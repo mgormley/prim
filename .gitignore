@@ -1,0 +1,18 @@
+*.pyc
+*~
+.#*
+\#*\#
+
+java.hprof.txt
+warn.log
+tmp
+ 
+# /
+/target
+/tests
+
+# /lib/
+/lib/*/
+/lib/*.tgz
+/lib/*.tar.gz
+/lib/*.zip
