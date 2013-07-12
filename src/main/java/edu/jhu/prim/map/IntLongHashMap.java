@@ -25,7 +25,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.math3.util.FastMath;
+import edu.jhu.prim.FastMath;
 
 import edu.jhu.prim.Primitives;
 import edu.jhu.util.Pair;
