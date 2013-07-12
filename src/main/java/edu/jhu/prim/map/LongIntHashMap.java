@@ -28,6 +28,7 @@ import java.util.NoSuchElementException;
 import edu.jhu.prim.FastMath;
 
 import edu.jhu.prim.Primitives;
+import edu.jhu.util.Pair;
 
 /**
  * NOTICE: Changes made to this class:
@@ -105,22 +106,7 @@ public class LongIntHashMap implements Serializable, LongIntMap {
         this(DEFAULT_EXPECTED_SIZE, Primitives.DEFAULT_MISSING_ENTRY_INT);
     }
 
-    // When the values are ints, it doesn't make sense to have this additional constructor.
-    //    /**
-    //     * Build an empty map with default size
-    //     * @param missingEntries value to return when a missing entry is fetched
-    //     */
-    //    public PLongIntHashMap(final int missingEntries) {
-    //        this(DEFAULT_EXPECTED_SIZE, missingEntries);
-    //    }
-
-    /**
-     * Build an empty map with specified size and using NaN for missing entries.
-     * @param expectedSize expected number of elements in the map
-     */
-    public LongIntHashMap(final int expectedSize) {
-        this(expectedSize, Primitives.DEFAULT_MISSING_ENTRY_INT);
-    }
+    /*  */
 
     /**
      * Build an empty map with specified size.
@@ -659,5 +645,19 @@ public class LongIntHashMap implements Serializable, LongIntMap {
         }
         return tmpVals;
     }
-
+    
+    public Pair<long[], int[]> getIndicesAndValues() {
+        int cur = 0;
+        long[] tmpKeys = new long[size()];
+        int[] tmpVals = new int[size()];
+        for (int i=0; i<keys.length; i++) {
+            if (states[i] == FULL) {
+                tmpKeys[cur] = keys[i];
+                tmpVals[cur] = values[i];
+                cur++;
+            }
+        }
+        return new Pair<long[], int[]>(tmpKeys, tmpVals);
+    }
+    
 }

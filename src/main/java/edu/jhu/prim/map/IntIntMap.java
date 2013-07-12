@@ -2,6 +2,10 @@ package edu.jhu.prim.map;
 
 import java.util.Iterator;
 
+/**
+ * A primitives map from ints to ints.
+ * @author mgormley
+ */
 public interface IntIntMap extends Iterable<IntIntEntry> {
 
     public abstract void clear();

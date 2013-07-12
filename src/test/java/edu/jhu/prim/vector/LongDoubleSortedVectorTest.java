@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import edu.jhu.prim.list.DoubleArrayList;
+
 public class LongDoubleSortedVectorTest {
 
     @Test
@@ -186,7 +188,11 @@ public class LongDoubleSortedVectorTest {
         return a;
     }
 
+    /* START EXCLUDE IV 1 */
+
     private double toDouble(int i) {
         return i;
     }
+    
+    /* END EXCLUDE 1 */
 }    

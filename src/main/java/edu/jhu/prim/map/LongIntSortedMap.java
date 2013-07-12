@@ -3,32 +3,32 @@ package edu.jhu.prim.map;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import edu.jhu.prim.list.DoubleArrayList;
+import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.list.LongArrayList;
 import edu.jhu.util.Pair;
 import edu.jhu.util.Sort;
 import edu.jhu.util.Utilities;
 
 /**
- * A primitives map from longs to doubles. The map is stored by keeping a sorted
+ * A primitives map from longs to ints. The map is stored by keeping a sorted
  * array of indices, and an array of their corresponding values. This is useful
  * when an extremely compact representation of the map is needed.
  * 
  * @author mgormley
  */
-public class LongDoubleSortedMap implements LongDoubleMap {
+public class LongIntSortedMap implements LongIntMap {
 
 	protected long[] indices;
-	protected double[] values;
+	protected int[] values;
 	protected int used; // TODO: size
 	
-	public LongDoubleSortedMap() {
+	public LongIntSortedMap() {
 		this.used = 0;
 		this.indices= new long[0];
-		this.values = new double[0];	
+		this.values = new int[0];	
 	}
 
-	public LongDoubleSortedMap(long[] index, double[] data) {
+	public LongIntSortedMap(long[] index, int[] data) {
 		if (!Sort.isSortedAscAndUnique(index)) {
 			throw new IllegalStateException("Indices are not sorted ascending");
 		}
@@ -38,15 +38,15 @@ public class LongDoubleSortedMap implements LongDoubleMap {
 		this.values = data;
 	}
 
-	public LongDoubleSortedMap(LongDoubleSortedMap other) {
+	public LongIntSortedMap(LongIntSortedMap other) {
 		this.used = other.used;
 		this.indices = Utilities.copyOf(other.indices);
 		this.values = Utilities.copyOf(other.values);
 	}
 	
-    //	// TODO: we need to break up Sort into SortLongDouble, SortIntDouble before adding this constructor.
-    //	public SortedLongDoubleMap(PLongDoubleHashMap other) {
-    //        Pair<long[], double[]> ivs = other.getIndicesAndValues();
+    //	// TODO: we need to break up Sort into SortLongInt, SortIntInt before adding this constructor.
+    //	public SortedLongIntMap(PLongIntHashMap other) {
+    //        Pair<long[], int[]> ivs = other.getIndicesAndValues();
     //        this.indices = ivs.get1();
     //        this.values = ivs.get2();
     //        this.used = indices.length;
@@ -54,7 +54,7 @@ public class LongDoubleSortedMap implements LongDoubleMap {
     //	}
 
 	/* (non-Javadoc)
-     * @see edu.jhu.util.vector.LongDoubleMap#clear()
+     * @see edu.jhu.util.vector.LongIntMap#clear()
      */
 	@Override
     public void clear() {
@@ -63,7 +63,7 @@ public class LongDoubleSortedMap implements LongDoubleMap {
 	
 	// TODO: rename to containsKey.
 	/* (non-Javadoc)
-     * @see edu.jhu.util.vector.LongDoubleMap#contains(long)
+     * @see edu.jhu.util.vector.LongIntMap#contains(long)
      */
 	@Override
     public boolean contains(long idx) {
@@ -71,10 +71,10 @@ public class LongDoubleSortedMap implements LongDoubleMap {
 	}
 	
 	/* (non-Javadoc)
-     * @see edu.jhu.util.vector.LongDoubleMap#get(long)
+     * @see edu.jhu.util.vector.LongIntMap#get(long)
      */
 	@Override
-    public double get(long idx) {
+    public int get(long idx) {
 		int i = Arrays.binarySearch(indices, 0, used, idx);
 		if (i < 0) {
 			throw new IllegalArgumentException("This map does not contain the key: " + idx);
@@ -83,10 +83,10 @@ public class LongDoubleSortedMap implements LongDoubleMap {
 	}
 	
 	/* (non-Javadoc)
-     * @see edu.jhu.util.vector.LongDoubleMap#getWithDefault(long, double)
+     * @see edu.jhu.util.vector.LongIntMap#getWithDefault(long, int)
      */
 	@Override
-    public double getWithDefault(long idx, double defaultVal) {
+    public int getWithDefault(long idx, int defaultVal) {
 		int i = Arrays.binarySearch(indices, 0, used, idx);
 		if (i < 0) {
 			return defaultVal;
@@ -95,7 +95,7 @@ public class LongDoubleSortedMap implements LongDoubleMap {
 	}
 	
 	/* (non-Javadoc)
-     * @see edu.jhu.util.vector.LongDoubleMap#remove(long)
+     * @see edu.jhu.util.vector.LongIntMap#remove(long)
      */
 	@Override
     public void remove(long idx) {
@@ -110,10 +110,10 @@ public class LongDoubleSortedMap implements LongDoubleMap {
 	}
 	
 	/* (non-Javadoc)
-     * @see edu.jhu.util.vector.LongDoubleMap#put(long, double)
+     * @see edu.jhu.util.vector.LongIntMap#put(long, int)
      */
 	@Override
-    public void put(long idx, double val) {
+    public void put(long idx, int val) {
 		int i = Arrays.binarySearch(indices, 0, used, idx);
 		if (i >= 0) {
 			// Just update the value.
@@ -140,12 +140,12 @@ public class LongDoubleSortedMap implements LongDoubleMap {
 		return array;
 	}
 	
-    /* START EXCLUDE IK IV 1 */
+    /*  */
 	
-	private final double[] insert(double[] array, int i, double val) {
+	private final int[] insert(int[] array, int i, int val) {
 		if (used >= array.length) {
 			// Increase the capacity of the array.
-			array = DoubleArrayList.ensureCapacity(array, used+1);
+			array = IntArrayList.ensureCapacity(array, used+1);
 		}
 		if (i < used) {
 			// Shift the values over.
@@ -156,17 +156,17 @@ public class LongDoubleSortedMap implements LongDoubleMap {
 		return array;
 	}
 	
-	/* END EXCLUDE 1 */
+	/*  */
 
-	public class LongDoubleEntryImpl implements LongDoubleEntry {
+	public class LongIntEntryImpl implements LongIntEntry {
 		private int i;
-		public LongDoubleEntryImpl(int i) {
+		public LongIntEntryImpl(int i) {
 			this.i = i;
 		}
 		public long index() {
 			return indices[i];
 		}
-		public double get() {
+		public int get() {
 			return values[i];
 		}
     }
@@ -175,10 +175,10 @@ public class LongDoubleSortedMap implements LongDoubleMap {
      * This iterator is fast in the case of for(Entry e : vector) { }, however a
      * given entry should not be used after the following call to next().
      */
-    public class LongDoubleIterator implements Iterator<LongDoubleEntry> {
+    public class LongIntIterator implements Iterator<LongIntEntry> {
 
         // The current entry.
-        private LongDoubleEntryImpl entry = new LongDoubleEntryImpl(-1);
+        private LongIntEntryImpl entry = new LongIntEntryImpl(-1);
 
         @Override
         public boolean hasNext() {
@@ -186,7 +186,7 @@ public class LongDoubleSortedMap implements LongDoubleMap {
         }
 
         @Override
-        public LongDoubleEntry next() {
+        public LongIntEntry next() {
             entry.i++;
             return entry;
         }
@@ -201,16 +201,16 @@ public class LongDoubleSortedMap implements LongDoubleMap {
     /*
      * (non-Javadoc)
      * 
-     * @see edu.jhu.util.vector.LongDoubleMap#iterator()
+     * @see edu.jhu.util.vector.LongIntMap#iterator()
      */
 	@Override
-	public Iterator<LongDoubleEntry> iterator() {
-		return new LongDoubleIterator();
+	public Iterator<LongIntEntry> iterator() {
+		return new LongIntIterator();
 	}
 
 
 	/* (non-Javadoc)
-     * @see edu.jhu.util.vector.LongDoubleMap#size()
+     * @see edu.jhu.util.vector.LongIntMap#size()
      */
 	@Override
     public int size() {
@@ -222,7 +222,7 @@ public class LongDoubleSortedMap implements LongDoubleMap {
 	}	
 
     /* (non-Javadoc)
-     * @see edu.jhu.util.vector.LongDoubleMap#getIndices()
+     * @see edu.jhu.util.vector.LongIntMap#getIndices()
      */
     @Override
     public long[] getIndices() {
@@ -237,14 +237,14 @@ public class LongDoubleSortedMap implements LongDoubleMap {
     }
     
     /* (non-Javadoc)
-     * @see edu.jhu.util.vector.LongDoubleMap#getValues()
+     * @see edu.jhu.util.vector.LongIntMap#getValues()
      */
     @Override
-    public double[] getValues() {
+    public int[] getValues() {
         if (used == values.length)
             return values;
 
-        double[] tmpValues = new double[used];
+        int[] tmpValues = new int[used];
         for (int i = 0; i < used; i++) {
         	tmpValues[i] = values[i];
         }

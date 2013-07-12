@@ -3,11 +3,19 @@ package edu.jhu.prim.map;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.list.LongArrayList;
+import edu.jhu.prim.list.IntArrayList;
+import edu.jhu.util.Pair;
 import edu.jhu.util.Sort;
 import edu.jhu.util.Utilities;
 
+/**
+ * A primitives map from ints to longs. The map is stored by keeping a sorted
+ * array of indices, and an array of their corresponding values. This is useful
+ * when an extremely compact representation of the map is needed.
+ * 
+ * @author mgormley
+ */
 public class IntLongSortedMap implements IntLongMap {
 
 	protected int[] indices;
@@ -35,6 +43,15 @@ public class IntLongSortedMap implements IntLongMap {
 		this.indices = Utilities.copyOf(other.indices);
 		this.values = Utilities.copyOf(other.values);
 	}
+	
+    //	// TODO: we need to break up Sort into SortIntLong, SortIntLong before adding this constructor.
+    //	public SortedIntLongMap(PIntLongHashMap other) {
+    //        Pair<int[], long[]> ivs = other.getIndicesAndValues();
+    //        this.indices = ivs.get1();
+    //        this.values = ivs.get2();
+    //        this.used = indices.length;
+    //        Sort.sortIndexAsc(indices, values);
+    //	}
 
 	/* (non-Javadoc)
      * @see edu.jhu.util.vector.IntLongMap#clear()
@@ -123,6 +140,8 @@ public class IntLongSortedMap implements IntLongMap {
 		return array;
 	}
 	
+    /*  */
+	
 	private final long[] insert(long[] array, int i, long val) {
 		if (used >= array.length) {
 			// Increase the capacity of the array.
@@ -136,6 +155,8 @@ public class IntLongSortedMap implements IntLongMap {
 		array[i] = val;
 		return array;
 	}
+	
+	/*  */
 
 	public class IntLongEntryImpl implements IntLongEntry {
 		private int i;

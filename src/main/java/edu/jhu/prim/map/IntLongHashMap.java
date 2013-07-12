@@ -106,21 +106,7 @@ public class IntLongHashMap implements Serializable, IntLongMap {
         this(DEFAULT_EXPECTED_SIZE, Primitives.DEFAULT_MISSING_ENTRY_LONG);
     }
 
-    /**
-     * Build an empty map with default size
-     * @param missingEntries value to return when a missing entry is fetched
-     */
-    public IntLongHashMap(final long missingEntries) {
-        this(DEFAULT_EXPECTED_SIZE, missingEntries);
-    }
-
-    /**
-     * Build an empty map with specified size and using NaN for missing entries.
-     * @param expectedSize expected number of elements in the map
-     */
-    public IntLongHashMap(final int expectedSize) {
-        this(expectedSize, Primitives.DEFAULT_MISSING_ENTRY_LONG);
-    }
+    /*  */
 
     /**
      * Build an empty map with specified size.

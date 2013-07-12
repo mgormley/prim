@@ -144,8 +144,14 @@ public class IntLongSortedMapTest {
         return a;
     }
 
+
+    /*  */
+    // TODO: just move these to Primitives rather than excluding them.
+    
     private long toLong(int i) {
         return i;
     }
+    
+    /*  */
     
 }

@@ -28,6 +28,7 @@ import java.util.NoSuchElementException;
 import edu.jhu.prim.FastMath;
 
 import edu.jhu.prim.Primitives;
+import edu.jhu.util.Pair;
 
 /**
  * NOTICE: Changes made to this class:
@@ -104,6 +105,8 @@ public class IntIntHashMap implements Serializable, IntIntMap {
     public IntIntHashMap() {
         this(DEFAULT_EXPECTED_SIZE, Primitives.DEFAULT_MISSING_ENTRY_INT);
     }
+
+    /*  */
 
     /**
      * Build an empty map with specified size.
@@ -642,5 +645,19 @@ public class IntIntHashMap implements Serializable, IntIntMap {
         }
         return tmpVals;
     }
-
+    
+    public Pair<int[], int[]> getIndicesAndValues() {
+        int cur = 0;
+        int[] tmpKeys = new int[size()];
+        int[] tmpVals = new int[size()];
+        for (int i=0; i<keys.length; i++) {
+            if (states[i] == FULL) {
+                tmpKeys[cur] = keys[i];
+                tmpVals[cur] = values[i];
+                cur++;
+            }
+        }
+        return new Pair<int[], int[]>(tmpKeys, tmpVals);
+    }
+    
 }

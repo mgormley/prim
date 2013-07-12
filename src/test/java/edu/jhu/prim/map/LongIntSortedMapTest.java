@@ -6,14 +6,14 @@ import java.util.Iterator;
 
 import org.junit.Test;
 
-public class IntDoubleSortedMapTest {
+public class LongIntSortedMapTest {
 
 	@Test
 	public void testOrderedUsage() {
-		IntDoubleMap map = new IntDoubleSortedMap();
-		map.put(1, toDouble(11));
-		map.put(2, toDouble(22));
-		map.put(3, toDouble(33));
+		LongIntMap map = new LongIntSortedMap();
+		map.put(1, toInt(11));
+		map.put(2, toInt(22));
+		map.put(3, toInt(33));
 		
 		assertEquals(11, toInt(map.get(1)));
 		assertEquals(22, toInt(map.get(2)));
@@ -22,13 +22,13 @@ public class IntDoubleSortedMapTest {
 	
 	@Test
 	public void testNormalUsage() {
-		IntDoubleMap map = new IntDoubleSortedMap();
-		map.put(2, toDouble(22));
-		map.put(1, toDouble(11));
-		map.put(3, toDouble(33));
-		map.put(-1, toDouble(-11));
-		map.put(8, toDouble(88));
-		map.put(6, toDouble(66));
+		LongIntMap map = new LongIntSortedMap();
+		map.put(2, toInt(22));
+		map.put(1, toInt(11));
+		map.put(3, toInt(33));
+		map.put(-1, toInt(-11));
+		map.put(8, toInt(88));
+		map.put(6, toInt(66));
 
 		assertEquals(33, toInt(map.get(3)));		
 		assertEquals(11, toInt(map.get(1)));
@@ -40,9 +40,9 @@ public class IntDoubleSortedMapTest {
 		// Clear the map.
 		map.clear();
 		
-		map.put(3, toDouble(33));
-		map.put(2, toDouble(22));
-		map.put(1, toDouble(11));
+		map.put(3, toInt(33));
+		map.put(2, toInt(22));
+		map.put(1, toInt(11));
 		
 		assertEquals(22, toInt(map.get(2)));
 		assertEquals(11, toInt(map.get(1)));
@@ -53,9 +53,9 @@ public class IntDoubleSortedMapTest {
 	@Test
 	public void testRemove() {
 		// First element.
-		IntDoubleMap map = new IntDoubleSortedMap();
-		map.put(2, toDouble(22));
-		map.put(1, toDouble(11));
+		LongIntMap map = new LongIntSortedMap();
+		map.put(2, toInt(22));
+		map.put(1, toInt(11));
 		assertEquals(22, toInt(map.get(2)));
 		assertEquals(11, toInt(map.get(1)));
 		
@@ -65,10 +65,10 @@ public class IntDoubleSortedMapTest {
 		assertEquals(1, map.size());
 		
 		// Middle element.
-		map = new IntDoubleSortedMap();
-		map.put(2, toDouble(22));
-		map.put(3, toDouble(33));
-		map.put(1, toDouble(11));
+		map = new LongIntSortedMap();
+		map.put(2, toInt(22));
+		map.put(3, toInt(33));
+		map.put(1, toInt(11));
 		assertEquals(22, toInt(map.get(2)));
 		assertEquals(11, toInt(map.get(1)));
 		assertEquals(33, toInt(map.get(3)));		
@@ -80,10 +80,10 @@ public class IntDoubleSortedMapTest {
 		assertEquals(2, map.size());
 		
 		// Last element.
-		map = new IntDoubleSortedMap();
-		map.put(2, toDouble(22));
-		map.put(3, toDouble(33));
-		map.put(1, toDouble(11));
+		map = new LongIntSortedMap();
+		map.put(2, toInt(22));
+		map.put(3, toInt(33));
+		map.put(1, toInt(11));
 		assertEquals(22, toInt(map.get(2)));
 		assertEquals(11, toInt(map.get(1)));
 		assertEquals(33, toInt(map.get(3)));		
@@ -97,14 +97,14 @@ public class IntDoubleSortedMapTest {
 
 	@Test
 	public void testBadGets() {
-		IntDoubleMap map = new IntDoubleSortedMap();
+		LongIntMap map = new LongIntSortedMap();
 
 		try {
 			map.get(2);
 		} catch(Exception e) {
 			// pass
 		}
-		map.put(3, toDouble(33));
+		map.put(3, toInt(33));
 		try {
 			map.get(-3);
 		} catch(Exception e) {
@@ -114,12 +114,12 @@ public class IntDoubleSortedMapTest {
 
     @Test
     public void testIterator() {
-        IntDoubleSortedMap map = new IntDoubleSortedMap();
-        map.put(2, toDouble(22));
-        map.put(1, toDouble(11));
+        LongIntSortedMap map = new LongIntSortedMap();
+        map.put(2, toInt(22));
+        map.put(1, toInt(11));
         
-        IntDoubleEntry cur;
-        Iterator<IntDoubleEntry> iter = map.iterator();
+        LongIntEntry cur;
+        Iterator<LongIntEntry> iter = map.iterator();
         assertEquals(true, iter.hasNext()); 
         assertEquals(true, iter.hasNext()); 
         cur = iter.next();
@@ -132,12 +132,12 @@ public class IntDoubleSortedMapTest {
         assertEquals(false, iter.hasNext());
     }
     
-    private int toInt(double d) {
+    private int toInt(int d) {
         return (int)d;
     }
 
-    private double[] toDoubles(int... b) {
-        double[] a = new double[b.length];
+    private int[] toInts(int... b) {
+        int[] a = new int[b.length];
         for (int i=0; i<b.length; i++) {
             a[i] = b[i];
         }
@@ -145,13 +145,6 @@ public class IntDoubleSortedMapTest {
     }
 
 
-    /*  */
-    // TODO: just move these to Primitives rather than excluding them.
-    
-    private double toDouble(int i) {
-        return i;
-    }
-    
     /*  */
     
 }

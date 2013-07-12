@@ -2,9 +2,9 @@ package edu.jhu.prim.vector;
 
 import edu.jhu.prim.Primitives;
 import edu.jhu.prim.list.IntArrayList;
-import edu.jhu.prim.list.IntArrayList;
-import edu.jhu.prim.map.IntIntEntry;
-import edu.jhu.prim.map.IntIntSortedMap;
+import edu.jhu.prim.list.LongArrayList;
+import edu.jhu.prim.map.LongIntEntry;
+import edu.jhu.prim.map.LongIntSortedMap;
 import edu.jhu.util.Lambda;
 import edu.jhu.util.Lambda.LambdaBinOpInt;
 import edu.jhu.util.SafeCast;
@@ -16,41 +16,41 @@ import edu.jhu.util.Utilities;
  * @author mgormley
  *
  */
-public class IntIntSortedVector extends IntIntSortedMap {
+public class LongIntSortedVector extends LongIntSortedMap {
 
     private static final int ZERO = (int) 0;
     
     boolean norm2Cached = false;
     int norm2Value;
     
-    public IntIntSortedVector() {
+    public LongIntSortedVector() {
         super();
     }
     
-    public IntIntSortedVector(int[] index, int[] data) {
+    public LongIntSortedVector(long[] index, int[] data) {
     	super(index, data);
 	}
     
-    public IntIntSortedVector(IntIntSortedVector vector) {
+    public LongIntSortedVector(LongIntSortedVector vector) {
     	super(vector);
     }
 
-	public IntIntSortedVector(int[] denseRow) {
-		this(Utilities.getIndexArray(denseRow.length), denseRow);
+	public LongIntSortedVector(int[] denseRow) {
+		this(Utilities.getLongIndexArray(denseRow.length), denseRow);
 	}
 
 	// TODO: This could be done with a single binary search instead of two.
-    public void add(int idx, int val) {
+    public void add(long idx, int val) {
     	int curVal = getWithDefault(idx, ZERO);
     	put(idx, curVal + val);
     }
     
-    public void set(int idx, int val) {
+    public void set(long idx, int val) {
     	put(idx, val);
     }
     
     @Override
-	public int get(int idx) {
+	public int get(long idx) {
 		return getWithDefault(idx, ZERO);
 	}
     
@@ -67,7 +67,7 @@ public class IntIntSortedVector extends IntIntSortedMap {
             if (indices[c] > Integer.MAX_VALUE) {
                 break;
             }
-            ret += values[c] * other[indices[c]];
+            ret += values[c] * other[SafeCast.safeLongToInt(indices[c])];
         }
         return ret;
     }
@@ -79,15 +79,15 @@ public class IntIntSortedVector extends IntIntSortedMap {
             if (indices[c] > Integer.MAX_VALUE) {
                 break;
             }
-            ret += values[c] * matrix[indices[c]][col];
+            ret += values[c] * matrix[SafeCast.safeLongToInt(indices[c])][col];
         }
         return ret;
     }
     
     /** Computes the dot product of this vector with the given vector. */   
-    public int dot(IntIntSortedVector y) {
-        if (y instanceof IntIntSortedVector) {
-            IntIntSortedVector other = ((IntIntSortedVector) y);
+    public int dot(LongIntSortedVector y) {
+        if (y instanceof LongIntSortedVector) {
+            LongIntSortedVector other = ((LongIntSortedVector) y);
             int ret = 0;
             int oc = 0;
             for (int c = 0; c < used; c++) {
@@ -112,8 +112,8 @@ public class IntIntSortedVector extends IntIntSortedMap {
     /**
      * @return A new vector without zeros OR the same vector if it has none.
      */
-    public static IntIntSortedVector getWithNoZeroValues(IntIntSortedVector row) {
-        int[] origIndex = row.getIndices();
+    public static LongIntSortedVector getWithNoZeroValues(LongIntSortedVector row) {
+        long[] origIndex = row.getIndices();
         int[] origData = row.getValues();
         
         // Count and keep track of nonzeros.
@@ -131,7 +131,7 @@ public class IntIntSortedVector extends IntIntSortedMap {
         
         if (numZeros > 0) {
             // Create the new vector without the zeros.
-            int[] newIndex = new int[numNonZeros];
+            long[] newIndex = new long[numNonZeros];
             int[] newData = new int[numNonZeros];
 
             int newIdx = 0;
@@ -142,7 +142,7 @@ public class IntIntSortedVector extends IntIntSortedMap {
                     newIdx++;
                 }
             }
-            return new IntIntSortedVector(newIndex, newData);
+            return new LongIntSortedVector(newIndex, newData);
         } else {
             return row;
         }
@@ -150,19 +150,19 @@ public class IntIntSortedVector extends IntIntSortedMap {
     
 
     /**
-     * TODO: Make a SortedIntIntVectorWithExplicitZeros class and move this method there.
+     * TODO: Make a SortedLongIntVectorWithExplicitZeros class and move this method there.
      * 
      * Here we override the zero method so that it doesn't set the number of
      * used values to 0. This ensures that we keep explicit zeros in.
      */
-    public IntIntSortedVector zero() {
+    public LongIntSortedVector zero() {
         java.util.Arrays.fill(values, 0);
         //used = 0;
         return this;
     }
 
     /** Sets all values in this vector to those in the other vector. */
-    public void set(IntIntSortedVector other) {
+    public void set(LongIntSortedVector other) {
         this.used = other.used;
         this.indices = Utilities.copyOf(other.indices);
         this.values = Utilities.copyOf(other.values);
@@ -173,8 +173,8 @@ public class IntIntSortedVector extends IntIntSortedMap {
      * another.
      */
     // TODO: this could just be a binaryOp call.
-    public IntIntSortedVector hadamardProd(IntIntSortedVector other) {
-    	IntIntSortedVector ip = new IntIntSortedVector();
+    public LongIntSortedVector hadamardProd(LongIntSortedVector other) {
+    	LongIntSortedVector ip = new LongIntSortedVector();
         int oc = 0;
         for (int c = 0; c < used; c++) {
             while (oc < other.used) {
@@ -191,26 +191,26 @@ public class IntIntSortedVector extends IntIntSortedMap {
         return ip;
     }
 
-    public void add(IntIntSortedVector other) {
+    public void add(LongIntSortedVector other) {
         binaryOp(other, new Lambda.IntAdd());
     }
     
-    public void subtract(IntIntSortedVector other) {
+    public void subtract(LongIntSortedVector other) {
         binaryOp(other, new Lambda.IntSubtract());
     }
     
-    public void binaryOp(IntIntSortedVector other, LambdaBinOpInt lambda) {
-        IntArrayList newIndices = new IntArrayList(Math.max(this.indices.length, other.indices.length));
+    public void binaryOp(LongIntSortedVector other, LambdaBinOpInt lambda) {
+        LongArrayList newIndices = new LongArrayList(Math.max(this.indices.length, other.indices.length));
         IntArrayList newValues = new IntArrayList(Math.max(this.indices.length, other.indices.length));
         int i=0; 
         int j=0;
         while(i < this.used && j < other.used) {
-            int e1 = this.indices[i];
+            long e1 = this.indices[i];
             int v1 = this.values[i];
-            int e2 = other.indices[j];
+            long e2 = other.indices[j];
             int v2 = other.values[j];
             
-            int diff = e1 - e2;
+            long diff = e1 - e2;
             if (diff == 0) {
                 // Elements are equal. Add both of them.
                 newIndices.add(e1);
@@ -234,13 +234,13 @@ public class IntIntSortedVector extends IntIntSortedMap {
         // the remaining elements. There will never be more than one such list. 
         assert (!(i < this.used && j < other.used));
         for (; i < this.used; i++) {
-            int e1 = this.indices[i];
+            long e1 = this.indices[i];
             int v1 = this.values[i];
             newIndices.add(e1);
             newValues.add(lambda.call(v1, ZERO));
         }
         for (; j < other.used; j++) {
-            int e2 = other.indices[j];
+            long e2 = other.indices[j];
             int v2 = other.values[j];
             newIndices.add(e2);
             newValues.add(lambda.call(ZERO, v2));
@@ -256,7 +256,7 @@ public class IntIntSortedVector extends IntIntSortedMap {
      * @param indices1 Sorted array of indices.
      * @param indices2 Sorted array of indices.
      */
-    public static int countUnique(int[] indices1, int[] indices2) {
+    public static int countUnique(long[] indices1, long[] indices2) {
         int numUniqueIndices = 0;
         int i = 0;
         int j = 0;
@@ -282,14 +282,14 @@ public class IntIntSortedVector extends IntIntSortedMap {
         return numUniqueIndices;
     }
     
-    public IntIntSortedVector getElementwiseSum(IntIntSortedVector other) {
-        IntIntSortedVector sum = new IntIntSortedVector(this);
+    public LongIntSortedVector getElementwiseSum(LongIntSortedVector other) {
+        LongIntSortedVector sum = new LongIntSortedVector(this);
         sum.add(other);
         return sum;
     }
     
-    public IntIntSortedVector getElementwiseDiff(IntIntSortedVector other) {
-        IntIntSortedVector sum = new IntIntSortedVector(this);
+    public LongIntSortedVector getElementwiseDiff(LongIntSortedVector other) {
+        LongIntSortedVector sum = new LongIntSortedVector(this);
         sum.subtract(other);
         return sum;
     }
@@ -313,21 +313,21 @@ public class IntIntSortedVector extends IntIntSortedMap {
     /**
      * Returns true if the input vector is equal to this one.
      */
-    public boolean eq(IntIntSortedVector other) {
+    public boolean eq(LongIntSortedVector other) {
         // This is slow, but correct.
-        IntIntSortedVector v1 = IntIntSortedVector.getWithNoZeroValues(this);
-        IntIntSortedVector v2 = IntIntSortedVector.getWithNoZeroValues(other);
+        LongIntSortedVector v1 = LongIntSortedVector.getWithNoZeroValues(this);
+        LongIntSortedVector v2 = LongIntSortedVector.getWithNoZeroValues(other);
                 
         if (v2.size() != v1.size()) {
             return false;
         }
 
-        for (IntIntEntry ve : v1) {
+        for (LongIntEntry ve : v1) {
             if (!Utilities.equals(ve.get(), v2.get(ve.index()))) {
                 return false;
             }
         }
-        for (IntIntEntry ve : v2) {
+        for (LongIntEntry ve : v2) {
             if (!Utilities.equals(ve.get(), v1.get(ve.index()))) {
                 return false;
             }

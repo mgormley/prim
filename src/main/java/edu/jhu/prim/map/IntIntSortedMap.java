@@ -4,9 +4,18 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 import edu.jhu.prim.list.IntArrayList;
+import edu.jhu.prim.list.IntArrayList;
+import edu.jhu.util.Pair;
 import edu.jhu.util.Sort;
 import edu.jhu.util.Utilities;
 
+/**
+ * A primitives map from ints to ints. The map is stored by keeping a sorted
+ * array of indices, and an array of their corresponding values. This is useful
+ * when an extremely compact representation of the map is needed.
+ * 
+ * @author mgormley
+ */
 public class IntIntSortedMap implements IntIntMap {
 
 	protected int[] indices;
@@ -34,6 +43,15 @@ public class IntIntSortedMap implements IntIntMap {
 		this.indices = Utilities.copyOf(other.indices);
 		this.values = Utilities.copyOf(other.values);
 	}
+	
+    //	// TODO: we need to break up Sort into SortIntInt, SortIntInt before adding this constructor.
+    //	public SortedIntIntMap(PIntIntHashMap other) {
+    //        Pair<int[], int[]> ivs = other.getIndicesAndValues();
+    //        this.indices = ivs.get1();
+    //        this.values = ivs.get2();
+    //        this.used = indices.length;
+    //        Sort.sortIndexAsc(indices, values);
+    //	}
 
 	/* (non-Javadoc)
      * @see edu.jhu.util.vector.IntIntMap#clear()
@@ -121,6 +139,8 @@ public class IntIntSortedMap implements IntIntMap {
 		array[i] = val;
 		return array;
 	}
+	
+    /*  */
 
 	public class IntIntEntryImpl implements IntIntEntry {
 		private int i;

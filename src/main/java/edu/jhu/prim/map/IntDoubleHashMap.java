@@ -106,6 +106,8 @@ public class IntDoubleHashMap implements Serializable, IntDoubleMap {
         this(DEFAULT_EXPECTED_SIZE, Primitives.DEFAULT_MISSING_ENTRY_DOUBLE);
     }
 
+    /*  */
+    
     /**
      * Build an empty map with default size
      * @param missingEntries value to return when a missing entry is fetched
@@ -121,6 +123,8 @@ public class IntDoubleHashMap implements Serializable, IntDoubleMap {
     public IntDoubleHashMap(final int expectedSize) {
         this(expectedSize, Primitives.DEFAULT_MISSING_ENTRY_DOUBLE);
     }
+    
+    /*  */
 
     /**
      * Build an empty map with specified size.

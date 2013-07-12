@@ -5,9 +5,17 @@ import java.util.Iterator;
 
 import edu.jhu.prim.list.DoubleArrayList;
 import edu.jhu.prim.list.IntArrayList;
+import edu.jhu.util.Pair;
 import edu.jhu.util.Sort;
 import edu.jhu.util.Utilities;
 
+/**
+ * A primitives map from ints to doubles. The map is stored by keeping a sorted
+ * array of indices, and an array of their corresponding values. This is useful
+ * when an extremely compact representation of the map is needed.
+ * 
+ * @author mgormley
+ */
 public class IntDoubleSortedMap implements IntDoubleMap {
 
 	protected int[] indices;
@@ -35,6 +43,15 @@ public class IntDoubleSortedMap implements IntDoubleMap {
 		this.indices = Utilities.copyOf(other.indices);
 		this.values = Utilities.copyOf(other.values);
 	}
+	
+    //	// TODO: we need to break up Sort into SortIntDouble, SortIntDouble before adding this constructor.
+    //	public SortedIntDoubleMap(PIntDoubleHashMap other) {
+    //        Pair<int[], double[]> ivs = other.getIndicesAndValues();
+    //        this.indices = ivs.get1();
+    //        this.values = ivs.get2();
+    //        this.used = indices.length;
+    //        Sort.sortIndexAsc(indices, values);
+    //	}
 
 	/* (non-Javadoc)
      * @see edu.jhu.util.vector.IntDoubleMap#clear()
@@ -123,6 +140,8 @@ public class IntDoubleSortedMap implements IntDoubleMap {
 		return array;
 	}
 	
+    /*  */
+	
 	private final double[] insert(double[] array, int i, double val) {
 		if (used >= array.length) {
 			// Increase the capacity of the array.
@@ -136,6 +155,8 @@ public class IntDoubleSortedMap implements IntDoubleMap {
 		array[i] = val;
 		return array;
 	}
+	
+	/*  */
 
 	public class IntDoubleEntryImpl implements IntDoubleEntry {
 		private int i;

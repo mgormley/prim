@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import edu.jhu.prim.list.DoubleArrayList;
+
 public class IntDoubleSortedVectorTest {
 
     @Test
@@ -186,7 +188,11 @@ public class IntDoubleSortedVectorTest {
         return a;
     }
 
+    /*  */
+
     private double toDouble(int i) {
         return i;
     }
+    
+    /*  */
 }    

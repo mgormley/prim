@@ -2,6 +2,10 @@ package edu.jhu.prim.map;
 
 import java.util.Iterator;
 
+/**
+ * A primitives map from ints to longs.
+ * @author mgormley
+ */
 public interface IntLongMap extends Iterable<IntLongEntry> {
 
     public abstract void clear();

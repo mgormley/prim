@@ -1,8 +1,8 @@
 package edu.jhu.prim.vector;
 
 import edu.jhu.prim.Primitives;
-import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.list.LongArrayList;
+import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.map.IntLongEntry;
 import edu.jhu.prim.map.IntLongSortedMap;
 import edu.jhu.util.Lambda;

@@ -2,6 +2,10 @@ package edu.jhu.prim.map;
 
 import java.util.Iterator;
 
+/**
+ * A primitives map from ints to doubles.
+ * @author mgormley
+ */
 public interface IntDoubleMap extends Iterable<IntDoubleEntry> {
 
     public abstract void clear();

@@ -106,6 +106,8 @@ public class LongDoubleHashMap implements Serializable, LongDoubleMap {
         this(DEFAULT_EXPECTED_SIZE, Primitives.DEFAULT_MISSING_ENTRY_DOUBLE);
     }
 
+    /* START EXCLUDE ILV 1 */
+    
     /**
      * Build an empty map with default size
      * @param missingEntries value to return when a missing entry is fetched
@@ -121,6 +123,8 @@ public class LongDoubleHashMap implements Serializable, LongDoubleMap {
     public LongDoubleHashMap(final int expectedSize) {
         this(expectedSize, Primitives.DEFAULT_MISSING_ENTRY_DOUBLE);
     }
+    
+    /* END EXCLUDE 1 */
 
     /**
      * Build an empty map with specified size.

@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import edu.jhu.prim.list.LongArrayList;
+
 public class IntLongSortedVectorTest {
 
     @Test
@@ -186,7 +188,11 @@ public class IntLongSortedVectorTest {
         return a;
     }
 
+    /*  */
+
     private long toLong(int i) {
         return i;
     }
+    
+    /*  */
 }    

@@ -28,7 +28,7 @@ def replace_all(repls, s):
 
 def re_sub_all(re_subs, s):
     for k,v in re_subs:
-        s, num_subs = re.subn(k, v, s)
+        s, num_subs = re.subn(k, v, s, flags=re.DOTALL)
         print "Number of substitutions for %s-->%s: %d" % (k, v, num_subs)
     return s
         
@@ -38,6 +38,7 @@ def copy_pair(dest_key, dest_val):
     src_val = tds.get("double")
     
     repls = []
+    add_re_subs = []
     # Prepend some replacements for generics in the unit tests. 
     if dest_key == "Int":
         repls += [("<Long,", "<Integer,")]
@@ -51,6 +52,39 @@ def copy_pair(dest_key, dest_val):
                   (", zeroThreshold", ""),
                   (", 1e-13", ""),
                   ]
+        
+    # Excluded code.
+    if dest_val.is_integral:
+        add_re_subs += [
+            # Remove everything between the markers.
+            (r"START EXCLUDE ILV (\S+).*END EXCLUDE \1", ""),
+            ]
+    else:
+        add_re_subs += [
+            # Just remove the markers.
+            (r"(START EXCLUDE ILV (\S+)|END EXCLUDE (\S+))", ""),
+            ]
+    if dest_val.prim == "int":
+        add_re_subs += [
+            # Remove everything between the markers.
+            (r"START EXCLUDE IV (\S+).*END EXCLUDE \1", ""),
+            ]
+    else:
+        add_re_subs += [
+            # Just remove the markers.
+            (r"(START EXCLUDE IV (\S+)|END EXCLUDE (\S+))", ""),
+            ]
+    if dest_key.prim == "int" and dest_val.prim == "int":
+        add_re_subs += [
+            # Remove everything between the markers.
+            (r"START EXCLUDE IK IV (\S+).*END EXCLUDE \1", ""),
+            ]
+    else:
+        add_re_subs += [
+            # Just remove the markers.
+            (r"(START EXCLUDE IK IV (\S+)|END EXCLUDE (\S+))", ""),
+            ]
+
     # Add the primary replacements.
     repls += get_typedef_repls(src_key, dest_key)
     repls += get_typedef_repls(src_val, dest_val)
@@ -58,7 +92,7 @@ def copy_pair(dest_key, dest_val):
              ("int serialVersionUID", "long serialVersionUID"),
              ]
     # Other regex replacements
-    add_re_subs = [(r"SafeCast\.safeIntToInt\(([^\)]+)\)", r"\1"),
+    add_re_subs += [(r"SafeCast\.safeIntToInt\(([^\)]+)\)", r"\1"),
                ]
     
     # Convert repls to regex replacements.
@@ -66,19 +100,25 @@ def copy_pair(dest_key, dest_val):
     re_subs += add_re_subs
     assert len(re_subs) == len(repls) + len(add_re_subs)
         
-    classes = [
-               "edu.jhu.util.vector.LongDoubleMap",
-               "edu.jhu.util.vector.LongDoubleEntry",
-                 "edu.jhu.util.vector.SortedLongDoubleMap",
-                 "edu.jhu.util.vector.SortedLongDoubleMapTest",
-                 "edu.jhu.util.vector.SortedLongDoubleVector",
-                 "edu.jhu.util.vector.SortedLongDoubleVectorTest",
-                 "edu.jhu.util.collections.PLongDoubleHashMap",
-                 "edu.jhu.util.collections.PLongDoubleHashMapTest",
-                 # "edu.jhu.util.collections.PLongHashSet",
+    main_classes = [
+                 "edu.jhu.prim.map.LongDoubleMap",
+                 "edu.jhu.prim.map.LongDoubleEntry",
+                 "edu.jhu.prim.map.LongDoubleSortedMap",
+                 "edu.jhu.prim.map.LongDoubleHashMap",
+                 "edu.jhu.prim.vector.LongDoubleSortedVector",
+                 # "edu.jhu.prim.set.LongHashSet",
                  ]
-    java_dir = os.path.join("src", "main", "java")
-    src_files = [os.path.join(java_dir, c.replace(".", "/") + ".java") for c in classes]
+    main_java = os.path.join("src", "main", "java")
+    src_files = [os.path.join(main_java, c.replace(".", "/") + ".java") for c in main_classes]
+
+    test_classes = [
+                 "edu.jhu.prim.map.LongDoubleSortedMapTest",
+                 "edu.jhu.prim.map.LongDoubleHashMapTest",
+                 "edu.jhu.prim.vector.LongDoubleSortedVectorTest",
+                 ]
+    test_java = os.path.join("src", "test", "java")
+    src_files += [os.path.join(test_java, c.replace(".", "/") + ".java") for c in test_classes]
+
     dest_files = map(lambda f : replace_all(repls, f), src_files)
     for sf, df in zip(src_files, dest_files):
         print "Current destination file:", df
@@ -110,9 +150,7 @@ if __name__ == "__main__":
     copy_pair(tds.get("int"), tds.get("double"))
     copy_pair(tds.get("int"), tds.get("long"))
     
-    #TODO: Should only make a subset:
-    #copy_pair(tds.get("long"), tds.get("int"))
-
-    #TODO: IntInt sort of works, but requires the removal of some duplicate methods/constructors:
-    # copy_pair(tds.get("int"), tds.get("int"))
+    #TODO: IntInt/LongInt sort of works, but requires the removal of some duplicate methods/constructors:
+    copy_pair(tds.get("long"), tds.get("int"))
+    copy_pair(tds.get("int"), tds.get("int"))
 

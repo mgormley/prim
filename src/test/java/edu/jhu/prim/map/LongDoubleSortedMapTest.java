@@ -144,8 +144,14 @@ public class LongDoubleSortedMapTest {
         return a;
     }
 
+
+    /* START EXCLUDE IV 1 */
+    // TODO: just move these to Primitives rather than excluding them.
+    
     private double toDouble(int i) {
         return i;
     }
+    
+    /* END EXCLUDE 1 */
     
 }
