@@ -1,11 +1,7 @@
 package edu.jhu.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.util.math.Vectors;
