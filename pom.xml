@@ -54,5 +54,11 @@
       <version>4.8</version>
       <!-- <scope>test</scope> -->
     </dependency>
+    <dependency>
+      <!-- TODO Remove this dep. -->
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-math3</artifactId>
+      <version>3.2</version>
+    </dependency>
   </dependencies>
 </project>
