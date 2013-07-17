@@ -2,6 +2,8 @@ package edu.jhu.prim.list;
 
 import java.util.Arrays;
 
+import edu.jhu.util.Utilities;
+
 /**
  * Array list for double primitives.
  * @author mgormley
@@ -82,6 +84,23 @@ public class DoubleArrayList {
         for (int i=0; i<values.size; i++) {
             this.add(values.elements[i]);
         }
+    }
+
+    /**
+     * Gets the index of the first element in this list with the specified
+     * value, or -1 if it is not present.
+     * 
+     * @param value The value to search for.
+     * @param delta The delta with which to evaluate equality.
+     * @return The index or -1 if not present.
+     */
+    public int lookupIndex(double value, double delta) {
+        for (int i=0; i<elements.length; i++) {
+            if (Utilities.equals(elements[i], value, delta)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**

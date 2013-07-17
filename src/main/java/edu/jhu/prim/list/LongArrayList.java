@@ -83,6 +83,22 @@ public class LongArrayList {
             this.add(values.elements[i]);
         }
     }
+    
+    /**
+     * Gets the index of the first element in this list with the specified
+     * value, or -1 if it is not present.
+     * 
+     * @param value The value to search for.
+     * @return The index or -1 if not present.
+     */
+    public int lookupIndex(long value) {
+        for (int i=0; i<elements.length; i++) {
+            if (elements[i] == value) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
     /**
      * Gets a NEW array containing all the elements in this array list.
