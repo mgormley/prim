@@ -26,7 +26,11 @@ public class IntLongSortedVector extends IntLongSortedMap {
     public IntLongSortedVector() {
         super();
     }
-    
+
+    public IntLongSortedVector(int initialSize) {
+        super(initialSize);
+    }
+
     public IntLongSortedVector(int[] index, long[] data) {
     	super(index, data);
 	}

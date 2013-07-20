@@ -23,9 +23,13 @@ public class IntIntSortedMap implements IntIntMap {
 	protected int used; // TODO: size
 	
 	public IntIntSortedMap() {
-		this.used = 0;
-		this.indices= new int[0];
-		this.values = new int[0];	
+	    this(0);
+	}
+	
+	public IntIntSortedMap(int initialSize) {
+	    this.used = 0;
+	    this.indices= new int[initialSize];
+        this.values = new int[initialSize];
 	}
 
 	public IntIntSortedMap(int[] index, int[] data) {

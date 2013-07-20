@@ -23,9 +23,13 @@ public class IntLongSortedMap implements IntLongMap {
 	protected int used; // TODO: size
 	
 	public IntLongSortedMap() {
-		this.used = 0;
-		this.indices= new int[0];
-		this.values = new long[0];	
+	    this(0);
+	}
+	
+	public IntLongSortedMap(int initialSize) {
+	    this.used = 0;
+	    this.indices= new int[initialSize];
+        this.values = new long[initialSize];
 	}
 
 	public IntLongSortedMap(int[] index, long[] data) {

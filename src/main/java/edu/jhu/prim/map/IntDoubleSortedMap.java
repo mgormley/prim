@@ -23,9 +23,13 @@ public class IntDoubleSortedMap implements IntDoubleMap {
 	protected int used; // TODO: size
 	
 	public IntDoubleSortedMap() {
-		this.used = 0;
-		this.indices= new int[0];
-		this.values = new double[0];	
+	    this(0);
+	}
+	
+	public IntDoubleSortedMap(int initialSize) {
+	    this.used = 0;
+	    this.indices= new int[initialSize];
+        this.values = new double[initialSize];
 	}
 
 	public IntDoubleSortedMap(int[] index, double[] data) {

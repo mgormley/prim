@@ -26,7 +26,11 @@ public class IntDoubleSortedVector extends IntDoubleSortedMap {
     public IntDoubleSortedVector() {
         super();
     }
-    
+
+    public IntDoubleSortedVector(int initialSize) {
+        super(initialSize);
+    }
+
     public IntDoubleSortedVector(int[] index, double[] data) {
     	super(index, data);
 	}

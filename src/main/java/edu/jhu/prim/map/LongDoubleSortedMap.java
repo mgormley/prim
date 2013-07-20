@@ -23,9 +23,13 @@ public class LongDoubleSortedMap implements LongDoubleMap {
 	protected int used; // TODO: size
 	
 	public LongDoubleSortedMap() {
-		this.used = 0;
-		this.indices= new long[0];
-		this.values = new double[0];	
+	    this(0);
+	}
+	
+	public LongDoubleSortedMap(int initialSize) {
+	    this.used = 0;
+	    this.indices= new long[initialSize];
+        this.values = new double[initialSize];
 	}
 
 	public LongDoubleSortedMap(long[] index, double[] data) {

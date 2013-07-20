@@ -26,7 +26,11 @@ public class IntIntSortedVector extends IntIntSortedMap {
     public IntIntSortedVector() {
         super();
     }
-    
+
+    public IntIntSortedVector(int initialSize) {
+        super(initialSize);
+    }
+
     public IntIntSortedVector(int[] index, int[] data) {
     	super(index, data);
 	}
