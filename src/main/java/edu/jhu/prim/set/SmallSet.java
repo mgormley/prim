@@ -143,9 +143,26 @@ public class SmallSet<E extends Comparable<E>> implements Set<E> {
     }
 
     /** @inheritDoc */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public boolean removeAll(Collection<?> c) {
-        return list.removeAll(c);
+        if (c instanceof SmallSet) {
+            SmallSet other = (SmallSet)c;
+            ArrayList<E> tmp = new ArrayList<E>(this.size() - other.size());
+            Sort.diffSortedLists(this.list, other.list, tmp);
+            boolean changed = (tmp.size() != this.list.size());
+            this.list = tmp;
+            return changed;
+        } else {
+            return list.removeAll(c);
+        }
+    }
+    
+    /** Gets a new SmallSet containing the difference of this set with the other. */
+    public SmallSet<E> diff(SmallSet<E> other) {
+        SmallSet<E> tmp = new SmallSet<E>(this.size() - other.size());
+        Sort.diffSortedLists(this.list, other.list, tmp.list);
+        return tmp;
     }
 
     /** @inheritDoc */
