@@ -1,10 +1,10 @@
-package edu.jhu.util;
+package edu.jhu.prim.util;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.jhu.prim.list.IntArrayList;
-import edu.jhu.util.math.Vectors;
+import edu.jhu.prim.util.math.Vectors;
 
 public class Sort {
 

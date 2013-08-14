@@ -1,4 +1,4 @@
-package edu.jhu.util;
+package edu.jhu.prim.util;
 
 public class Timer {
 

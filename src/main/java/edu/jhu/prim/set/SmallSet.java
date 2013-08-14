@@ -1,12 +1,13 @@
 package edu.jhu.prim.set;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
 
-import edu.jhu.util.Sort;
+import edu.jhu.prim.util.Sort;
 
 /**
  * Maintains a set as a sorted list.
@@ -14,8 +15,9 @@ import edu.jhu.util.Sort;
  * @author mgormley
  * 
   */
-public class SmallSet<E extends Comparable<E>> implements Set<E> {
+public class SmallSet<E extends Comparable<E>> implements Set<E>, Serializable {
 
+    private static final long serialVersionUID = -203006641880991792L;
     private ArrayList<E> list;
     
     public SmallSet() {

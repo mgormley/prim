@@ -7,7 +7,7 @@ import java.util.HashMap;
 import org.junit.Test;
 
 import edu.jhu.prim.Primitives;
-import edu.jhu.util.Timer;
+import edu.jhu.prim.util.Timer;
 
 public class LongDoubleHashMapTest {
 

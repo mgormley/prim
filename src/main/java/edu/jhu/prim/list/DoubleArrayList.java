@@ -2,7 +2,7 @@ package edu.jhu.prim.list;
 
 import java.util.Arrays;
 
-import edu.jhu.util.Utilities;
+import edu.jhu.prim.util.Utilities;
 
 /**
  * Array list for double primitives.

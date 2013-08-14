@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.jhu.util;
+package edu.jhu.prim.util;
 
 import java.util.Arrays;
 

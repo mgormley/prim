@@ -1,8 +1,10 @@
-package edu.jhu.util;
+package edu.jhu.prim.util;
 
 import junit.framework.Assert;
 
 import org.junit.Test;
+
+import edu.jhu.prim.util.Timer;
 
 
 public class TimerTest {

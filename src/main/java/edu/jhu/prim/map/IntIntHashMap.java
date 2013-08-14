@@ -28,7 +28,7 @@ import java.util.NoSuchElementException;
 import edu.jhu.prim.FastMath;
 
 import edu.jhu.prim.Primitives;
-import edu.jhu.util.Pair;
+import edu.jhu.prim.util.Pair;
 
 /**
  * NOTICE: Changes made to this class:

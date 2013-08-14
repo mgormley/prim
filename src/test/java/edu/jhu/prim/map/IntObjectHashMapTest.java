@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import edu.jhu.util.JUnitUtils;
+import edu.jhu.prim.util.JUnitUtils;
 
 public class IntObjectHashMapTest {
 

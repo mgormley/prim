@@ -1,8 +1,11 @@
-package edu.jhu.util;
+package edu.jhu.prim.util;
 
 import java.util.Arrays;
 
 import org.junit.Test;
+
+import edu.jhu.prim.util.Timer;
+import edu.jhu.prim.util.Utilities;
 
 public class UtilitiesTest {
 

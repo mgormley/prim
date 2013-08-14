@@ -5,9 +5,9 @@ import java.util.Iterator;
 
 import edu.jhu.prim.list.DoubleArrayList;
 import edu.jhu.prim.list.LongArrayList;
-import edu.jhu.util.Pair;
-import edu.jhu.util.Sort;
-import edu.jhu.util.Utilities;
+import edu.jhu.prim.util.Pair;
+import edu.jhu.prim.util.Sort;
+import edu.jhu.prim.util.Utilities;
 
 /**
  * A primitives map from longs to doubles. The map is stored by keeping a sorted

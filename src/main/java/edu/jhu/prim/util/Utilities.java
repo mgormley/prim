@@ -1,4 +1,4 @@
-package edu.jhu.util;
+package edu.jhu.prim.util;
 
 import java.io.File;
 import java.util.ArrayList;

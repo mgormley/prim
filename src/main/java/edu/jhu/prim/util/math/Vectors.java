@@ -1,6 +1,6 @@
-package edu.jhu.util.math;
+package edu.jhu.prim.util.math;
 
-import edu.jhu.util.Utilities;
+import edu.jhu.prim.util.Utilities;
 
 public class Vectors {
 

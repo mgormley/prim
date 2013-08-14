@@ -1,4 +1,4 @@
-package edu.jhu.util;
+package edu.jhu.prim.util;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,6 +6,8 @@ import java.util.List;
 import junit.framework.Assert;
 
 import org.junit.Test;
+
+import edu.jhu.prim.util.Sets;
 
 
 public class SetsTest {
