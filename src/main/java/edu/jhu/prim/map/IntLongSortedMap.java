@@ -255,4 +255,20 @@ public class IntLongSortedMap implements IntLongMap {
         return tmpValues;
     }
 		
+    /**
+     * Gets the INTERNAL representation of the indices. Great care should be
+     * taken to avoid touching the values beyond the used indices.
+     */
+    public int[] getInternalIndices() {
+        return indices;
+    }
+
+    /**
+     * Gets the INTERNAL representation of the values. Great care should be
+     * taken to avoid touching the values beyond the used values.
+     */
+    public long[] getInternalValues() {
+        return values;
+    }
+    
 }

@@ -255,4 +255,20 @@ public class LongDoubleSortedMap implements LongDoubleMap {
         return tmpValues;
     }
 		
+    /**
+     * Gets the INTERNAL representation of the indices. Great care should be
+     * taken to avoid touching the values beyond the used indices.
+     */
+    public long[] getInternalIndices() {
+        return indices;
+    }
+
+    /**
+     * Gets the INTERNAL representation of the values. Great care should be
+     * taken to avoid touching the values beyond the used values.
+     */
+    public double[] getInternalValues() {
+        return values;
+    }
+    
 }
