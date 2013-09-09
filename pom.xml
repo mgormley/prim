@@ -4,13 +4,13 @@
 
   <groupId>edu.jhu.prim</groupId>
   <artifactId>prim</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>edu.jhu.prim</name>
 
   <parent>
-    <groupId>edu.jhu.parent</groupId>
+    <groupId>edu.jhu.hlt.parent</groupId>
     <artifactId>parent</artifactId>
     <version>1.0.0</version>
   </parent>
@@ -55,4 +55,11 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <scm>
+    <developerConnection>scm:git:file:///home/hltcoe/mgormley/public/git_repos/prim.git</developerConnection>
+    <!-- <connection>scm:git:git://github.com/hertzsprung/redis-launcher.git</connection>
+    <url>http://github.com/hertzsprung/redis-launcher</url> -->
+  </scm>
+
 </project>
