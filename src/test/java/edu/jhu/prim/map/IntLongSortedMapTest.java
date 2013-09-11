@@ -1,5 +1,7 @@
 package edu.jhu.prim.map;
 
+import static edu.jhu.prim.Primitives.toLong;
+import static edu.jhu.prim.Primitives.toInt;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Iterator;
@@ -131,27 +133,5 @@ public class IntLongSortedMapTest {
         assertEquals(22, toInt(cur.get())); 
         assertEquals(false, iter.hasNext());
     }
-    
-    private int toInt(long d) {
-        return (int)d;
-    }
-
-    private long[] toLongs(int... b) {
-        long[] a = new long[b.length];
-        for (int i=0; i<b.length; i++) {
-            a[i] = b[i];
-        }
-        return a;
-    }
-
-
-    /*  */
-    // TODO: just move these to Primitives rather than excluding them.
-    
-    private long toLong(int i) {
-        return i;
-    }
-    
-    /*  */
-    
+        
 }

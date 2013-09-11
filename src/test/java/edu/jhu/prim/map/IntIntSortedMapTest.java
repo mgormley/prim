@@ -1,5 +1,7 @@
 package edu.jhu.prim.map;
 
+import static edu.jhu.prim.Primitives.toInt;
+import static edu.jhu.prim.Primitives.toInt;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Iterator;
@@ -131,20 +133,5 @@ public class IntIntSortedMapTest {
         assertEquals(22, toInt(cur.get())); 
         assertEquals(false, iter.hasNext());
     }
-    
-    private int toInt(int d) {
-        return (int)d;
-    }
-
-    private int[] toInts(int... b) {
-        int[] a = new int[b.length];
-        for (int i=0; i<b.length; i++) {
-            a[i] = b[i];
-        }
-        return a;
-    }
-
-
-    /*  */
-    
+        
 }

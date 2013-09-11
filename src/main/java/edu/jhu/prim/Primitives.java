@@ -52,4 +52,37 @@ public class Primitives {
         return -zeroThreshold <= val && val <= zeroThreshold;
     }
     
+    /* --------------------- Long Form Casting ------------------- */
+
+    public static long toLong(int d) {
+        return (long)d;
+    }
+
+    public static double toDouble(int i) {
+        return (double)i;
+    }
+
+    public static int toInt(long d) {
+        return (int)d;
+    }
+    
+    public static int toInt(double d) {
+        return (int)d;
+    }
+    
+    public static int[] toInts(int... b) {
+        int[] a = new int[b.length];
+        for (int i=0; i<b.length; i++) {
+            a[i] = b[i];
+        }
+        return a;
+    }
+    
+    public static double[] toDoubles(int... b) {
+        double[] a = new double[b.length];
+        for (int i=0; i<b.length; i++) {
+            a[i] = b[i];
+        }
+        return a;
+    }
  }

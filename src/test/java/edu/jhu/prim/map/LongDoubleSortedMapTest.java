@@ -1,5 +1,7 @@
 package edu.jhu.prim.map;
 
+import static edu.jhu.prim.Primitives.toDouble;
+import static edu.jhu.prim.Primitives.toInt;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Iterator;
@@ -131,27 +133,5 @@ public class LongDoubleSortedMapTest {
         assertEquals(22, toInt(cur.get())); 
         assertEquals(false, iter.hasNext());
     }
-    
-    private int toInt(double d) {
-        return (int)d;
-    }
-
-    private double[] toDoubles(int... b) {
-        double[] a = new double[b.length];
-        for (int i=0; i<b.length; i++) {
-            a[i] = b[i];
-        }
-        return a;
-    }
-
-
-    /* START EXCLUDE IV 1 */
-    // TODO: just move these to Primitives rather than excluding them.
-    
-    private double toDouble(int i) {
-        return i;
-    }
-    
-    /* END EXCLUDE 1 */
-    
+        
 }
