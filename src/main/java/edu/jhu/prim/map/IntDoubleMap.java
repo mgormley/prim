@@ -8,31 +8,31 @@ import java.util.Iterator;
  */
 public interface IntDoubleMap extends Iterable<IntDoubleEntry> {
 
-    public abstract void clear();
+    void clear();
 
     // TODO: rename to containsKey.
-    public abstract boolean contains(int idx);
+    boolean contains(int idx);
 
-    public abstract double get(int idx);
+    double get(int idx);
 
-    public abstract double getWithDefault(int idx, double defaultVal);
+    double getWithDefault(int idx, double defaultVal);
 
-    public abstract void remove(int idx);
+    void remove(int idx);
 
-    public abstract void put(int idx, double val);
+    void put(int idx, double val);
 
-    public abstract Iterator<IntDoubleEntry> iterator();
+    Iterator<IntDoubleEntry> iterator();
 
-    public abstract int size();
+    int size();
 
     /**
      * Returns the indices.
      */
-    public abstract int[] getIndices();
+    int[] getIndices();
 
     /**
      * Returns the values.
      */
-    public abstract double[] getValues();
+    double[] getValues();
 
 }
