@@ -113,35 +113,35 @@ public class LongDoubleHashMapSpeedTest {
     @Test
     public void testCompareSortedVsHashMap() {
         int trials = 1000000;
-        //int max = 200;
-        for (int max=20; max<Math.pow(10, 4)*20; max *= 10) {
+        // int max = 200;
+        for (int max = 20; max < Math.pow(10, 4) * 20; max *= 10) {
             trials /= 10;
             System.out.println("max: " + max);
-        {
-            Timer timer = new Timer();
-            timer.start();
-            for (int t = 0; t < trials; t++) {
-                LongDoubleHashMap map = new LongDoubleHashMap();
-                for (int i = 0; i < max; i++) {
-                    map.put(Primitives.hashOfInt(i)%max, i);
+            {
+                Timer timer = new Timer();
+                timer.start();
+                for (int t = 0; t < trials; t++) {
+                    LongDoubleHashMap map = new LongDoubleHashMap();
+                    for (int i = 0; i < max; i++) {
+                        map.put(Primitives.hashOfInt(i) % max, i);
+                    }
                 }
+                timer.stop();
+                System.out.println("Primitive HashMap: " + timer.totMs());
             }
-            timer.stop();
-            System.out.println("Primitive HashMap: " + timer.totMs());
-        }
-        {
-            Timer timer = new Timer();
-            timer.start();
-            for (int t = 0; t < trials; t++) {
-                LongDoubleSortedMap map = new LongDoubleSortedMap();
-                for (int i = 0; i < max; i++) {
-                    map.put(Primitives.hashOfInt(i)%max, i);
+            {
+                Timer timer = new Timer();
+                timer.start();
+                for (int t = 0; t < trials; t++) {
+                    LongDoubleSortedMap map = new LongDoubleSortedMap();
+                    for (int i = 0; i < max; i++) {
+                        map.put(Primitives.hashOfInt(i) % max, i);
+                    }
                 }
+                timer.stop();
+                System.out.println("Primitive SortedMap: " + timer.totMs());
             }
-            timer.stop();
-            System.out.println("Primitive SortedMap: " + timer.totMs());
-        }
-        
+
         }
     }
 
