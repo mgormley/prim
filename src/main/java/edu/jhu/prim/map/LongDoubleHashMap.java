@@ -69,7 +69,7 @@ public class LongDoubleHashMap implements Serializable, LongDoubleMap {
     /** Default starting size.
      * <p>This must be a power of two for bit mask to work properly. </p>
      */
-    private static final int DEFAULT_EXPECTED_SIZE = 16;
+    protected static final int DEFAULT_EXPECTED_SIZE = 16;
 
     /** Multiplier for size growth when map fills up.
      * <p>This must be a power of two for bit mask to work properly. </p>

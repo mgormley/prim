@@ -2,36 +2,36 @@ package edu.jhu.prim.vector;
 
 import java.util.Arrays;
 
-import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
+import edu.jhu.prim.util.Lambda.FnLongIntToInt;
 import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.util.Utilities;
 
 
-public class LongDoubleDenseVector implements LongDoubleVector {
+public class LongIntDenseVector implements LongIntVector {
 
     /** The value given to non-explicit entries in the vector. */
-    private static final double missingEntries = 0;
+    private static final int missingEntries = 0;
     /** The internal array representing this vector. */
-    private double[] elements;
+    private int[] elements;
     /** The index after the last explicit entry in the vector. */
     private int idxAfterLast;
 
-    public LongDoubleDenseVector() {
+    public LongIntDenseVector() {
         this(8);
     }    
     
-    public LongDoubleDenseVector(int initialCapacity) {
-        elements = new double[initialCapacity];
+    public LongIntDenseVector(int initialCapacity) {
+        elements = new int[initialCapacity];
         idxAfterLast = 0;
     }
 
-    public LongDoubleDenseVector(double[] elements) {
+    public LongIntDenseVector(int[] elements) {
         this.elements = elements;
         idxAfterLast = elements.length;
     }
     
     /** Copy constructor. */
-    public LongDoubleDenseVector(LongDoubleDenseVector other) {
+    public LongIntDenseVector(LongIntDenseVector other) {
         this.elements = Utilities.copyOf(other.elements);
         this.idxAfterLast = other.idxAfterLast;
     }
@@ -41,7 +41,7 @@ public class LongDoubleDenseVector implements LongDoubleVector {
      * @param i The index of the element to get.
      * @return The value of the element to get.
      */
-    public double get(long i) {
+    public int get(long i) {
         if (i < 0 || i >= idxAfterLast) {
             return missingEntries;
         }
@@ -53,14 +53,14 @@ public class LongDoubleDenseVector implements LongDoubleVector {
      * @param i The index to set.
      * @param value The value to set.
      */
-    public void set(long idx, double value) {
+    public void set(long idx, int value) {
         int i = SafeCast.safeLongToInt(idx);
         idxAfterLast = Math.max(idxAfterLast, i + 1);
         ensureCapacity(idxAfterLast);
         elements[i] = value;
     }
 
-    public void add(long idx, double value) {
+    public void add(long idx, int value) {
         int i = SafeCast.safeLongToInt(idx);
         idxAfterLast = Math.max(idxAfterLast, i + 1);
         ensureCapacity(idxAfterLast);
@@ -68,16 +68,16 @@ public class LongDoubleDenseVector implements LongDoubleVector {
     }
 
 
-    public void scale(double multiplier) {
+    public void scale(int multiplier) {
         for (int i=0; i<idxAfterLast; i++) {
             elements[i] *= multiplier;
         }
     }
 
     @Override
-    public double dot(double[] other) {
+    public int dot(int[] other) {
         int max = Math.min(idxAfterLast, other.length);
-        double dot = 0;
+        int dot = 0;
         for (int i=0; i<max; i++) {
             dot += elements[i] * other[i];
         }
@@ -85,19 +85,19 @@ public class LongDoubleDenseVector implements LongDoubleVector {
     }
 
     @Override
-    public double dot(LongDoubleVector y) {
-        if (y instanceof LongDoubleSortedVector || y instanceof LongDoubleHashVector) {
+    public int dot(LongIntVector y) {
+        if (y instanceof LongIntSortedVector || y instanceof LongIntHashVector) {
             return y.dot(this);
-        } else if (y instanceof LongDoubleDenseVector){
-            LongDoubleDenseVector other = (LongDoubleDenseVector) y;
+        } else if (y instanceof LongIntDenseVector){
+            LongIntDenseVector other = (LongIntDenseVector) y;
             int max = Math.min(idxAfterLast, other.idxAfterLast);
-            double dot = 0;
+            int dot = 0;
             for (int i=0; i<max; i++) {
                 dot += elements[i] * y.get(i);
             }
             return dot;
         } else {
-            double dot = 0;
+            int dot = 0;
             for (int i=0; i<idxAfterLast; i++) {
                 dot += elements[i] * y.get(i);
             }
@@ -106,7 +106,7 @@ public class LongDoubleDenseVector implements LongDoubleVector {
     }
 
     @Override
-    public void apply(FnLongDoubleToDouble function) {
+    public void apply(FnLongIntToInt function) {
         for (int i=0; i<idxAfterLast; i++) {
             elements[i] = function.call(i, elements[i]);
         }
@@ -120,9 +120,9 @@ public class LongDoubleDenseVector implements LongDoubleVector {
      * @param delta The delta with which to evaluate equality.
      * @return The index or -1 if not present.
      */
-    public int lookupIndex(double value, double delta) {
+    public int lookupIndex(int value) {
         for (int i=0; i<elements.length; i++) {
-            if (Utilities.equals(elements[i], value, delta)) {
+            if (Utilities.equals(elements[i], value)) {
                 return i;
             }
         }
@@ -133,7 +133,7 @@ public class LongDoubleDenseVector implements LongDoubleVector {
      * Gets a NEW array containing all the elements in this array list.
      * @return The new array containing the elements in this list.
      */
-    public double[] toNativeArray() {
+    public int[] toNativeArray() {
         return Arrays.copyOf(elements, idxAfterLast);
     }
     
@@ -146,7 +146,7 @@ public class LongDoubleDenseVector implements LongDoubleVector {
      *         correct size.
      */
     // TODO: rename to getElements.
-    public double[] elements() {
+    public int[] elements() {
         this.trimToSize();
         return elements;
     }
@@ -173,9 +173,9 @@ public class LongDoubleDenseVector implements LongDoubleVector {
      * @param elements The array.
      * @param size The number of elements. 
      */
-    public static double[] ensureCapacity(double[] elements, int size) {
+    public static int[] ensureCapacity(int[] elements, int size) {
         if (size > elements.length) {
-            double[] tmp = new double[size*2];
+            int[] tmp = new int[size*2];
             System.arraycopy(elements, 0, tmp, 0, elements.length);
             elements = tmp;
         }

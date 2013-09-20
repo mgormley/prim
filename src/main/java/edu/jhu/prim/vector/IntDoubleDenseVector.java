@@ -2,12 +2,12 @@ package edu.jhu.prim.vector;
 
 import java.util.Arrays;
 
-import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
+import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
 import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.util.Utilities;
 
 
-public class LongDoubleDenseVector implements LongDoubleVector {
+public class IntDoubleDenseVector implements IntDoubleVector {
 
     /** The value given to non-explicit entries in the vector. */
     private static final double missingEntries = 0;
@@ -16,22 +16,22 @@ public class LongDoubleDenseVector implements LongDoubleVector {
     /** The index after the last explicit entry in the vector. */
     private int idxAfterLast;
 
-    public LongDoubleDenseVector() {
+    public IntDoubleDenseVector() {
         this(8);
     }    
     
-    public LongDoubleDenseVector(int initialCapacity) {
+    public IntDoubleDenseVector(int initialCapacity) {
         elements = new double[initialCapacity];
         idxAfterLast = 0;
     }
 
-    public LongDoubleDenseVector(double[] elements) {
+    public IntDoubleDenseVector(double[] elements) {
         this.elements = elements;
         idxAfterLast = elements.length;
     }
     
     /** Copy constructor. */
-    public LongDoubleDenseVector(LongDoubleDenseVector other) {
+    public IntDoubleDenseVector(IntDoubleDenseVector other) {
         this.elements = Utilities.copyOf(other.elements);
         this.idxAfterLast = other.idxAfterLast;
     }
@@ -41,11 +41,11 @@ public class LongDoubleDenseVector implements LongDoubleVector {
      * @param i The index of the element to get.
      * @return The value of the element to get.
      */
-    public double get(long i) {
+    public double get(int i) {
         if (i < 0 || i >= idxAfterLast) {
             return missingEntries;
         }
-        return elements[SafeCast.safeLongToInt(i)];
+        return elements[i];
     }
     
     /**
@@ -53,15 +53,15 @@ public class LongDoubleDenseVector implements LongDoubleVector {
      * @param i The index to set.
      * @param value The value to set.
      */
-    public void set(long idx, double value) {
-        int i = SafeCast.safeLongToInt(idx);
+    public void set(int idx, double value) {
+        int i = idx;
         idxAfterLast = Math.max(idxAfterLast, i + 1);
         ensureCapacity(idxAfterLast);
         elements[i] = value;
     }
 
-    public void add(long idx, double value) {
-        int i = SafeCast.safeLongToInt(idx);
+    public void add(int idx, double value) {
+        int i = idx;
         idxAfterLast = Math.max(idxAfterLast, i + 1);
         ensureCapacity(idxAfterLast);
         elements[i] += value;
@@ -85,11 +85,11 @@ public class LongDoubleDenseVector implements LongDoubleVector {
     }
 
     @Override
-    public double dot(LongDoubleVector y) {
-        if (y instanceof LongDoubleSortedVector || y instanceof LongDoubleHashVector) {
+    public double dot(IntDoubleVector y) {
+        if (y instanceof IntDoubleSortedVector || y instanceof IntDoubleHashVector) {
             return y.dot(this);
-        } else if (y instanceof LongDoubleDenseVector){
-            LongDoubleDenseVector other = (LongDoubleDenseVector) y;
+        } else if (y instanceof IntDoubleDenseVector){
+            IntDoubleDenseVector other = (IntDoubleDenseVector) y;
             int max = Math.min(idxAfterLast, other.idxAfterLast);
             double dot = 0;
             for (int i=0; i<max; i++) {
@@ -106,7 +106,7 @@ public class LongDoubleDenseVector implements LongDoubleVector {
     }
 
     @Override
-    public void apply(FnLongDoubleToDouble function) {
+    public void apply(FnIntDoubleToDouble function) {
         for (int i=0; i<idxAfterLast; i++) {
             elements[i] = function.call(i, elements[i]);
         }

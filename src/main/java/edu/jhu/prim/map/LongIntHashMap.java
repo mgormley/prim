@@ -29,6 +29,7 @@ import edu.jhu.prim.FastMath;
 
 import edu.jhu.prim.Primitives;
 import edu.jhu.prim.util.Pair;
+import edu.jhu.prim.util.Lambda.FnLongIntToInt;
 
 /**
  * NOTICE: Changes made to this class:
@@ -68,7 +69,7 @@ public class LongIntHashMap implements Serializable, LongIntMap {
     /** Default starting size.
      * <p>This must be a power of two for bit mask to work properly. </p>
      */
-    private static final int DEFAULT_EXPECTED_SIZE = 16;
+    protected static final int DEFAULT_EXPECTED_SIZE = 16;
 
     /** Multiplier for size growth when map fills up.
      * <p>This must be a power of two for bit mask to work properly. </p>
@@ -79,13 +80,13 @@ public class LongIntHashMap implements Serializable, LongIntMap {
     private static final int PERTURB_SHIFT = 5;
 
     /** Keys table. */
-    private long[] keys;
+    protected long[] keys;
 
     /** Values table. */
-    private int[] values;
+    protected int[] values;
 
     /** States table. */
-    private byte[] states;
+    protected byte[] states;
 
     /** Return value for missing entries. */
     private final int missingEntries;
@@ -445,7 +446,36 @@ public class LongIntHashMap implements Serializable, LongIntMap {
             ++count;
         }
         return previous;
+    }
 
+    public void add(final long key, final int value) {
+        addAndGet(key, value);
+    }
+    
+    /**
+     * Just like putAndGet, but adds to the previous value instead of replacing
+     * the previous value.
+     */
+    public int addAndGet(final long key, final int value) {
+        int index = findInsertionIndex(key);
+        int previous = missingEntries;
+        boolean newMapping = true;
+        if (index < 0) {
+            index = changeIndexSign(index);
+            previous = values[index];
+            newMapping = false;
+        }
+        keys[index]   = key;
+        states[index] = FULL;
+        values[index] = previous + value;
+        if (newMapping) {
+            ++size;
+            if (shouldGrowTable()) {
+                growTable();
+            }
+            ++count;
+        }
+        return previous;
     }
 
     /**
@@ -658,6 +688,14 @@ public class LongIntHashMap implements Serializable, LongIntMap {
             }
         }
         return new Pair<long[], int[]>(tmpKeys, tmpVals);
+    }
+    
+    public void apply(FnLongIntToInt lambda) {
+        for (int i=0; i<keys.length; i++) {
+            if (states[i] == FULL) {
+                values[i] = lambda.call(keys[i], values[i]);
+            }
+        }
     }
     
 }

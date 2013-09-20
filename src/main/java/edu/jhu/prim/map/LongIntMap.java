@@ -2,6 +2,8 @@ package edu.jhu.prim.map;
 
 import java.util.Iterator;
 
+import edu.jhu.prim.util.Lambda.FnLongIntToInt;
+
 /**
  * A primitives map from longs to ints.
  * @author mgormley
@@ -20,6 +22,10 @@ public interface LongIntMap extends Iterable<LongIntEntry> {
     void remove(long idx);
 
     void put(long idx, int val);
+
+    void add(long idx, int val);
+
+    void apply(FnLongIntToInt lambda);
 
     Iterator<LongIntEntry> iterator();
 

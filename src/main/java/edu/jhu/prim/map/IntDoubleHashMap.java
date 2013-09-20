@@ -29,6 +29,7 @@ import edu.jhu.prim.FastMath;
 
 import edu.jhu.prim.Primitives;
 import edu.jhu.prim.util.Pair;
+import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
 
 /**
  * NOTICE: Changes made to this class:
@@ -68,7 +69,7 @@ public class IntDoubleHashMap implements Serializable, IntDoubleMap {
     /** Default starting size.
      * <p>This must be a power of two for bit mask to work properly. </p>
      */
-    private static final int DEFAULT_EXPECTED_SIZE = 16;
+    protected static final int DEFAULT_EXPECTED_SIZE = 16;
 
     /** Multiplier for size growth when map fills up.
      * <p>This must be a power of two for bit mask to work properly. </p>
@@ -79,13 +80,13 @@ public class IntDoubleHashMap implements Serializable, IntDoubleMap {
     private static final int PERTURB_SHIFT = 5;
 
     /** Keys table. */
-    private int[] keys;
+    protected int[] keys;
 
     /** Values table. */
-    private double[] values;
+    protected double[] values;
 
     /** States table. */
-    private byte[] states;
+    protected byte[] states;
 
     /** Return value for missing entries. */
     private final double missingEntries;
@@ -463,7 +464,36 @@ public class IntDoubleHashMap implements Serializable, IntDoubleMap {
             ++count;
         }
         return previous;
+    }
 
+    public void add(final int key, final double value) {
+        addAndGet(key, value);
+    }
+    
+    /**
+     * Just like putAndGet, but adds to the previous value instead of replacing
+     * the previous value.
+     */
+    public double addAndGet(final int key, final double value) {
+        int index = findInsertionIndex(key);
+        double previous = missingEntries;
+        boolean newMapping = true;
+        if (index < 0) {
+            index = changeIndexSign(index);
+            previous = values[index];
+            newMapping = false;
+        }
+        keys[index]   = key;
+        states[index] = FULL;
+        values[index] = previous + value;
+        if (newMapping) {
+            ++size;
+            if (shouldGrowTable()) {
+                growTable();
+            }
+            ++count;
+        }
+        return previous;
     }
 
     /**
@@ -676,6 +706,14 @@ public class IntDoubleHashMap implements Serializable, IntDoubleMap {
             }
         }
         return new Pair<int[], double[]>(tmpKeys, tmpVals);
+    }
+    
+    public void apply(FnIntDoubleToDouble lambda) {
+        for (int i=0; i<keys.length; i++) {
+            if (states[i] == FULL) {
+                values[i] = lambda.call(keys[i], values[i]);
+            }
+        }
     }
     
 }

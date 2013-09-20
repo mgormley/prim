@@ -1,26 +1,26 @@
 package edu.jhu.prim.vector;
 
-import edu.jhu.prim.map.LongDoubleHashMap;
+import edu.jhu.prim.map.IntDoubleHashMap;
 import edu.jhu.prim.util.SafeCast;
 
-public class LongDoubleHashVector extends LongDoubleHashMap implements LongDoubleVector {
+public class IntDoubleHashVector extends IntDoubleHashMap implements IntDoubleVector {
 
     private static final long serialVersionUID = 1L;
 
-    public LongDoubleHashVector() {
+    public IntDoubleHashVector() {
         super(DEFAULT_EXPECTED_SIZE, 0);
     }
     
-    public LongDoubleHashVector(int expectedSize) {
+    public IntDoubleHashVector(int expectedSize) {
         super(expectedSize, 0);
     }
     
-    public LongDoubleHashVector(LongDoubleHashVector other) {
+    public IntDoubleHashVector(IntDoubleHashVector other) {
         super(other);
     }
     
     @Override
-    public void set(long idx, double val) {
+    public void set(int idx, double val) {
         put(idx, val);
     }
 
@@ -38,21 +38,21 @@ public class LongDoubleHashVector extends LongDoubleHashMap implements LongDoubl
         double dot = 0;
         for (int i=0; i<keys.length; i++) {
             if (states[i] == FULL && keys[i] <= Integer.MAX_VALUE) {
-                dot += values[i] * other[SafeCast.safeLongToInt(keys[i])];
+                dot += values[i] * other[keys[i]];
             }
         }
         return dot;
     }
 
     @Override
-    public double dot(LongDoubleVector y) {
-        if (y instanceof LongDoubleHashVector) {
-            LongDoubleHashVector other = ((LongDoubleHashVector) y);
+    public double dot(IntDoubleVector y) {
+        if (y instanceof IntDoubleHashVector) {
+            IntDoubleHashVector other = ((IntDoubleHashVector) y);
             if (other.size() < this.size()) {
                 return other.dot(this);
             }
             return dotWithoutCaveats(other);
-        } else if (y instanceof LongDoubleSortedVector) {
+        } else if (y instanceof IntDoubleSortedVector) {
             // TODO: If the size of the HashVector is much smaller than the size
             // of the SortedVector and neither is very large, we might want to
             // instead loop over the HashVector.
@@ -62,7 +62,7 @@ public class LongDoubleHashVector extends LongDoubleHashMap implements LongDoubl
         }
     }
 
-    private double dotWithoutCaveats(LongDoubleVector other) {
+    private double dotWithoutCaveats(IntDoubleVector other) {
         double dot = 0;
         for (int i=0; i<this.keys.length; i++) {
             if (this.states[i] == FULL) {

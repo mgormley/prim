@@ -16,7 +16,7 @@ import edu.jhu.prim.util.Lambda.LambdaBinOpInt;
  * @author mgormley
  *
  */
-public class IntIntSortedVector extends IntIntSortedMap {
+public class IntIntSortedVector extends IntIntSortedMap implements IntIntVector {
 
     private static final int ZERO = (int) 0;
     
@@ -66,14 +66,14 @@ public class IntIntSortedVector extends IntIntSortedMap {
 
     /** Computes the dot product of this vector with the given vector. */
     public int dot(int[] other) {
-        int ret = 0;
+        int dot = 0;
         for (int c = 0; c < used && indices[c] < other.length; c++) {
             if (indices[c] > Integer.MAX_VALUE) {
                 break;
             }
-            ret += values[c] * other[indices[c]];
+            dot += values[c] * other[indices[c]];
         }
-        return ret;
+        return dot;
     }
 
     /** Computes the dot product of this vector with the column of the given matrix. */
@@ -88,30 +88,33 @@ public class IntIntSortedVector extends IntIntSortedMap {
         return ret;
     }
     
-    /** Computes the dot product of this vector with the given vector. */   
-    public int dot(IntIntSortedVector y) {
+    /** Computes the dot product of this vector with the other vector. */   
+    public int dot(IntIntVector y) {
         if (y instanceof IntIntSortedVector) {
             IntIntSortedVector other = ((IntIntSortedVector) y);
-            int ret = 0;
+            int dot = 0;
             int oc = 0;
             for (int c = 0; c < used; c++) {
                 while (oc < other.used) {
                     if (other.indices[oc] < indices[c]) {
                         oc++;
                     } else if (indices[c] == other.indices[oc]) {
-                        ret += values[c] * other.values[oc];
+                        dot += values[c] * other.values[oc];
                         break;
                     } else {
                         break;
                     }
                 }
             }
-            return ret;
+            return dot;
         } else {
-        	throw new IllegalArgumentException("Unhandled type: " + y.getClass());
+            int dot = 0;
+            for (int c = 0; c < used; c++) {
+                dot += this.values[c] * y.get(indices[c]);
+            }
+            return dot;
         }
-    }
-    
+    }    
 
     /**
      * @return A new vector without zeros OR the same vector if it has none.

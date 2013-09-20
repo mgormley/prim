@@ -36,6 +36,14 @@ public class Lambda {
         public int call(int idx, int val);
     }
 
+    public interface FnIntLongToLong {
+        public long call(int idx, long val);
+    }
+
+    public interface FnLongIntToInt {
+        public int call(long idx, int val);
+    }
+    
     public interface FnIntDoubleToDouble {
         public double call(int idx, double val);
     }

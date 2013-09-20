@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 import edu.jhu.prim.list.LongArrayList;
 import edu.jhu.prim.list.IntArrayList;
-import edu.jhu.prim.util.Pair;
+import edu.jhu.prim.util.Lambda.FnIntLongToLong;
 import edu.jhu.prim.util.Sort;
 import edu.jhu.prim.util.Utilities;
 
@@ -130,6 +130,29 @@ public class IntLongSortedMap implements IntLongMap {
 		used++;
 	}
 	
+    /* (non-Javadoc)
+     * @see edu.jhu.util.vector.IntLongMap#put(int, long)
+     */
+    @Override
+    public void add(int idx, long val) {
+        int i = Arrays.binarySearch(indices, 0, used, idx);
+        if (i >= 0) {
+            // Just add to the existing value.
+            values[i] += val;
+            return;
+        } 
+        int insertionPoint = -(i + 1);
+        indices = insert(indices, insertionPoint, idx);
+        values = insert(values, insertionPoint, val);
+        used++;
+    }
+    
+    public void apply(FnIntLongToLong lambda) {
+        for (int i=0; i<used; i++) {
+            values[i] = lambda.call(indices[i], values[i]);
+        }
+    }
+	
 	private final int[] insert(int[] array, int i, int val) {
 		if (used >= array.length) {
 			// Increase the capacity of the array.
@@ -143,7 +166,7 @@ public class IntLongSortedMap implements IntLongMap {
 		array[i] = val;
 		return array;
 	}
-	
+		
     /*  */
 	
 	private final long[] insert(long[] array, int i, long val) {
