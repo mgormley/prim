@@ -7,6 +7,18 @@ public class LongDoubleHashVector extends LongDoubleHashMap implements LongDoubl
 
     private static final long serialVersionUID = 1L;
 
+    public LongDoubleHashVector() {
+        super(0.0);
+    }
+    
+    public LongDoubleHashVector(int expectedSize) {
+        super(expectedSize, 0.0);
+    }
+    
+    public LongDoubleHashVector(LongDoubleHashVector other) {
+        super(other);
+    }
+    
     @Override
     public void set(long idx, double val) {
         put(idx, val);

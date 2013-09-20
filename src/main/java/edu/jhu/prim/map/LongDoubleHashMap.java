@@ -80,13 +80,13 @@ public class LongDoubleHashMap implements Serializable, LongDoubleMap {
     private static final int PERTURB_SHIFT = 5;
 
     /** Keys table. */
-    private long[] keys;
+    protected long[] keys;
 
     /** Values table. */
-    private double[] values;
+    protected double[] values;
 
     /** States table. */
-    private byte[] states;
+    protected byte[] states;
 
     /** Return value for missing entries. */
     private final double missingEntries;
@@ -467,7 +467,7 @@ public class LongDoubleHashMap implements Serializable, LongDoubleMap {
     }
 
     public void add(final long key, final double value) {
-        add(key, value);
+        addAndGet(key, value);
     }
     
     /**
