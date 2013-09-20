@@ -2,6 +2,8 @@ package edu.jhu.prim.map;
 
 import java.util.Iterator;
 
+import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
+
 /**
  * A primitives map from longs to doubles.
  * @author mgormley
@@ -20,6 +22,10 @@ public interface LongDoubleMap extends Iterable<LongDoubleEntry> {
     void remove(long idx);
 
     void put(long idx, double val);
+
+    void add(long idx, double val);
+
+    void apply(FnLongDoubleToDouble lambda);
 
     Iterator<LongDoubleEntry> iterator();
 

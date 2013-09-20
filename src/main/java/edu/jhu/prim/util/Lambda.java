@@ -29,8 +29,27 @@ public class Lambda {
     public interface LambdaTwoToOne<T,S,V> {
         public V call(T obj1, S obj2);
     }
-        
+    
+    /* -------------------- Functions over vector entries ---------------------- */
+
+    public interface FnIntIntToInt {
+        public int call(int idx, int val);
+    }
+
+    public interface FnIntDoubleToDouble {
+        public double call(int idx, double val);
+    }
+    
+    public interface FnLongDoubleToDouble {
+        public double call(long idx, double val);
+    }
+    
     /* -------------------- Doubles ---------------------- */
+
+    /** A unary operator on doubles. */
+    public interface LambdaUnaryOpDouble {
+        public double call(double v);
+    }
     
     /** A binary operator on doubles. */
     public interface LambdaBinOpDouble {

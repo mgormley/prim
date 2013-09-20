@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 import edu.jhu.prim.list.DoubleArrayList;
 import edu.jhu.prim.list.LongArrayList;
-import edu.jhu.prim.util.Pair;
+import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
 import edu.jhu.prim.util.Sort;
 import edu.jhu.prim.util.Utilities;
 
@@ -130,6 +130,29 @@ public class LongDoubleSortedMap implements LongDoubleMap {
 		used++;
 	}
 	
+    /* (non-Javadoc)
+     * @see edu.jhu.util.vector.LongDoubleMap#put(long, double)
+     */
+    @Override
+    public void add(long idx, double val) {
+        int i = Arrays.binarySearch(indices, 0, used, idx);
+        if (i >= 0) {
+            // Just add to the existing value.
+            values[i] += val;
+            return;
+        } 
+        int insertionPoint = -(i + 1);
+        indices = insert(indices, insertionPoint, idx);
+        values = insert(values, insertionPoint, val);
+        used++;
+    }
+    
+    public void apply(FnLongDoubleToDouble lambda) {
+        for (int i=0; i<used; i++) {
+            values[i] = lambda.call(indices[i], values[i]);
+        }
+    }
+	
 	private final long[] insert(long[] array, int i, long val) {
 		if (used >= array.length) {
 			// Increase the capacity of the array.
@@ -143,7 +166,7 @@ public class LongDoubleSortedMap implements LongDoubleMap {
 		array[i] = val;
 		return array;
 	}
-	
+		
     /* START EXCLUDE IK IV 1 */
 	
 	private final double[] insert(double[] array, int i, double val) {
