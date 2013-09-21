@@ -121,6 +121,14 @@ public class LongArrayList {
         this.trimToSize();
         return elements;
     }
+
+    /**
+     * Gets the internal representation of this list. CAUTION: this should not
+     * be called without carefully handling the result.
+     */
+    public long[] getInternalElements() {
+        return elements;
+    }
     
     /**
      * Trims the internal array to exactly the size of the list.

@@ -5,6 +5,7 @@ import org.junit.Test;
 import edu.jhu.prim.Primitives;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
 import edu.jhu.prim.util.Timer;
+import edu.jhu.prim.vector.LongDoubleSortedVector;
 
 public class LongDoubleIteratorSpeedTest {
     
@@ -109,6 +110,41 @@ public class LongDoubleIteratorSpeedTest {
             
         }
     }
+    
+    @Test
+    public void testBinaryOpSpeed() {
+        int trials = 1000000;
+        // int max = 200;
+        for (int max = 20; max < Math.pow(10, 4) * 20; max *= 10) {
+            trials /= 10;
+            System.out.println("max: " + max);
+            {
+                Timer timer1 = new Timer();
+                Timer timer2 = new Timer();
+                for (int t = 0; t < trials; t++) {
+                    LongDoubleSortedVector map1 = new LongDoubleSortedVector();
+                    for (int i = 0; i < max; i++) {
+                        map1.put(Primitives.hashOfInt(i) % max*2, i);
+                    }
+
+                    LongDoubleSortedVector map2 = new LongDoubleSortedVector();
+                    for (int i = 0; i < max; i++) {
+                        map2.put(Primitives.hashOfInt(i) % max*3, i);
+                    }
+
+                    timer2.start();
+                    //map1.hadamardProd(map2);
+                    timer2.stop();
+                    timer1.start();
+                    map1.getSum(map2);
+                    timer1.stop();
+                }
+                System.out.println("Primitive SortedVec (apply in binaryOp): " + timer1.totMs());
+                System.out.println("Primitive SortedVec (for loops): " + timer2.totMs());
+            }
+        }
+    }
+    
     private static class Sum implements FnLongDoubleToDouble {
         public int idxSum = 0;
         public double valSum = 0;

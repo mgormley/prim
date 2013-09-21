@@ -126,6 +126,14 @@ public class DoubleArrayList {
     }
     
     /**
+     * Gets the internal representation of this list. CAUTION: this should not
+     * be called without carefully handling the result.
+     */
+    public double[] getInternalElements() {
+        return elements;
+    }
+    
+    /**
      * Trims the internal array to exactly the size of the list.
      */
     public void trimToSize() {

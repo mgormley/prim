@@ -48,7 +48,7 @@ public class LongDoubleSortedVectorTest extends AbstractLongDoubleVectorTest {
         v2.set(4, toDouble(0));
         v2.set(5, toDouble(55));
         
-        LongDoubleSortedVector v3 = v1.hadamardProd(v2);
+        LongDoubleSortedVector v3 = v1.getProd(v2);
 
 		assertEquals(11*11, toInt(v3.get(1)));
 		assertEquals(22*22, toInt(v3.get(2)));
@@ -117,7 +117,7 @@ public class LongDoubleSortedVectorTest extends AbstractLongDoubleVectorTest {
         v2.set(4, toDouble(0));
         v2.set(5, toDouble(55));
         
-        LongDoubleSortedVector v3 = v1.getElementwiseSum(v2);
+        LongDoubleSortedVector v3 = v1.getSum(v2);
 
         assertEquals(22, toInt(v3.get(1)));
         assertEquals(22, toInt(v3.get(2)));

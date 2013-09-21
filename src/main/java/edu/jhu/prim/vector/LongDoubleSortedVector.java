@@ -174,41 +174,57 @@ public class LongDoubleSortedVector extends LongDoubleSortedMap implements LongD
         this.indices = Utilities.copyOf(other.indices);
         this.values = Utilities.copyOf(other.values);
     }
-    
-    /**
-     * Computes the Hadamard product (or entry-wise product) of this vector with
-     * another.
-     */
-    // TODO: this could just be a binaryOp call.
-    public LongDoubleSortedVector hadamardProd(LongDoubleSortedVector other) {
-    	LongDoubleSortedVector ip = new LongDoubleSortedVector();
-        int oc = 0;
-        for (int c = 0; c < used; c++) {
-            while (oc < other.used) {
-                if (other.indices[oc] < indices[c]) {
-                    oc++;
-                } else if (indices[c] == other.indices[oc]) {
-                    ip.set(indices[c], values[c] * other.values[oc]);
-                    break;
-                } else {
-                    break;
-                }
-            }
-        }
-        return ip;
-    }
 
+    /** Updates this vector to be the entrywise sum of this vector with the other. */
     public void add(LongDoubleSortedVector other) {
         binaryOp(other, new Lambda.DoubleAdd());
     }
     
+    /** Updates this vector to be the entrywise difference of this vector with the other. */
     public void subtract(LongDoubleSortedVector other) {
         binaryOp(other, new Lambda.DoubleSubtract());
     }
     
+    /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */
+    public void product(LongDoubleSortedVector other) {
+        binaryOp(other, new Lambda.DoubleProd(), true);
+    }
+    
+    /** Gets the entrywise sum of the two vectors. */
+    public LongDoubleSortedVector getSum(LongDoubleSortedVector other) {
+        LongDoubleSortedVector sum = new LongDoubleSortedVector(this);
+        sum.add(other);
+        return sum;
+    }
+    
+    /** Gets the entrywise difference of the two vectors. */
+    public LongDoubleSortedVector getDiff(LongDoubleSortedVector other) {
+        LongDoubleSortedVector diff = new LongDoubleSortedVector(this);
+        diff.subtract(other);
+        return diff;
+    }
+    
+    /** Gets the entrywise product (i.e. Hadamard product) of the two vectors. */
+    public LongDoubleSortedVector getProd(LongDoubleSortedVector other) {
+        LongDoubleSortedVector prod = new LongDoubleSortedVector(this);
+        prod.product(other);
+        return prod;
+    }
+    
     public void binaryOp(LongDoubleSortedVector other, LambdaBinOpDouble lambda) {
-        LongArrayList newIndices = new LongArrayList(Math.max(this.indices.length, other.indices.length));
-        DoubleArrayList newValues = new DoubleArrayList(Math.max(this.indices.length, other.indices.length));
+        binaryOp(other, lambda, false);
+    }
+    
+    public void binaryOp(final LongDoubleSortedVector other, final LambdaBinOpDouble lambda, final boolean skipZeros) {
+        // It appears to be faster to just make a good (quick guess) at the
+        // resulting length of the new array, rather than to make an educated
+        // guess by counting:
+        // int numNewIndices = skipZeros ? Primitives.countCommon(this.indices, other.indices) 
+        //                               : Primitives.countUnique(this.indices, other.indices);
+        
+        int numNewIndices = Math.max(this.used, other.used);
+        LongArrayList newIndices = new LongArrayList(numNewIndices);
+        DoubleArrayList newValues = new DoubleArrayList(numNewIndices);
         int i=0; 
         int j=0;
         while(i < this.used && j < other.used) {
@@ -225,80 +241,47 @@ public class LongDoubleSortedVector extends LongDoubleSortedMap implements LongD
                 i++;
                 j++;
             } else if (diff < 0) {
-                // e1 is less than e2, so only add e1 this round.
-                newIndices.add(e1);
-                newValues.add(lambda.call(v1, ZERO));
+                if (!skipZeros) {
+                    // e1 is less than e2, so only add e1 this round.
+                    newIndices.add(e1);
+                    newValues.add(lambda.call(v1, ZERO));
+                }
                 i++;
             } else {
-                // e2 is less than e1, so only add e2 this round.
-                newIndices.add(e2);
-                newValues.add(lambda.call(ZERO, v2));
+                if (!skipZeros) {
+                    // e2 is less than e1, so only add e2 this round.
+                    newIndices.add(e2);
+                    newValues.add(lambda.call(ZERO, v2));
+                }
                 j++;
             }
         }
 
-        // If there is a list that we didn't get all the way through, add all
-        // the remaining elements. There will never be more than one such list. 
         assert (!(i < this.used && j < other.used));
-        for (; i < this.used; i++) {
-            long e1 = this.indices[i];
-            double v1 = this.values[i];
-            newIndices.add(e1);
-            newValues.add(lambda.call(v1, ZERO));
-        }
-        for (; j < other.used; j++) {
-            long e2 = other.indices[j];
-            double v2 = other.values[j];
-            newIndices.add(e2);
-            newValues.add(lambda.call(ZERO, v2));
+
+        if (!skipZeros) {
+            // If there is a list that we didn't get all the way through, add all
+            // the remaining elements. There will never be more than one such list. 
+            for (; i < this.used; i++) {
+                long e1 = this.indices[i];
+                double v1 = this.values[i];
+                newIndices.add(e1);
+                newValues.add(lambda.call(v1, ZERO));
+            }
+            for (; j < other.used; j++) {
+                long e2 = other.indices[j];
+                double v2 = other.values[j];
+                newIndices.add(e2);
+                newValues.add(lambda.call(ZERO, v2));
+            }
         }
         
         this.used = newIndices.size();
-        this.indices = newIndices.toNativeArray();
-        this.values = newValues.toNativeArray();
-    }
-    
-    /**
-     * Counts the number of unique indices in two arrays.
-     * @param indices1 Sorted array of indices.
-     * @param indices2 Sorted array of indices.
-     */
-    public static int countUnique(long[] indices1, long[] indices2) {
-        int numUniqueIndices = 0;
-        int i = 0;
-        int j = 0;
-        while (i < indices1.length && j < indices2.length) {
-            if (indices1[i] < indices2[j]) {
-                numUniqueIndices++;
-                i++;
-            } else if (indices2[j] < indices1[i]) {
-                numUniqueIndices++;
-                j++;
-            } else {
-                // Equal indices.
-                i++;
-                j++;
-            }
+        this.indices = newIndices.getInternalElements();
+        this.values = newValues.getInternalElements();
+        if (indices.length != values.length) {
+            throw new IllegalStateException("The primitive ArrayLists grew at different lengths. This should never occur.");
         }
-        for (; i < indices1.length; i++) {
-            numUniqueIndices++;
-        }
-        for (; j < indices2.length; j++) {
-            numUniqueIndices++;
-        }
-        return numUniqueIndices;
-    }
-    
-    public LongDoubleSortedVector getElementwiseSum(LongDoubleSortedVector other) {
-        LongDoubleSortedVector sum = new LongDoubleSortedVector(this);
-        sum.add(other);
-        return sum;
-    }
-    
-    public LongDoubleSortedVector getElementwiseDiff(LongDoubleSortedVector other) {
-        LongDoubleSortedVector sum = new LongDoubleSortedVector(this);
-        sum.subtract(other);
-        return sum;
     }
     
     @Override
