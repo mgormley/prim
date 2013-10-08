@@ -43,7 +43,15 @@ public class LongDoubleSortedVector extends LongDoubleSortedMap implements LongD
 		this(Utilities.getLongIndexArray(denseRow.length), denseRow);
 	}
 
-	// TODO: This could be done with a single binary search instead of two.
+	public LongDoubleSortedVector(LongDoubleHashVector vector) {
+	    super(vector);
+    }
+
+    public LongDoubleSortedVector(LongDoubleDenseVector vector) {
+        this(vector.toNativeArray());
+    }
+    
+    // TODO: This could be done with a single binary search instead of two.
     public void add(long idx, double val) {
     	double curVal = getWithDefault(idx, ZERO);
     	put(idx, curVal + val);
@@ -176,52 +184,73 @@ public class LongDoubleSortedVector extends LongDoubleSortedMap implements LongD
     }
 
     /** Updates this vector to be the entrywise sum of this vector with the other. */
-    public void add(LongDoubleSortedVector other) {
-        binaryOp(other, new Lambda.DoubleAdd());
+    public void add(LongDoubleVector other) {
+        apply(other, new Lambda.DoubleAdd(), false);
     }
     
     /** Updates this vector to be the entrywise difference of this vector with the other. */
-    public void subtract(LongDoubleSortedVector other) {
-        binaryOp(other, new Lambda.DoubleSubtract());
+    public void subtract(LongDoubleVector other) {
+        apply(other, new Lambda.DoubleSubtract(), false);
     }
     
     /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */
-    public void product(LongDoubleSortedVector other) {
-        binaryOp(other, new Lambda.DoubleProd(), true);
+    public void product(LongDoubleVector other) {
+        apply(other, new Lambda.DoubleProd(), true);
     }
     
     /** Gets the entrywise sum of the two vectors. */
-    public LongDoubleSortedVector getSum(LongDoubleSortedVector other) {
+    public LongDoubleSortedVector getSum(LongDoubleVector other) {
         LongDoubleSortedVector sum = new LongDoubleSortedVector(this);
         sum.add(other);
         return sum;
     }
     
     /** Gets the entrywise difference of the two vectors. */
-    public LongDoubleSortedVector getDiff(LongDoubleSortedVector other) {
+    public LongDoubleSortedVector getDiff(LongDoubleVector other) {
         LongDoubleSortedVector diff = new LongDoubleSortedVector(this);
         diff.subtract(other);
         return diff;
     }
     
     /** Gets the entrywise product (i.e. Hadamard product) of the two vectors. */
-    public LongDoubleSortedVector getProd(LongDoubleSortedVector other) {
+    public LongDoubleSortedVector getProd(LongDoubleVector other) {
         LongDoubleSortedVector prod = new LongDoubleSortedVector(this);
         prod.product(other);
         return prod;
     }
-    
-    public void binaryOp(LongDoubleSortedVector other, LambdaBinOpDouble lambda) {
-        binaryOp(other, lambda, false);
+
+    /**
+     * Applies the function to every pair of entries in this vector and an
+     * other. If the call is skipping zeros, then the function is only applied
+     * to those entries which are explicit in both vectors. Otherwise, it is
+     * applied to any entry which is explicit in either vector.
+     * 
+     * @param other The other vector.
+     * @param lambda The function to apply.
+     * @param skipZeros Whether to skip entries which are explicit in one of the
+     *            vectors. Note that most such entries will be non-zero, but the
+     *            implementation may choose to allow explicit zero entries. This
+     *            is useful for operations such as entrywise product.
+     */
+    public void apply(LongDoubleVector other, LambdaBinOpDouble lambda, boolean skipZeros) {
+        if (other instanceof LongDoubleSortedVector) {
+            applyToSorted((LongDoubleSortedVector)other, lambda, false);
+        } else if (other instanceof LongDoubleHashVector) {
+            other = new LongDoubleSortedVector((LongDoubleHashVector) other);
+            applyToSorted((LongDoubleSortedVector) other, lambda, false);
+        } else if (other instanceof LongDoubleDenseVector) {
+            other = new LongDoubleSortedVector((LongDoubleDenseVector) other);
+            applyToSorted((LongDoubleSortedVector) other, lambda, false);
+        } else {
+            // TODO: we could just add a generic constructor. 
+            throw new IllegalStateException("Unhandled vector type: " + other.getClass());
+        }
     }
     
-    public void binaryOp(final LongDoubleSortedVector other, final LambdaBinOpDouble lambda, final boolean skipZeros) {
-        // It appears to be faster to just make a good (quick guess) at the
-        // resulting length of the new array, rather than to make an educated
-        // guess by counting:
-        // int numNewIndices = skipZeros ? Primitives.countCommon(this.indices, other.indices) 
-        //                               : Primitives.countUnique(this.indices, other.indices);
-        
+    private void applyToSorted(final LongDoubleSortedVector other, final LambdaBinOpDouble lambda, final boolean skipZeros) {
+        // It appears to be faster to just make a good (quick guess) for the
+        // final length of the new array, rather than to make an educated
+        // guess by counting.
         int numNewIndices = Math.max(this.used, other.used);
         LongArrayList newIndices = new LongArrayList(numNewIndices);
         DoubleArrayList newValues = new DoubleArrayList(numNewIndices);

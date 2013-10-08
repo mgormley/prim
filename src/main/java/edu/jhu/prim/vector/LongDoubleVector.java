@@ -30,4 +30,13 @@ public interface LongDoubleVector {
     /** Applies the function to each entry in the vector. */
     void apply(FnLongDoubleToDouble function);
     
+    /** Updates this vector to be the entrywise sum of this vector with the other. */
+    void add(LongDoubleVector other);
+    
+    /** Updates this vector to be the entrywise difference of this vector with the other. */
+    void subtract(LongDoubleVector other);
+    
+    /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */
+    void product(LongDoubleVector other);
+    
 }

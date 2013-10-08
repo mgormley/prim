@@ -81,29 +81,6 @@ public class LongDoubleSortedVectorTest extends AbstractLongDoubleVectorTest {
     }
     
     @Test
-    public void testAddAll() {
-        LongDoubleSortedVector v1 = new LongDoubleSortedVector();
-        LongDoubleSortedVector v2 = new LongDoubleSortedVector();
-        
-        v1.set(1, toDouble(11));
-        v1.set(2, toDouble(22));
-        v1.set(4, toDouble(44));
-        
-        v2.set(1, toDouble(11));
-        v2.set(3, toDouble(33));
-        v2.set(4, toDouble(0));
-        v2.set(5, toDouble(55));
-        
-        v1.add(v2);
-
-        assertEquals(22, toInt(v1.get(1)));
-        assertEquals(22, toInt(v1.get(2)));
-        assertEquals(33, toInt(v1.get(3)));
-        assertEquals(44, toInt(v1.get(4)));
-        assertEquals(55, toInt(v1.get(5)));        
-    }
-    
-    @Test
     public void testGetElementwiseSum() {
         LongDoubleSortedVector v1 = new LongDoubleSortedVector();
         LongDoubleSortedVector v2 = new LongDoubleSortedVector();

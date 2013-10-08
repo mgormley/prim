@@ -6,6 +6,7 @@ import java.util.Iterator;
 import edu.jhu.prim.list.DoubleArrayList;
 import edu.jhu.prim.list.LongArrayList;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
+import edu.jhu.prim.util.Pair;
 import edu.jhu.prim.util.Sort;
 import edu.jhu.prim.util.Utilities;
 
@@ -47,7 +48,15 @@ public class LongDoubleSortedMap implements LongDoubleMap {
 		this.indices = Utilities.copyOf(other.indices);
 		this.values = Utilities.copyOf(other.values);
 	}
-	
+
+    public LongDoubleSortedMap(LongDoubleHashMap other) {
+        Pair<long[], double[]> pair = other.getIndicesAndValues();
+        Sort.sortIndexAsc(pair.get1(), pair.get2());
+        this.used = other.size();
+        this.indices = pair.get1();
+        this.values = pair.get2();
+    }
+    
     //	// TODO: we need to break up Sort into SortLongDouble, SortIntDouble before adding this constructor.
     //	public SortedLongDoubleMap(PLongDoubleHashMap other) {
     //        Pair<long[], double[]> ivs = other.getIndicesAndValues();

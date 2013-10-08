@@ -1,7 +1,10 @@
 package edu.jhu.prim.vector;
 
 import edu.jhu.prim.map.LongDoubleHashMap;
+import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.SafeCast;
+import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
+import edu.jhu.prim.util.Lambda.LambdaBinOpDouble;
 
 public class LongDoubleHashVector extends LongDoubleHashMap implements LongDoubleVector {
 
@@ -70,6 +73,42 @@ public class LongDoubleHashVector extends LongDoubleHashMap implements LongDoubl
             }
         }
         return dot;
+    }
+
+    /** Updates this vector to be the entrywise sum of this vector with the other. */
+    public void add(LongDoubleVector other) {
+        other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleAdd()));
+    }
+    
+    /** Updates this vector to be the entrywise difference of this vector with the other. */
+    public void subtract(LongDoubleVector other) {
+        other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleSubtract()));
+    }
+    
+    /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */
+    public void product(LongDoubleVector other) { 
+        // TODO: This is correct, but will create lots of zero entries and not remove any.
+        // Also this will be very slow if other is a LongDoubleSortedVector since it will have to
+        // call get() each time.
+        this.apply(new SparseBinaryOpApplier2(this, other, new Lambda.DoubleProd()));
+    }
+    
+    private static class SparseBinaryOpApplier2 implements FnLongDoubleToDouble {
+        
+        private LongDoubleVector vec1;
+        private LongDoubleVector vec2;
+        private LambdaBinOpDouble lambda;
+        
+        public SparseBinaryOpApplier2(LongDoubleVector vec1, LongDoubleVector vec2, LambdaBinOpDouble lambda) {
+            this.vec1 = vec1;
+            this.vec2 = vec2;
+            this.lambda = lambda;
+        }
+        
+        public double call(long idx, double val) {
+            return lambda.call(vec1.get(idx), vec2.get(idx));
+        }
+        
     }
 
 }

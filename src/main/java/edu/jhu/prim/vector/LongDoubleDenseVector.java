@@ -3,6 +3,7 @@ package edu.jhu.prim.vector;
 import java.util.Arrays;
 
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
+import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.util.Utilities;
 
@@ -18,7 +19,7 @@ public class LongDoubleDenseVector implements LongDoubleVector {
 
     public LongDoubleDenseVector() {
         this(8);
-    }    
+    }
     
     public LongDoubleDenseVector(int initialCapacity) {
         elements = new double[initialCapacity];
@@ -67,7 +68,6 @@ public class LongDoubleDenseVector implements LongDoubleVector {
         elements[i] += value;
     }
 
-
     public void scale(double multiplier) {
         for (int i=0; i<idxAfterLast; i++) {
             elements[i] *= multiplier;
@@ -104,7 +104,7 @@ public class LongDoubleDenseVector implements LongDoubleVector {
             return dot;
         }
     }
-
+    
     @Override
     public void apply(FnLongDoubleToDouble function) {
         for (int i=0; i<idxAfterLast; i++) {
@@ -112,6 +112,26 @@ public class LongDoubleDenseVector implements LongDoubleVector {
         }
     }
 
+    /** Updates this vector to be the entrywise sum of this vector with the other. */
+    public void add(LongDoubleVector other) {
+        // TODO: Add special case for LongDoubleDenseVector.
+        other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleAdd()));
+    }
+    
+    /** Updates this vector to be the entrywise difference of this vector with the other. */
+    public void subtract(LongDoubleVector other) {
+        // TODO: Add special case for LongDoubleDenseVector.
+        other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleSubtract()));
+    }
+    
+    /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */
+    public void product(LongDoubleVector other) {
+        // TODO: Add special case for LongDoubleDenseVector.
+        for (int i=0; i<idxAfterLast; i++) {
+            elements[i] *= other.get(i);
+        }
+    }
+    
     /**
      * Gets the index of the first element in this vector with the specified
      * value, or -1 if it is not present.
@@ -135,20 +155,6 @@ public class LongDoubleDenseVector implements LongDoubleVector {
      */
     public double[] toNativeArray() {
         return Arrays.copyOf(elements, idxAfterLast);
-    }
-    
-    /**
-     * Trims the internal array to the size of the array list and then return
-     * the internal array backing this array list. CAUTION: this should not be
-     * called without carefully handling the result.
-     * 
-     * @return The internal array representing this array list, trimmed to the
-     *         correct size.
-     */
-    // TODO: rename to getElements.
-    public double[] elements() {
-        this.trimToSize();
-        return elements;
     }
     
     /**

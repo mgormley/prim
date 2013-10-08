@@ -61,6 +61,84 @@ public abstract class AbstractLongDoubleVectorTest {
     	assertEquals(44, toInt(v1.get(2)));
     	assertEquals(66, toInt(v1.get(3)));
     }
+    
+    @Test
+    public void testAddAll() {        
+        testAddAllHelper(getLongDoubleVector(), new LongDoubleSortedVector());        
+        testAddAllHelper(getLongDoubleVector(), new LongDoubleHashVector());
+        testAddAllHelper(getLongDoubleVector(), new LongDoubleDenseVector());
+    }
+
+    private void testAddAllHelper(LongDoubleVector v1, LongDoubleVector v2) {
+        v1.set(1, toDouble(11));
+        v1.set(2, toDouble(22));
+        v1.set(4, toDouble(44));
+        
+        v2.set(1, toDouble(11));
+        v2.set(3, toDouble(33));
+        v2.set(4, toDouble(0));
+        v2.set(5, toDouble(55));
+        
+        v1.add(v2);
+
+        assertEquals(22, toInt(v1.get(1)));
+        assertEquals(22, toInt(v1.get(2)));
+        assertEquals(33, toInt(v1.get(3)));
+        assertEquals(44, toInt(v1.get(4)));
+        assertEquals(55, toInt(v1.get(5)));
+    }
+    
+    @Test
+    public void testSubtractAll() {        
+        testSubtractAllHelper(getLongDoubleVector(), new LongDoubleSortedVector());        
+        testSubtractAllHelper(getLongDoubleVector(), new LongDoubleHashVector());
+        testSubtractAllHelper(getLongDoubleVector(), new LongDoubleDenseVector());
+    }
+
+    private void testSubtractAllHelper(LongDoubleVector v1, LongDoubleVector v2) {
+        v1.set(1, toDouble(11));
+        v1.set(2, toDouble(22));
+        v1.set(4, toDouble(44));
+        
+        v2.set(1, toDouble(11));
+        v2.set(3, toDouble(33));
+        v2.set(4, toDouble(0));
+        v2.set(5, toDouble(55));
+        
+        v1.subtract(v2);
+
+        assertEquals(0, toInt(v1.get(1)));
+        assertEquals(22, toInt(v1.get(2)));
+        assertEquals(-33, toInt(v1.get(3)));
+        assertEquals(44, toInt(v1.get(4)));
+        assertEquals(-55, toInt(v1.get(5)));        
+    }
+    
+    @Test
+    public void testProductAll() {        
+        testProductAllHelper(getLongDoubleVector(), new LongDoubleSortedVector());        
+        testProductAllHelper(getLongDoubleVector(), new LongDoubleHashVector());
+        testProductAllHelper(getLongDoubleVector(), new LongDoubleDenseVector());
+    }
+
+    private void testProductAllHelper(LongDoubleVector v1, LongDoubleVector v2) {
+        v1.set(1, toDouble(11));
+        v1.set(2, toDouble(22));
+        v1.set(4, toDouble(44));
+        
+        v2.set(1, toDouble(11));
+        v2.set(3, toDouble(33));
+        v2.set(4, toDouble(2));
+        v2.set(5, toDouble(55));
+        
+        v1.product(v2);
+
+        assertEquals(11*11, toInt(v1.get(1)));
+        assertEquals(22*0, toInt(v1.get(2)));
+        assertEquals(33*0, toInt(v1.get(3)));
+        assertEquals(44*2, toInt(v1.get(4)));
+        assertEquals(55*0, toInt(v1.get(5)));        
+    }
 
     protected abstract LongDoubleVector getLongDoubleVector();
 
