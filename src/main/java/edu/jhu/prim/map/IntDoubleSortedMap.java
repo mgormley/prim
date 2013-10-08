@@ -6,6 +6,7 @@ import java.util.Iterator;
 import edu.jhu.prim.list.DoubleArrayList;
 import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
+import edu.jhu.prim.util.Pair;
 import edu.jhu.prim.util.Sort;
 import edu.jhu.prim.util.Utilities;
 
@@ -47,7 +48,15 @@ public class IntDoubleSortedMap implements IntDoubleMap {
 		this.indices = Utilities.copyOf(other.indices);
 		this.values = Utilities.copyOf(other.values);
 	}
-	
+
+    public IntDoubleSortedMap(IntDoubleHashMap other) {
+        Pair<int[], double[]> pair = other.getIndicesAndValues();
+        Sort.sortIndexAsc(pair.get1(), pair.get2());
+        this.used = other.size();
+        this.indices = pair.get1();
+        this.values = pair.get2();
+    }
+    
     //	// TODO: we need to break up Sort into SortIntDouble, SortIntDouble before adding this constructor.
     //	public SortedIntDoubleMap(PIntDoubleHashMap other) {
     //        Pair<int[], double[]> ivs = other.getIndicesAndValues();

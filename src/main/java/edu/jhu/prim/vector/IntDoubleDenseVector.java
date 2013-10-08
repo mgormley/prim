@@ -2,9 +2,11 @@ package edu.jhu.prim.vector;
 
 import java.util.Arrays;
 
+import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
 import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.util.Utilities;
+import edu.jhu.prim.vector.IntDoubleHashVector.SparseBinaryOpApplier;
 
 
 public class IntDoubleDenseVector implements IntDoubleVector {
@@ -18,7 +20,7 @@ public class IntDoubleDenseVector implements IntDoubleVector {
 
     public IntDoubleDenseVector() {
         this(8);
-    }    
+    }
     
     public IntDoubleDenseVector(int initialCapacity) {
         elements = new double[initialCapacity];
@@ -67,7 +69,6 @@ public class IntDoubleDenseVector implements IntDoubleVector {
         elements[i] += value;
     }
 
-
     public void scale(double multiplier) {
         for (int i=0; i<idxAfterLast; i++) {
             elements[i] *= multiplier;
@@ -104,7 +105,7 @@ public class IntDoubleDenseVector implements IntDoubleVector {
             return dot;
         }
     }
-
+    
     @Override
     public void apply(FnIntDoubleToDouble function) {
         for (int i=0; i<idxAfterLast; i++) {
@@ -112,6 +113,26 @@ public class IntDoubleDenseVector implements IntDoubleVector {
         }
     }
 
+    /** Updates this vector to be the entrywise sum of this vector with the other. */
+    public void add(IntDoubleVector other) {
+        // TODO: Add special case for IntDoubleDenseVector.
+        other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleAdd()));
+    }
+    
+    /** Updates this vector to be the entrywise difference of this vector with the other. */
+    public void subtract(IntDoubleVector other) {
+        // TODO: Add special case for IntDoubleDenseVector.
+        other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleSubtract()));
+    }
+    
+    /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */
+    public void product(IntDoubleVector other) {
+        // TODO: Add special case for IntDoubleDenseVector.
+        for (int i=0; i<idxAfterLast; i++) {
+            elements[i] *= other.get(i);
+        }
+    }
+    
     /**
      * Gets the index of the first element in this vector with the specified
      * value, or -1 if it is not present.
@@ -135,20 +156,6 @@ public class IntDoubleDenseVector implements IntDoubleVector {
      */
     public double[] toNativeArray() {
         return Arrays.copyOf(elements, idxAfterLast);
-    }
-    
-    /**
-     * Trims the internal array to the size of the array list and then return
-     * the internal array backing this array list. CAUTION: this should not be
-     * called without carefully handling the result.
-     * 
-     * @return The internal array representing this array list, trimmed to the
-     *         correct size.
-     */
-    // TODO: rename to getElements.
-    public double[] elements() {
-        this.trimToSize();
-        return elements;
     }
     
     /**

@@ -30,4 +30,13 @@ public interface IntDoubleVector {
     /** Applies the function to each entry in the vector. */
     void apply(FnIntDoubleToDouble function);
     
+    /** Updates this vector to be the entrywise sum of this vector with the other. */
+    void add(IntDoubleVector other);
+    
+    /** Updates this vector to be the entrywise difference of this vector with the other. */
+    void subtract(IntDoubleVector other);
+    
+    /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */
+    void product(IntDoubleVector other);
+    
 }

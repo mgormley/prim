@@ -1,6 +1,9 @@
 package edu.jhu.prim.vector;
 
 import edu.jhu.prim.map.IntDoubleHashMap;
+import edu.jhu.prim.util.Lambda;
+import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
+import edu.jhu.prim.util.Lambda.LambdaBinOpDouble;
 import edu.jhu.prim.util.SafeCast;
 
 public class IntDoubleHashVector extends IntDoubleHashMap implements IntDoubleVector {
@@ -70,6 +73,59 @@ public class IntDoubleHashVector extends IntDoubleHashMap implements IntDoubleVe
             }
         }
         return dot;
+    }
+
+    /** Updates this vector to be the entrywise sum of this vector with the other. */
+    public void add(IntDoubleVector other) {
+        other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleAdd()));
+    }
+    
+    /** Updates this vector to be the entrywise difference of this vector with the other. */
+    public void subtract(IntDoubleVector other) {
+        other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleSubtract()));
+    }
+    
+    /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */
+    public void product(IntDoubleVector other) { 
+        // TODO: This is correct, but will create lots of zero entries and not remove any.
+        // Also this will be very slow if other is a IntDoubleSortedVector since it will have to
+        // call get() each time.
+        this.apply(new SparseBinaryOpApplier2(this, other, new Lambda.DoubleProd()));
+    }
+    
+    public static class SparseBinaryOpApplier implements FnIntDoubleToDouble {
+        
+        private IntDoubleVector modifiedVector;
+        private LambdaBinOpDouble lambda;
+        
+        public SparseBinaryOpApplier(IntDoubleVector modifiedVector, LambdaBinOpDouble lambda) {
+            this.modifiedVector = modifiedVector;
+            this.lambda = lambda;
+        }
+        
+        public double call(int idx, double val) {
+            modifiedVector.set(idx, lambda.call(modifiedVector.get(idx), val));
+            return val;
+        }
+        
+    }
+    
+    private static class SparseBinaryOpApplier2 implements FnIntDoubleToDouble {
+        
+        private IntDoubleVector vec1;
+        private IntDoubleVector vec2;
+        private LambdaBinOpDouble lambda;
+        
+        public SparseBinaryOpApplier2(IntDoubleVector vec1, IntDoubleVector vec2, LambdaBinOpDouble lambda) {
+            this.vec1 = vec1;
+            this.vec2 = vec2;
+            this.lambda = lambda;
+        }
+        
+        public double call(int idx, double val) {
+            return lambda.call(vec1.get(idx), vec2.get(idx));
+        }
+        
     }
 
 }

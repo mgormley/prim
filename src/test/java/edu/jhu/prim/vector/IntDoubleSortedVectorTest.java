@@ -48,7 +48,7 @@ public class IntDoubleSortedVectorTest extends AbstractIntDoubleVectorTest {
         v2.set(4, toDouble(0));
         v2.set(5, toDouble(55));
         
-        IntDoubleSortedVector v3 = v1.hadamardProd(v2);
+        IntDoubleSortedVector v3 = v1.getProd(v2);
 
 		assertEquals(11*11, toInt(v3.get(1)));
 		assertEquals(22*22, toInt(v3.get(2)));
@@ -81,29 +81,6 @@ public class IntDoubleSortedVectorTest extends AbstractIntDoubleVectorTest {
     }
     
     @Test
-    public void testAddAll() {
-        IntDoubleSortedVector v1 = new IntDoubleSortedVector();
-        IntDoubleSortedVector v2 = new IntDoubleSortedVector();
-        
-        v1.set(1, toDouble(11));
-        v1.set(2, toDouble(22));
-        v1.set(4, toDouble(44));
-        
-        v2.set(1, toDouble(11));
-        v2.set(3, toDouble(33));
-        v2.set(4, toDouble(0));
-        v2.set(5, toDouble(55));
-        
-        v1.add(v2);
-
-        assertEquals(22, toInt(v1.get(1)));
-        assertEquals(22, toInt(v1.get(2)));
-        assertEquals(33, toInt(v1.get(3)));
-        assertEquals(44, toInt(v1.get(4)));
-        assertEquals(55, toInt(v1.get(5)));        
-    }
-    
-    @Test
     public void testGetElementwiseSum() {
         IntDoubleSortedVector v1 = new IntDoubleSortedVector();
         IntDoubleSortedVector v2 = new IntDoubleSortedVector();
@@ -117,7 +94,7 @@ public class IntDoubleSortedVectorTest extends AbstractIntDoubleVectorTest {
         v2.set(4, toDouble(0));
         v2.set(5, toDouble(55));
         
-        IntDoubleSortedVector v3 = v1.getElementwiseSum(v2);
+        IntDoubleSortedVector v3 = v1.getSum(v2);
 
         assertEquals(22, toInt(v3.get(1)));
         assertEquals(22, toInt(v3.get(2)));
