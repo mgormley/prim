@@ -2,9 +2,9 @@ package edu.jhu.prim.vector;
 
 import edu.jhu.prim.map.LongDoubleHashMap;
 import edu.jhu.prim.util.Lambda;
-import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
 import edu.jhu.prim.util.Lambda.LambdaBinOpDouble;
+import edu.jhu.prim.util.SafeCast;
 
 public class LongDoubleHashVector extends LongDoubleHashMap implements LongDoubleVector {
 
@@ -91,6 +91,23 @@ public class LongDoubleHashVector extends LongDoubleHashMap implements LongDoubl
         // Also this will be very slow if other is a LongDoubleSortedVector since it will have to
         // call get() each time.
         this.apply(new SparseBinaryOpApplier2(this, other, new Lambda.DoubleProd()));
+    }
+    
+    public static class SparseBinaryOpApplier implements FnLongDoubleToDouble {
+        
+        private LongDoubleVector modifiedVector;
+        private LambdaBinOpDouble lambda;
+        
+        public SparseBinaryOpApplier(LongDoubleVector modifiedVector, LambdaBinOpDouble lambda) {
+            this.modifiedVector = modifiedVector;
+            this.lambda = lambda;
+        }
+        
+        public double call(long idx, double val) {
+            modifiedVector.set(idx, lambda.call(modifiedVector.get(idx), val));
+            return val;
+        }
+        
     }
     
     private static class SparseBinaryOpApplier2 implements FnLongDoubleToDouble {

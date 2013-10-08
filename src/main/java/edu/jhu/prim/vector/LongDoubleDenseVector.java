@@ -2,10 +2,11 @@ package edu.jhu.prim.vector;
 
 import java.util.Arrays;
 
-import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
 import edu.jhu.prim.util.Lambda;
+import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
 import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.util.Utilities;
+import edu.jhu.prim.vector.LongDoubleHashVector.SparseBinaryOpApplier;
 
 
 public class LongDoubleDenseVector implements LongDoubleVector {
