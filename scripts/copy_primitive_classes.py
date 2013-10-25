@@ -43,7 +43,7 @@ def copy_pair(dest_key, dest_val):
     if dest_key == "Int":
         repls += [("<Long,", "<Integer,")]
     if dest_val == "Int":
-        repls += ["Double>", "Integer>"]
+        repls += ["Double>", "Integer>"] #TODO: should this have parens???
     # Conditional replacements
     if dest_val.is_integral:
         repls += [(", double delta", ""),
@@ -88,8 +88,12 @@ def copy_pair(dest_key, dest_val):
     # Add the primary replacements.
     repls += get_typedef_repls(src_key, dest_key)
     repls += get_typedef_repls(src_val, dest_val)
-    repls += [("getIntIndexArray", "getIndexArray"),
+    repls += [#("getIntIndexArray", "getIndexArray"),
              ("int serialVersionUID", "long serialVersionUID"),
+             ("Long.POSITIVE_INFINITY", "Long.MAX_VALUE"),
+             ("Long.NEGATIVE_INFINITY", "Long.MIN_VALUE"),
+             ("Int.POSITIVE_INFINITY", "Integer.MAX_VALUE"),
+             ("Int.NEGATIVE_INFINITY", "Integer.MIN_VALUE"),
              ]
     # Other regex replacements
     add_re_subs += [(r"SafeCast\.safeIntToInt\(([^\)]+)\)", r"\1"),
@@ -109,6 +113,7 @@ def copy_pair(dest_key, dest_val):
                  "edu.jhu.prim.vector.LongDoubleSortedVector",
                  "edu.jhu.prim.vector.LongDoubleHashVector",
                  "edu.jhu.prim.vector.LongDoubleDenseVector",
+                 "edu.jhu.prim.util.sort.LongDoubleSort",
                  # "edu.jhu.prim.set.LongHashSet",
                  ]
     main_java = os.path.join("src", "main", "java")
@@ -117,6 +122,7 @@ def copy_pair(dest_key, dest_val):
     test_classes = [
                  "edu.jhu.prim.map.LongDoubleSortedMapTest",
                  "edu.jhu.prim.map.LongDoubleHashMapTest",
+                 "edu.jhu.prim.util.sort.LongDoubleSortTest",
                  "edu.jhu.prim.vector.LongDoubleSortedVectorTest",
                  "edu.jhu.prim.vector.LongDoubleHashVectorTest",
                  "edu.jhu.prim.vector.LongDoubleDenseVectorTest",
@@ -149,6 +155,7 @@ def get_typedefs():
     return {"int" : TypeDef("Int", "int", "INT", True),
             "long" : TypeDef("Long", "long", "LONG", True),
             "double" : TypeDef("Double", "double", "DOUBLE", False),
+            "none" : TypeDef("", "", "", False),
         }
         
 if __name__ == "__main__":

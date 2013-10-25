@@ -3,10 +3,12 @@ package edu.jhu.prim.map;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.list.LongArrayList;
+import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.util.Lambda.FnIntLongToLong;
+import edu.jhu.prim.util.Pair;
 import edu.jhu.prim.util.Utilities;
+import edu.jhu.prim.util.sort.IntLongSort;
 import edu.jhu.prim.util.sort.IntSort;
 
 /**
@@ -17,7 +19,8 @@ import edu.jhu.prim.util.sort.IntSort;
  * @author mgormley
  */
 public class IntLongSortedMap implements IntLongMap {
-
+    
+    private static final long serialVersionUID = 1L;
 	protected int[] indices;
 	protected long[] values;
 	protected int used; // TODO: size
@@ -47,7 +50,15 @@ public class IntLongSortedMap implements IntLongMap {
 		this.indices = Utilities.copyOf(other.indices);
 		this.values = Utilities.copyOf(other.values);
 	}
-	
+
+    public IntLongSortedMap(IntLongHashMap other) {
+        Pair<int[], long[]> pair = other.getIndicesAndValues();
+        IntLongSort.sortIndexAsc(pair.get1(), pair.get2());
+        this.used = other.size();
+        this.indices = pair.get1();
+        this.values = pair.get2();
+    }
+    
     //	// TODO: we need to break up Sort into SortIntLong, SortIntLong before adding this constructor.
     //	public SortedIntLongMap(PIntLongHashMap other) {
     //        Pair<int[], long[]> ivs = other.getIndicesAndValues();

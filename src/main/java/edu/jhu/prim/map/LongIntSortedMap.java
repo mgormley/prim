@@ -6,7 +6,9 @@ import java.util.Iterator;
 import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.list.LongArrayList;
 import edu.jhu.prim.util.Lambda.FnLongIntToInt;
+import edu.jhu.prim.util.Pair;
 import edu.jhu.prim.util.Utilities;
+import edu.jhu.prim.util.sort.LongIntSort;
 import edu.jhu.prim.util.sort.LongSort;
 
 /**
@@ -17,7 +19,8 @@ import edu.jhu.prim.util.sort.LongSort;
  * @author mgormley
  */
 public class LongIntSortedMap implements LongIntMap {
-
+    
+    private static final long serialVersionUID = 1L;
 	protected long[] indices;
 	protected int[] values;
 	protected int used; // TODO: size
@@ -47,7 +50,15 @@ public class LongIntSortedMap implements LongIntMap {
 		this.indices = Utilities.copyOf(other.indices);
 		this.values = Utilities.copyOf(other.values);
 	}
-	
+
+    public LongIntSortedMap(LongIntHashMap other) {
+        Pair<long[], int[]> pair = other.getIndicesAndValues();
+        LongIntSort.sortIndexAsc(pair.get1(), pair.get2());
+        this.used = other.size();
+        this.indices = pair.get1();
+        this.values = pair.get2();
+    }
+    
     //	// TODO: we need to break up Sort into SortLongInt, SortIntInt before adding this constructor.
     //	public SortedLongIntMap(PLongIntHashMap other) {
     //        Pair<long[], int[]> ivs = other.getIndicesAndValues();

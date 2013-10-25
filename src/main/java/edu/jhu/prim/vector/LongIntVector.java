@@ -1,5 +1,7 @@
 package edu.jhu.prim.vector;
 
+import java.io.Serializable;
+
 import edu.jhu.prim.util.Lambda.FnLongIntToInt;
 
 /** 
@@ -7,7 +9,7 @@ import edu.jhu.prim.util.Lambda.FnLongIntToInt;
  * 
  * @author mgormley
  */
-public interface LongIntVector {
+public interface LongIntVector extends Serializable {
 
     /** Gets the value at the specified index. */
     int get(long idx);
@@ -29,5 +31,14 @@ public interface LongIntVector {
 
     /** Applies the function to each entry in the vector. */
     void apply(FnLongIntToInt function);
+    
+    /** Updates this vector to be the entrywise sum of this vector with the other. */
+    void add(LongIntVector other);
+    
+    /** Updates this vector to be the entrywise difference of this vector with the other. */
+    void subtract(LongIntVector other);
+    
+    /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */
+    void product(LongIntVector other);
     
 }

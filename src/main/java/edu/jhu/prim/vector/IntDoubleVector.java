@@ -1,5 +1,7 @@
 package edu.jhu.prim.vector;
 
+import java.io.Serializable;
+
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
 
 /** 
@@ -7,7 +9,7 @@ import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
  * 
  * @author mgormley
  */
-public interface IntDoubleVector {
+public interface IntDoubleVector extends Serializable {
 
     /** Gets the value at the specified index. */
     double get(int idx);

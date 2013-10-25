@@ -1,6 +1,5 @@
 package edu.jhu.prim.util.sort;
 
-import edu.jhu.prim.util.Utilities;
 import edu.jhu.prim.util.math.Vectors;
 
 public class LongDoubleSort {
@@ -16,9 +15,9 @@ public class LongDoubleSort {
      * are mirrored in index. Sorts in descending order.
      */
     public static void sortValuesDesc(double[] values, long[] index) {
-        Vectors.scale(values, -1.0);
+        Vectors.scale(values, -1);
         sortValuesAsc(values, index);
-        Vectors.scale(values, -1.0);
+        Vectors.scale(values, -1);
     }
     
     /**
@@ -140,6 +139,8 @@ public class LongDoubleSort {
         array[j] = valAtI;
     }
 
+    /* START EXCLUDE IK IV 1 */
+    
     /**
      * Swaps the elements at positions i and j.
      */
@@ -148,6 +149,8 @@ public class LongDoubleSort {
         array[i] = array[j];
         array[j] = valAtI;
     }
+
+    /* END EXCLUDE 1 */
 
     /**
      * Gets an array where array[i] = i.

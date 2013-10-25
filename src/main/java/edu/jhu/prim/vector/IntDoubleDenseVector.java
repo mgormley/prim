@@ -11,6 +11,8 @@ import edu.jhu.prim.vector.IntDoubleHashVector.SparseBinaryOpApplier;
 
 public class IntDoubleDenseVector implements IntDoubleVector {
 
+    private static final long serialVersionUID = 1L;
+
     /** The value given to non-explicit entries in the vector. */
     private static final double missingEntries = 0;
     /** The internal array representing this vector. */

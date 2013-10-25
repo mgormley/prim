@@ -2,12 +2,16 @@ package edu.jhu.prim.vector;
 
 import java.util.Arrays;
 
+import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntLongToLong;
 import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.util.Utilities;
+import edu.jhu.prim.vector.IntLongHashVector.SparseBinaryOpApplier;
 
 
 public class IntLongDenseVector implements IntLongVector {
+
+    private static final long serialVersionUID = 1L;
 
     /** The value given to non-explicit entries in the vector. */
     private static final long missingEntries = 0;
@@ -18,7 +22,7 @@ public class IntLongDenseVector implements IntLongVector {
 
     public IntLongDenseVector() {
         this(8);
-    }    
+    }
     
     public IntLongDenseVector(int initialCapacity) {
         elements = new long[initialCapacity];
@@ -67,7 +71,6 @@ public class IntLongDenseVector implements IntLongVector {
         elements[i] += value;
     }
 
-
     public void scale(long multiplier) {
         for (int i=0; i<idxAfterLast; i++) {
             elements[i] *= multiplier;
@@ -104,7 +107,7 @@ public class IntLongDenseVector implements IntLongVector {
             return dot;
         }
     }
-
+    
     @Override
     public void apply(FnIntLongToLong function) {
         for (int i=0; i<idxAfterLast; i++) {
@@ -112,6 +115,26 @@ public class IntLongDenseVector implements IntLongVector {
         }
     }
 
+    /** Updates this vector to be the entrywise sum of this vector with the other. */
+    public void add(IntLongVector other) {
+        // TODO: Add special case for IntLongDenseVector.
+        other.apply(new SparseBinaryOpApplier(this, new Lambda.LongAdd()));
+    }
+    
+    /** Updates this vector to be the entrywise difference of this vector with the other. */
+    public void subtract(IntLongVector other) {
+        // TODO: Add special case for IntLongDenseVector.
+        other.apply(new SparseBinaryOpApplier(this, new Lambda.LongSubtract()));
+    }
+    
+    /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */
+    public void product(IntLongVector other) {
+        // TODO: Add special case for IntLongDenseVector.
+        for (int i=0; i<idxAfterLast; i++) {
+            elements[i] *= other.get(i);
+        }
+    }
+    
     /**
      * Gets the index of the first element in this vector with the specified
      * value, or -1 if it is not present.
@@ -135,20 +158,6 @@ public class IntLongDenseVector implements IntLongVector {
      */
     public long[] toNativeArray() {
         return Arrays.copyOf(elements, idxAfterLast);
-    }
-    
-    /**
-     * Trims the internal array to the size of the array list and then return
-     * the internal array backing this array list. CAUTION: this should not be
-     * called without carefully handling the result.
-     * 
-     * @return The internal array representing this array list, trimmed to the
-     *         correct size.
-     */
-    // TODO: rename to getElements.
-    public long[] elements() {
-        this.trimToSize();
-        return elements;
     }
     
     /**

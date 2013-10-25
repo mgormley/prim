@@ -14,79 +14,79 @@ import edu.jhu.prim.util.JUnitUtils;
 import edu.jhu.prim.util.sort.Sort;
 
 public class IntDoubleSortTest {
-    
+        
     /* ---------- Ints and Doubles --------------*/
     
     @Test
-    public void testSortValuesAsc() {
-        double[] values = new double[]{ 1.0f, 3.0f, 2.0f, -1.0, 5.0};
+    public void testIntDoubleSortValuesAsc() {
+        double[] values = new double[]{ 1, 3, 2, -1, 5};
         int[] index = IntDoubleSort.getIntIndexArray(values);
         IntDoubleSort.sortValuesAsc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new double[]{ -1.0, 1.0f, 2.0, 3.0f, 5.0}, values, 1e-13);
+        JUnitUtils.assertArrayEquals(new double[]{ -1, 1, 2, 3, 5}, values, 1e-13);
         Assert.assertArrayEquals(new int[]{ 3, 0, 2, 1, 4}, index);
     }
     
     @Test
-    public void testSortValuesDesc() {
-        double[] values = new double[]{ 1.0f, 3.0f, 2.0f, -1.0, 5.0};
+    public void testIntDoubleSortValuesDesc() {
+        double[] values = new double[]{ 1, 3, 2, -1, 5};
         int[] index = IntDoubleSort.getIntIndexArray(values);
         IntDoubleSort.sortValuesDesc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new double[]{ 5.0, 3.0, 2.0, 1.0, -1.0}, values, 1e-13);
+        JUnitUtils.assertArrayEquals(new double[]{ 5, 3, 2, 1, -1}, values, 1e-13);
         Assert.assertArrayEquals(new int[]{ 4, 1, 2, 0, 3}, index);
     }
     
     @Test
-    public void testSortValuesInfinitiesAsc() {
-        double[] values = new double[]{ 1.0f, Double.POSITIVE_INFINITY, 2.0f, -1.0, Double.NEGATIVE_INFINITY, 5.0};
+    public void testIntDoubleSortValuesInfinitiesAsc() {
+        double[] values = new double[]{ 1, Double.POSITIVE_INFINITY, 2, -1, Double.NEGATIVE_INFINITY, 5};
         int[] index = IntDoubleSort.getIntIndexArray(values);
         IntDoubleSort.sortValuesAsc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
 
-        JUnitUtils.assertArrayEquals(new double[]{Double.NEGATIVE_INFINITY, -1.0, 1.0, 2.0, 5.0, Double.POSITIVE_INFINITY}, values, 1e-13);
+        JUnitUtils.assertArrayEquals(new double[]{Double.NEGATIVE_INFINITY, -1, 1, 2, 5, Double.POSITIVE_INFINITY}, values, 1e-13);
         Assert.assertArrayEquals(new int[]{ 4, 3, 0, 2, 5, 1 }, index);
     }
     
     @Test
-    public void testSortValuesInfinitiesDesc() {
-        double[] values = new double[]{ 1.0f, Double.POSITIVE_INFINITY, 2.0f, -1.0, Double.NEGATIVE_INFINITY, 5.0};
+    public void testIntDoubleSortValuesInfinitiesDesc() {
+        double[] values = new double[]{ 1, Double.POSITIVE_INFINITY, 2, -1, Double.NEGATIVE_INFINITY, 5};
         int[] index = IntDoubleSort.getIntIndexArray(values);
         IntDoubleSort.sortValuesDesc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new double[]{Double.POSITIVE_INFINITY,  5.0, 2.0, 1.0, -1.0, Double.NEGATIVE_INFINITY}, values, 1e-13);
+        JUnitUtils.assertArrayEquals(new double[]{Double.POSITIVE_INFINITY,  5, 2, 1, -1, Double.NEGATIVE_INFINITY}, values, 1e-13);
         Assert.assertArrayEquals(new int[]{ 1, 5, 2, 0, 3, 4 }, index);
     }    
 
     @Test
-    public void testSortIndexAsc() {
-        double[] values = new double[]{ 1.0f, 3.0f, 2.0f, -1.0, 5.0};
+    public void testIntDoubleSortIndexAsc() {
+        double[] values = new double[]{ 1, 3, 2, -1, 5};
         int[] index = new int[] { 1, 4, 5, 8, 3};
         IntDoubleSort.sortIndexAsc(index, values);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new double[]{ 1.0, 5.0, 3.0, 2.0, -1.0 }, values, 1e-13);
+        JUnitUtils.assertArrayEquals(new double[]{ 1, 5, 3, 2, -1 }, values, 1e-13);
         Assert.assertArrayEquals(new int[]{ 1, 3, 4, 5, 8 }, index);
     }
 
     @Test
-    public void testSortIndexDesc() {
-        double[] values = new double[]{ 1.0f, 3.0f, 2.0f, -1.0, 5.0};
+    public void testIntDoubleSortIndexDesc() {
+        double[] values = new double[]{ 1, 3, 2, -1, 5};
         int[] index = new int[] { 1, 4, 5, 8, 3};
         IntDoubleSort.sortIndexDesc(index, values);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new double[]{ -1.0, 2.0, 3.0, 5.0, 1.0 }, values, 1e-13);
+        JUnitUtils.assertArrayEquals(new double[]{ -1, 2, 3, 5, 1 }, values, 1e-13);
         Assert.assertArrayEquals(new int[]{ 8, 5, 4, 3, 1 }, index);
     }
-            
+    
 }

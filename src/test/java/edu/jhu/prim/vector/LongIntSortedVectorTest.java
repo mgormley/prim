@@ -48,7 +48,7 @@ public class LongIntSortedVectorTest extends AbstractLongIntVectorTest {
         v2.set(4, toInt(0));
         v2.set(5, toInt(55));
         
-        LongIntSortedVector v3 = v1.hadamardProd(v2);
+        LongIntSortedVector v3 = v1.getProd(v2);
 
 		assertEquals(11*11, toInt(v3.get(1)));
 		assertEquals(22*22, toInt(v3.get(2)));
@@ -81,29 +81,6 @@ public class LongIntSortedVectorTest extends AbstractLongIntVectorTest {
     }
     
     @Test
-    public void testAddAll() {
-        LongIntSortedVector v1 = new LongIntSortedVector();
-        LongIntSortedVector v2 = new LongIntSortedVector();
-        
-        v1.set(1, toInt(11));
-        v1.set(2, toInt(22));
-        v1.set(4, toInt(44));
-        
-        v2.set(1, toInt(11));
-        v2.set(3, toInt(33));
-        v2.set(4, toInt(0));
-        v2.set(5, toInt(55));
-        
-        v1.add(v2);
-
-        assertEquals(22, toInt(v1.get(1)));
-        assertEquals(22, toInt(v1.get(2)));
-        assertEquals(33, toInt(v1.get(3)));
-        assertEquals(44, toInt(v1.get(4)));
-        assertEquals(55, toInt(v1.get(5)));        
-    }
-    
-    @Test
     public void testGetElementwiseSum() {
         LongIntSortedVector v1 = new LongIntSortedVector();
         LongIntSortedVector v2 = new LongIntSortedVector();
@@ -117,7 +94,7 @@ public class LongIntSortedVectorTest extends AbstractLongIntVectorTest {
         v2.set(4, toInt(0));
         v2.set(5, toInt(55));
         
-        LongIntSortedVector v3 = v1.getElementwiseSum(v2);
+        LongIntSortedVector v3 = v1.getSum(v2);
 
         assertEquals(22, toInt(v3.get(1)));
         assertEquals(22, toInt(v3.get(2)));

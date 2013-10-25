@@ -1,6 +1,9 @@
 package edu.jhu.prim.vector;
 
 import edu.jhu.prim.map.IntLongHashMap;
+import edu.jhu.prim.util.Lambda;
+import edu.jhu.prim.util.Lambda.FnIntLongToLong;
+import edu.jhu.prim.util.Lambda.LambdaBinOpLong;
 import edu.jhu.prim.util.SafeCast;
 
 public class IntLongHashVector extends IntLongHashMap implements IntLongVector {
@@ -70,6 +73,59 @@ public class IntLongHashVector extends IntLongHashMap implements IntLongVector {
             }
         }
         return dot;
+    }
+
+    /** Updates this vector to be the entrywise sum of this vector with the other. */
+    public void add(IntLongVector other) {
+        other.apply(new SparseBinaryOpApplier(this, new Lambda.LongAdd()));
+    }
+    
+    /** Updates this vector to be the entrywise difference of this vector with the other. */
+    public void subtract(IntLongVector other) {
+        other.apply(new SparseBinaryOpApplier(this, new Lambda.LongSubtract()));
+    }
+    
+    /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */
+    public void product(IntLongVector other) { 
+        // TODO: This is correct, but will create lots of zero entries and not remove any.
+        // Also this will be very slow if other is a IntLongSortedVector since it will have to
+        // call get() each time.
+        this.apply(new SparseBinaryOpApplier2(this, other, new Lambda.LongProd()));
+    }
+    
+    public static class SparseBinaryOpApplier implements FnIntLongToLong {
+        
+        private IntLongVector modifiedVector;
+        private LambdaBinOpLong lambda;
+        
+        public SparseBinaryOpApplier(IntLongVector modifiedVector, LambdaBinOpLong lambda) {
+            this.modifiedVector = modifiedVector;
+            this.lambda = lambda;
+        }
+        
+        public long call(int idx, long val) {
+            modifiedVector.set(idx, lambda.call(modifiedVector.get(idx), val));
+            return val;
+        }
+        
+    }
+    
+    private static class SparseBinaryOpApplier2 implements FnIntLongToLong {
+        
+        private IntLongVector vec1;
+        private IntLongVector vec2;
+        private LambdaBinOpLong lambda;
+        
+        public SparseBinaryOpApplier2(IntLongVector vec1, IntLongVector vec2, LambdaBinOpLong lambda) {
+            this.vec1 = vec1;
+            this.vec2 = vec2;
+            this.lambda = lambda;
+        }
+        
+        public long call(int idx, long val) {
+            return lambda.call(vec1.get(idx), vec2.get(idx));
+        }
+        
     }
 
 }

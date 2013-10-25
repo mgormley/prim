@@ -6,9 +6,10 @@ import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.map.IntDoubleEntry;
 import edu.jhu.prim.map.IntDoubleSortedMap;
 import edu.jhu.prim.util.Lambda;
+import edu.jhu.prim.util.Lambda.LambdaBinOpDouble;
 import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.util.Utilities;
-import edu.jhu.prim.util.Lambda.LambdaBinOpDouble;
+import edu.jhu.prim.util.sort.IntDoubleSort;
 
 /**
  * Infinite length sparse vector.
@@ -17,7 +18,8 @@ import edu.jhu.prim.util.Lambda.LambdaBinOpDouble;
  *
  */
 public class IntDoubleSortedVector extends IntDoubleSortedMap implements IntDoubleVector {
-
+    
+    private static final long serialVersionUID = 1L;
     private static final double ZERO = (double) 0;
     
     boolean norm2Cached = false;
@@ -40,7 +42,7 @@ public class IntDoubleSortedVector extends IntDoubleSortedMap implements IntDoub
     }
 
 	public IntDoubleSortedVector(double[] denseRow) {
-		this(Utilities.getIndexArray(denseRow.length), denseRow);
+		this(IntDoubleSort.getIntIndexArray(denseRow.length), denseRow);
 	}
 
 	public IntDoubleSortedVector(IntDoubleHashVector vector) {

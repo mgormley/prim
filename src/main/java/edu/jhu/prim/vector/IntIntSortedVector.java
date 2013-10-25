@@ -6,9 +6,10 @@ import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.map.IntIntEntry;
 import edu.jhu.prim.map.IntIntSortedMap;
 import edu.jhu.prim.util.Lambda;
+import edu.jhu.prim.util.Lambda.LambdaBinOpInt;
 import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.util.Utilities;
-import edu.jhu.prim.util.Lambda.LambdaBinOpInt;
+import edu.jhu.prim.util.sort.IntIntSort;
 
 /**
  * Infinite length sparse vector.
@@ -17,7 +18,8 @@ import edu.jhu.prim.util.Lambda.LambdaBinOpInt;
  *
  */
 public class IntIntSortedVector extends IntIntSortedMap implements IntIntVector {
-
+    
+    private static final long serialVersionUID = 1L;
     private static final int ZERO = (int) 0;
     
     boolean norm2Cached = false;
@@ -40,10 +42,18 @@ public class IntIntSortedVector extends IntIntSortedMap implements IntIntVector 
     }
 
 	public IntIntSortedVector(int[] denseRow) {
-		this(Utilities.getIndexArray(denseRow.length), denseRow);
+		this(IntIntSort.getIntIndexArray(denseRow.length), denseRow);
 	}
 
-	// TODO: This could be done with a single binary search instead of two.
+	public IntIntSortedVector(IntIntHashVector vector) {
+	    super(vector);
+    }
+
+    public IntIntSortedVector(IntIntDenseVector vector) {
+        this(vector.toNativeArray());
+    }
+    
+    // TODO: This could be done with a single binary search instead of two.
     public void add(int idx, int val) {
     	int curVal = getWithDefault(idx, ZERO);
     	put(idx, curVal + val);
@@ -174,41 +184,78 @@ public class IntIntSortedVector extends IntIntSortedMap implements IntIntVector 
         this.indices = Utilities.copyOf(other.indices);
         this.values = Utilities.copyOf(other.values);
     }
+
+    /** Updates this vector to be the entrywise sum of this vector with the other. */
+    public void add(IntIntVector other) {
+        apply(other, new Lambda.IntAdd(), false);
+    }
     
-    /**
-     * Computes the Hadamard product (or entry-wise product) of this vector with
-     * another.
-     */
-    // TODO: this could just be a binaryOp call.
-    public IntIntSortedVector hadamardProd(IntIntSortedVector other) {
-    	IntIntSortedVector ip = new IntIntSortedVector();
-        int oc = 0;
-        for (int c = 0; c < used; c++) {
-            while (oc < other.used) {
-                if (other.indices[oc] < indices[c]) {
-                    oc++;
-                } else if (indices[c] == other.indices[oc]) {
-                    ip.set(indices[c], values[c] * other.values[oc]);
-                    break;
-                } else {
-                    break;
-                }
-            }
-        }
-        return ip;
+    /** Updates this vector to be the entrywise difference of this vector with the other. */
+    public void subtract(IntIntVector other) {
+        apply(other, new Lambda.IntSubtract(), false);
+    }
+    
+    /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */
+    public void product(IntIntVector other) {
+        apply(other, new Lambda.IntProd(), true);
+    }
+    
+    /** Gets the entrywise sum of the two vectors. */
+    public IntIntSortedVector getSum(IntIntVector other) {
+        IntIntSortedVector sum = new IntIntSortedVector(this);
+        sum.add(other);
+        return sum;
+    }
+    
+    /** Gets the entrywise difference of the two vectors. */
+    public IntIntSortedVector getDiff(IntIntVector other) {
+        IntIntSortedVector diff = new IntIntSortedVector(this);
+        diff.subtract(other);
+        return diff;
+    }
+    
+    /** Gets the entrywise product (i.e. Hadamard product) of the two vectors. */
+    public IntIntSortedVector getProd(IntIntVector other) {
+        IntIntSortedVector prod = new IntIntSortedVector(this);
+        prod.product(other);
+        return prod;
     }
 
-    public void add(IntIntSortedVector other) {
-        binaryOp(other, new Lambda.IntAdd());
+    /**
+     * Applies the function to every pair of entries in this vector and an
+     * other. If the call is skipping zeros, then the function is only applied
+     * to those entries which are explicit in both vectors. Otherwise, it is
+     * applied to any entry which is explicit in either vector.
+     * 
+     * @param other The other vector.
+     * @param lambda The function to apply.
+     * @param skipZeros Whether to skip entries which are explicit in one of the
+     *            vectors. Note that most such entries will be non-zero, but the
+     *            implementation may choose to allow explicit zero entries. This
+     *            is useful for operations such as entrywise product.
+     */
+    public void apply(IntIntVector other, LambdaBinOpInt lambda, boolean skipZeros) {
+        if (other instanceof IntIntSortedVector) {
+            applyToSorted((IntIntSortedVector)other, lambda, false);
+        } else if (other instanceof IntIntHashVector) {
+            other = new IntIntSortedVector((IntIntHashVector) other);
+            applyToSorted((IntIntSortedVector) other, lambda, false);
+        } else if (other instanceof IntIntDenseVector) {
+            other = new IntIntSortedVector((IntIntDenseVector) other);
+            applyToSorted((IntIntSortedVector) other, lambda, false);
+        } else {
+            // TODO: we could just add a generic constructor. 
+            throw new IllegalStateException("Unhandled vector type: " + other.getClass());
+        }
     }
     
-    public void subtract(IntIntSortedVector other) {
-        binaryOp(other, new Lambda.IntSubtract());
-    }
-    
-    public void binaryOp(IntIntSortedVector other, LambdaBinOpInt lambda) {
-        IntArrayList newIndices = new IntArrayList(Math.max(this.indices.length, other.indices.length));
-        IntArrayList newValues = new IntArrayList(Math.max(this.indices.length, other.indices.length));
+    private void applyToSorted(final IntIntSortedVector other, final LambdaBinOpInt lambda, final boolean skipZeros) {
+        // It appears to be faster to just make a good (quick guess) for the
+        // final length of the new array, rather than to make an educated
+        // guess by counting.
+        int numNewIndices = Math.max(this.used, other.used);
+        IntArrayList newIndices = new IntArrayList(numNewIndices);
+        IntArrayList newValues = new IntArrayList(numNewIndices);
         int i=0; 
         int j=0;
         while(i < this.used && j < other.used) {
@@ -225,80 +272,47 @@ public class IntIntSortedVector extends IntIntSortedMap implements IntIntVector 
                 i++;
                 j++;
             } else if (diff < 0) {
-                // e1 is less than e2, so only add e1 this round.
-                newIndices.add(e1);
-                newValues.add(lambda.call(v1, ZERO));
+                if (!skipZeros) {
+                    // e1 is less than e2, so only add e1 this round.
+                    newIndices.add(e1);
+                    newValues.add(lambda.call(v1, ZERO));
+                }
                 i++;
             } else {
-                // e2 is less than e1, so only add e2 this round.
-                newIndices.add(e2);
-                newValues.add(lambda.call(ZERO, v2));
+                if (!skipZeros) {
+                    // e2 is less than e1, so only add e2 this round.
+                    newIndices.add(e2);
+                    newValues.add(lambda.call(ZERO, v2));
+                }
                 j++;
             }
         }
 
-        // If there is a list that we didn't get all the way through, add all
-        // the remaining elements. There will never be more than one such list. 
         assert (!(i < this.used && j < other.used));
-        for (; i < this.used; i++) {
-            int e1 = this.indices[i];
-            int v1 = this.values[i];
-            newIndices.add(e1);
-            newValues.add(lambda.call(v1, ZERO));
-        }
-        for (; j < other.used; j++) {
-            int e2 = other.indices[j];
-            int v2 = other.values[j];
-            newIndices.add(e2);
-            newValues.add(lambda.call(ZERO, v2));
+
+        if (!skipZeros) {
+            // If there is a list that we didn't get all the way through, add all
+            // the remaining elements. There will never be more than one such list. 
+            for (; i < this.used; i++) {
+                int e1 = this.indices[i];
+                int v1 = this.values[i];
+                newIndices.add(e1);
+                newValues.add(lambda.call(v1, ZERO));
+            }
+            for (; j < other.used; j++) {
+                int e2 = other.indices[j];
+                int v2 = other.values[j];
+                newIndices.add(e2);
+                newValues.add(lambda.call(ZERO, v2));
+            }
         }
         
         this.used = newIndices.size();
-        this.indices = newIndices.toNativeArray();
-        this.values = newValues.toNativeArray();
-    }
-    
-    /**
-     * Counts the number of unique indices in two arrays.
-     * @param indices1 Sorted array of indices.
-     * @param indices2 Sorted array of indices.
-     */
-    public static int countUnique(int[] indices1, int[] indices2) {
-        int numUniqueIndices = 0;
-        int i = 0;
-        int j = 0;
-        while (i < indices1.length && j < indices2.length) {
-            if (indices1[i] < indices2[j]) {
-                numUniqueIndices++;
-                i++;
-            } else if (indices2[j] < indices1[i]) {
-                numUniqueIndices++;
-                j++;
-            } else {
-                // Equal indices.
-                i++;
-                j++;
-            }
+        this.indices = newIndices.getInternalElements();
+        this.values = newValues.getInternalElements();
+        if (indices.length != values.length) {
+            throw new IllegalStateException("The primitive ArrayLists grew at different lengths. This should never occur.");
         }
-        for (; i < indices1.length; i++) {
-            numUniqueIndices++;
-        }
-        for (; j < indices2.length; j++) {
-            numUniqueIndices++;
-        }
-        return numUniqueIndices;
-    }
-    
-    public IntIntSortedVector getElementwiseSum(IntIntSortedVector other) {
-        IntIntSortedVector sum = new IntIntSortedVector(this);
-        sum.add(other);
-        return sum;
-    }
-    
-    public IntIntSortedVector getElementwiseDiff(IntIntSortedVector other) {
-        IntIntSortedVector sum = new IntIntSortedVector(this);
-        sum.subtract(other);
-        return sum;
     }
     
     @Override

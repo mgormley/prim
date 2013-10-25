@@ -4,8 +4,11 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 import edu.jhu.prim.list.IntArrayList;
+import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
+import edu.jhu.prim.util.Pair;
 import edu.jhu.prim.util.Utilities;
+import edu.jhu.prim.util.sort.IntIntSort;
 import edu.jhu.prim.util.sort.IntSort;
 
 /**
@@ -16,7 +19,8 @@ import edu.jhu.prim.util.sort.IntSort;
  * @author mgormley
  */
 public class IntIntSortedMap implements IntIntMap {
-
+    
+    private static final long serialVersionUID = 1L;
 	protected int[] indices;
 	protected int[] values;
 	protected int used; // TODO: size
@@ -46,7 +50,15 @@ public class IntIntSortedMap implements IntIntMap {
 		this.indices = Utilities.copyOf(other.indices);
 		this.values = Utilities.copyOf(other.values);
 	}
-	
+
+    public IntIntSortedMap(IntIntHashMap other) {
+        Pair<int[], int[]> pair = other.getIndicesAndValues();
+        IntIntSort.sortIndexAsc(pair.get1(), pair.get2());
+        this.used = other.size();
+        this.indices = pair.get1();
+        this.values = pair.get2();
+    }
+    
     //	// TODO: we need to break up Sort into SortIntInt, SortIntInt before adding this constructor.
     //	public SortedIntIntMap(PIntIntHashMap other) {
     //        Pair<int[], int[]> ivs = other.getIndicesAndValues();

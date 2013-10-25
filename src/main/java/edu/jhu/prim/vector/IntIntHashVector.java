@@ -1,6 +1,9 @@
 package edu.jhu.prim.vector;
 
 import edu.jhu.prim.map.IntIntHashMap;
+import edu.jhu.prim.util.Lambda;
+import edu.jhu.prim.util.Lambda.FnIntIntToInt;
+import edu.jhu.prim.util.Lambda.LambdaBinOpInt;
 import edu.jhu.prim.util.SafeCast;
 
 public class IntIntHashVector extends IntIntHashMap implements IntIntVector {
@@ -70,6 +73,59 @@ public class IntIntHashVector extends IntIntHashMap implements IntIntVector {
             }
         }
         return dot;
+    }
+
+    /** Updates this vector to be the entrywise sum of this vector with the other. */
+    public void add(IntIntVector other) {
+        other.apply(new SparseBinaryOpApplier(this, new Lambda.IntAdd()));
+    }
+    
+    /** Updates this vector to be the entrywise difference of this vector with the other. */
+    public void subtract(IntIntVector other) {
+        other.apply(new SparseBinaryOpApplier(this, new Lambda.IntSubtract()));
+    }
+    
+    /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */
+    public void product(IntIntVector other) { 
+        // TODO: This is correct, but will create lots of zero entries and not remove any.
+        // Also this will be very slow if other is a IntIntSortedVector since it will have to
+        // call get() each time.
+        this.apply(new SparseBinaryOpApplier2(this, other, new Lambda.IntProd()));
+    }
+    
+    public static class SparseBinaryOpApplier implements FnIntIntToInt {
+        
+        private IntIntVector modifiedVector;
+        private LambdaBinOpInt lambda;
+        
+        public SparseBinaryOpApplier(IntIntVector modifiedVector, LambdaBinOpInt lambda) {
+            this.modifiedVector = modifiedVector;
+            this.lambda = lambda;
+        }
+        
+        public int call(int idx, int val) {
+            modifiedVector.set(idx, lambda.call(modifiedVector.get(idx), val));
+            return val;
+        }
+        
+    }
+    
+    private static class SparseBinaryOpApplier2 implements FnIntIntToInt {
+        
+        private IntIntVector vec1;
+        private IntIntVector vec2;
+        private LambdaBinOpInt lambda;
+        
+        public SparseBinaryOpApplier2(IntIntVector vec1, IntIntVector vec2, LambdaBinOpInt lambda) {
+            this.vec1 = vec1;
+            this.vec2 = vec2;
+            this.lambda = lambda;
+        }
+        
+        public int call(int idx, int val) {
+            return lambda.call(vec1.get(idx), vec2.get(idx));
+        }
+        
     }
 
 }

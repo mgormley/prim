@@ -1,5 +1,7 @@
 package edu.jhu.prim.vector;
 
+import java.io.Serializable;
+
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
 
 /** 
@@ -7,7 +9,7 @@ import edu.jhu.prim.util.Lambda.FnIntIntToInt;
  * 
  * @author mgormley
  */
-public interface IntIntVector {
+public interface IntIntVector extends Serializable {
 
     /** Gets the value at the specified index. */
     int get(int idx);
@@ -29,5 +31,14 @@ public interface IntIntVector {
 
     /** Applies the function to each entry in the vector. */
     void apply(FnIntIntToInt function);
+    
+    /** Updates this vector to be the entrywise sum of this vector with the other. */
+    void add(IntIntVector other);
+    
+    /** Updates this vector to be the entrywise difference of this vector with the other. */
+    void subtract(IntIntVector other);
+    
+    /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */
+    void product(IntIntVector other);
     
 }

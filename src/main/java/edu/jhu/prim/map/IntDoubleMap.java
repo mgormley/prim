@@ -1,5 +1,6 @@
 package edu.jhu.prim.map;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
@@ -8,7 +9,7 @@ import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
  * A primitives map from ints to doubles.
  * @author mgormley
  */
-public interface IntDoubleMap extends Iterable<IntDoubleEntry> {
+public interface IntDoubleMap extends Iterable<IntDoubleEntry>, Serializable {
 
     /** Gets the value at the specified index and returns an implementation specific default it's missing. */
     double get(int idx);

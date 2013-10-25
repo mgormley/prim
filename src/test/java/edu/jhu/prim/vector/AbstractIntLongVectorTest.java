@@ -61,6 +61,84 @@ public abstract class AbstractIntLongVectorTest {
     	assertEquals(44, toInt(v1.get(2)));
     	assertEquals(66, toInt(v1.get(3)));
     }
+    
+    @Test
+    public void testAddAll() {        
+        testAddAllHelper(getIntLongVector(), new IntLongSortedVector());        
+        testAddAllHelper(getIntLongVector(), new IntLongHashVector());
+        testAddAllHelper(getIntLongVector(), new IntLongDenseVector());
+    }
+
+    private void testAddAllHelper(IntLongVector v1, IntLongVector v2) {
+        v1.set(1, toLong(11));
+        v1.set(2, toLong(22));
+        v1.set(4, toLong(44));
+        
+        v2.set(1, toLong(11));
+        v2.set(3, toLong(33));
+        v2.set(4, toLong(0));
+        v2.set(5, toLong(55));
+        
+        v1.add(v2);
+
+        assertEquals(22, toInt(v1.get(1)));
+        assertEquals(22, toInt(v1.get(2)));
+        assertEquals(33, toInt(v1.get(3)));
+        assertEquals(44, toInt(v1.get(4)));
+        assertEquals(55, toInt(v1.get(5)));
+    }
+    
+    @Test
+    public void testSubtractAll() {        
+        testSubtractAllHelper(getIntLongVector(), new IntLongSortedVector());        
+        testSubtractAllHelper(getIntLongVector(), new IntLongHashVector());
+        testSubtractAllHelper(getIntLongVector(), new IntLongDenseVector());
+    }
+
+    private void testSubtractAllHelper(IntLongVector v1, IntLongVector v2) {
+        v1.set(1, toLong(11));
+        v1.set(2, toLong(22));
+        v1.set(4, toLong(44));
+        
+        v2.set(1, toLong(11));
+        v2.set(3, toLong(33));
+        v2.set(4, toLong(0));
+        v2.set(5, toLong(55));
+        
+        v1.subtract(v2);
+
+        assertEquals(0, toInt(v1.get(1)));
+        assertEquals(22, toInt(v1.get(2)));
+        assertEquals(-33, toInt(v1.get(3)));
+        assertEquals(44, toInt(v1.get(4)));
+        assertEquals(-55, toInt(v1.get(5)));        
+    }
+    
+    @Test
+    public void testProductAll() {        
+        testProductAllHelper(getIntLongVector(), new IntLongSortedVector());        
+        testProductAllHelper(getIntLongVector(), new IntLongHashVector());
+        testProductAllHelper(getIntLongVector(), new IntLongDenseVector());
+    }
+
+    private void testProductAllHelper(IntLongVector v1, IntLongVector v2) {
+        v1.set(1, toLong(11));
+        v1.set(2, toLong(22));
+        v1.set(4, toLong(44));
+        
+        v2.set(1, toLong(11));
+        v2.set(3, toLong(33));
+        v2.set(4, toLong(2));
+        v2.set(5, toLong(55));
+        
+        v1.product(v2);
+
+        assertEquals(11*11, toInt(v1.get(1)));
+        assertEquals(22*0, toInt(v1.get(2)));
+        assertEquals(33*0, toInt(v1.get(3)));
+        assertEquals(44*2, toInt(v1.get(4)));
+        assertEquals(55*0, toInt(v1.get(5)));        
+    }
 
     protected abstract IntLongVector getIntLongVector();
 

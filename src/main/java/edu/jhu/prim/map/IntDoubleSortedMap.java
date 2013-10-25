@@ -19,7 +19,8 @@ import edu.jhu.prim.util.sort.IntSort;
  * @author mgormley
  */
 public class IntDoubleSortedMap implements IntDoubleMap {
-
+    
+    private static final long serialVersionUID = 1L;
 	protected int[] indices;
 	protected double[] values;
 	protected int used; // TODO: size
