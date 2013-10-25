@@ -1,6 +1,10 @@
 package edu.jhu.prim.util;
 
-public class Quadruple<X,Y,Z,A> {
+import java.io.Serializable;
+
+public class Quadruple<X,Y,Z,A> implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
 
 	private X x;
 	private Y y;

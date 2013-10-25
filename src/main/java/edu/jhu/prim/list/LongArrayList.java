@@ -1,12 +1,15 @@
 package edu.jhu.prim.list;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
  * Array list of long primitives.
  * @author mgormley
  */
-public class LongArrayList {
+public class LongArrayList implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
 
     /** The internal array representing this list. */
     private long[] elements;

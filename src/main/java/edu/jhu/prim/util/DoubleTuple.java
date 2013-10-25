@@ -3,9 +3,12 @@
  */
 package edu.jhu.prim.util;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class DoubleTuple {
+public class DoubleTuple implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
     
     private final double[] x;
     

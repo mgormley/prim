@@ -1,6 +1,10 @@
 package edu.jhu.prim.util;
 
-public class Pair<X,Y> {
+import java.io.Serializable;
+
+public class Pair<X,Y> implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
 
 	private X x;
 	private Y y;

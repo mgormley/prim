@@ -1,5 +1,7 @@
 package edu.jhu.prim.vector;
 
+import java.io.Serializable;
+
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
 
 /** 
@@ -7,7 +9,7 @@ import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
  * 
  * @author mgormley
  */
-public interface LongDoubleVector {
+public interface LongDoubleVector extends Serializable {
 
     /** Gets the value at the specified index. */
     double get(long idx);

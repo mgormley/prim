@@ -1,5 +1,6 @@
 package edu.jhu.prim.map;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
@@ -8,7 +9,7 @@ import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
  * A primitives map from longs to doubles.
  * @author mgormley
  */
-public interface LongDoubleMap extends Iterable<LongDoubleEntry> {
+public interface LongDoubleMap extends Iterable<LongDoubleEntry>, Serializable {
 
     /** Gets the value at the specified index and returns an implementation specific default it's missing. */
     double get(long idx);

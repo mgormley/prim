@@ -18,7 +18,8 @@ import edu.jhu.prim.util.Utilities;
  * @author mgormley
  */
 public class LongDoubleSortedMap implements LongDoubleMap {
-
+    
+    private static final long serialVersionUID = 1L;
 	protected long[] indices;
 	protected double[] values;
 	protected int used; // TODO: size

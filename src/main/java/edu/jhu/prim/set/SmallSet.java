@@ -17,7 +17,7 @@ import edu.jhu.prim.util.Sort;
   */
 public class SmallSet<E extends Comparable<E>> implements Set<E>, Serializable {
 
-    private static final long serialVersionUID = -203006641880991792L;
+    private static final long serialVersionUID = 1L;
     private ArrayList<E> list;
     
     public SmallSet() {

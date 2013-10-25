@@ -1,12 +1,15 @@
 package edu.jhu.prim.list;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
  * Array list for int primitives.
  * @author mgormley
  */
-public class IntArrayList {
+public class IntArrayList implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
 
     /** The internal array representing this list. */
     private int[] elements;

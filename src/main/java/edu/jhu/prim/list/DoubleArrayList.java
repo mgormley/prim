@@ -1,5 +1,6 @@
 package edu.jhu.prim.list;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 import edu.jhu.prim.util.Utilities;
@@ -8,7 +9,9 @@ import edu.jhu.prim.util.Utilities;
  * Array list for double primitives.
  * @author mgormley
  */
-public class DoubleArrayList {
+public class DoubleArrayList implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
 
     /** The internal array representing this list. */
     private double[] elements;

@@ -11,6 +11,8 @@ import edu.jhu.prim.vector.LongDoubleHashVector.SparseBinaryOpApplier;
 
 public class LongDoubleDenseVector implements LongDoubleVector {
 
+    private static final long serialVersionUID = 1L;
+
     /** The value given to non-explicit entries in the vector. */
     private static final double missingEntries = 0;
     /** The internal array representing this vector. */

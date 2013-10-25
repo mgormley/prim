@@ -17,7 +17,8 @@ import edu.jhu.prim.util.Lambda.LambdaBinOpDouble;
  *
  */
 public class LongDoubleSortedVector extends LongDoubleSortedMap implements LongDoubleVector {
-
+    
+    private static final long serialVersionUID = 1L;
     private static final double ZERO = (double) 0;
     
     boolean norm2Cached = false;

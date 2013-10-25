@@ -1,12 +1,16 @@
 package edu.jhu.prim.set;
 
+import java.io.Serializable;
+
 import edu.jhu.prim.map.LongDoubleHashMap;
 
 /**
  * Hash set for long primitives.
  * @author mgormley
  */
-public class LongHashSet {
+public class LongHashSet implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
 
     private LongDoubleHashMap map = new LongDoubleHashMap();
 
