@@ -4,10 +4,9 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 import edu.jhu.prim.list.IntArrayList;
-import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
-import edu.jhu.prim.util.Sort;
 import edu.jhu.prim.util.Utilities;
+import edu.jhu.prim.util.sort.IntSort;
 
 /**
  * A primitives map from ints to ints. The map is stored by keeping a sorted
@@ -33,7 +32,7 @@ public class IntIntSortedMap implements IntIntMap {
 	}
 
 	public IntIntSortedMap(int[] index, int[] data) {
-		if (!Sort.isSortedAscAndUnique(index)) {
+		if (!IntSort.isSortedAscAndUnique(index)) {
 			throw new IllegalStateException("Indices are not sorted ascending");
 		}
 		

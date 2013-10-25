@@ -7,8 +7,9 @@ import edu.jhu.prim.list.DoubleArrayList;
 import edu.jhu.prim.list.LongArrayList;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
 import edu.jhu.prim.util.Pair;
-import edu.jhu.prim.util.Sort;
 import edu.jhu.prim.util.Utilities;
+import edu.jhu.prim.util.sort.LongDoubleSort;
+import edu.jhu.prim.util.sort.LongSort;
 
 /**
  * A primitives map from longs to doubles. The map is stored by keeping a sorted
@@ -35,7 +36,7 @@ public class LongDoubleSortedMap implements LongDoubleMap {
 	}
 
 	public LongDoubleSortedMap(long[] index, double[] data) {
-		if (!Sort.isSortedAscAndUnique(index)) {
+		if (!LongSort.isSortedAscAndUnique(index)) {
 			throw new IllegalStateException("Indices are not sorted ascending");
 		}
 		
@@ -52,7 +53,7 @@ public class LongDoubleSortedMap implements LongDoubleMap {
 
     public LongDoubleSortedMap(LongDoubleHashMap other) {
         Pair<long[], double[]> pair = other.getIndicesAndValues();
-        Sort.sortIndexAsc(pair.get1(), pair.get2());
+        LongDoubleSort.sortIndexAsc(pair.get1(), pair.get2());
         this.used = other.size();
         this.indices = pair.get1();
         this.values = pair.get2();

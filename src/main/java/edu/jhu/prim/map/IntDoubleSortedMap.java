@@ -7,8 +7,9 @@ import edu.jhu.prim.list.DoubleArrayList;
 import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
 import edu.jhu.prim.util.Pair;
-import edu.jhu.prim.util.Sort;
 import edu.jhu.prim.util.Utilities;
+import edu.jhu.prim.util.sort.IntDoubleSort;
+import edu.jhu.prim.util.sort.IntSort;
 
 /**
  * A primitives map from ints to doubles. The map is stored by keeping a sorted
@@ -34,7 +35,7 @@ public class IntDoubleSortedMap implements IntDoubleMap {
 	}
 
 	public IntDoubleSortedMap(int[] index, double[] data) {
-		if (!Sort.isSortedAscAndUnique(index)) {
+		if (!IntSort.isSortedAscAndUnique(index)) {
 			throw new IllegalStateException("Indices are not sorted ascending");
 		}
 		
@@ -51,7 +52,7 @@ public class IntDoubleSortedMap implements IntDoubleMap {
 
     public IntDoubleSortedMap(IntDoubleHashMap other) {
         Pair<int[], double[]> pair = other.getIndicesAndValues();
-        Sort.sortIndexAsc(pair.get1(), pair.get2());
+        IntDoubleSort.sortIndexAsc(pair.get1(), pair.get2());
         this.used = other.size();
         this.indices = pair.get1();
         this.values = pair.get2();

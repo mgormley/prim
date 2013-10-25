@@ -3,11 +3,11 @@ package edu.jhu.prim.map;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import edu.jhu.prim.list.LongArrayList;
 import edu.jhu.prim.list.IntArrayList;
+import edu.jhu.prim.list.LongArrayList;
 import edu.jhu.prim.util.Lambda.FnIntLongToLong;
-import edu.jhu.prim.util.Sort;
 import edu.jhu.prim.util.Utilities;
+import edu.jhu.prim.util.sort.IntSort;
 
 /**
  * A primitives map from ints to longs. The map is stored by keeping a sorted
@@ -33,7 +33,7 @@ public class IntLongSortedMap implements IntLongMap {
 	}
 
 	public IntLongSortedMap(int[] index, long[] data) {
-		if (!Sort.isSortedAscAndUnique(index)) {
+		if (!IntSort.isSortedAscAndUnique(index)) {
 			throw new IllegalStateException("Indices are not sorted ascending");
 		}
 		

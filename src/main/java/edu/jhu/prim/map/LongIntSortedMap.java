@@ -6,8 +6,8 @@ import java.util.Iterator;
 import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.list.LongArrayList;
 import edu.jhu.prim.util.Lambda.FnLongIntToInt;
-import edu.jhu.prim.util.Sort;
 import edu.jhu.prim.util.Utilities;
+import edu.jhu.prim.util.sort.LongSort;
 
 /**
  * A primitives map from longs to ints. The map is stored by keeping a sorted
@@ -33,7 +33,7 @@ public class LongIntSortedMap implements LongIntMap {
 	}
 
 	public LongIntSortedMap(long[] index, int[] data) {
-		if (!Sort.isSortedAscAndUnique(index)) {
+		if (!LongSort.isSortedAscAndUnique(index)) {
 			throw new IllegalStateException("Indices are not sorted ascending");
 		}
 		

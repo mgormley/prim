@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
 
-import edu.jhu.prim.util.Sort;
+import edu.jhu.prim.util.sort.Sort;
 
 /**
  * Maintains a set as a sorted list.
