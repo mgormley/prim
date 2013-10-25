@@ -43,7 +43,7 @@ def copy_pair(dest_key, dest_val):
     if dest_key == "Int":
         repls += [("<Long,", "<Integer,")]
     if dest_val == "Int":
-        repls += ["Double>", "Integer>"] #TODO: should this have parens???
+        repls += [("Double>", "Integer>")] #TODO: should this have parens???
     # Conditional replacements
     if dest_val.is_integral:
         repls += [(", double delta", ""),
