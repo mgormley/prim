@@ -1,15 +1,13 @@
 package edu.jhu.prim.vector;
 
 import edu.jhu.prim.Primitives;
-import edu.jhu.prim.list.IntArrayList;
+import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.map.IntIntEntry;
 import edu.jhu.prim.map.IntIntSortedMap;
+import edu.jhu.prim.sort.IntIntSort;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.LambdaBinOpInt;
-import edu.jhu.prim.util.SafeCast;
-import edu.jhu.prim.util.Utilities;
-import edu.jhu.prim.util.sort.IntIntSort;
 
 /**
  * Infinite length sparse vector.
@@ -181,8 +179,8 @@ public class IntIntSortedVector extends IntIntSortedMap implements IntIntVector 
     /** Sets all values in this vector to those in the other vector. */
     public void set(IntIntSortedVector other) {
         this.used = other.used;
-        this.indices = Utilities.copyOf(other.indices);
-        this.values = Utilities.copyOf(other.values);
+        this.indices = IntArrays.copyOf(other.indices);
+        this.values = IntArrays.copyOf(other.values);
     }
 
     /** Updates this vector to be the entrywise sum of this vector with the other. */
@@ -344,12 +342,12 @@ public class IntIntSortedVector extends IntIntSortedMap implements IntIntVector 
         }
 
         for (IntIntEntry ve : v1) {
-            if (!Utilities.equals(ve.get(), v2.get(ve.index()))) {
+            if (!Primitives.equals(ve.get(), v2.get(ve.index()))) {
                 return false;
             }
         }
         for (IntIntEntry ve : v2) {
-            if (!Utilities.equals(ve.get(), v1.get(ve.index()))) {
+            if (!Primitives.equals(ve.get(), v1.get(ve.index()))) {
                 return false;
             }
         }

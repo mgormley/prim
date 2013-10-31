@@ -3,13 +3,14 @@ package edu.jhu.prim.map;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import edu.jhu.prim.list.LongArrayList;
+import edu.jhu.prim.arrays.IntArrays;
+import edu.jhu.prim.arrays.LongArrays;
 import edu.jhu.prim.list.IntArrayList;
+import edu.jhu.prim.list.LongArrayList;
+import edu.jhu.prim.sort.IntLongSort;
+import edu.jhu.prim.sort.IntSort;
+import edu.jhu.prim.tuple.Pair;
 import edu.jhu.prim.util.Lambda.FnIntLongToLong;
-import edu.jhu.prim.util.Pair;
-import edu.jhu.prim.util.Utilities;
-import edu.jhu.prim.util.sort.IntLongSort;
-import edu.jhu.prim.util.sort.IntSort;
 
 /**
  * A primitives map from ints to longs. The map is stored by keeping a sorted
@@ -47,8 +48,8 @@ public class IntLongSortedMap implements IntLongMap {
 
 	public IntLongSortedMap(IntLongSortedMap other) {
 		this.used = other.used;
-		this.indices = Utilities.copyOf(other.indices);
-		this.values = Utilities.copyOf(other.values);
+		this.indices = IntArrays.copyOf(other.indices);
+		this.values = LongArrays.copyOf(other.values);
 	}
 
     public IntLongSortedMap(IntLongHashMap other) {

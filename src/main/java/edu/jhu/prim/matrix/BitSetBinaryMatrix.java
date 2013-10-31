@@ -2,8 +2,8 @@ package edu.jhu.prim.matrix;
 
 import java.util.BitSet;
 
+import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.matrix.infinite.ColumnCountIterator;
-import edu.jhu.prim.util.Utilities;
 public class BitSetBinaryMatrix implements BinaryMatrix {
 
     private static final long serialVersionUID = 6324612589688787142L;
@@ -33,9 +33,9 @@ public class BitSetBinaryMatrix implements BinaryMatrix {
         for (int i = 0; i < matrix.length; i++) {
             matrix[i] = (BitSet) bsbm.matrix[i].clone();
         }
-        columnCounts = Utilities.copyOf(bsbm.columnCounts, bsbm.columnCounts.length);
+        columnCounts = IntArrays.copyOf(bsbm.columnCounts, bsbm.columnCounts.length);
         if (bsbm.rowCounts != null) {
-            rowCounts = Utilities.copyOf(bsbm.rowCounts, bsbm.rowCounts.length);
+            rowCounts = IntArrays.copyOf(bsbm.rowCounts, bsbm.rowCounts.length);
         } else {
             rowCounts = new int[bsbm.numRows];
         }
@@ -54,9 +54,9 @@ public class BitSetBinaryMatrix implements BinaryMatrix {
                 matrix[i].clear();
                 matrix[i].or(bsbm.matrix[i]);
             }
-            Utilities.copy(bsbm.columnCounts, columnCounts);
+            IntArrays.copy(bsbm.columnCounts, columnCounts);
             if (bsbm.rowCounts != null) {
-                Utilities.copy(bsbm.rowCounts, rowCounts);
+                IntArrays.copy(bsbm.rowCounts, rowCounts);
             } else {
                 rowCounts = new int[bsbm.numRows];
             }

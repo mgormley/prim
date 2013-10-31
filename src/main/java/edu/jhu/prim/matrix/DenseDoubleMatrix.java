@@ -2,8 +2,8 @@ package edu.jhu.prim.matrix;
 
 import java.util.Iterator;
 
+import edu.jhu.prim.arrays.DoubleArrays;
 import edu.jhu.prim.map.IntDoubleEntry;
-import edu.jhu.prim.util.Utilities;
 public class DenseDoubleMatrix implements DoubleMatrix {
     
     private static final long serialVersionUID = -2148653126472159945L;
@@ -31,7 +31,7 @@ public class DenseDoubleMatrix implements DoubleMatrix {
 	public DenseDoubleMatrix(DenseDoubleMatrix dim) {
 	    numRows = dim.numRows;
 	    numCols = dim.numCols;
-	    matrix = Utilities.copyOf(dim.matrix);
+	    matrix = DoubleArrays.copyOf(dim.matrix);
     }
 
     public void set(DoubleMatrix other) {
@@ -40,7 +40,7 @@ public class DenseDoubleMatrix implements DoubleMatrix {
             assert(numRows == dim.numRows);
             assert(numCols == dim.numCols);
             for (int row=0; row<numRows; row++) {
-                Utilities.copy(dim.matrix[row], matrix[row]);
+                DoubleArrays.copy(dim.matrix[row], matrix[row]);
             }
         } else {
             throw new IllegalArgumentException("unhandled type: " + other.getClass().getCanonicalName());

@@ -2,10 +2,10 @@ package edu.jhu.prim.vector;
 
 import java.util.Arrays;
 
+import edu.jhu.prim.Primitives;
+import edu.jhu.prim.arrays.DoubleArrays;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
-import edu.jhu.prim.util.SafeCast;
-import edu.jhu.prim.util.Utilities;
 import edu.jhu.prim.vector.IntDoubleHashVector.SparseBinaryOpApplier;
 
 
@@ -36,7 +36,7 @@ public class IntDoubleDenseVector implements IntDoubleVector {
     
     /** Copy constructor. */
     public IntDoubleDenseVector(IntDoubleDenseVector other) {
-        this.elements = Utilities.copyOf(other.elements);
+        this.elements = DoubleArrays.copyOf(other.elements);
         this.idxAfterLast = other.idxAfterLast;
     }
     
@@ -145,7 +145,7 @@ public class IntDoubleDenseVector implements IntDoubleVector {
      */
     public int lookupIndex(double value, double delta) {
         for (int i=0; i<elements.length; i++) {
-            if (Utilities.equals(elements[i], value, delta)) {
+            if (Primitives.equals(elements[i], value, delta)) {
                 return i;
             }
         }

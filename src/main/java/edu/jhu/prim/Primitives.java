@@ -1,5 +1,6 @@
 package edu.jhu.prim;
 
+
 /**
  * Methods and constants for primitive collections.
  * @author mgormley
@@ -13,6 +14,7 @@ public class Primitives {
     
     public static int LONG_NUM_BITS = 64;
     public static int INT_NUM_BITS = 32;
+    public static final double DEFAULT_DELTA = 1e-13;
     
     private Primitives() {
         // Private constructor.
@@ -39,68 +41,6 @@ public class Primitives {
     public static int hashOfInt(final int key) {
         final int h = key ^ ((key >>> 20) ^ (key >>> 12));
         return h ^ (h >>> 7) ^ (h >>> 4);
-    }
-
-
-    /**
-     * Counts the number of indices that appear in both arrays.
-     * @param indices1 Sorted array of indices.
-     * @param indices2 Sorted array of indices.
-     */
-    public static int countCommon(long[] indices1, long[] indices2) {
-        int numCommonIndices = 0;
-        int i = 0;
-        int j = 0;
-        while (i < indices1.length && j < indices2.length) {
-            if (indices1[i] < indices2[j]) {
-                i++;
-            } else if (indices2[j] < indices1[i]) {
-                j++;
-            } else {
-                numCommonIndices++;
-                // Equal indices.
-                i++;
-                j++;
-            }
-        }
-        for (; i < indices1.length; i++) {
-            numCommonIndices++;
-        }
-        for (; j < indices2.length; j++) {
-            numCommonIndices++;
-        }
-        return numCommonIndices;
-    }
-    
-    /**
-     * Counts the number of unique indices in two arrays.
-     * @param indices1 Sorted array of indices.
-     * @param indices2 Sorted array of indices.
-     */
-    public static int countUnique(long[] indices1, long[] indices2) {
-        int numUniqueIndices = 0;
-        int i = 0;
-        int j = 0;
-        while (i < indices1.length && j < indices2.length) {
-            if (indices1[i] < indices2[j]) {
-                numUniqueIndices++;
-                i++;
-            } else if (indices2[j] < indices1[i]) {
-                numUniqueIndices++;
-                j++;
-            } else {
-                // Equal indices.
-                i++;
-                j++;
-            }
-        }
-        for (; i < indices1.length; i++) {
-            numUniqueIndices++;
-        }
-        for (; j < indices2.length; j++) {
-            numUniqueIndices++;
-        }
-        return numUniqueIndices;
     }
     
     /* ------------------- Tests ---------------------- */
@@ -150,5 +90,58 @@ public class Primitives {
             a[i] = b[i];
         }
         return a;
+    }
+
+    /* --------------------- Equality and Comparison ------------------- */
+
+    public static boolean equals(int a, int b) {
+        return a == b;
+    }
+
+    public static boolean equals(long a, long b) {
+        return a == b;
+    }
+
+    public static boolean equals(double a, double b, double delta) {
+        return Math.abs(a - b) < delta;
+    }
+
+    /**
+     * Compares two double values up to some delta.
+     * 
+     * @param a
+     * @param b
+     * @param delta
+     * @return The value 0 if a equals b, a value greater than 0 if if a > b, and a value less than 0 if a < b.  
+     */
+    public static int compare(double a, double b, double delta) {
+        if (equals(a, b, delta)) {
+            return 0;
+        }
+        return Double.compare(a, b);
+    }
+
+    public static int compare(int a, int b) {
+        return a - b;
+    }
+
+    public static boolean lte(double a, double b) {
+        return a <= b + Primitives.DEFAULT_DELTA;
+    }
+
+    public static boolean lte(double a, double b, double delta) {
+        return a <= b + delta;
+    }
+
+    public static boolean gte(double a, double b) {
+        return a + Primitives.DEFAULT_DELTA >= b;
+    }
+
+    public static boolean gte(double a, double b, double delta) {
+        return a + delta >= b;
+    }
+
+    public static void assertDoubleEquals(double a, double b) {
+        assert(Math.abs(a - b) < 0.000000000001);
     }
  }

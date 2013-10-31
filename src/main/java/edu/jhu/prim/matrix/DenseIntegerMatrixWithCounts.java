@@ -1,7 +1,7 @@
 package edu.jhu.prim.matrix;
 
+import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.map.IntIntEntry;
-import edu.jhu.prim.util.Utilities;
 public class DenseIntegerMatrixWithCounts implements IntegerMatrix {
     
     private static final long serialVersionUID = -2148653126472159945L;
@@ -23,9 +23,9 @@ public class DenseIntegerMatrixWithCounts implements IntegerMatrix {
 	public DenseIntegerMatrixWithCounts(DenseIntegerMatrixWithCounts dim) {
 	    numRows = dim.numRows;
 	    numCols = dim.numCols;
-	    matrix = Utilities.copyOf(dim.matrix);
-	    colCounts = Utilities.copyOf(dim.colCounts, dim.colCounts.length);
-	    rowCounts = Utilities.copyOf(dim.rowCounts, dim.rowCounts.length);
+	    matrix = IntArrays.copyOf(dim.matrix);
+	    colCounts = IntArrays.copyOf(dim.colCounts, dim.colCounts.length);
+	    rowCounts = IntArrays.copyOf(dim.rowCounts, dim.rowCounts.length);
     }
 	
 	public void set(IntegerMatrix other) {
@@ -33,10 +33,10 @@ public class DenseIntegerMatrixWithCounts implements IntegerMatrix {
             DenseIntegerMatrixWithCounts dim = (DenseIntegerMatrixWithCounts)other;
             assert(numRows == dim.numRows);
             assert(numCols == dim.numCols);
-            Utilities.copy(dim.colCounts, colCounts);
-            Utilities.copy(dim.rowCounts, rowCounts);
+            IntArrays.copy(dim.colCounts, colCounts);
+            IntArrays.copy(dim.rowCounts, rowCounts);
             for (int row=0; row<numRows; row++) {
-                Utilities.copy(dim.matrix[row], matrix[row]);
+                IntArrays.copy(dim.matrix[row], matrix[row]);
             }
         } else {
             throw new IllegalArgumentException("unhandled type: " + other.getClass().getCanonicalName());

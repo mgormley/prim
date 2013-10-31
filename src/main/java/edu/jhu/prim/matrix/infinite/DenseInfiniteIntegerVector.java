@@ -2,7 +2,7 @@ package edu.jhu.prim.matrix.infinite;
 
 import java.util.Arrays;
 
-import edu.jhu.prim.util.Utilities;
+import edu.jhu.prim.arrays.IntArrays;
 public class DenseInfiniteIntegerVector implements InfiniteIntegerVector {
 
     private int[] columnCounts;
@@ -44,7 +44,7 @@ public class DenseInfiniteIntegerVector implements InfiniteIntegerVector {
 
     private void doubleSize() {
         curMaxCol *= 2;
-        columnCounts = Utilities.copyOf(columnCounts, curMaxCol);
+        columnCounts = IntArrays.copyOf(columnCounts, curMaxCol);
     }
 
     public Iterable<Integer> getActiveIndices() {
