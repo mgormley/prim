@@ -1,4 +1,4 @@
-package edu.jhu.prim.set;
+package edu.jhu.util.collections;
 
 import java.io.Serializable;
 import java.util.ArrayList;
