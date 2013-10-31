@@ -7,10 +7,10 @@ import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.list.LongArrayList;
 import edu.jhu.prim.map.LongIntEntry;
 import edu.jhu.prim.map.LongIntSortedMap;
+import edu.jhu.prim.sort.LongIntSort;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.LambdaBinOpInt;
 import edu.jhu.prim.util.SafeCast;
-import edu.jhu.prim.util.sort.LongIntSort;
 
 /**
  * Infinite length sparse vector.

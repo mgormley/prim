@@ -6,10 +6,10 @@ import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.map.IntIntEntry;
 import edu.jhu.prim.map.IntIntSortedMap;
+import edu.jhu.prim.sort.IntIntSort;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.LambdaBinOpInt;
 import edu.jhu.prim.util.SafeCast;
-import edu.jhu.prim.util.sort.IntIntSort;
 
 /**
  * Infinite length sparse vector.

@@ -7,10 +7,10 @@ import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.arrays.LongArrays;
 import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.list.LongArrayList;
+import edu.jhu.prim.sort.LongIntSort;
+import edu.jhu.prim.sort.LongSort;
 import edu.jhu.prim.tuple.Pair;
 import edu.jhu.prim.util.Lambda.FnLongIntToInt;
-import edu.jhu.prim.util.sort.LongIntSort;
-import edu.jhu.prim.util.sort.LongSort;
 
 /**
  * A primitives map from longs to ints. The map is stored by keeping a sorted

@@ -1,4 +1,4 @@
-package edu.jhu.prim.util.sort;
+package edu.jhu.prim.sort;
 
 import static org.junit.Assert.assertTrue;
 
@@ -7,6 +7,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
+import edu.jhu.prim.sort.DoubleSort;
 import edu.jhu.prim.util.JUnitUtils;
 
 public class DoubleSortTest {

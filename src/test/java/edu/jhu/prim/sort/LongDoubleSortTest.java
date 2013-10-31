@@ -1,4 +1,4 @@
-package edu.jhu.prim.util.sort;
+package edu.jhu.prim.sort;
 
 import static org.junit.Assert.assertTrue;
 
@@ -10,8 +10,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import edu.jhu.prim.list.IntArrayList;
+import edu.jhu.prim.sort.LongDoubleSort;
+import edu.jhu.prim.sort.Sort;
 import edu.jhu.prim.util.JUnitUtils;
-import edu.jhu.prim.util.sort.Sort;
 
 public class LongDoubleSortTest {
         

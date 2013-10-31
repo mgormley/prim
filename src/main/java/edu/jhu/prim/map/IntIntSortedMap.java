@@ -6,10 +6,10 @@ import java.util.Iterator;
 import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.list.IntArrayList;
+import edu.jhu.prim.sort.IntIntSort;
+import edu.jhu.prim.sort.IntSort;
 import edu.jhu.prim.tuple.Pair;
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
-import edu.jhu.prim.util.sort.IntIntSort;
-import edu.jhu.prim.util.sort.IntSort;
 
 /**
  * A primitives map from ints to ints. The map is stored by keeping a sorted

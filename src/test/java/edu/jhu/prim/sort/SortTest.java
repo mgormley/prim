@@ -1,4 +1,4 @@
-package edu.jhu.prim.util.sort;
+package edu.jhu.prim.sort;
 
 import java.util.ArrayList;
 
@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import edu.jhu.prim.list.IntArrayList;
+import edu.jhu.prim.sort.Sort;
 
 public class SortTest {
     

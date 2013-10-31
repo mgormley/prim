@@ -109,12 +109,12 @@ def copy_pair(dest_key, dest_val):
                  "edu.jhu.prim.map.LongDoubleEntry",
                  "edu.jhu.prim.map.LongDoubleSortedMap",
                  "edu.jhu.prim.map.LongDoubleHashMap",
+                 "edu.jhu.prim.sort.LongDoubleSort",
+                 # "edu.jhu.prim.set.LongHashSet",
                  "edu.jhu.prim.vector.LongDoubleVector",
                  "edu.jhu.prim.vector.LongDoubleSortedVector",
                  "edu.jhu.prim.vector.LongDoubleHashVector",
                  "edu.jhu.prim.vector.LongDoubleDenseVector",
-                 "edu.jhu.prim.util.sort.LongDoubleSort",
-                 # "edu.jhu.prim.set.LongHashSet",
                  ]
     main_java = os.path.join("src", "main", "java")
     src_files = [os.path.join(main_java, c.replace(".", "/") + ".java") for c in main_classes]
@@ -122,7 +122,7 @@ def copy_pair(dest_key, dest_val):
     test_classes = [
                  "edu.jhu.prim.map.LongDoubleSortedMapTest",
                  "edu.jhu.prim.map.LongDoubleHashMapTest",
-                 "edu.jhu.prim.util.sort.LongDoubleSortTest",
+                 "edu.jhu.prim.sort.LongDoubleSortTest",
                  "edu.jhu.prim.vector.LongDoubleSortedVectorTest",
                  "edu.jhu.prim.vector.LongDoubleHashVectorTest",
                  "edu.jhu.prim.vector.LongDoubleDenseVectorTest",

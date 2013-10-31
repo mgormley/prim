@@ -1,4 +1,4 @@
-package edu.jhu.prim.util.sort;
+package edu.jhu.prim.sort;
 
 import java.util.ArrayList;
 import java.util.List;
