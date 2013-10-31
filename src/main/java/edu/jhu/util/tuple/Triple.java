@@ -1,19 +1,21 @@
-package edu.jhu.prim.util;
+package edu.jhu.util.tuple;
 
 import java.io.Serializable;
 
 import edu.jhu.util.Utilities;
 
-public class Pair<X,Y> implements Serializable {
+public class Triple<X,Y,Z> implements Serializable {
     
     private static final long serialVersionUID = 1L;
 
 	private X x;
 	private Y y;
+	private Z z;
 	
-	public Pair(X x, Y y) {
+	public Triple(X x, Y y, Z z) {
 		this.x = x;
 		this.y = y;
+		this.z = z;
 	}
 	
 	public X get1() { 
@@ -23,12 +25,22 @@ public class Pair<X,Y> implements Serializable {
 		return y;
 	}
 	
+	public Z get3() {
+		return z;
+	}
+	
+	@Override
+	public String toString() {
+	    return String.format("<%s, %s, %s>", x,y,z);
+	}
+	
 	@Override
 	public boolean equals(Object o) { 
-		if (o instanceof Pair<?,?>) {
-			Pair<?,?> p = (Pair<?,?>)o;
+		if (o instanceof Triple<?,?,?>) {
+			Triple<?,?,?> p = (Triple<?,?,?>)o;
 			if (Utilities.safeEquals(x, p.get1()) &&
-					Utilities.safeEquals(y, p.get2())) {
+					Utilities.safeEquals(y, p.get2()) &&
+					Utilities.safeEquals(z, p.get3())) {
 				return true;
 			}
 		}
@@ -40,12 +52,8 @@ public class Pair<X,Y> implements Serializable {
 		int result = 17;
 		result = 37*result + (x == null ? 0 : x.hashCode());
 		result = 37*result + (y == null ? 0 : y.hashCode());
+		result = 37*result + (z == null ? 0 : z.hashCode());
 		return result;
 	}
-
-    @Override
-    public String toString() {
-        return String.format("<%s, %s>", x,y);
-    }
 	
 }

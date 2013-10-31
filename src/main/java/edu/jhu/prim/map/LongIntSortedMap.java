@@ -8,9 +8,9 @@ import edu.jhu.prim.arrays.LongArrays;
 import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.list.LongArrayList;
 import edu.jhu.prim.util.Lambda.FnLongIntToInt;
-import edu.jhu.prim.util.Pair;
 import edu.jhu.prim.util.sort.LongIntSort;
 import edu.jhu.prim.util.sort.LongSort;
+import edu.jhu.util.tuple.Pair;
 
 /**
  * A primitives map from longs to ints. The map is stored by keeping a sorted

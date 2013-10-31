@@ -27,8 +27,8 @@ import java.util.NoSuchElementException;
 
 
 import edu.jhu.prim.Primitives;
-import edu.jhu.prim.util.Pair;
 import edu.jhu.prim.util.Lambda.FnLongIntToInt;
+import edu.jhu.util.tuple.Pair;
 
 /**
  * NOTICE: Changes made to this class:

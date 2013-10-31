@@ -1,4 +1,4 @@
-package edu.jhu.prim.util;
+package edu.jhu.util.tuple;
 
 import java.io.Serializable;
 
