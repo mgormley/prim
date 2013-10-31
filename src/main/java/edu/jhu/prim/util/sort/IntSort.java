@@ -1,7 +1,6 @@
 package edu.jhu.prim.util.sort;
 
-import edu.jhu.prim.util.Utilities;
-import edu.jhu.prim.util.math.Vectors;
+import edu.jhu.prim.arrays.IntArrays;
 
 public class IntSort {
 
@@ -15,9 +14,9 @@ public class IntSort {
      * Performs an in-place quick sort on array. Sorts in descending order.
      */
     public static void sortDesc(int[] array) {
-        Vectors.scale(array, -1);
+        IntArrays.scale(array, -1);
         sortAsc(array);
-        Vectors.scale(array, -1);
+        IntArrays.scale(array, -1);
     }
     
     /**
@@ -62,7 +61,7 @@ public class IntSort {
     }
     
     public static int[] getIndexArray(int[] values) {
-        return Utilities.getIndexArray(values.length);
+        return IntSort.getIndexArray(values.length);
     }
 
     /**
@@ -99,6 +98,19 @@ public class IntSort {
             }
         }
         return true;
+    }
+
+    /**
+     * Gets an array where array[i] = i.
+     * @param length The length of the array.
+     * @return The new index array.
+     */
+    public static int[] getIndexArray(int length) {
+        int[] index = new int[length];
+        for (int i=0; i<index.length; i++) {
+            index[i] = i;
+        }
+        return index;
     }
 
 }

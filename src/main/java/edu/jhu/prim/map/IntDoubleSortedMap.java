@@ -3,11 +3,12 @@ package edu.jhu.prim.map;
 import java.util.Arrays;
 import java.util.Iterator;
 
+import edu.jhu.prim.arrays.DoubleArrays;
+import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.list.DoubleArrayList;
 import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
 import edu.jhu.prim.util.Pair;
-import edu.jhu.prim.util.Utilities;
 import edu.jhu.prim.util.sort.IntDoubleSort;
 import edu.jhu.prim.util.sort.IntSort;
 
@@ -47,8 +48,8 @@ public class IntDoubleSortedMap implements IntDoubleMap {
 
 	public IntDoubleSortedMap(IntDoubleSortedMap other) {
 		this.used = other.used;
-		this.indices = Utilities.copyOf(other.indices);
-		this.values = Utilities.copyOf(other.values);
+		this.indices = IntArrays.copyOf(other.indices);
+		this.values = DoubleArrays.copyOf(other.values);
 	}
 
     public IntDoubleSortedMap(IntDoubleHashMap other) {

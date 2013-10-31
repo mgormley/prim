@@ -2,6 +2,8 @@ package edu.jhu.prim.util;
 
 import java.io.Serializable;
 
+import edu.jhu.util.Utilities;
+
 public class Triple<X,Y,Z> implements Serializable {
     
     private static final long serialVersionUID = 1L;

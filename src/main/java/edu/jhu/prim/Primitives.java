@@ -1,5 +1,6 @@
 package edu.jhu.prim;
 
+
 /**
  * Methods and constants for primitive collections.
  * @author mgormley
@@ -13,6 +14,7 @@ public class Primitives {
     
     public static int LONG_NUM_BITS = 64;
     public static int INT_NUM_BITS = 32;
+    public static final double DEFAULT_DELTA = 1e-13;
     
     private Primitives() {
         // Private constructor.
@@ -150,5 +152,52 @@ public class Primitives {
             a[i] = b[i];
         }
         return a;
+    }
+
+    public static boolean equals(int a, int b) {
+        return a == b;
+    }
+
+    public static boolean equals(long a, long b) {
+        return a == b;
+    }
+
+    public static boolean equals(double a, double b, double delta) {
+        return Math.abs(a - b) < delta;
+    }
+
+    /**
+     * Compares two double values up to some delta.
+     * 
+     * @param a
+     * @param b
+     * @param delta
+     * @return The value 0 if a equals b, a value greater than 0 if if a > b, and a value less than 0 if a < b.  
+     */
+    public static int compare(double a, double b, double delta) {
+        if (equals(a, b, delta)) {
+            return 0;
+        }
+        return Double.compare(a, b);
+    }
+
+    public static int compare(int a, int b) {
+        return a - b;
+    }
+
+    public static boolean lte(double a, double b) {
+        return a <= b + Primitives.DEFAULT_DELTA;
+    }
+
+    public static boolean lte(double a, double b, double delta) {
+        return a <= b + delta;
+    }
+
+    public static boolean gte(double a, double b) {
+        return a + Primitives.DEFAULT_DELTA >= b;
+    }
+
+    public static boolean gte(double a, double b, double delta) {
+        return a + delta >= b;
     }
  }

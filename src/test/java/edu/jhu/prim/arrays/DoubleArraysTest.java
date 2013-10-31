@@ -1,13 +1,13 @@
-package edu.jhu.prim.util;
+package edu.jhu.prim.arrays;
 
 import java.util.Arrays;
 
 import org.junit.Test;
 
+import edu.jhu.prim.arrays.DoubleArrays;
 import edu.jhu.prim.util.Timer;
-import edu.jhu.prim.util.Utilities;
 
-public class UtilitiesTest {
+public class DoubleArraysTest {
 
     @Test
     public void testFillSpeed() {
@@ -40,7 +40,7 @@ public class UtilitiesTest {
             Timer timer = new Timer();
             timer.start();
             for (int t = 0; t < trials; t++) {
-                Utilities.fill(array, t);
+                DoubleArrays.fill(array, t);
             }
             timer.stop();
             System.out.println("edu.jhu.util.Utilities.fill() total ms: " + timer.totMs());

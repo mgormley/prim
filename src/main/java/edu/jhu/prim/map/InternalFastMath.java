@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-package edu.jhu.prim;
+package edu.jhu.prim.map;
 
 /**
  * NOTICE: These functions are from FastMath in Apache Commons Math.
  * @author mgormley
  */
-public class FastMath {
+class InternalFastMath {
 
     /** 2^52 - double numbers this large must be integral (no fraction) or NaN or Infinite */
     private static final double TWO_POWER_52 = 4503599627370496.0;

@@ -1,6 +1,6 @@
 package edu.jhu.prim.util.sort;
 
-import edu.jhu.prim.util.math.Vectors;
+import edu.jhu.prim.arrays.IntArrays;
 
 public class IntIntSort {
 
@@ -15,9 +15,9 @@ public class IntIntSort {
      * are mirrored in index. Sorts in descending order.
      */
     public static void sortValuesDesc(int[] values, int[] index) {
-        Vectors.scale(values, -1);
+        IntArrays.scale(values, -1);
         sortValuesAsc(values, index);
-        Vectors.scale(values, -1);
+        IntArrays.scale(values, -1);
     }
     
     /**
@@ -67,9 +67,9 @@ public class IntIntSort {
      * are mirrored in values. Sorts in descending order.
      */
     public static void sortIndexDesc(int[] index, int[] values) {
-        Vectors.scale(index, -1);
+        IntArrays.scale(index, -1);
         sortIndexAsc(index, values);
-        Vectors.scale(index, -1);
+        IntArrays.scale(index, -1);
     }
     
     /**

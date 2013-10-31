@@ -3,7 +3,7 @@ package edu.jhu.prim.matrix.infinite;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import edu.jhu.prim.util.Utilities;
+import edu.jhu.prim.arrays.BoolArrays;
 public class DenseInfiniteBinaryMatrix implements InfiniteBinaryMatrix {
 
     private boolean[][] matrix;
@@ -103,7 +103,7 @@ public class DenseInfiniteBinaryMatrix implements InfiniteBinaryMatrix {
     private void doubleSize() {
         curMaxCol *= 2;
         for (int i=0; i<numRows; i++) {
-            matrix[i] = Utilities.copyOf(matrix[i], curMaxCol);
+            matrix[i] = BoolArrays.copyOf(matrix[i], curMaxCol);
         }
         for (int i=curMaxCol/2; i<curMaxCol; i++) {
         	inactiveCols.add(i);

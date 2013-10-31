@@ -1,7 +1,10 @@
-package edu.jhu.prim.util;
+package edu.jhu.util;
 
 import java.io.Serializable;
 import java.util.Arrays;
+
+import edu.jhu.prim.arrays.IntArrays;
+
 
 public class IntTuple implements Comparable<IntTuple>, Serializable {
     
@@ -53,7 +56,7 @@ public class IntTuple implements Comparable<IntTuple>, Serializable {
 
     @Override
     public int compareTo(IntTuple other) {
-        return Utilities.compare(this.x, other.x);
+        return IntArrays.compare(this.x, other.x);
     }
     
 }

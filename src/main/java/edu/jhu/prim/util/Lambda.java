@@ -1,5 +1,7 @@
 package edu.jhu.prim.util;
 
+import edu.jhu.util.Utilities;
+
 
 /**
  * Container for lambda expression interfaces.

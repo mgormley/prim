@@ -3,7 +3,7 @@ package edu.jhu.prim.list;
 import java.io.Serializable;
 import java.util.Arrays;
 
-import edu.jhu.prim.util.Utilities;
+import edu.jhu.prim.Primitives;
 
 /**
  * Array list for double primitives.
@@ -99,7 +99,7 @@ public class DoubleArrayList implements Serializable {
      */
     public int lookupIndex(double value, double delta) {
         for (int i=0; i<elements.length; i++) {
-            if (Utilities.equals(elements[i], value, delta)) {
+            if (Primitives.equals(elements[i], value, delta)) {
                 return i;
             }
         }

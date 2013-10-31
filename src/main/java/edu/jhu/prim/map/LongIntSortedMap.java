@@ -3,11 +3,12 @@ package edu.jhu.prim.map;
 import java.util.Arrays;
 import java.util.Iterator;
 
+import edu.jhu.prim.arrays.IntArrays;
+import edu.jhu.prim.arrays.LongArrays;
 import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.list.LongArrayList;
 import edu.jhu.prim.util.Lambda.FnLongIntToInt;
 import edu.jhu.prim.util.Pair;
-import edu.jhu.prim.util.Utilities;
 import edu.jhu.prim.util.sort.LongIntSort;
 import edu.jhu.prim.util.sort.LongSort;
 
@@ -47,8 +48,8 @@ public class LongIntSortedMap implements LongIntMap {
 
 	public LongIntSortedMap(LongIntSortedMap other) {
 		this.used = other.used;
-		this.indices = Utilities.copyOf(other.indices);
-		this.values = Utilities.copyOf(other.values);
+		this.indices = LongArrays.copyOf(other.indices);
+		this.values = IntArrays.copyOf(other.values);
 	}
 
     public LongIntSortedMap(LongIntHashMap other) {

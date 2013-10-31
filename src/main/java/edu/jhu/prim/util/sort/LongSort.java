@@ -1,7 +1,6 @@
 package edu.jhu.prim.util.sort;
 
-import edu.jhu.prim.util.Utilities;
-import edu.jhu.prim.util.math.Vectors;
+import edu.jhu.prim.arrays.LongArrays;
 
 public class LongSort {
 
@@ -15,9 +14,9 @@ public class LongSort {
      * Performs an in-place quick sort on array. Sorts in descending order.
      */
     public static void sortDesc(long[] array) {
-        Vectors.scale(array, -1);
+        LongArrays.scale(array, -1);
         sortAsc(array);
-        Vectors.scale(array, -1);
+        LongArrays.scale(array, -1);
     }
     
     /**
@@ -62,7 +61,7 @@ public class LongSort {
     }
     
     public static int[] getIndexArray(long[] values) {
-        return Utilities.getIndexArray(values.length);
+        return IntSort.getIndexArray(values.length);
     }
 
     /**

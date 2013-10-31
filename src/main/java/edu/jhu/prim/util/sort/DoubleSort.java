@@ -1,7 +1,6 @@
 package edu.jhu.prim.util.sort;
 
-import edu.jhu.prim.util.Utilities;
-import edu.jhu.prim.util.math.Vectors;
+import edu.jhu.prim.arrays.DoubleArrays;
 
 public class DoubleSort {
 
@@ -15,9 +14,9 @@ public class DoubleSort {
      * Performs an in-place quick sort on array. Sorts in descending order.
      */
     public static void sortDesc(double[] array) {
-        Vectors.scale(array, -1);
+        DoubleArrays.scale(array, -1);
         sortAsc(array);
-        Vectors.scale(array, -1);
+        DoubleArrays.scale(array, -1);
     }
     
     /**
@@ -62,7 +61,7 @@ public class DoubleSort {
     }
     
     public static int[] getIndexArray(double[] values) {
-        return Utilities.getIndexArray(values.length);
+        return IntSort.getIndexArray(values.length);
     }
 
     /**

@@ -3,11 +3,12 @@ package edu.jhu.prim.map;
 import java.util.Arrays;
 import java.util.Iterator;
 
+import edu.jhu.prim.arrays.DoubleArrays;
+import edu.jhu.prim.arrays.LongArrays;
 import edu.jhu.prim.list.DoubleArrayList;
 import edu.jhu.prim.list.LongArrayList;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
 import edu.jhu.prim.util.Pair;
-import edu.jhu.prim.util.Utilities;
 import edu.jhu.prim.util.sort.LongDoubleSort;
 import edu.jhu.prim.util.sort.LongSort;
 
@@ -47,8 +48,8 @@ public class LongDoubleSortedMap implements LongDoubleMap {
 
 	public LongDoubleSortedMap(LongDoubleSortedMap other) {
 		this.used = other.used;
-		this.indices = Utilities.copyOf(other.indices);
-		this.values = Utilities.copyOf(other.values);
+		this.indices = LongArrays.copyOf(other.indices);
+		this.values = DoubleArrays.copyOf(other.values);
 	}
 
     public LongDoubleSortedMap(LongDoubleHashMap other) {

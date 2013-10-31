@@ -25,7 +25,6 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import edu.jhu.prim.FastMath;
 
 import edu.jhu.prim.Primitives;
 import edu.jhu.prim.util.Pair;
@@ -171,7 +170,7 @@ public class LongDoubleHashMap implements Serializable, LongDoubleMap {
         if (expectedSize == 0) {
             return 1;
         }
-        final int capacity   = (int) FastMath.ceil(expectedSize / LOAD_FACTOR);
+        final int capacity   = (int) InternalFastMath.ceil(expectedSize / LOAD_FACTOR);
         final int powerOfTwo = Integer.highestOneBit(capacity);
         if (powerOfTwo == capacity) {
             return capacity;

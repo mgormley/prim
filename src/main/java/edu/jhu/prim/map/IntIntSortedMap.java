@@ -3,11 +3,11 @@ package edu.jhu.prim.map;
 import java.util.Arrays;
 import java.util.Iterator;
 
+import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
 import edu.jhu.prim.util.Pair;
-import edu.jhu.prim.util.Utilities;
 import edu.jhu.prim.util.sort.IntIntSort;
 import edu.jhu.prim.util.sort.IntSort;
 
@@ -47,8 +47,8 @@ public class IntIntSortedMap implements IntIntMap {
 
 	public IntIntSortedMap(IntIntSortedMap other) {
 		this.used = other.used;
-		this.indices = Utilities.copyOf(other.indices);
-		this.values = Utilities.copyOf(other.values);
+		this.indices = IntArrays.copyOf(other.indices);
+		this.values = IntArrays.copyOf(other.values);
 	}
 
     public IntIntSortedMap(IntIntHashMap other) {

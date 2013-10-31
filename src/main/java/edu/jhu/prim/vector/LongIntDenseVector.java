@@ -2,10 +2,11 @@ package edu.jhu.prim.vector;
 
 import java.util.Arrays;
 
+import edu.jhu.prim.Primitives;
+import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnLongIntToInt;
 import edu.jhu.prim.util.SafeCast;
-import edu.jhu.prim.util.Utilities;
 import edu.jhu.prim.vector.LongIntHashVector.SparseBinaryOpApplier;
 
 
@@ -36,7 +37,7 @@ public class LongIntDenseVector implements LongIntVector {
     
     /** Copy constructor. */
     public LongIntDenseVector(LongIntDenseVector other) {
-        this.elements = Utilities.copyOf(other.elements);
+        this.elements = IntArrays.copyOf(other.elements);
         this.idxAfterLast = other.idxAfterLast;
     }
     
@@ -145,7 +146,7 @@ public class LongIntDenseVector implements LongIntVector {
      */
     public int lookupIndex(int value) {
         for (int i=0; i<elements.length; i++) {
-            if (Utilities.equals(elements[i], value)) {
+            if (Primitives.equals(elements[i], value)) {
                 return i;
             }
         }

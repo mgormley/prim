@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.jhu.prim.list.IntArrayList;
-import edu.jhu.prim.util.Utilities;
-import edu.jhu.prim.util.math.Vectors;
 
 public class Sort {
 

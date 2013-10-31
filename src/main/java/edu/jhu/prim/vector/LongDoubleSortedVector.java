@@ -1,6 +1,8 @@
 package edu.jhu.prim.vector;
 
 import edu.jhu.prim.Primitives;
+import edu.jhu.prim.arrays.DoubleArrays;
+import edu.jhu.prim.arrays.LongArrays;
 import edu.jhu.prim.list.DoubleArrayList;
 import edu.jhu.prim.list.LongArrayList;
 import edu.jhu.prim.map.LongDoubleEntry;
@@ -8,7 +10,6 @@ import edu.jhu.prim.map.LongDoubleSortedMap;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.LambdaBinOpDouble;
 import edu.jhu.prim.util.SafeCast;
-import edu.jhu.prim.util.Utilities;
 import edu.jhu.prim.util.sort.LongDoubleSort;
 
 /**
@@ -181,8 +182,8 @@ public class LongDoubleSortedVector extends LongDoubleSortedMap implements LongD
     /** Sets all values in this vector to those in the other vector. */
     public void set(LongDoubleSortedVector other) {
         this.used = other.used;
-        this.indices = Utilities.copyOf(other.indices);
-        this.values = Utilities.copyOf(other.values);
+        this.indices = LongArrays.copyOf(other.indices);
+        this.values = DoubleArrays.copyOf(other.values);
     }
 
     /** Updates this vector to be the entrywise sum of this vector with the other. */
@@ -344,12 +345,12 @@ public class LongDoubleSortedVector extends LongDoubleSortedMap implements LongD
         }
 
         for (LongDoubleEntry ve : v1) {
-            if (!Utilities.equals(ve.get(), v2.get(ve.index()), delta)) {
+            if (!Primitives.equals(ve.get(), v2.get(ve.index()), delta)) {
                 return false;
             }
         }
         for (LongDoubleEntry ve : v2) {
-            if (!Utilities.equals(ve.get(), v1.get(ve.index()), delta)) {
+            if (!Primitives.equals(ve.get(), v1.get(ve.index()), delta)) {
                 return false;
             }
         }
