@@ -1,10 +1,5 @@
 package edu.jhu.util.math;
 
-import java.util.Random;
-
-import org.junit.Test;
-
-import edu.jhu.util.SafeEquals;
 
 /**
  * A port of Jason Smith's C++ LogTable code, used for POS tagging.
