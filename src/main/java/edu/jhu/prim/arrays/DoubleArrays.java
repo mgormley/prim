@@ -3,9 +3,9 @@ package edu.jhu.prim.arrays;
 import java.util.Arrays;
 
 import edu.jhu.prim.Primitives;
+import edu.jhu.prim.tuple.IntTuple;
 import edu.jhu.util.Prng;
 import edu.jhu.util.Utilities;
-import edu.jhu.util.tuple.IntTuple;
 
 
 /**

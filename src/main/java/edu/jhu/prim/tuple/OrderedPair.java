@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.jhu.util.tuple;
+package edu.jhu.prim.tuple;
 
 
 public class OrderedPair extends IntTuple {

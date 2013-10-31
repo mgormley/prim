@@ -1,4 +1,4 @@
-package edu.jhu.util.tuple;
+package edu.jhu.prim.tuple;
 
 import java.util.Collection;
 

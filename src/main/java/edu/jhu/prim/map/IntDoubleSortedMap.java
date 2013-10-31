@@ -7,10 +7,10 @@ import edu.jhu.prim.arrays.DoubleArrays;
 import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.list.DoubleArrayList;
 import edu.jhu.prim.list.IntArrayList;
+import edu.jhu.prim.tuple.Pair;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
 import edu.jhu.prim.util.sort.IntDoubleSort;
 import edu.jhu.prim.util.sort.IntSort;
-import edu.jhu.util.tuple.Pair;
 
 /**
  * A primitives map from ints to doubles. The map is stored by keeping a sorted

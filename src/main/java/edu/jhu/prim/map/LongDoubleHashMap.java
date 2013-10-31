@@ -27,8 +27,8 @@ import java.util.NoSuchElementException;
 
 
 import edu.jhu.prim.Primitives;
+import edu.jhu.prim.tuple.Pair;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
-import edu.jhu.util.tuple.Pair;
 
 /**
  * NOTICE: Changes made to this class:
