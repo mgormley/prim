@@ -10,7 +10,6 @@ import edu.jhu.prim.map.IntDoubleSortedMap;
 import edu.jhu.prim.sort.IntDoubleSort;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.LambdaBinOpDouble;
-import edu.jhu.prim.util.SafeCast;
 
 /**
  * Infinite length sparse vector.

@@ -1,17 +1,10 @@
 package edu.jhu.prim.sort;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import edu.jhu.prim.list.IntArrayList;
-import edu.jhu.prim.sort.LongIntSort;
-import edu.jhu.prim.sort.Sort;
 import edu.jhu.prim.util.JUnitUtils;
 
 public class LongIntSortTest {

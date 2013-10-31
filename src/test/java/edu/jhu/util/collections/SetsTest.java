@@ -7,8 +7,6 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import edu.jhu.util.collections.Sets;
-
 
 public class SetsTest {
 

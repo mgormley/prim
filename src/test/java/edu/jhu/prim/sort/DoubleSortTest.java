@@ -7,7 +7,6 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import edu.jhu.prim.sort.DoubleSort;
 import edu.jhu.prim.util.JUnitUtils;
 
 public class DoubleSortTest {

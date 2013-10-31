@@ -4,7 +4,6 @@ import edu.jhu.prim.map.IntIntHashMap;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
 import edu.jhu.prim.util.Lambda.LambdaBinOpInt;
-import edu.jhu.prim.util.SafeCast;
 
 public class IntIntHashVector extends IntIntHashMap implements IntIntVector {
 

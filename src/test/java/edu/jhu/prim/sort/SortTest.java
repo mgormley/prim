@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import edu.jhu.prim.list.IntArrayList;
-import edu.jhu.prim.sort.Sort;
 
 public class SortTest {
     

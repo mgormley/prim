@@ -4,7 +4,6 @@ import edu.jhu.prim.map.IntLongHashMap;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntLongToLong;
 import edu.jhu.prim.util.Lambda.LambdaBinOpLong;
-import edu.jhu.prim.util.SafeCast;
 
 public class IntLongHashVector extends IntLongHashMap implements IntLongVector {
 

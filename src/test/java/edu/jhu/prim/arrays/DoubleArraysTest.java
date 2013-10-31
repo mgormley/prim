@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import edu.jhu.prim.arrays.DoubleArrays;
 import edu.jhu.util.Timer;
 
 public class DoubleArraysTest {

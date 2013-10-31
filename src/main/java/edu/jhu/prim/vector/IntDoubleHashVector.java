@@ -4,7 +4,6 @@ import edu.jhu.prim.map.IntDoubleHashMap;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
 import edu.jhu.prim.util.Lambda.LambdaBinOpDouble;
-import edu.jhu.prim.util.SafeCast;
 
 public class IntDoubleHashVector extends IntDoubleHashMap implements IntDoubleVector {
 
