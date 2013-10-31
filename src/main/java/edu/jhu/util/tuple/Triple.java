@@ -1,12 +1,8 @@
 package edu.jhu.util.tuple;
 
-import java.io.Serializable;
-
 import edu.jhu.util.Utilities;
 
-public class Triple<X,Y,Z> implements Serializable {
-    
-    private static final long serialVersionUID = 1L;
+public class Triple<X,Y,Z> {
 
 	private X x;
 	private Y y;

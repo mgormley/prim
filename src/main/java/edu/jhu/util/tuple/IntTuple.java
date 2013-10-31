@@ -1,14 +1,10 @@
 package edu.jhu.util.tuple;
 
-import java.io.Serializable;
 import java.util.Arrays;
 
 import edu.jhu.prim.arrays.IntArrays;
 
-
-public class IntTuple implements Comparable<IntTuple>, Serializable {
-    
-    private static final long serialVersionUID = 1L;
+public class IntTuple implements Comparable<IntTuple> {
     
     private final int[] x;
     

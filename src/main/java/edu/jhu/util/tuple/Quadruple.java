@@ -1,10 +1,6 @@
 package edu.jhu.util.tuple;
 
-import java.io.Serializable;
-
-public class Quadruple<X,Y,Z,A> implements Serializable {
-    
-    private static final long serialVersionUID = 1L;
+public class Quadruple<X,Y,Z,A> {
 
 	private X x;
 	private Y y;

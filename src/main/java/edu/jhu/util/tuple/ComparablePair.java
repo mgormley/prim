@@ -1,10 +1,8 @@
 package edu.jhu.util.tuple;
 
-
 public class ComparablePair<X extends Comparable<X>,Y extends Comparable<Y>> extends Pair<X,Y> implements Comparable<ComparablePair<X,Y>> {
 		
-    private static final long serialVersionUID = 1L;
-    
+
 	public ComparablePair(X x, Y y) {
 		super(x, y);
 	}

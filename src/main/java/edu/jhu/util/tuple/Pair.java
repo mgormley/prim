@@ -1,12 +1,8 @@
 package edu.jhu.util.tuple;
 
-import java.io.Serializable;
-
 import edu.jhu.util.Utilities;
 
-public class Pair<X,Y> implements Serializable {
-    
-    private static final long serialVersionUID = 1L;
+public class Pair<X,Y> {
 
 	private X x;
 	private Y y;
