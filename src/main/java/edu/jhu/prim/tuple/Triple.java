@@ -1,6 +1,6 @@
 package edu.jhu.prim.tuple;
 
-import edu.jhu.util.Utilities;
+import edu.jhu.util.SafeEquals;
 
 public class Triple<X,Y,Z> {
 
@@ -34,9 +34,9 @@ public class Triple<X,Y,Z> {
 	public boolean equals(Object o) { 
 		if (o instanceof Triple<?,?,?>) {
 			Triple<?,?,?> p = (Triple<?,?,?>)o;
-			if (Utilities.safeEquals(x, p.get1()) &&
-					Utilities.safeEquals(y, p.get2()) &&
-					Utilities.safeEquals(z, p.get3())) {
+			if (SafeEquals.safeEquals(x, p.get1()) &&
+					SafeEquals.safeEquals(y, p.get2()) &&
+					SafeEquals.safeEquals(z, p.get3())) {
 				return true;
 			}
 		}

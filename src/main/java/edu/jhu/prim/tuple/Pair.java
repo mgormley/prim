@@ -1,6 +1,6 @@
 package edu.jhu.prim.tuple;
 
-import edu.jhu.util.Utilities;
+import edu.jhu.util.SafeEquals;
 
 public class Pair<X,Y> {
 
@@ -23,8 +23,8 @@ public class Pair<X,Y> {
 	public boolean equals(Object o) { 
 		if (o instanceof Pair<?,?>) {
 			Pair<?,?> p = (Pair<?,?>)o;
-			if (Utilities.safeEquals(x, p.get1()) &&
-					Utilities.safeEquals(y, p.get2())) {
+			if (SafeEquals.safeEquals(x, p.get1()) &&
+					SafeEquals.safeEquals(y, p.get2())) {
 				return true;
 			}
 		}

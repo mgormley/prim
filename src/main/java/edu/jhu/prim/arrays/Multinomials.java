@@ -2,7 +2,7 @@ package edu.jhu.prim.arrays;
 
 import edu.jhu.prim.Primitives;
 import edu.jhu.util.Prng;
-import edu.jhu.util.Utilities;
+import edu.jhu.util.math.FastMath;
 
 public class Multinomials {
 
@@ -41,7 +41,7 @@ public class Multinomials {
                 assert(!Double.isNaN(logProps[d]));
             }
         } else {
-            double uniform = Utilities.log(1.0 / (double)logProps.length);
+            double uniform = FastMath.log(1.0 / (double)logProps.length);
             for (int d = 0; d < logProps.length; d++) {
                 logProps[d] = uniform;
             }

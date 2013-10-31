@@ -5,7 +5,7 @@ import java.util.Arrays;
 import edu.jhu.prim.Primitives;
 import edu.jhu.prim.tuple.IntTuple;
 import edu.jhu.util.Prng;
-import edu.jhu.util.Utilities;
+import edu.jhu.util.math.FastMath;
 
 
 /**
@@ -177,20 +177,20 @@ public class DoubleArrays {
     public static double[] getExp(double[] logPhi) {
         double[] phi = new double[logPhi.length];
         for (int i=0; i<phi.length; i++) {
-            phi[i] = Utilities.exp(logPhi[i]);
+            phi[i] = FastMath.exp(logPhi[i]);
         }
         return phi;
     }
 
     public static void exp(double[] phi) {
         for (int i=0; i<phi.length; i++) {
-            phi[i] = Utilities.exp(phi[i]);
+            phi[i] = FastMath.exp(phi[i]);
         }
     }
 
     public static void log(double[] phi) {
         for (int i=0; i<phi.length; i++) {
-            phi[i] = Utilities.log(phi[i]);
+            phi[i] = FastMath.log(phi[i]);
         }
     }
 
@@ -202,7 +202,7 @@ public class DoubleArrays {
 
     public static void logForIlp(double[] phi) {
         for (int i=0; i<phi.length; i++) {
-            phi[i] = Utilities.logForIlp(phi[i]);
+            phi[i] = FastMath.logForIlp(phi[i]);
         }
     }
 
@@ -215,14 +215,14 @@ public class DoubleArrays {
     public static double[] getLogForIlp(double[] phi) {
         double[] logPhi = new double[phi.length];
         for (int t=0; t<logPhi.length; t++) {
-            logPhi[t] = Utilities.logForIlp(phi[t]);
+            logPhi[t] = FastMath.logForIlp(phi[t]);
         }
         return logPhi;
     }
 
     public static void updateLogPhi(double[] phi, double[] logPhi) {
     	for (int t=0; t<logPhi.length; t++) {
-    		logPhi[t] = Utilities.log(phi[t]);
+    		logPhi[t] = FastMath.log(phi[t]);
     	}
     }
 
@@ -353,7 +353,7 @@ public class DoubleArrays {
     public static double logSum(double[] logProps) {
         double logPropSum = Double.NEGATIVE_INFINITY;
         for (int d = 0; d < logProps.length; d++) {
-            logPropSum = Utilities.logAdd(logPropSum, logProps[d]);
+            logPropSum = FastMath.logAdd(logPropSum, logProps[d]);
         }
         return logPropSum;
     }

@@ -1,9 +1,11 @@
-package edu.jhu.prim.tuple;
+package edu.jhu.prim.sample;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
+import edu.jhu.prim.tuple.OrderedPair;
+import edu.jhu.prim.tuple.UnorderedPair;
 import edu.jhu.util.Prng;
 
 public class PairSampler {

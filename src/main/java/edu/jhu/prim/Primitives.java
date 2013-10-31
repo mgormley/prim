@@ -140,4 +140,8 @@ public class Primitives {
     public static boolean gte(double a, double b, double delta) {
         return a + delta >= b;
     }
+
+    public static void assertDoubleEquals(double a, double b) {
+        assert(Math.abs(a - b) < 0.000000000001);
+    }
  }

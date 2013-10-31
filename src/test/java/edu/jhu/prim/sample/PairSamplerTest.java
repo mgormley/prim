@@ -1,9 +1,12 @@
-package edu.jhu.prim.tuple;
+package edu.jhu.prim.sample;
 
 import java.util.Collection;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import edu.jhu.prim.tuple.OrderedPair;
+import edu.jhu.prim.tuple.UnorderedPair;
 
 
 public class PairSamplerTest {

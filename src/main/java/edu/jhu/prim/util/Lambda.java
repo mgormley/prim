@@ -1,6 +1,6 @@
 package edu.jhu.prim.util;
 
-import edu.jhu.util.Utilities;
+import edu.jhu.util.math.FastMath;
 
 
 /**
@@ -97,7 +97,7 @@ public class Lambda {
     /** Log-add operator on doubles. */
     public static final class DoubleLogAdd implements LambdaBinOpDouble {
         public double call(double v1, double v2) {
-            return Utilities.logAdd(v1, v2);
+            return FastMath.logAdd(v1, v2);
         }
     }
     
