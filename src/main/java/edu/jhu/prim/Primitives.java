@@ -42,68 +42,6 @@ public class Primitives {
         final int h = key ^ ((key >>> 20) ^ (key >>> 12));
         return h ^ (h >>> 7) ^ (h >>> 4);
     }
-
-
-    /**
-     * Counts the number of indices that appear in both arrays.
-     * @param indices1 Sorted array of indices.
-     * @param indices2 Sorted array of indices.
-     */
-    public static int countCommon(long[] indices1, long[] indices2) {
-        int numCommonIndices = 0;
-        int i = 0;
-        int j = 0;
-        while (i < indices1.length && j < indices2.length) {
-            if (indices1[i] < indices2[j]) {
-                i++;
-            } else if (indices2[j] < indices1[i]) {
-                j++;
-            } else {
-                numCommonIndices++;
-                // Equal indices.
-                i++;
-                j++;
-            }
-        }
-        for (; i < indices1.length; i++) {
-            numCommonIndices++;
-        }
-        for (; j < indices2.length; j++) {
-            numCommonIndices++;
-        }
-        return numCommonIndices;
-    }
-    
-    /**
-     * Counts the number of unique indices in two arrays.
-     * @param indices1 Sorted array of indices.
-     * @param indices2 Sorted array of indices.
-     */
-    public static int countUnique(long[] indices1, long[] indices2) {
-        int numUniqueIndices = 0;
-        int i = 0;
-        int j = 0;
-        while (i < indices1.length && j < indices2.length) {
-            if (indices1[i] < indices2[j]) {
-                numUniqueIndices++;
-                i++;
-            } else if (indices2[j] < indices1[i]) {
-                numUniqueIndices++;
-                j++;
-            } else {
-                // Equal indices.
-                i++;
-                j++;
-            }
-        }
-        for (; i < indices1.length; i++) {
-            numUniqueIndices++;
-        }
-        for (; j < indices2.length; j++) {
-            numUniqueIndices++;
-        }
-        return numUniqueIndices;
-    }
     
     /* ------------------- Tests ---------------------- */
     
@@ -153,6 +91,8 @@ public class Primitives {
         }
         return a;
     }
+
+    /* --------------------- Equality and Comparison ------------------- */
 
     public static boolean equals(int a, int b) {
         return a == b;
