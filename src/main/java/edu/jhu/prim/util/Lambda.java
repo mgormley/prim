@@ -1,6 +1,6 @@
 package edu.jhu.prim.util;
 
-import edu.jhu.util.math.FastMath;
+import edu.jhu.prim.util.math.FastMath;
 
 
 /**

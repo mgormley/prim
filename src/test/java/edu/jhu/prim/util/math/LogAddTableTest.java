@@ -1,12 +1,14 @@
-package edu.jhu.util.math;
+package edu.jhu.prim.util.math;
 
-import static edu.jhu.util.math.LogAddTable.LOG_ADD_MIN;
-import static edu.jhu.util.math.LogAddTable.logAdd;
-import static edu.jhu.util.math.LogAddTable.logSubtract;
+import static edu.jhu.prim.util.math.LogAddTable.LOG_ADD_MIN;
+import static edu.jhu.prim.util.math.LogAddTable.logAdd;
+import static edu.jhu.prim.util.math.LogAddTable.logSubtract;
 
 import java.util.Random;
 
 import org.junit.Test;
+
+import edu.jhu.prim.util.math.FastMath;
 
 
 

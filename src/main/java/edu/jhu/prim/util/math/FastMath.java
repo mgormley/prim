@@ -1,4 +1,4 @@
-package edu.jhu.util.math;
+package edu.jhu.prim.util.math;
 
 
 public class FastMath {

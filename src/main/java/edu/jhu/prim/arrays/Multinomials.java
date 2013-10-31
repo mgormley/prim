@@ -1,8 +1,8 @@
 package edu.jhu.prim.arrays;
 
 import edu.jhu.prim.Primitives;
+import edu.jhu.prim.util.math.FastMath;
 import edu.jhu.util.Prng;
-import edu.jhu.util.math.FastMath;
 
 public class Multinomials {
 
