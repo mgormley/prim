@@ -6,6 +6,9 @@
 java.hprof.txt
 warn.log
 tmp
+.project
+.classpath
+.pydevproject
  
 # /
 /target
