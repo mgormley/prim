@@ -40,6 +40,20 @@ public class LongDoubleDenseVector implements LongDoubleVector {
         this.elements = DoubleArrays.copyOf(other.elements);
         this.idxAfterLast = other.idxAfterLast;
     }
+
+    /** Copy constructor. */
+    public LongDoubleDenseVector(LongDoubleVector other) {
+        // TODO: Exploit the number of non-zero entries in other.
+        this();
+        final LongDoubleDenseVector thisVec = this; 
+        other.apply(new FnLongDoubleToDouble() {            
+            @Override
+            public double call(long idx, double val) {
+                thisVec.set(idx, val);
+                return val;
+            }
+        });
+    }
     
     /**
      * Gets the i'th entry in the vector.

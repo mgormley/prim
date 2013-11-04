@@ -9,6 +9,7 @@ import edu.jhu.prim.map.LongDoubleEntry;
 import edu.jhu.prim.map.LongDoubleSortedMap;
 import edu.jhu.prim.sort.LongDoubleSort;
 import edu.jhu.prim.util.Lambda;
+import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
 import edu.jhu.prim.util.Lambda.LambdaBinOpDouble;
 import edu.jhu.prim.util.SafeCast;
 
@@ -37,21 +38,38 @@ public class LongDoubleSortedVector extends LongDoubleSortedMap implements LongD
     public LongDoubleSortedVector(long[] index, double[] data) {
     	super(index, data);
 	}
-    
-    public LongDoubleSortedVector(LongDoubleSortedVector vector) {
-    	super(vector);
-    }
 
 	public LongDoubleSortedVector(double[] denseRow) {
 		this(LongDoubleSort.getLongIndexArray(denseRow.length), denseRow);
 	}
+	
+	/** Copy constructor. */
+    public LongDoubleSortedVector(LongDoubleSortedVector vector) {
+        super(vector);
+    }
 
+    /** Copy constructor. */
 	public LongDoubleSortedVector(LongDoubleHashVector vector) {
 	    super(vector);
     }
-
+	
+	/** Copy constructor. */
     public LongDoubleSortedVector(LongDoubleDenseVector vector) {
         this(vector.toNativeArray());
+    }
+
+    /** Copy constructor. */
+    public LongDoubleSortedVector(LongDoubleVector other) {
+        // TODO: Exploit the number of non-zero entries in other.
+        this();
+        final LongDoubleSortedVector thisVec = this; 
+        other.apply(new FnLongDoubleToDouble() {            
+            @Override
+            public double call(long idx, double val) {
+                thisVec.set(idx, val);
+                return val;
+            }
+        });
     }
     
     // TODO: This could be done with a single binary search instead of two.
