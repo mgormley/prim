@@ -2,12 +2,16 @@ package edu.jhu.prim.vector;
 
 import edu.jhu.prim.Primitives;
 import edu.jhu.prim.arrays.IntArrays;
+import edu.jhu.prim.arrays.IntArrays;
+import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.map.IntIntEntry;
 import edu.jhu.prim.map.IntIntSortedMap;
 import edu.jhu.prim.sort.IntIntSort;
 import edu.jhu.prim.util.Lambda;
+import edu.jhu.prim.util.Lambda.FnIntIntToInt;
 import edu.jhu.prim.util.Lambda.LambdaBinOpInt;
+import edu.jhu.prim.util.SafeCast;
 
 /**
  * Infinite length sparse vector.
@@ -34,21 +38,38 @@ public class IntIntSortedVector extends IntIntSortedMap implements IntIntVector 
     public IntIntSortedVector(int[] index, int[] data) {
     	super(index, data);
 	}
-    
-    public IntIntSortedVector(IntIntSortedVector vector) {
-    	super(vector);
-    }
 
 	public IntIntSortedVector(int[] denseRow) {
 		this(IntIntSort.getIntIndexArray(denseRow.length), denseRow);
 	}
+	
+	/** Copy constructor. */
+    public IntIntSortedVector(IntIntSortedVector vector) {
+        super(vector);
+    }
 
+    /** Copy constructor. */
 	public IntIntSortedVector(IntIntHashVector vector) {
 	    super(vector);
     }
-
+	
+	/** Copy constructor. */
     public IntIntSortedVector(IntIntDenseVector vector) {
         this(vector.toNativeArray());
+    }
+
+    /** Copy constructor. */
+    public IntIntSortedVector(IntIntVector other) {
+        // TODO: Exploit the number of non-zero entries in other.
+        this();
+        final IntIntSortedVector thisVec = this; 
+        other.apply(new FnIntIntToInt() {            
+            @Override
+            public int call(int idx, int val) {
+                thisVec.set(idx, val);
+                return val;
+            }
+        });
     }
     
     // TODO: This could be done with a single binary search instead of two.

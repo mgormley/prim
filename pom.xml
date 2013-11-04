@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>edu.jhu.prim</groupId>
@@ -26,8 +27,8 @@
         <configuration>
           <source>1.6</source>
           <target>1.6</target>
-	  <useIncrementalCompilation>true</useIncrementalCompilation>
-	  <fork>true</fork>
+          <useIncrementalCompilation>true</useIncrementalCompilation>
+          <fork>true</fork>
         </configuration>
         <version>3.0</version>
       </plugin>
@@ -43,6 +44,30 @@
           </descriptorRefs>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
@@ -57,23 +82,23 @@
 
   <scm>
     <developerConnection>scm:git:file:///home/hltcoe/mgormley/public/git_repos/prim.git</developerConnection>
-    <!-- <connection>scm:git:git://github.com/hertzsprung/redis-launcher.git</connection>
-    <url>http://github.com/hertzsprung/redis-launcher</url> -->
+    <!-- <connection>scm:git:git://github.com/hertzsprung/redis-launcher.git</connection> 
+      <url>http://github.com/hertzsprung/redis-launcher</url> -->
   </scm>
 
 <!--
-<distributionManagement>
+  <distributionManagement>
     <repository>
-        <id>checker</id>
-        <name>checker-releases</name>
-        <url>http://localhost:8081/artifactory/libs-release-local</url>
+      <id>checker</id>
+      <name>checker-releases</name>
+      <url>http://localhost:8081/artifactory/libs-release-local</url>
     </repository>
     <snapshotRepository>
-        <id>checker</id>
-        <name>checker-snapshots</name>
-        <url>http://localhost:8081/artifactory/libs-snapshot-local</url>
+      <id>checker</id>
+      <name>checker-snapshots</name>
+      <url>http://localhost:8081/artifactory/libs-snapshot-local</url>
     </snapshotRepository>
-</distributionManagement>
+  </distributionManagement>
 -->
 
 </project>

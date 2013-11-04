@@ -18,10 +18,24 @@ public class LongDoubleHashVector extends LongDoubleHashMap implements LongDoubl
         super(expectedSize, 0);
     }
     
+    /** Copy constructor. */
     public LongDoubleHashVector(LongDoubleHashVector other) {
         super(other);
     }
     
+    /** Copy constructor. */
+    public LongDoubleHashVector(LongDoubleVector other) {
+        this();
+        final LongDoubleHashVector thisVec = this; 
+        other.apply(new FnLongDoubleToDouble() {            
+            @Override
+            public double call(long idx, double val) {
+                thisVec.set(idx, val);
+                return val;
+            }
+        });
+    }
+        
     @Override
     public void set(long idx, double val) {
         put(idx, val);

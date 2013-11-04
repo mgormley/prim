@@ -1,15 +1,17 @@
 package edu.jhu.prim.vector;
 
 import edu.jhu.prim.Primitives;
-import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.arrays.LongArrays;
-import edu.jhu.prim.list.IntArrayList;
+import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.list.LongArrayList;
+import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.map.IntLongEntry;
 import edu.jhu.prim.map.IntLongSortedMap;
 import edu.jhu.prim.sort.IntLongSort;
 import edu.jhu.prim.util.Lambda;
+import edu.jhu.prim.util.Lambda.FnIntLongToLong;
 import edu.jhu.prim.util.Lambda.LambdaBinOpLong;
+import edu.jhu.prim.util.SafeCast;
 
 /**
  * Infinite length sparse vector.
@@ -36,21 +38,38 @@ public class IntLongSortedVector extends IntLongSortedMap implements IntLongVect
     public IntLongSortedVector(int[] index, long[] data) {
     	super(index, data);
 	}
-    
-    public IntLongSortedVector(IntLongSortedVector vector) {
-    	super(vector);
-    }
 
 	public IntLongSortedVector(long[] denseRow) {
 		this(IntLongSort.getIntIndexArray(denseRow.length), denseRow);
 	}
+	
+	/** Copy constructor. */
+    public IntLongSortedVector(IntLongSortedVector vector) {
+        super(vector);
+    }
 
+    /** Copy constructor. */
 	public IntLongSortedVector(IntLongHashVector vector) {
 	    super(vector);
     }
-
+	
+	/** Copy constructor. */
     public IntLongSortedVector(IntLongDenseVector vector) {
         this(vector.toNativeArray());
+    }
+
+    /** Copy constructor. */
+    public IntLongSortedVector(IntLongVector other) {
+        // TODO: Exploit the number of non-zero entries in other.
+        this();
+        final IntLongSortedVector thisVec = this; 
+        other.apply(new FnIntLongToLong() {            
+            @Override
+            public long call(int idx, long val) {
+                thisVec.set(idx, val);
+                return val;
+            }
+        });
     }
     
     // TODO: This could be done with a single binary search instead of two.

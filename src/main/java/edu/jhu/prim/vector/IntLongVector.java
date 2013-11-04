@@ -29,7 +29,7 @@ public interface IntLongVector extends Serializable {
     /** Computes the dot product of this vector with the other vector. */
     long dot(IntLongVector other);
 
-    /** Applies the function to each entry in the vector. */
+    /** Applies the function to each (explicit) entry in the vector. */
     void apply(FnIntLongToLong function);
     
     /** Updates this vector to be the entrywise sum of this vector with the other. */

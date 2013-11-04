@@ -4,6 +4,7 @@ import edu.jhu.prim.map.IntIntHashMap;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
 import edu.jhu.prim.util.Lambda.LambdaBinOpInt;
+import edu.jhu.prim.util.SafeCast;
 
 public class IntIntHashVector extends IntIntHashMap implements IntIntVector {
 
@@ -17,10 +18,24 @@ public class IntIntHashVector extends IntIntHashMap implements IntIntVector {
         super(expectedSize, 0);
     }
     
+    /** Copy constructor. */
     public IntIntHashVector(IntIntHashVector other) {
         super(other);
     }
     
+    /** Copy constructor. */
+    public IntIntHashVector(IntIntVector other) {
+        this();
+        final IntIntHashVector thisVec = this; 
+        other.apply(new FnIntIntToInt() {            
+            @Override
+            public int call(int idx, int val) {
+                thisVec.set(idx, val);
+                return val;
+            }
+        });
+    }
+        
     @Override
     public void set(int idx, int val) {
         put(idx, val);

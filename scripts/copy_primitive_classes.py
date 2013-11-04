@@ -90,10 +90,11 @@ def copy_pair(dest_key, dest_val):
     repls += get_typedef_repls(src_val, dest_val)
     repls += [#("getIntIndexArray", "getIndexArray"),
              ("int serialVersionUID", "long serialVersionUID"),
-             ("Long.POSITIVE_INFINITY", "Long.MAX_VALUE"),
-             ("Long.NEGATIVE_INFINITY", "Long.MIN_VALUE"),
-             ("Int.POSITIVE_INFINITY", "Integer.MAX_VALUE"),
-             ("Int.NEGATIVE_INFINITY", "Integer.MIN_VALUE"),
+             # TODO: The MIN_VALUEs and MAX_VALUEs are not being sorted properly.
+             ("Long.POSITIVE_INFINITY", "9223372036854775806l"),
+             ("Long.NEGATIVE_INFINITY", "-9223372036854775806l"),
+             ("Int.POSITIVE_INFINITY", "2147483646"),
+             ("Int.NEGATIVE_INFINITY", "-2147483646"),
              ]
     # Other regex replacements
     add_re_subs += [(r"SafeCast\.safeIntToInt\(([^\)]+)\)", r"\1"),

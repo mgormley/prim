@@ -6,6 +6,7 @@ import edu.jhu.prim.Primitives;
 import edu.jhu.prim.arrays.LongArrays;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntLongToLong;
+import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.vector.IntLongHashVector.SparseBinaryOpApplier;
 
 
@@ -38,6 +39,20 @@ public class IntLongDenseVector implements IntLongVector {
     public IntLongDenseVector(IntLongDenseVector other) {
         this.elements = LongArrays.copyOf(other.elements);
         this.idxAfterLast = other.idxAfterLast;
+    }
+
+    /** Copy constructor. */
+    public IntLongDenseVector(IntLongVector other) {
+        // TODO: Exploit the number of non-zero entries in other.
+        this();
+        final IntLongDenseVector thisVec = this; 
+        other.apply(new FnIntLongToLong() {            
+            @Override
+            public long call(int idx, long val) {
+                thisVec.set(idx, val);
+                return val;
+            }
+        });
     }
     
     /**

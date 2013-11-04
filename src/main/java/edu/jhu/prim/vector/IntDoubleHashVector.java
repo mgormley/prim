@@ -4,6 +4,7 @@ import edu.jhu.prim.map.IntDoubleHashMap;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
 import edu.jhu.prim.util.Lambda.LambdaBinOpDouble;
+import edu.jhu.prim.util.SafeCast;
 
 public class IntDoubleHashVector extends IntDoubleHashMap implements IntDoubleVector {
 
@@ -17,10 +18,24 @@ public class IntDoubleHashVector extends IntDoubleHashMap implements IntDoubleVe
         super(expectedSize, 0);
     }
     
+    /** Copy constructor. */
     public IntDoubleHashVector(IntDoubleHashVector other) {
         super(other);
     }
     
+    /** Copy constructor. */
+    public IntDoubleHashVector(IntDoubleVector other) {
+        this();
+        final IntDoubleHashVector thisVec = this; 
+        other.apply(new FnIntDoubleToDouble() {            
+            @Override
+            public double call(int idx, double val) {
+                thisVec.set(idx, val);
+                return val;
+            }
+        });
+    }
+        
     @Override
     public void set(int idx, double val) {
         put(idx, val);

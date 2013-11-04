@@ -29,7 +29,7 @@ public interface IntIntVector extends Serializable {
     /** Computes the dot product of this vector with the other vector. */
     int dot(IntIntVector other);
 
-    /** Applies the function to each entry in the vector. */
+    /** Applies the function to each (explicit) entry in the vector. */
     void apply(FnIntIntToInt function);
     
     /** Updates this vector to be the entrywise sum of this vector with the other. */
