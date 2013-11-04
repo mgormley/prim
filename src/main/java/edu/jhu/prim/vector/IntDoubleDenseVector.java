@@ -6,6 +6,7 @@ import edu.jhu.prim.Primitives;
 import edu.jhu.prim.arrays.DoubleArrays;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
+import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.vector.IntDoubleHashVector.SparseBinaryOpApplier;
 
 
@@ -38,6 +39,20 @@ public class IntDoubleDenseVector implements IntDoubleVector {
     public IntDoubleDenseVector(IntDoubleDenseVector other) {
         this.elements = DoubleArrays.copyOf(other.elements);
         this.idxAfterLast = other.idxAfterLast;
+    }
+
+    /** Copy constructor. */
+    public IntDoubleDenseVector(IntDoubleVector other) {
+        // TODO: Exploit the number of non-zero entries in other.
+        this();
+        final IntDoubleDenseVector thisVec = this; 
+        other.apply(new FnIntDoubleToDouble() {            
+            @Override
+            public double call(int idx, double val) {
+                thisVec.set(idx, val);
+                return val;
+            }
+        });
     }
     
     /**

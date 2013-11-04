@@ -6,6 +6,7 @@ import edu.jhu.prim.Primitives;
 import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
+import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.vector.IntIntHashVector.SparseBinaryOpApplier;
 
 
@@ -38,6 +39,20 @@ public class IntIntDenseVector implements IntIntVector {
     public IntIntDenseVector(IntIntDenseVector other) {
         this.elements = IntArrays.copyOf(other.elements);
         this.idxAfterLast = other.idxAfterLast;
+    }
+
+    /** Copy constructor. */
+    public IntIntDenseVector(IntIntVector other) {
+        // TODO: Exploit the number of non-zero entries in other.
+        this();
+        final IntIntDenseVector thisVec = this; 
+        other.apply(new FnIntIntToInt() {            
+            @Override
+            public int call(int idx, int val) {
+                thisVec.set(idx, val);
+                return val;
+            }
+        });
     }
     
     /**

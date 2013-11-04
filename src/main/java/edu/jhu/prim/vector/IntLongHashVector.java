@@ -4,6 +4,7 @@ import edu.jhu.prim.map.IntLongHashMap;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntLongToLong;
 import edu.jhu.prim.util.Lambda.LambdaBinOpLong;
+import edu.jhu.prim.util.SafeCast;
 
 public class IntLongHashVector extends IntLongHashMap implements IntLongVector {
 
@@ -17,10 +18,24 @@ public class IntLongHashVector extends IntLongHashMap implements IntLongVector {
         super(expectedSize, 0);
     }
     
+    /** Copy constructor. */
     public IntLongHashVector(IntLongHashVector other) {
         super(other);
     }
     
+    /** Copy constructor. */
+    public IntLongHashVector(IntLongVector other) {
+        this();
+        final IntLongHashVector thisVec = this; 
+        other.apply(new FnIntLongToLong() {            
+            @Override
+            public long call(int idx, long val) {
+                thisVec.set(idx, val);
+                return val;
+            }
+        });
+    }
+        
     @Override
     public void set(int idx, long val) {
         put(idx, val);

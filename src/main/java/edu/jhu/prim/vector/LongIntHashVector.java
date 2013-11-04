@@ -18,10 +18,24 @@ public class LongIntHashVector extends LongIntHashMap implements LongIntVector {
         super(expectedSize, 0);
     }
     
+    /** Copy constructor. */
     public LongIntHashVector(LongIntHashVector other) {
         super(other);
     }
     
+    /** Copy constructor. */
+    public LongIntHashVector(LongIntVector other) {
+        this();
+        final LongIntHashVector thisVec = this; 
+        other.apply(new FnLongIntToInt() {            
+            @Override
+            public int call(long idx, int val) {
+                thisVec.set(idx, val);
+                return val;
+            }
+        });
+    }
+        
     @Override
     public void set(long idx, int val) {
         put(idx, val);

@@ -40,6 +40,20 @@ public class LongIntDenseVector implements LongIntVector {
         this.elements = IntArrays.copyOf(other.elements);
         this.idxAfterLast = other.idxAfterLast;
     }
+
+    /** Copy constructor. */
+    public LongIntDenseVector(LongIntVector other) {
+        // TODO: Exploit the number of non-zero entries in other.
+        this();
+        final LongIntDenseVector thisVec = this; 
+        other.apply(new FnLongIntToInt() {            
+            @Override
+            public int call(long idx, int val) {
+                thisVec.set(idx, val);
+                return val;
+            }
+        });
+    }
     
     /**
      * Gets the i'th entry in the vector.

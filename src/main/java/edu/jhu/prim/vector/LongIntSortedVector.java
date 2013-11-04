@@ -9,6 +9,7 @@ import edu.jhu.prim.map.LongIntEntry;
 import edu.jhu.prim.map.LongIntSortedMap;
 import edu.jhu.prim.sort.LongIntSort;
 import edu.jhu.prim.util.Lambda;
+import edu.jhu.prim.util.Lambda.FnLongIntToInt;
 import edu.jhu.prim.util.Lambda.LambdaBinOpInt;
 import edu.jhu.prim.util.SafeCast;
 
@@ -37,21 +38,38 @@ public class LongIntSortedVector extends LongIntSortedMap implements LongIntVect
     public LongIntSortedVector(long[] index, int[] data) {
     	super(index, data);
 	}
-    
-    public LongIntSortedVector(LongIntSortedVector vector) {
-    	super(vector);
-    }
 
 	public LongIntSortedVector(int[] denseRow) {
 		this(LongIntSort.getLongIndexArray(denseRow.length), denseRow);
 	}
+	
+	/** Copy constructor. */
+    public LongIntSortedVector(LongIntSortedVector vector) {
+        super(vector);
+    }
 
+    /** Copy constructor. */
 	public LongIntSortedVector(LongIntHashVector vector) {
 	    super(vector);
     }
-
+	
+	/** Copy constructor. */
     public LongIntSortedVector(LongIntDenseVector vector) {
         this(vector.toNativeArray());
+    }
+
+    /** Copy constructor. */
+    public LongIntSortedVector(LongIntVector other) {
+        // TODO: Exploit the number of non-zero entries in other.
+        this();
+        final LongIntSortedVector thisVec = this; 
+        other.apply(new FnLongIntToInt() {            
+            @Override
+            public int call(long idx, int val) {
+                thisVec.set(idx, val);
+                return val;
+            }
+        });
     }
     
     // TODO: This could be done with a single binary search instead of two.

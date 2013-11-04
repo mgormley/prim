@@ -9,7 +9,9 @@ import edu.jhu.prim.map.IntDoubleEntry;
 import edu.jhu.prim.map.IntDoubleSortedMap;
 import edu.jhu.prim.sort.IntDoubleSort;
 import edu.jhu.prim.util.Lambda;
+import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
 import edu.jhu.prim.util.Lambda.LambdaBinOpDouble;
+import edu.jhu.prim.util.SafeCast;
 
 /**
  * Infinite length sparse vector.
@@ -36,21 +38,38 @@ public class IntDoubleSortedVector extends IntDoubleSortedMap implements IntDoub
     public IntDoubleSortedVector(int[] index, double[] data) {
     	super(index, data);
 	}
-    
-    public IntDoubleSortedVector(IntDoubleSortedVector vector) {
-    	super(vector);
-    }
 
 	public IntDoubleSortedVector(double[] denseRow) {
 		this(IntDoubleSort.getIntIndexArray(denseRow.length), denseRow);
 	}
+	
+	/** Copy constructor. */
+    public IntDoubleSortedVector(IntDoubleSortedVector vector) {
+        super(vector);
+    }
 
+    /** Copy constructor. */
 	public IntDoubleSortedVector(IntDoubleHashVector vector) {
 	    super(vector);
     }
-
+	
+	/** Copy constructor. */
     public IntDoubleSortedVector(IntDoubleDenseVector vector) {
         this(vector.toNativeArray());
+    }
+
+    /** Copy constructor. */
+    public IntDoubleSortedVector(IntDoubleVector other) {
+        // TODO: Exploit the number of non-zero entries in other.
+        this();
+        final IntDoubleSortedVector thisVec = this; 
+        other.apply(new FnIntDoubleToDouble() {            
+            @Override
+            public double call(int idx, double val) {
+                thisVec.set(idx, val);
+                return val;
+            }
+        });
     }
     
     // TODO: This could be done with a single binary search instead of two.

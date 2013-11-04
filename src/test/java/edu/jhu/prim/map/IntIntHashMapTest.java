@@ -1,6 +1,8 @@
 package edu.jhu.prim.map;
 
 import static edu.jhu.prim.Primitives.toInt;
+import static edu.jhu.prim.Primitives.toInt;
+import static edu.jhu.prim.Primitives.toInt;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Iterator;

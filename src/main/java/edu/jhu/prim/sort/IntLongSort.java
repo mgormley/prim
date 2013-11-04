@@ -1,7 +1,7 @@
 package edu.jhu.prim.sort;
 
-import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.arrays.LongArrays;
+import edu.jhu.prim.arrays.IntArrays;
 
 public class IntLongSort {
 
