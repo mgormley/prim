@@ -37,25 +37,25 @@ public class IntLongSortTest {
     
     @Test
     public void testIntLongSortValuesInfinitiesAsc() {
-        long[] values = new long[]{ 1, Long.MAX_VALUE, 2, -1, Long.MIN_VALUE, 5};
+        long[] values = new long[]{ 1, 9223372036854775806l, 2, -1, -9223372036854775806l, 5};
         int[] index = IntLongSort.getIntIndexArray(values);
         IntLongSort.sortValuesAsc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
 
-        JUnitUtils.assertArrayEquals(new long[]{Long.MIN_VALUE, -1, 1, 2, 5, Long.MAX_VALUE}, values);
+        JUnitUtils.assertArrayEquals(new long[]{-9223372036854775806l, -1, 1, 2, 5, 9223372036854775806l}, values);
         Assert.assertArrayEquals(new int[]{ 4, 3, 0, 2, 5, 1 }, index);
     }
     
     @Test
     public void testIntLongSortValuesInfinitiesDesc() {
-        long[] values = new long[]{ 1, Long.MAX_VALUE, 2, -1, Long.MIN_VALUE, 5};
+        long[] values = new long[]{ 1, 9223372036854775806l, 2, -1, -9223372036854775806l, 5};
         int[] index = IntLongSort.getIntIndexArray(values);
         IntLongSort.sortValuesDesc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new long[]{Long.MAX_VALUE,  5, 2, 1, -1, Long.MIN_VALUE}, values);
+        JUnitUtils.assertArrayEquals(new long[]{9223372036854775806l,  5, 2, 1, -1, -9223372036854775806l}, values);
         Assert.assertArrayEquals(new int[]{ 1, 5, 2, 0, 3, 4 }, index);
     }    
 
