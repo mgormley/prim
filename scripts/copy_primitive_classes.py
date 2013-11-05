@@ -116,6 +116,7 @@ def copy_pair(dest_key, dest_val):
                  "edu.jhu.prim.vector.LongDoubleSortedVector",
                  "edu.jhu.prim.vector.LongDoubleHashVector",
                  "edu.jhu.prim.vector.LongDoubleDenseVector",
+                 "edu.jhu.prim.vector.LongDoubleVectorSlice",
                  ]
     main_java = os.path.join("src", "main", "java")
     src_files = [os.path.join(main_java, c.replace(".", "/") + ".java") for c in main_classes]
@@ -127,6 +128,7 @@ def copy_pair(dest_key, dest_val):
                  "edu.jhu.prim.vector.LongDoubleSortedVectorTest",
                  "edu.jhu.prim.vector.LongDoubleHashVectorTest",
                  "edu.jhu.prim.vector.LongDoubleDenseVectorTest",
+                 "edu.jhu.prim.vector.LongDoubleVectorSliceTest",
                  "edu.jhu.prim.vector.AbstractLongDoubleVectorTest",
                  ]
     test_java = os.path.join("src", "test", "java")

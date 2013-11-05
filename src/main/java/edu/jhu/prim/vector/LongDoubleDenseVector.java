@@ -175,6 +175,11 @@ public class LongDoubleDenseVector implements LongDoubleVector {
         return Arrays.copyOf(elements, idxAfterLast);
     }
     
+    /** Gets the INTERNAL representation of this vector. */
+    public double[] getInternalElements() {
+        return elements;
+    }
+    
     /**
      * Trims the internal array to exactly the size of the list.
      */

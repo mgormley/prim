@@ -175,6 +175,11 @@ public class IntIntDenseVector implements IntIntVector {
         return Arrays.copyOf(elements, idxAfterLast);
     }
     
+    /** Gets the INTERNAL representation of this vector. */
+    public int[] getInternalElements() {
+        return elements;
+    }
+    
     /**
      * Trims the internal array to exactly the size of the list.
      */

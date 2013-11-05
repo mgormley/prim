@@ -40,15 +40,27 @@ public class IntArrays {
     public static int[][] copyOf(int[][] array) {
         int[][] newArray = new int[array.length][];
         for (int i = 0; i < array.length; i++) {
-            newArray[i] = IntArrays.copyOf(array[i], array[i].length);
+            newArray[i] = copyOf(array[i], array[i].length);
         }
         return newArray;
     }
 
-    public static void fill(int[] array, int value) {
-        Arrays.fill(array, value);
+    public static int[][][] copyOf(int[][][] array) {
+        int[][][] clone = new int[array.length][][];
+        for (int i = 0; i < clone.length; i++) {
+            clone[i] = copyOf(array[i]);
+        }
+        return clone;
     }
     
+    public static int[][][][] copyOf(int[][][][] array) {
+        int[][][][] clone = new int[array.length][][][];
+        for (int i = 0; i < clone.length; i++) {
+            clone[i] = copyOf(array[i]);
+        }
+        return clone;
+    }
+
     public static void fill(int[][] array, int value) {
         for (int i=0; i<array.length; i++) {
             Arrays.fill(array[i], value);
