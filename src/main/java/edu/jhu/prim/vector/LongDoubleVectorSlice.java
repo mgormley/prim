@@ -27,16 +27,16 @@ public class LongDoubleVectorSlice implements LongDoubleVector {
     /** The size of this vector. The last element (exclusive) will be elements[start + size]. */
     private final int size;
     
-    public LongDoubleVectorSlice(double[] elements, int start, int end) {
+    public LongDoubleVectorSlice(double[] elements, int start, int size) {
         this.elements = elements;
         this.start = start;
-        this.size = end - start;
+        this.size = size;
         assert start >= 0;
         assert size <= elements.length;
     }
     
-    public LongDoubleVectorSlice(LongDoubleDenseVector vec, int start, int end) {
-        this(vec.getInternalElements(), start, end);
+    public LongDoubleVectorSlice(LongDoubleDenseVector vec, int start, int size) {
+        this(vec.getInternalElements(), start, size);
     }
     
     /** Shallow copy constructor. */
@@ -53,8 +53,16 @@ public class LongDoubleVectorSlice implements LongDoubleVector {
      * @return The value of the element to get.
      */
     public double get(long idx) {
-        checkIndex(idx);
+        if (idx < 0 || idx >= size) {
+            return 0;
+        }
         return elements[SafeCast.safeLongToInt(idx + start)];
+    }
+
+    private final void checkIndex(long idx) {
+        if (idx < 0 || idx >= size) {
+            throw new IllegalStateException("Invalid index for slice: " + idx);
+        }
     }
     
     /**
@@ -67,13 +75,8 @@ public class LongDoubleVectorSlice implements LongDoubleVector {
         elements[SafeCast.safeLongToInt(idx + start)] = value;
     }
 
-    private final void checkIndex(long idx) {
-        if (idx < 0 || idx > size) {
-            throw new IllegalStateException("Invalid index for slice: " + idx);
-        }
-    }
-
     public void add(long idx, double value) {
+        checkIndex(idx);
         elements[SafeCast.safeLongToInt(idx + start)] += value;
     }
 

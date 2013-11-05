@@ -27,16 +27,16 @@ public class IntLongVectorSlice implements IntLongVector {
     /** The size of this vector. The last element (exclusive) will be elements[start + size]. */
     private final int size;
     
-    public IntLongVectorSlice(long[] elements, int start, int end) {
+    public IntLongVectorSlice(long[] elements, int start, int size) {
         this.elements = elements;
         this.start = start;
-        this.size = end - start;
+        this.size = size;
         assert start >= 0;
         assert size <= elements.length;
     }
     
-    public IntLongVectorSlice(IntLongDenseVector vec, int start, int end) {
-        this(vec.getInternalElements(), start, end);
+    public IntLongVectorSlice(IntLongDenseVector vec, int start, int size) {
+        this(vec.getInternalElements(), start, size);
     }
     
     /** Shallow copy constructor. */
@@ -53,8 +53,16 @@ public class IntLongVectorSlice implements IntLongVector {
      * @return The value of the element to get.
      */
     public long get(int idx) {
-        checkIndex(idx);
+        if (idx < 0 || idx >= size) {
+            return 0;
+        }
         return elements[idx + start];
+    }
+
+    private final void checkIndex(int idx) {
+        if (idx < 0 || idx >= size) {
+            throw new IllegalStateException("Invalid index for slice: " + idx);
+        }
     }
     
     /**
@@ -67,13 +75,8 @@ public class IntLongVectorSlice implements IntLongVector {
         elements[idx + start] = value;
     }
 
-    private final void checkIndex(int idx) {
-        if (idx < 0 || idx > size) {
-            throw new IllegalStateException("Invalid index for slice: " + idx);
-        }
-    }
-
     public void add(int idx, long value) {
+        checkIndex(idx);
         elements[idx + start] += value;
     }
 
