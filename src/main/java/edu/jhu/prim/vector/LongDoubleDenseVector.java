@@ -35,7 +35,7 @@ public class LongDoubleDenseVector implements LongDoubleVector {
         idxAfterLast = elements.length;
     }
     
-    /** Copy constructor. */
+    /** Gets a deep copy of this vector. */
     public LongDoubleDenseVector(LongDoubleDenseVector other) {
         this.elements = DoubleArrays.copyOf(other.elements);
         this.idxAfterLast = other.idxAfterLast;
@@ -53,6 +53,12 @@ public class LongDoubleDenseVector implements LongDoubleVector {
                 return val;
             }
         });
+    }
+    
+    /** Copy factory method. */
+    @Override
+    public LongDoubleVector copy() {
+        return new LongDoubleDenseVector(this);
     }
     
     /**
@@ -178,6 +184,41 @@ public class LongDoubleDenseVector implements LongDoubleVector {
     /** Gets the INTERNAL representation of this vector. */
     public double[] getInternalElements() {
         return elements;
+    }
+
+    /**
+     * Gets the number of explicit entries in this vector.
+     * 
+     * For a dense vector, this is just the size of the vector.
+     * 
+     * For a sparse vector, this is the number of entries which are explicitly
+     * represented in the vector.
+     * 
+     * The contract of this method is that a call to this.apply(fn) will visit n
+     * entries where n = this.getNumExplicitEntries().
+     * 
+     * @return The number of explicit entries.
+     */
+    public int getNumExplicitEntries() {
+        return idxAfterLast;
+    }
+    
+    /**
+     * Gets the number of implicit entries.
+     * 
+     * For a dense vector, this is just the size of the vector.
+     * 
+     * For a sparse vector, this is index after the last explicit entry in the
+     * vector. This corresponds to (1 + i) where i is the highest index
+     * explicitly represented.
+     * 
+     * The contract of this method is that for any j >=
+     * this.getNumImplicitEntries(), this.get(j) will return 0.
+     * 
+     * @return The number of implicit entries.
+     */
+    public int getNumImplicitEntries() {
+        return idxAfterLast;
     }
     
     /**

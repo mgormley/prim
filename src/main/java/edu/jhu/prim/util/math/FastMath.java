@@ -3,6 +3,10 @@ package edu.jhu.prim.util.math;
 
 public class FastMath {
 
+    public static final double LOG2 = log(2);
+    //@Opt(hasArg = true, description = "Whether to use a log-add table or log-add exact.")
+    public static boolean useLogAddTable = false;
+    
     public static int factorial(int n)
     {
         if( n <= 1 ) {
@@ -112,9 +116,5 @@ public class FastMath {
         }
         return log(weight);
     }
-
-    public static final double LOG2 = log(2);
-    //@Opt(hasArg = true, description = "Whether to use a log-add table or log-add exact.")
-    public static boolean useLogAddTable = false;
 
 }

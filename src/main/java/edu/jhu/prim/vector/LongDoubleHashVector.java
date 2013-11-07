@@ -35,6 +35,12 @@ public class LongDoubleHashVector extends LongDoubleHashMap implements LongDoubl
             }
         });
     }
+    
+    /** Gets a deep copy of this vector. */
+    @Override
+    public LongDoubleVector copy() {
+        return new LongDoubleHashVector(this);
+    }
         
     @Override
     public void set(long idx, double val) {

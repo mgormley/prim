@@ -28,14 +28,18 @@ public class LongDoubleVectorSlice implements LongDoubleVector {
     private final int size;
     
     public LongDoubleVectorSlice(double[] elements, int start, int size) {
+        if (!(0 <= start && start < elements.length && 0 <= size && size <= elements.length && start + size <= elements.length)) {
+            throw new IllegalStateException("Invalid slice indices");
+        }
         this.elements = elements;
         this.start = start;
         this.size = size;
-        assert start >= 0;
-        assert size <= elements.length;
     }
     
     public LongDoubleVectorSlice(LongDoubleDenseVector vec, int start, int size) {
+        // TODO: There's a rather odd case we're dealing with in which the dense
+        // vector may actually have a larger internal representation than what
+        // it exposes. So we initialize the internal array here.
         this(vec.getInternalElements(), start, size);
     }
     
@@ -45,6 +49,12 @@ public class LongDoubleVectorSlice implements LongDoubleVector {
         this.elements = other.elements;
         this.start = other.start;
         this.size = other.size;
+    }
+    
+    /** Gets a deep copy of this vector. */
+    @Override
+    public LongDoubleVector copy() {
+        return new LongDoubleDenseVector(this);
     }
     
     /**

@@ -72,6 +72,12 @@ public class LongDoubleSortedVector extends LongDoubleSortedMap implements LongD
         });
     }
     
+    /** Gets a deep copy of this vector. */
+    @Override
+    public LongDoubleVector copy() {
+        return new LongDoubleSortedVector(this);
+    }
+    
     // TODO: This could be done with a single binary search instead of two.
     public void add(long idx, double val) {
     	double curVal = getWithDefault(idx, ZERO);

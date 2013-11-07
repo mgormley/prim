@@ -29,7 +29,11 @@ public interface LongDoubleVector extends Serializable {
     /** Computes the dot product of this vector with the other vector. */
     double dot(LongDoubleVector other);
 
-    /** Applies the function to each (explicit) entry in the vector. */
+    /**
+     * Applies the function to each (explicit) entry in the vector. The caller
+     * should make no assumptions about the order in which the entries will be
+     * visited.
+     */
     void apply(FnLongDoubleToDouble function);
     
     /** Updates this vector to be the entrywise sum of this vector with the other. */
@@ -40,5 +44,8 @@ public interface LongDoubleVector extends Serializable {
     
     /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */
     void product(LongDoubleVector other);
+    
+    /** Gets a deep copy of this vector. */
+    LongDoubleVector copy();
     
 }
