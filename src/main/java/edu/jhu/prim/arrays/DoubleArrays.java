@@ -394,4 +394,16 @@ public class DoubleArrays {
         return maxIN;
     }
 
+    public static boolean isInRange(double[] p, double min, double max) {
+        for (int i=0; i<p.length; i++) {
+            if (p[i] < min) {
+                return false;
+            }
+            if (p[i] > max) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
 }
