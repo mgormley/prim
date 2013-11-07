@@ -29,7 +29,11 @@ public interface IntIntVector extends Serializable {
     /** Computes the dot product of this vector with the other vector. */
     int dot(IntIntVector other);
 
-    /** Applies the function to each (explicit) entry in the vector. */
+    /**
+     * Applies the function to each (explicit) entry in the vector. The caller
+     * should make no assumptions about the order in which the entries will be
+     * visited.
+     */
     void apply(FnIntIntToInt function);
     
     /** Updates this vector to be the entrywise sum of this vector with the other. */
@@ -40,5 +44,8 @@ public interface IntIntVector extends Serializable {
     
     /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */
     void product(IntIntVector other);
+    
+    /** Gets a deep copy of this vector. */
+    IntIntVector copy();
     
 }

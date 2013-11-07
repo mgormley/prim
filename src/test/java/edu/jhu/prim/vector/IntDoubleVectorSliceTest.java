@@ -157,5 +157,40 @@ public class IntDoubleVectorSliceTest {
         assertEquals(44, toInt(v1.get(4)));
 
     }
+
+    @Test
+    public void testConstruct() {
+        // TODO: There's a rather odd case we're dealing with in which the dense
+        // vector may actually have a larger internal representation than what
+        // it exposes. So we initialize the internal array here.
+        IntDoubleVector v1 = new IntDoubleDenseVector(5);
+
+        v1.set(0, toDouble(10));
+        v1.set(1, toDouble(11));
+        v1.set(2, toDouble(22));
+        v1.set(3, toDouble(33));
+        v1.set(4, toDouble(44));
+        
+        IntDoubleVectorSlice v2;
+        
+        // Try various slice indicies exceeding the bounds sometimes.
+        for (int i=-1; i<=6; i++) {
+            for (int j=-1; j<=6; j++) {
+                if (0 <= i && i < 5 && 0 <= j && j <= 5 && i + j <= 5) {
+                    // If the slice indices are good, we should create it without exceptions.
+                    v2 = new IntDoubleVectorSlice((IntDoubleDenseVector)v1, i, j);
+                } else {
+                    // If the slice indices are bad, we should throw an exception.
+                    try {
+                        v2 = new IntDoubleVectorSlice((IntDoubleDenseVector)v1, i, j);
+                        fail("i=" + i + " j=" + j);
+                    } catch(Exception e) {
+                        // pass
+                    }
+                }                       
+            }
+        }
+
+    }
     
 }    

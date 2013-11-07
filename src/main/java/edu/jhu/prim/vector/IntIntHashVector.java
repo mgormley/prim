@@ -35,6 +35,12 @@ public class IntIntHashVector extends IntIntHashMap implements IntIntVector {
             }
         });
     }
+    
+    /** Gets a deep copy of this vector. */
+    @Override
+    public IntIntVector copy() {
+        return new IntIntHashVector(this);
+    }
         
     @Override
     public void set(int idx, int val) {

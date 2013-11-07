@@ -35,6 +35,12 @@ public class LongIntHashVector extends LongIntHashMap implements LongIntVector {
             }
         });
     }
+    
+    /** Gets a deep copy of this vector. */
+    @Override
+    public LongIntVector copy() {
+        return new LongIntHashVector(this);
+    }
         
     @Override
     public void set(long idx, int val) {

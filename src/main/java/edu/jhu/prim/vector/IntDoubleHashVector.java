@@ -35,6 +35,12 @@ public class IntDoubleHashVector extends IntDoubleHashMap implements IntDoubleVe
             }
         });
     }
+    
+    /** Gets a deep copy of this vector. */
+    @Override
+    public IntDoubleVector copy() {
+        return new IntDoubleHashVector(this);
+    }
         
     @Override
     public void set(int idx, double val) {

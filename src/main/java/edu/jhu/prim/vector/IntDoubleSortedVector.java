@@ -72,6 +72,12 @@ public class IntDoubleSortedVector extends IntDoubleSortedMap implements IntDoub
         });
     }
     
+    /** Gets a deep copy of this vector. */
+    @Override
+    public IntDoubleVector copy() {
+        return new IntDoubleSortedVector(this);
+    }
+    
     // TODO: This could be done with a single binary search instead of two.
     public void add(int idx, double val) {
     	double curVal = getWithDefault(idx, ZERO);

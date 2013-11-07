@@ -72,6 +72,12 @@ public class IntLongSortedVector extends IntLongSortedMap implements IntLongVect
         });
     }
     
+    /** Gets a deep copy of this vector. */
+    @Override
+    public IntLongVector copy() {
+        return new IntLongSortedVector(this);
+    }
+    
     // TODO: This could be done with a single binary search instead of two.
     public void add(int idx, long val) {
     	long curVal = getWithDefault(idx, ZERO);

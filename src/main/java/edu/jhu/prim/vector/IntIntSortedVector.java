@@ -72,6 +72,12 @@ public class IntIntSortedVector extends IntIntSortedMap implements IntIntVector 
         });
     }
     
+    /** Gets a deep copy of this vector. */
+    @Override
+    public IntIntVector copy() {
+        return new IntIntSortedVector(this);
+    }
+    
     // TODO: This could be done with a single binary search instead of two.
     public void add(int idx, int val) {
     	int curVal = getWithDefault(idx, ZERO);
