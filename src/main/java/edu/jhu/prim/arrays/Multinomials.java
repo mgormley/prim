@@ -4,6 +4,11 @@ import edu.jhu.prim.Primitives;
 import edu.jhu.prim.util.math.FastMath;
 import edu.jhu.util.Prng;
 
+/**
+ * Utility class for treating double arrays as multinomial distributions.
+ * 
+ * @author mgormley
+ */
 public class Multinomials {
 
     private Multinomials() {
