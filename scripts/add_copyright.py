@@ -9,25 +9,20 @@ import tempfile
 import stat
 import subprocess
 from optparse import OptionParser
-from experiments.run_srl import SrlExpParams
 from glob import glob
-from experiments.core.util import get_all_following, get_following, get_time, get_following_literal,\
-    to_str, to_int, get_group1, head, get_match
-from experiments.core.scrape import Scraper
-from experiments.core.util import tail
-from experiments import scrape_statuses
 import shlex
-from experiments.core import scrape
+
 
 watermark = "".join(["==__" for i in range(80/4)])
 
 # Copyright comments
 java_apache = """
 /* %s 
- * Comment. 
+ * Comment 2. 
  * %s 
  */
 """ % (watermark, watermark)
+
 py_apache = """
 # %s
 # Comment
@@ -75,22 +70,27 @@ class Commenter:
         self.add_copyright("py", py_apache, py_regex)
         self.add_copyright("xml", xml_apache, xml_regex)
                 
-    def add_copyright(self, type, comment):
+    def add_copyright(self, type, comment, regex):
         assert watermark in comment
+        
+        #comment = comment.strip() + "\n\n"
+        #regex = regex.strip() + "\n\n"
+        self.cr_comments[type] = comment
+        self.cr_regexes[type] = regex
     
     def copyright_dir(self, top_dir):
         for name in os.listdir(top_dir):
             path = os.path.join(top_dir, name)
             if os.path.isdir(path) and name != ".svn" and name != ".git":
-                copyright_dir(path)
+                self.copyright_dir(path)
             else:
-                copyright_file(path)
+                self.copyright_file(path)
                 
     def copyright_file(self, path):
         re.compile("")
         name = os.path.basename(path)        
         type = re.sub(r".+\.([^\.]+)", r"\1", name)
-        if type not in self.copyrights.keys(): #["java", "py"]:
+        if type not in self.cr_comments.keys(): #["java", "py"]:
             print "Skipping:", path
             return
         
@@ -118,7 +118,6 @@ if __name__ == "__main__":
 
     parser = OptionParser(usage=usage)
     #parser.add_option('-f', '--fast', action="store_true", help="Run a fast version")
-    scrape.add_options(parser)
     (options, args) = parser.parse_args(sys.argv)
 
     if len(args) < 2:
