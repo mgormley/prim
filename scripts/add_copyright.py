@@ -1,0 +1,130 @@
+#!/usr/local/bin/python
+
+import re
+import sys
+import os
+import getopt
+import math
+import tempfile
+import stat
+import subprocess
+from optparse import OptionParser
+from experiments.run_srl import SrlExpParams
+from glob import glob
+from experiments.core.util import get_all_following, get_following, get_time, get_following_literal,\
+    to_str, to_int, get_group1, head, get_match
+from experiments.core.scrape import Scraper
+from experiments.core.util import tail
+from experiments import scrape_statuses
+import shlex
+from experiments.core import scrape
+
+watermark = "".join(["==__" for i in range(80/4)])
+
+# Copyright comments
+java_apache = """
+/* %s 
+ * Comment. 
+ * %s 
+ */
+""" % (watermark, watermark)
+py_apache = """
+# %s
+# Comment
+# %s
+""" % (watermark, watermark)
+xml_apache = """
+<!-- %s 
+Comment
+%s -->
+""" % (watermark, watermark)
+
+# Regexes to match copyright comments.
+java_regex = re.compile(r"""
+/\* %s 
+ \* .* 
+ \* %s 
+ \*/
+""" % (watermark, watermark), re.DOTALL)
+
+py_regex = re.compile(r"""
+# %s
+# .*
+# %s
+""" % (watermark, watermark), re.DOTALL)
+
+xml_regex = re.compile(r"""
+<!-- %s 
+.*
+%s -->
+""" % (watermark, watermark), re.DOTALL)
+
+def get_root_dir():
+    scripts_dir =  os.path.abspath(sys.path[0])
+    root_dir =  os.path.dirname(os.path.dirname(scripts_dir))
+    print "Using root_dir: " + root_dir
+    return root_dir;
+
+class Commenter:
+    
+    def __init__(self, options):
+        self.root_dir = os.path.abspath(get_root_dir())
+        self.cr_comments = {}
+        self.cr_regexes = {}
+        self.add_copyright("java", java_apache, java_regex)
+        self.add_copyright("py", py_apache, py_regex)
+        self.add_copyright("xml", xml_apache, xml_regex)
+                
+    def add_copyright(self, type, comment):
+        assert watermark in comment
+    
+    def copyright_dir(self, top_dir):
+        for name in os.listdir(top_dir):
+            path = os.path.join(top_dir, name)
+            if os.path.isdir(path) and name != ".svn" and name != ".git":
+                copyright_dir(path)
+            else:
+                copyright_file(path)
+                
+    def copyright_file(self, path):
+        re.compile("")
+        name = os.path.basename(path)        
+        type = re.sub(r".+\.([^\.]+)", r"\1", name)
+        if type not in self.copyrights.keys(): #["java", "py"]:
+            print "Skipping:", path
+            return
+        
+        comment = self.cr_comments[type]
+        regex = self.cr_regexes[type]
+        
+        with open(path,'r+') as f:
+            content = f.read()
+            
+            match = regex.match(content)
+            if match:
+                content = content[match.end():]                
+            elif watermark in content:
+                print "WARN: file contains watermark but regex didn't match:", path
+                                            
+            f.seek(0)
+            f.write(comment + content)
+        
+        
+            
+        
+        
+if __name__ == "__main__":
+    usage = "%prog [top_dir...]"
+
+    parser = OptionParser(usage=usage)
+    #parser.add_option('-f', '--fast', action="store_true", help="Run a fast version")
+    scrape.add_options(parser)
+    (options, args) = parser.parse_args(sys.argv)
+
+    if len(args) < 2:
+        parser.print_help()
+        sys.exit(1)
+    
+    commenter = Commenter(options)
+    for top_dir in args[1:]:
+        commenter.copyright_dir(top_dir)
