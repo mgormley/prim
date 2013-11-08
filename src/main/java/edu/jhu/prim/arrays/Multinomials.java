@@ -53,6 +53,14 @@ public class Multinomials {
         }
     }
 
+    /**
+     * Asserts that the parameters are log-normalized within some delta.
+     */
+    public static void assertLogNormalized(double[] logProps, double delta) {
+        double logPropSum = DoubleArrays.logSum(logProps);
+        assert(Primitives.equals(0.0, logPropSum, delta));
+    }
+
     public static int sampleFromProportions(double[] dProp) {
         double dPropSum = 0;
         for (int d = 0; d < dProp.length; d++) {
