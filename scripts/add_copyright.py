@@ -18,7 +18,7 @@ watermark = "".join(["==__" for i in range(80/4)])
 # Copyright comments
 java_apache = """
 /* %s 
- * Comment 2. 
+ * Comment 3. 
  * %s 
  */
 """ % (watermark, watermark)
@@ -28,6 +28,7 @@ py_apache = """
 # Comment
 # %s
 """ % (watermark, watermark)
+
 xml_apache = """
 <!-- %s 
 Comment
@@ -35,24 +36,24 @@ Comment
 """ % (watermark, watermark)
 
 # Regexes to match copyright comments.
-java_regex = re.compile(r"""
+java_regex = r"""
 /\* %s 
  \* .* 
  \* %s 
  \*/
-""" % (watermark, watermark), re.DOTALL)
+""" % (watermark, watermark)
 
-py_regex = re.compile(r"""
+py_regex = r"""
 # %s
 # .*
 # %s
-""" % (watermark, watermark), re.DOTALL)
+""" % (watermark, watermark)
 
-xml_regex = re.compile(r"""
+xml_regex = r"""
 <!-- %s 
 .*
 %s -->
-""" % (watermark, watermark), re.DOTALL)
+""" % (watermark, watermark)
 
 def get_root_dir():
     scripts_dir =  os.path.abspath(sys.path[0])
@@ -68,13 +69,13 @@ class Commenter:
         self.cr_regexes = {}
         self.add_copyright("java", java_apache, java_regex)
         self.add_copyright("py", py_apache, py_regex)
-        self.add_copyright("xml", xml_apache, xml_regex)
+        #self.add_copyright("xml", xml_apache, xml_regex)
                 
     def add_copyright(self, type, comment, regex):
         assert watermark in comment
         
-        #comment = comment.strip() + "\n\n"
-        #regex = regex.strip() + "\n\n"
+        comment = comment.strip() + "\n\n"
+        regex = re.compile(regex.strip() + "\n\n")
         self.cr_comments[type] = comment
         self.cr_regexes[type] = regex
     
@@ -125,5 +126,10 @@ if __name__ == "__main__":
         sys.exit(1)
     
     commenter = Commenter(options)
-    for top_dir in args[1:]:
-        commenter.copyright_dir(top_dir)
+    for top in args[1:]:
+        if os.path.isdir(top):
+            commenter.copyright_dir(top)
+        elif os.path.isfile(top):
+            commenter.copyright_file(top)
+        else:
+            print "Skipping:", top
