@@ -106,17 +106,20 @@ class Commenter:
                 content = content[:match.start()] + content[match.end():]                
             elif watermark in content:
                 print "WARN: file contains watermark but regex didn't match:", path
-                                            
-            f.seek(0)
+            
+            # Adjust the insertion point of the comment if the file begins with 
+            # a line such as #!/usr/bin/python.                                
             prefix = ""
             tmp = ""
             if type == "py":
                 for line in content.split("\n"):
-                    if line.startswith("#!"):
+                    if line.startswith("#"):
                         prefix += line + "\n"
                     else:
                         break
             content = content[len(prefix):]
+            
+            f.seek(0)
             f.write(prefix + comment + content)
         
         
