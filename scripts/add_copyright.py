@@ -103,12 +103,21 @@ class Commenter:
             
             match = regex.match(content)
             if match:
-                content = content[match.end():]                
+                content = content[:match.start()] + content[match.end():]                
             elif watermark in content:
                 print "WARN: file contains watermark but regex didn't match:", path
                                             
             f.seek(0)
-            f.write(comment + content)
+            prefix = ""
+            tmp = ""
+            if type == "py":
+                for line in content.split("\n"):
+                    if line.startswith("#!"):
+                        prefix += line + "\n"
+                    else:
+                        break
+            content = content[len(prefix):]
+            f.write(prefix + comment + content)
         
         
             
