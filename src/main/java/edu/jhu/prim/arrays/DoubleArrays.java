@@ -405,5 +405,21 @@ public class DoubleArrays {
         }
         return true;
     }
+
+    /** 
+     * Reorder array in place. 
+     * 
+     * Letting A denote the original array and B the reordered version, 
+     * we will have B[i] = A[order[i]].
+     * 
+     * @param array The array to reorder.
+     * @param order The order to apply.
+     */
+    public static void reorder(double[] array, int[] order) {
+        double[] original = copyOf(array);
+        for (int i=0; i<array.length; i++) {
+            array[i] = original[order[i]];
+        }
+    }
     
 }

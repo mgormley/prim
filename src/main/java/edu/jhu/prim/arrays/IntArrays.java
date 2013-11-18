@@ -29,6 +29,16 @@ public class IntArrays {
         return sum;
     }
 
+    public static int max(int[] array) {
+        int max = Integer.MIN_VALUE;
+        for (int i=0; i<array.length; i++) {
+            if (array[i] > max) {
+                max = array[i];
+            }
+        }
+        return max;
+    }
+
     public static int[] copyOf(int[] original, int newLength) {
         return Arrays.copyOf(original, newLength);
     }
@@ -137,6 +147,22 @@ public class IntArrays {
             }
         }
         return count;
+    }
+
+    /** 
+     * Reorder array in place. 
+     * 
+     * Letting A denote the original array and B the reordered version, 
+     * we will have B[i] = A[order[i]].
+     * 
+     * @param array The array to reorder.
+     * @param order The order to apply.
+     */
+    public static void reorder(int[] array, int[] order) {
+        int[] original = copyOf(array);
+        for (int i=0; i<array.length; i++) {
+            array[i] = original[order[i]];
+        }
     }
     
 }

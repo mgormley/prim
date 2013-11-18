@@ -179,4 +179,18 @@ public class LongArrayList implements Serializable {
         size = 0;
     }
     
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("LongArrayList [");
+        for (int i=0; i<size; i++) {
+            sb.append(i);
+            if (i != size-1) {
+                sb.append(", ");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+    
 }
