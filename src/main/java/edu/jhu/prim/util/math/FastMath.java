@@ -117,4 +117,19 @@ public class FastMath {
         return log(weight);
     }
 
+    /**
+     * Modulo operator where all numbers evaluate to a positive remainder.
+     * 
+     * @param val The value to mod.
+     * @param mod The mod.
+     * @return val modulo mod
+     */
+    public static int mod(int val, int mod) {
+        val = val % mod;
+        if (val < 0) {
+            val += mod;
+        }
+        return val;
+    }
+    
 }
