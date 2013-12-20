@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import edu.jhu.prim.arrays.DoubleArrays;
 import edu.jhu.prim.map.IntDoubleEntry;
+import edu.jhu.prim.vector.IntDoubleDenseVector;
 public class DenseDoubleMatrix implements DoubleMatrix {
     
     private static final long serialVersionUID = -2148653126472159945L;
@@ -32,6 +33,15 @@ public class DenseDoubleMatrix implements DoubleMatrix {
 	    numRows = dim.numRows;
 	    numCols = dim.numCols;
 	    matrix = DoubleArrays.copyOf(dim.matrix);
+    }
+
+    public DenseDoubleMatrix(IntDoubleDenseVector[] vectors) {
+        this(vectors.length, vectors[0].getNumImplicitEntries());
+        for (int row = 0; row < numRows; row++) {
+            for (int col = 0; col < numCols; col++) {
+                matrix[row][col] = vectors[row].get(col);
+            }
+        }
     }
 
     public void set(DoubleMatrix other) {
@@ -79,6 +89,26 @@ public class DenseDoubleMatrix implements DoubleMatrix {
 
 	public void increment(int row, int col, double incr) {
 	    matrix[row][col] += incr;
+	}
+	
+	public double[] getRowSums() {
+	    double[] rowSums = new double[numRows];
+        for (int row = 0; row < numRows; row++) {
+            for (int col = 0; col < numCols; col++) {
+                rowSums[row] += matrix[row][col];
+            }
+        }
+        return rowSums;
+	}
+	
+	public double[] getColSums() {
+	    double[] colSums = new double[numCols];
+        for (int row = 0; row < numRows; row++) {
+            for (int col = 0; col < numCols; col++) {
+                colSums[col] += matrix[row][col];
+            }
+        }
+        return colSums;
 	}
 	
 	public DoubleMatrix viewTranspose() {
