@@ -94,7 +94,11 @@ def get_re_subs_for_pair(dest_key, dest_val):
                   (", zeroThreshold", ""),
                   (", 1e-13", ""),
                   ]
-    
+        
+    # Add the primary replacements.
+    repls += get_typedef_repls(src_key, dest_key)
+    repls += get_typedef_repls(src_val, dest_val)
+
     # Special cases to always use.
     repls += [#("getIntIndexArray", "getIndexArray"),
              ("int serialVersionUID", "long serialVersionUID"),
@@ -105,10 +109,6 @@ def get_re_subs_for_pair(dest_key, dest_val):
              ("Int.NEGATIVE_INFINITY", "-2147483646"),
              ]
     
-    # Add the primary replacements.
-    repls += get_typedef_repls(src_key, dest_key)
-    repls += get_typedef_repls(src_val, dest_val)
-        
     # Additional regular expression replacements to be concatenated at the end.
     add_re_subs = []
     
