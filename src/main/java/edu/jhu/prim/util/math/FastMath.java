@@ -1,5 +1,7 @@
 package edu.jhu.prim.util.math;
 
+import edu.jhu.prim.util.SafeCast;
+
 
 public class FastMath {
 
@@ -116,6 +118,42 @@ public class FastMath {
         }
         return log(weight);
     }
+    
+    public static double sqrt(double value) {
+        // TODO: Switch to a fast implementation is this gets used more heavily.
+        return Math.sqrt(value);
+    }
+    
+    /* --------- Float versions which just cast to Double. ---------- */
+    public static float log(float d) {
+        return SafeCast.safeDoubleToFloat(Math.log(d));
+    }
+
+    public static float exp(float d) {
+        return SafeCast.safeDoubleToFloat(Math.exp(d));
+    }
+
+    public static float log2(float d) {
+        return SafeCast.safeDoubleToFloat(log2(d));
+    }
+    
+    public static float logForIlp(float d) {
+        return SafeCast.safeDoubleToFloat(logForIlp(d));
+    }
+
+    public static float logAdd(float x, float y) {
+        return SafeCast.safeDoubleToFloat(logAdd(x, y));
+    }
+
+    public static float logSubtract(float x, float y) {
+        return SafeCast.safeDoubleToFloat(logSubtract(x, y));
+    }
+    
+    public static float sqrt(float value) {
+        return SafeCast.safeDoubleToFloat(sqrt(value));
+    }
+    /* --------------------------------------------------------------- */
+
 
     /**
      * Modulo operator where all numbers evaluate to a positive remainder.

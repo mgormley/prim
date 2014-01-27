@@ -172,12 +172,21 @@ def copy_single(src_prim, dest_prim, src_files):
     re_subs = get_re_subs_for_single(src_prim, dest_prim)
     copy_and_sub(re_subs, src_files)
 
-def copy_pair(dest_key, dest_val):
+def copy_pair(dest_key, dest_val, src_files):
     '''Copies a set of classes defined with key=Long, value=Double primitives to a new class
         using key=dest_key and value=dest_val.
     '''
     re_subs = get_re_subs_for_pair(dest_key, dest_val)
-    
+    copy_and_sub(re_subs, src_files)
+
+def classes_to_files(main_test, classes):
+    java = os.path.join("src", main_test, "java")
+    src_files = [os.path.join(java, c.replace(".", "/") + ".java") for c in classes]
+    return src_files
+
+if __name__ == "__main__":
+    # Create a list of main/test classes which are defined for a pair of primitives (Long and Double)
+    # and should be copied over to a new pair of primitives.
     main_classes = [
                  "edu.jhu.prim.map.LongDoubleMap",
                  "edu.jhu.prim.map.LongDoubleEntry",
@@ -191,9 +200,6 @@ def copy_pair(dest_key, dest_val):
                  "edu.jhu.prim.vector.LongDoubleDenseVector",
                  "edu.jhu.prim.vector.LongDoubleVectorSlice",
                  ]
-    main_java = os.path.join("src", "main", "java")
-    src_files = [os.path.join(main_java, c.replace(".", "/") + ".java") for c in main_classes]
-
     test_classes = [
                  "edu.jhu.prim.map.LongDoubleSortedMapTest",
                  "edu.jhu.prim.map.LongDoubleHashMapTest",
@@ -204,18 +210,22 @@ def copy_pair(dest_key, dest_val):
                  "edu.jhu.prim.vector.LongDoubleVectorSliceTest",
                  "edu.jhu.prim.vector.AbstractLongDoubleVectorTest",
                  ]
-    test_java = os.path.join("src", "test", "java")
-    src_files += [os.path.join(test_java, c.replace(".", "/") + ".java") for c in test_classes]
+    src_files = classes_to_files("main", main_classes) + classes_to_files("test", test_classes)
 
-    copy_and_sub(re_subs, src_files)
-
-if __name__ == "__main__":
     tds = get_typedefs()
-    copy_pair(tds.get("int"), tds.get("double"))
-    copy_pair(tds.get("int"), tds.get("long"))
-    #copy_pair(tds.get("short"), tds.get("int"))
+    copy_pair(tds.get("int"), tds.get("double"), src_files)
+    copy_pair(tds.get("int"), tds.get("long"), src_files)
+    #copy_pair(tds.get("short"), tds.get("int"), src_files)
     
     #TODO: IntInt/LongInt sort of works, but requires the removal of some duplicate methods/constructors:
-    copy_pair(tds.get("long"), tds.get("int"))
-    copy_pair(tds.get("int"), tds.get("int"))
+    copy_pair(tds.get("long"), tds.get("int"), src_files)
+    copy_pair(tds.get("int"), tds.get("int"), src_files)
+    
+    
+    # Create a list of main/test classes which are defined for a single primitive
+    # and should be copied over to a primitive.
+    src_files = classes_to_files("main", ["edu.jhu.prim.arrays.DoubleArrays"])    
+    copy_single(tds.get("double"), tds.get("float"), src_files)
+    src_files = classes_to_files("main", ["edu.jhu.prim.arrays.LongArrays"])    
+    copy_single(tds.get("long"), tds.get("short"), src_files)
 

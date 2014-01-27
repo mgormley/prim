@@ -14,7 +14,8 @@ public class Primitives {
     
     public static int LONG_NUM_BITS = 64;
     public static int INT_NUM_BITS = 32;
-    public static final double DEFAULT_DELTA = 1e-13;
+    public static final double DEFAULT_DOUBLE_DELTA = 1e-13;
+    public static final float DEFAULT_FLOAT_DELTA = 1e-13f;
     
     private Primitives() {
         // Private constructor.
@@ -126,7 +127,7 @@ public class Primitives {
     }
 
     public static boolean lte(double a, double b) {
-        return a <= b + Primitives.DEFAULT_DELTA;
+        return a <= b + Primitives.DEFAULT_DOUBLE_DELTA;
     }
 
     public static boolean lte(double a, double b, double delta) {
@@ -134,7 +135,7 @@ public class Primitives {
     }
 
     public static boolean gte(double a, double b) {
-        return a + Primitives.DEFAULT_DELTA >= b;
+        return a + Primitives.DEFAULT_DOUBLE_DELTA >= b;
     }
 
     public static boolean gte(double a, double b, double delta) {

@@ -43,12 +43,28 @@ public class Prng {
         return curRandom.nextDouble();
     }
     
+    public static double nextFloat() {
+        return curRandom.nextFloat();
+    }
+    
     public static boolean nextBoolean() {
         return curRandom.nextBoolean();
+    }
+
+    public static short nextShort() {
+        return (short) curRandom.nextInt();
+    }
+    
+    public static int nextInt() {
+        return curRandom.nextInt();
     }
     
     public static int nextInt(int n) {
         return curRandom.nextInt(n);
+    }
+
+    public static long nextLong() {
+        return curRandom.nextLong();
     }
     
 }

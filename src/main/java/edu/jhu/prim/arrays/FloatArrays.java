@@ -9,68 +9,68 @@ import edu.jhu.util.Prng;
 
 
 /**
- * Utility methods and math for double arrays of varying dimensionalities.
+ * Utility methods and math for float arrays of varying dimensionalities.
  * 
  * @author mgormley
  */
-public class DoubleArrays {
+public class FloatArrays {
 
-    private DoubleArrays() {
+    private FloatArrays() {
         // private constructor
     }
 
-    public static double[] copyOf(double[] original, int newLength) {
+    public static float[] copyOf(float[] original, int newLength) {
         return Arrays.copyOf(original, newLength);
     }
 
-    public static double[] copyOf(double[] original) {
+    public static float[] copyOf(float[] original) {
         return Arrays.copyOf(original, original.length);
     }
 
-    public static double[][] copyOf(double[][] array) {
-        double[][] newArray = new double[array.length][];
+    public static float[][] copyOf(float[][] array) {
+        float[][] newArray = new float[array.length][];
         for (int i = 0; i < array.length; i++) {
             newArray[i] = copyOf(array[i], array[i].length);
         }
         return newArray;
     }
 
-    public static double[][][] copyOf(double[][][] array) {
-        double[][][] clone = new double[array.length][][];
+    public static float[][][] copyOf(float[][][] array) {
+        float[][][] clone = new float[array.length][][];
         for (int i = 0; i < clone.length; i++) {
             clone[i] = copyOf(array[i]);
         }
         return clone;
     }
     
-    public static double[][][][] copyOf(double[][][][] array) {
-        double[][][][] clone = new double[array.length][][][];
+    public static float[][][][] copyOf(float[][][][] array) {
+        float[][][][] clone = new float[array.length][][][];
         for (int i = 0; i < clone.length; i++) {
             clone[i] = copyOf(array[i]);
         }
         return clone;
     }
 
-    public static void copy(double[] array, double[] clone) {
+    public static void copy(float[] array, float[] clone) {
         assert (array.length == clone.length);
         System.arraycopy(array, 0, clone, 0, array.length);
     }
 
-    public static void copy(double[][] array, double[][] clone) {
+    public static void copy(float[][] array, float[][] clone) {
         assert (array.length == clone.length);
         for (int i = 0; i < clone.length; i++) {
             copy(array[i], clone[i]);
         }
     }
 
-    public static void copy(double[][][] array, double[][][] clone) {
+    public static void copy(float[][][] array, float[][][] clone) {
         assert (array.length == clone.length);
         for (int i = 0; i < clone.length; i++) {
             copy(array[i], clone[i]);
         }
     }
 
-    public static void copy(double[][][][] array, double[][][][] clone) {
+    public static void copy(float[][][][] array, float[][][][] clone) {
         assert (array.length == clone.length);
         for (int i = 0; i < clone.length; i++) {
             copy(array[i], clone[i]);
@@ -83,7 +83,7 @@ public class DoubleArrays {
      * works out to be much faster and seems to be using memset as appropriate.
      */
     // TODO: Iterating is still the fastest way to fill an array.
-    public static void fill(final double[] array, final double value) {
+    public static void fill(final float[] array, final float value) {
         //        final int n = array.length;
         //        if (n > 0) {
         //            array[0] = value;
@@ -96,24 +96,24 @@ public class DoubleArrays {
         }
     }
 
-    public static void fill(double[][] array, double value) {
+    public static void fill(float[][] array, float value) {
         for (int i=0; i<array.length; i++) {
             Arrays.fill(array[i], value);
         }
     }
 
-    public static void fill(double[][][] array, double value) {
+    public static void fill(float[][][] array, float value) {
         for (int i=0; i<array.length; i++) {
             fill(array[i], value);
         }
     }
 
-    public static void fill(double[][][][] array, double value) {
+    public static void fill(float[][][][] array, float value) {
         for (int i=0; i<array.length; i++) {
             fill(array[i], value);
         }
     }
-    public static String toString(double[] array, String formatString) {
+    public static String toString(float[] array, String formatString) {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
         for (int i=0; i<array.length; i++) {
@@ -126,12 +126,12 @@ public class DoubleArrays {
         return sb.toString();
     }
 
-    public static String deepToString(double[][] array) {
+    public static String deepToString(float[][] array) {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
-        for (double[] arr : array) {
+        for (float[] arr : array) {
             sb.append("[");
-            for (double a : arr) {
+            for (float a : arr) {
                 sb.append(String.format("%10.3g, ", a));
             }
             sb.append("], ");
@@ -140,87 +140,87 @@ public class DoubleArrays {
         return sb.toString();
     }
 
-    public static double sum(double[] vector) {
-        double sum = 0;
+    public static float sum(float[] vector) {
+        float sum = 0;
         for(int i=0; i<vector.length; i++) {
             sum += vector[i];
         }
         return sum;
     }
 
-    public static void assertNoZeroes(double[] draw, double[] logDraw) {
+    public static void assertNoZeroes(float[] draw, float[] logDraw) {
         assertNoZeros(draw);
         assertNoNegInfs(logDraw);
     }
 
-    public static void assertNoNegInfs(double[] logDraw) {
+    public static void assertNoNegInfs(float[] logDraw) {
         for (int i=0; i<logDraw.length; i++) {
-            assert(!Double.isNaN(logDraw[i]));
-            assert(!Double.isInfinite(logDraw[i]));
+            assert(!Float.isNaN(logDraw[i]));
+            assert(!Float.isInfinite(logDraw[i]));
         }
     }
 
-    public static void assertNoZeros(double[] draw) {
+    public static void assertNoZeros(float[] draw) {
         for (int i=0; i<draw.length; i++) {
-            assert(!Double.isNaN(draw[i]));
+            assert(!Float.isNaN(draw[i]));
             assert(draw[i] != 0);
         }
     }
 
-    public static void assertSameSize(double[][] newLogPhi, double[][] logPhi) {
+    public static void assertSameSize(float[][] newLogPhi, float[][] logPhi) {
         assert(newLogPhi.length == logPhi.length);
         for (int k=0; k<logPhi.length; k++) {
             assert(newLogPhi[k].length == logPhi[k].length); 
         }
     }
 
-    public static double[] getExp(double[] logPhi) {
-        double[] phi = new double[logPhi.length];
+    public static float[] getExp(float[] logPhi) {
+        float[] phi = new float[logPhi.length];
         for (int i=0; i<phi.length; i++) {
             phi[i] = FastMath.exp(logPhi[i]);
         }
         return phi;
     }
 
-    public static void exp(double[] phi) {
+    public static void exp(float[] phi) {
         for (int i=0; i<phi.length; i++) {
             phi[i] = FastMath.exp(phi[i]);
         }
     }
 
-    public static void log(double[] phi) {
+    public static void log(float[] phi) {
         for (int i=0; i<phi.length; i++) {
             phi[i] = FastMath.log(phi[i]);
         }
     }
 
-    public static void log(double[][] phi) {
+    public static void log(float[][] phi) {
         for (int i=0; i<phi.length; i++) {
             log(phi[i]);
         }
     }
 
-    public static void logForIlp(double[] phi) {
+    public static void logForIlp(float[] phi) {
         for (int i=0; i<phi.length; i++) {
             phi[i] = FastMath.logForIlp(phi[i]);
         }
     }
 
-    public static double[] getLog(double[] phi) {
-        double[] logPhi = new double[phi.length];
+    public static float[] getLog(float[] phi) {
+        float[] logPhi = new float[phi.length];
         updateLogPhi(phi, logPhi);
         return logPhi;
     }
 
-    public static double[] getLogForIlp(double[] phi) {
-        double[] logPhi = new double[phi.length];
+    public static float[] getLogForIlp(float[] phi) {
+        float[] logPhi = new float[phi.length];
         for (int t=0; t<logPhi.length; t++) {
             logPhi[t] = FastMath.logForIlp(phi[t]);
         }
         return logPhi;
     }
 
-    public static void updateLogPhi(double[] phi, double[] logPhi) {
+    public static void updateLogPhi(float[] phi, float[] logPhi) {
     	for (int t=0; t<logPhi.length; t++) {
     		logPhi[t] = FastMath.log(phi[t]);
     	}
@@ -229,16 +229,16 @@ public class DoubleArrays {
     /**
      * TODO: This should live in a matrix class
      */
-    public static double sum(double[][] matrix) {
-        double sum = 0; 
+    public static float sum(float[][] matrix) {
+        float sum = 0; 
         for (int i=0; i<matrix.length; i++) {
             sum += sum(matrix[i]);
         }
         return sum;
     }
 
-    public static double max(double[] array) {
-        double max = Double.NEGATIVE_INFINITY;
+    public static float max(float[] array) {
+        float max = Float.NEGATIVE_INFINITY;
         for (int i=0; i<array.length; i++) {
             if (array[i] > max) {
                 max = array[i];
@@ -247,8 +247,8 @@ public class DoubleArrays {
         return max;
     }
 
-    public static double min(double[] array) {
-        double min = Double.POSITIVE_INFINITY;
+    public static float min(float[] array) {
+        float min = Float.POSITIVE_INFINITY;
         for (int i=0; i<array.length; i++) {
             if (array[i] < min) {
                 min = array[i];
@@ -257,8 +257,8 @@ public class DoubleArrays {
         return min;
     }
 
-    public static int argmax(double[] array) {
-        double max = Double.NEGATIVE_INFINITY;
+    public static int argmax(float[] array) {
+        float max = Float.NEGATIVE_INFINITY;
         int argmax = -1;
         for (int i=0; i<array.length; i++) {
             if (array[i] > max) {
@@ -269,8 +269,8 @@ public class DoubleArrays {
         return argmax;
     }
 
-    public static int argmin(double[] array) {
-        double min = Double.POSITIVE_INFINITY;
+    public static int argmin(float[] array) {
+        float min = Float.POSITIVE_INFINITY;
         int argmin = -1;
         for (int i=0; i<array.length; i++) {
             if (array[i] < min) {
@@ -284,22 +284,22 @@ public class DoubleArrays {
     /**
      * Gets the argmax breaking ties randomly.
      */
-    public static IntTuple getArgmax(double[][] array) {
-        return getArgmax(array, Primitives.DEFAULT_DOUBLE_DELTA);
+    public static IntTuple getArgmax(float[][] array) {
+        return getArgmax(array, Primitives.DEFAULT_FLOAT_DELTA);
     }
     
     /**
      * Gets the argmax breaking ties randomly.
      */
-    public static IntTuple getArgmax(double[][] array, double delta) {
-        double maxValue = Double.NEGATIVE_INFINITY;
+    public static IntTuple getArgmax(float[][] array, float delta) {
+        float maxValue = Float.NEGATIVE_INFINITY;
         int maxX = -1;
         int maxY = -1;
-        double numMax = 1;
+        float numMax = 1;
         for (int x=0; x<array.length; x++) {
             for (int y=0; y<array[x].length; y++) {
-                double diff = Primitives.compare(array[x][y], maxValue, delta);
-                if (diff == 0 && Prng.nextDouble() < 1.0 / numMax) {
+                float diff = Primitives.compare(array[x][y], maxValue, delta);
+                if (diff == 0 && Prng.nextFloat() < 1.0 / numMax) {
                     maxValue = array[x][y];
                     maxX = x;
                     maxY = y;
@@ -316,66 +316,66 @@ public class DoubleArrays {
     }
 
 
-    public static double dotProduct(double[] array1, double[] array2) {
+    public static float dotProduct(float[] array1, float[] array2) {
         if (array1.length != array2.length) {
             throw new IllegalStateException("array1.length != array2.length");
         }
-        double dotProduct = 0;
+        float dotProduct = 0;
         for (int i=0; i<array1.length; i++) {
             dotProduct += array1[i] * array2[i];
         }
         return dotProduct;
     }
 
-    public static void scale(double[] array, double alpha) {
+    public static void scale(float[] array, float alpha) {
         for (int i=0; i<array.length; i++) {
             array[i] *= alpha;
         }
     }
 
-    public static double mean(double[] array) {
+    public static float mean(float[] array) {
         return sum(array) / array.length;
     }
 
-    public static double variance(double[] array) {
-        double mean = mean(array);
-        double sumOfSquares = 0;
+    public static float variance(float[] array) {
+        float mean = mean(array);
+        float sumOfSquares = 0;
         for (int i=0; i<array.length; i++) {
             sumOfSquares += (array[i] - mean)*(array[i] - mean);
         }
         return sumOfSquares / (array.length - 1);
     }
 
-    public static double stdDev(double[] array) {
+    public static float stdDev(float[] array) {
         return FastMath.sqrt(variance(array));
     }
 
-    public static double logSum(double[] logProps) {
-        double logPropSum = Double.NEGATIVE_INFINITY;
+    public static float logSum(float[] logProps) {
+        float logPropSum = Float.NEGATIVE_INFINITY;
         for (int d = 0; d < logProps.length; d++) {
             logPropSum = FastMath.logAdd(logPropSum, logProps[d]);
         }
         return logPropSum;
     }
 
-    public static void add(double[] params, double lambda) {
+    public static void add(float[] params, float lambda) {
         for (int i=0; i<params.length; i++) {
             params[i] += lambda;
         }
     }
     
     /** Each element of the second array is added to each element of the first. */
-    public static void add(double[] array1, double[] array2) {
+    public static void add(float[] array1, float[] array2) {
         assert (array1.length == array2.length);
         for (int i=0; i<array1.length; i++) {
             array1[i] += array2[i];
         }
     }
     
-    public static double infinityNorm(double[] gradient) {
-        double maxAbs = 0;
+    public static float infinityNorm(float[] gradient) {
+        float maxAbs = 0;
         for (int i=0; i<gradient.length; i++) {
-            double tempVal = Math.abs(gradient[i]);
+            float tempVal = Math.abs(gradient[i]);
             if (tempVal > maxAbs) {
                 maxAbs = tempVal;
             }
@@ -383,10 +383,10 @@ public class DoubleArrays {
         return maxAbs;
     }
 
-    public static double infinityNorm(double[][] gradient) {
-        double maxIN = 0;
+    public static float infinityNorm(float[][] gradient) {
+        float maxIN = 0;
         for (int i=0; i<gradient.length; i++) {
-            double tempVal = infinityNorm(gradient[i]);
+            float tempVal = infinityNorm(gradient[i]);
             if (tempVal > maxIN) {
                 maxIN = tempVal;
             }
@@ -394,7 +394,7 @@ public class DoubleArrays {
         return maxIN;
     }
 
-    public static boolean isInRange(double[] p, double min, double max) {
+    public static boolean isInRange(float[] p, float min, float max) {
         for (int i=0; i<p.length; i++) {
             if (p[i] < min) {
                 return false;
@@ -415,8 +415,8 @@ public class DoubleArrays {
      * @param array The array to reorder.
      * @param order The order to apply.
      */
-    public static void reorder(double[] array, int[] order) {
-        double[] original = copyOf(array);
+    public static void reorder(float[] array, int[] order) {
+        float[] original = copyOf(array);
         for (int i=0; i<array.length; i++) {
             array[i] = original[order[i]];
         }
