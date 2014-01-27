@@ -16,9 +16,9 @@ public class IntDoubleSort {
      * are mirrored in index. Sorts in descending order.
      */
     public static void sortValuesDesc(double[] values, int[] index) {
-        DoubleArrays.scale(values, -1);
+        DoubleArrays.scale(values, (double) -1);
         sortValuesAsc(values, index);
-        DoubleArrays.scale(values, -1);
+        DoubleArrays.scale(values, (double) -1);
     }
     
     /**
@@ -68,9 +68,9 @@ public class IntDoubleSort {
      * are mirrored in values. Sorts in descending order.
      */
     public static void sortIndexDesc(int[] index, double[] values) {
-        IntArrays.scale(index, -1);
+        IntArrays.scale(index, (int) -1);
         sortIndexAsc(index, values);
-        IntArrays.scale(index, -1);
+        IntArrays.scale(index, (int) -1);
     }
     
     /**
@@ -170,7 +170,8 @@ public class IntDoubleSort {
     public static int[] getIntIndexArray(int length) {
         int[] index = new int[length];
         for (int i=0; i<index.length; i++) {
-            index[i] = i;
+            // TODO: This should maybe be a safe cast for the benefit of non-IntDouble classes.
+            index[i] = (int) i;
         }
         return index;
     }

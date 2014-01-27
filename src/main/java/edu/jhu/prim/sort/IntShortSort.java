@@ -1,35 +1,35 @@
 package edu.jhu.prim.sort;
 
-import edu.jhu.prim.arrays.LongArrays;
+import edu.jhu.prim.arrays.ShortArrays;
 import edu.jhu.prim.arrays.IntArrays;
 
-public class IntLongSort {
+public class IntShortSort {
 
-    public IntLongSort() {
+    public IntShortSort() {
         // private constructor
     }
 
-    /* ------------------- Ints and Longs --------------- */
+    /* ------------------- Ints and Shorts --------------- */
     
     /**
      * Performs an in-place quick sort on values. All the sorting operations on values
      * are mirrored in index. Sorts in descending order.
      */
-    public static void sortValuesDesc(long[] values, int[] index) {
-        LongArrays.scale(values, (long) -1);
+    public static void sortValuesDesc(short[] values, int[] index) {
+        ShortArrays.scale(values, (short) -1);
         sortValuesAsc(values, index);
-        LongArrays.scale(values, (long) -1);
+        ShortArrays.scale(values, (short) -1);
     }
     
     /**
      * Performs an in-place quick sort on values. All the sorting operations on values
      * are mirrored in index. Sorts in ascending order.
      */
-    public static void sortValuesAsc(long[] values, int[] index) {
+    public static void sortValuesAsc(short[] values, int[] index) {
         quicksortValues(values, index, 0, index.length - 1);
     }
 
-    private static void quicksortValues(long[] array, int[] index, int left, int right) {
+    private static void quicksortValues(short[] array, int[] index, int left, int right) {
         if (left < right) {
             // Choose a pivot index.
             // --> Here we choose the rightmost element which does the least
@@ -45,8 +45,8 @@ public class IntLongSort {
         }
     }
     
-    private static int partitionValues(long[] array, int[] index, int left, int right, int pivotIndex) {
-        long pivotValue = array[pivotIndex];
+    private static int partitionValues(short[] array, int[] index, int left, int right, int pivotIndex) {
+        short pivotValue = array[pivotIndex];
         // Move the pivot value to the rightmost position.
         swap(array, index, pivotIndex, right);
         // For each position between left and right, swap all the values less
@@ -67,7 +67,7 @@ public class IntLongSort {
      * Performs an in-place quick sort on index. All the sorting operations on index
      * are mirrored in values. Sorts in descending order.
      */
-    public static void sortIndexDesc(int[] index, long[] values) {
+    public static void sortIndexDesc(int[] index, short[] values) {
         IntArrays.scale(index, (int) -1);
         sortIndexAsc(index, values);
         IntArrays.scale(index, (int) -1);
@@ -78,12 +78,12 @@ public class IntLongSort {
      * are mirrored in values. Sorts in ascending order.
      * @return index - sorted.
      */
-    public static int[] sortIndexAsc(int[] index, long[] values) {
+    public static int[] sortIndexAsc(int[] index, short[] values) {
         quicksortIndex(index, values, 0, index.length - 1);
         return index;
     }
 
-    private static void quicksortIndex(int[] array, long[] values, int left, int right) {
+    private static void quicksortIndex(int[] array, short[] values, int left, int right) {
         if (left < right) {
             // Choose a pivot index.
             // --> Here we choose the rightmost element which does the least
@@ -99,7 +99,7 @@ public class IntLongSort {
         }
     }
     
-    private static int partitionIndex(int[] array, long[] values, int left, int right, int pivotIndex) {
+    private static int partitionIndex(int[] array, short[] values, int left, int right, int pivotIndex) {
         int pivotValue = array[pivotIndex];
         // Move the pivot value to the rightmost position.
         swap(values, array, pivotIndex, right);
@@ -124,7 +124,7 @@ public class IntLongSort {
      * @param i The position of the first element to swap.
      * @param j The position of the second element to swap.
      */
-    private static void swap(long[] values, int[] index, int i, int j) {
+    private static void swap(short[] values, int[] index, int i, int j) {
         swap(values, i, j);
         swap(index, i, j);
     }
@@ -134,8 +134,8 @@ public class IntLongSort {
     /**
      * Swaps the elements at positions i and j.
      */
-    private static void swap(long[] array, int i, int j) {
-        long valAtI = array[i];
+    private static void swap(short[] array, int i, int j) {
+        short valAtI = array[i];
         array[i] = array[j];
         array[j] = valAtI;
     }
@@ -158,7 +158,7 @@ public class IntLongSort {
      * @param values The length of the index array will be values.length.
      * @return The new index array.
      */
-    public static int[] getIntIndexArray(long[] values) {
+    public static int[] getIntIndexArray(short[] values) {
         return getIntIndexArray(values.length);
     }
     
@@ -170,7 +170,7 @@ public class IntLongSort {
     public static int[] getIntIndexArray(int length) {
         int[] index = new int[length];
         for (int i=0; i<index.length; i++) {
-            // TODO: This should maybe be a safe cast for the benefit of non-IntLong classes.
+            // TODO: This should maybe be a safe cast for the benefit of non-IntShort classes.
             index[i] = (int) i;
         }
         return index;

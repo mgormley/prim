@@ -16,9 +16,9 @@ public class LongIntSort {
      * are mirrored in index. Sorts in descending order.
      */
     public static void sortValuesDesc(int[] values, long[] index) {
-        IntArrays.scale(values, -1);
+        IntArrays.scale(values, (int) -1);
         sortValuesAsc(values, index);
-        IntArrays.scale(values, -1);
+        IntArrays.scale(values, (int) -1);
     }
     
     /**
@@ -68,9 +68,9 @@ public class LongIntSort {
      * are mirrored in values. Sorts in descending order.
      */
     public static void sortIndexDesc(long[] index, int[] values) {
-        LongArrays.scale(index, -1);
+        LongArrays.scale(index, (long) -1);
         sortIndexAsc(index, values);
-        LongArrays.scale(index, -1);
+        LongArrays.scale(index, (long) -1);
     }
     
     /**
@@ -170,7 +170,8 @@ public class LongIntSort {
     public static long[] getLongIndexArray(int length) {
         long[] index = new long[length];
         for (int i=0; i<index.length; i++) {
-            index[i] = i;
+            // TODO: This should maybe be a safe cast for the benefit of non-LongInt classes.
+            index[i] = (long) i;
         }
         return index;
     }

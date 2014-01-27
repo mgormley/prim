@@ -109,6 +109,8 @@ def get_re_subs_for_pair(dest_key, dest_val):
              ("Long.NEGATIVE_INFINITY", "-9223372036854775806l"),
              ("Int.POSITIVE_INFINITY", "2147483646"),
              ("Int.NEGATIVE_INFINITY", "-2147483646"),
+             ("Short.POSITIVE_INFINITY", "32767"),
+             ("Short.NEGATIVE_INFINITY", "-32768"),
              ]
     
     # Additional regular expression replacements to be concatenated at the end.
@@ -217,11 +219,15 @@ if __name__ == "__main__":
     tds = get_typedefs()
     copy_pair(tds.get("int"), tds.get("double"), src_files)
     copy_pair(tds.get("int"), tds.get("long"), src_files)
-    #copy_pair(tds.get("short"), tds.get("int"), src_files)
     
     #TODO: IntInt/LongInt sort of works, but requires the removal of some duplicate methods/constructors:
     copy_pair(tds.get("long"), tds.get("int"), src_files)
     copy_pair(tds.get("int"), tds.get("int"), src_files)
+    
+    # TODO: ShortInt doesn't work because the literal 0 must be manually cast to a short.
+    src_files = classes_to_files("main", ["edu.jhu.prim.sort.LongDoubleSort"])    
+    src_files += classes_to_files("test", ["edu.jhu.prim.sort.LongDoubleSortTest"])
+    copy_pair(tds.get("int"), tds.get("short"), src_files)
     
     
     # Create a list of main/test classes which are defined for a single primitive

@@ -16,9 +16,9 @@ public class LongDoubleSort {
      * are mirrored in index. Sorts in descending order.
      */
     public static void sortValuesDesc(double[] values, long[] index) {
-        DoubleArrays.scale(values, -1);
+        DoubleArrays.scale(values, (double) -1);
         sortValuesAsc(values, index);
-        DoubleArrays.scale(values, -1);
+        DoubleArrays.scale(values, (double) -1);
     }
     
     /**
@@ -68,9 +68,9 @@ public class LongDoubleSort {
      * are mirrored in values. Sorts in descending order.
      */
     public static void sortIndexDesc(long[] index, double[] values) {
-        LongArrays.scale(index, -1);
+        LongArrays.scale(index, (long) -1);
         sortIndexAsc(index, values);
-        LongArrays.scale(index, -1);
+        LongArrays.scale(index, (long) -1);
     }
     
     /**
@@ -170,7 +170,8 @@ public class LongDoubleSort {
     public static long[] getLongIndexArray(int length) {
         long[] index = new long[length];
         for (int i=0; i<index.length; i++) {
-            index[i] = i;
+            // TODO: This should maybe be a safe cast for the benefit of non-LongDouble classes.
+            index[i] = (long) i;
         }
         return index;
     }
