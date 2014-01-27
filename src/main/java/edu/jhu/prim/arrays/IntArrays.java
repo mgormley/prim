@@ -117,7 +117,7 @@ public class IntArrays {
 
     public static int compare(int[] x, int[] y) {
         for (int i = 0; i < Math.min(x.length, y.length); i++) {
-            int diff = x[i] - y[i];
+            int diff = Integer.compare(x[i], y[i]);
             if (diff != 0) {
                 return diff;
             }

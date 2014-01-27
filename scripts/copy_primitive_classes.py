@@ -61,6 +61,8 @@ def get_re_subs_for_single(src_prim, dest_prim):
     repls = []
     add_re_subs = []
     
+    if src_prim.prim == "long" and dest_prim.prim == "int":
+        repls += [("Long.", "Integer.")]
     repls += get_typedef_repls(src_prim, dest_prim)
     
     # Convert repls to regex replacements.
@@ -82,9 +84,9 @@ def get_re_subs_for_pair(dest_key, dest_val):
     repls = []
         
     # Prepend some replacements for generics in the unit tests. 
-    if dest_key == "Int":
+    if dest_key.prim == "int":
         repls += [("<Long,", "<Integer,")]
-    if dest_val == "Int":
+    if dest_val.prim == "int":
         repls += [("Double>", "Integer>")] #TODO: should this have parens???
     # Conditional replacements
     if dest_val.is_integral:
@@ -228,4 +230,4 @@ if __name__ == "__main__":
     copy_single(tds.get("double"), tds.get("float"), src_files)
     src_files = classes_to_files("main", ["edu.jhu.prim.arrays.LongArrays"])    
     copy_single(tds.get("long"), tds.get("short"), src_files)
-
+    copy_single(tds.get("long"), tds.get("int"), src_files)
