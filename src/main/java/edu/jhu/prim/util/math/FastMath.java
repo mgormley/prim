@@ -126,31 +126,31 @@ public class FastMath {
     
     /* --------- Float versions which just cast to Double. ---------- */
     public static float log(float d) {
-        return SafeCast.safeDoubleToFloat(Math.log(d));
+        return SafeCast.safeDoubleToFloat(Math.log((double) d));
     }
 
     public static float exp(float d) {
-        return SafeCast.safeDoubleToFloat(Math.exp(d));
+        return SafeCast.safeDoubleToFloat(Math.exp((double) d));
     }
 
     public static float log2(float d) {
-        return SafeCast.safeDoubleToFloat(log2(d));
+        return SafeCast.safeDoubleToFloat(log2((double) d));
     }
     
     public static float logForIlp(float d) {
-        return SafeCast.safeDoubleToFloat(logForIlp(d));
+        return SafeCast.safeDoubleToFloat(logForIlp((double) d));
     }
 
     public static float logAdd(float x, float y) {
-        return SafeCast.safeDoubleToFloat(logAdd(x, y));
+        return SafeCast.safeDoubleToFloat(logAdd((double) x, (double) y));
     }
 
     public static float logSubtract(float x, float y) {
-        return SafeCast.safeDoubleToFloat(logSubtract(x, y));
+        return SafeCast.safeDoubleToFloat(logSubtract((double) x, (double) y));
     }
     
     public static float sqrt(float value) {
-        return SafeCast.safeDoubleToFloat(sqrt(value));
+        return SafeCast.safeDoubleToFloat(sqrt((double) value));
     }
     /* --------------------------------------------------------------- */
 
