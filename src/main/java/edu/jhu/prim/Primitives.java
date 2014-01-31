@@ -104,6 +104,10 @@ public class Primitives {
     }
 
     public static boolean equals(double a, double b, double delta) {
+        if (a == b) {
+            // This case is needed for infinity equality.
+            return true;
+        }
         return Math.abs(a - b) < delta;
     }
 
@@ -143,6 +147,10 @@ public class Primitives {
     }
 
     public static void assertDoubleEquals(double a, double b) {
+        if (a == b) {
+            // This check is needed to ensure infinity equality.
+            return;
+        }
         assert(Math.abs(a - b) < 0.000000000001);
     }
  }
