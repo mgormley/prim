@@ -101,6 +101,32 @@ public class Lambda {
         }
     }
     
+    /**
+     * Like DoubleSubtract, but handles edge cases slightly differently than Java:
+     * (-Infinity) - (-Infinity) == 0  (java would have this be NaN)
+     * This is useful in Belief Propagation.
+     */
+    public static final class DoubleSubtractBP implements LambdaBinOpDouble {
+        public final double call(double v1, double v2) {
+        	if(v1 == v2 && v1 == Double.NEGATIVE_INFINITY)
+        		return 0;
+            return v1 - v2;
+        }
+    }
+    
+    /**
+     * Like DoubleDiv, but handles edge cases slightly differently than Java:
+     * 0 / 0 == 0  (java would have this be NaN)
+     * This is useful in Belief Propagation.
+     */
+    public static final class DoubleDivBP implements LambdaBinOpDouble {
+        public final double call(double v1, double v2) {
+        	if(v1 == 0d && v2 == 0d)
+        		return 0d;
+            return v1 / v2;
+        }
+    }
+
 
     /* -------------------- Longs ---------------------- */
     
