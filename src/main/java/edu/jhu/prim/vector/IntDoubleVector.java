@@ -14,8 +14,8 @@ public interface IntDoubleVector extends Serializable {
     /** Gets the value at the specified index. */
     double get(int idx);
 
-    /** Sets the value at the specified index. */
-    void set(int idx, double val);
+    /** Sets the value at the specified index and returns the previous value. */
+    double set(int idx, double val);
 
     /** Adds to the current value at the specified index. */
     void add(int idx, double val);

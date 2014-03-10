@@ -129,17 +129,20 @@ public class LongDoubleSortedMap implements LongDoubleMap {
      * @see edu.jhu.util.vector.LongDoubleMap#put(long, double)
      */
 	@Override
-    public void put(long idx, double val) {
+    public double put(long idx, double val) {
+	    double old = 0d;
 		int i = Arrays.binarySearch(indices, 0, used, idx);
 		if (i >= 0) {
 			// Just update the value.
+		    old = values[i];
 			values[i] = val;
-			return;
+			return old;
 		} 
 		int insertionPoint = -(i + 1);
 		indices = insert(indices, insertionPoint, idx);
 		values = insert(values, insertionPoint, val);
 		used++;
+		return old;
 	}
 	
     /* (non-Javadoc)

@@ -21,8 +21,8 @@ public interface LongDoubleMap extends Iterable<LongDoubleEntry>, Serializable {
     // TODO: rename to containsKey.
     boolean contains(long idx);
     
-    /** Puts the value with the specified index in the map, replacing the current value if it exists. */
-    void put(long idx, double val);
+    /** Puts the value with the specified index in the map, replacing the current value if it exists, and returning the previous value. */
+    double put(long idx, double val);
 
     /** Removes the entry with the given index. */
     void remove(long idx);
