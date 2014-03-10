@@ -72,7 +72,7 @@ public class FastMath {
      * 
      * @param x log(p)
      * @param y log(q)
-     * @return log(p - q) = log(exp(p) + exp(q))
+     * @return log(p - q) = log(exp(p) - exp(q))
      * @throws IllegalStateException if x < y
      */
     public static double logSubtractExact(double x, double y) {
