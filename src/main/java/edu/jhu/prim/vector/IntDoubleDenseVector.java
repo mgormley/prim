@@ -111,7 +111,7 @@ public class IntDoubleDenseVector implements IntDoubleVector {
 
     @Override
     public double dot(IntDoubleVector y) {
-        if (y instanceof IntDoubleSortedVector || y instanceof IntDoubleHashVector) {
+        if (y instanceof IntDoubleSortedVector || y instanceof IntDoubleUnsortedVector || y instanceof IntDoubleHashVector) {
             return y.dot(this);
         } else if (y instanceof IntDoubleDenseVector){
             IntDoubleDenseVector other = (IntDoubleDenseVector) y;
