@@ -43,6 +43,8 @@ public class Sample {
      */
     public static boolean[] sampleWithoutReplacementBooleans(int sampleSize, int n) {
         int[] indices = sampleWithoutReplacement(sampleSize, n);
+        Arrays.sort(indices);
+        assert indices.length == sampleSize;
         boolean[] bools = new boolean[n];
         int j=0;
         for (int i=0; i<bools.length; i++) {

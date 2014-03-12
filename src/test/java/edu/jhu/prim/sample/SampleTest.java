@@ -8,22 +8,22 @@ public class SampleTest {
 
     @Test
     public void testSampleWithoutReplacement() {
-        int[] indices = Sample.sampleWithoutReplacement(1, 3);
-        assertEquals(1, indices.length);
+        int[] indices = Sample.sampleWithoutReplacement(15, 30);
+        assertEquals(15, indices.length);
     }
     
 
     @Test
     public void testSampleWithoutReplacementBooleans() {
-        boolean[] indices = Sample.sampleWithoutReplacementBooleans(2, 3);
-        assertEquals(3, indices.length);
+        boolean[] indices = Sample.sampleWithoutReplacementBooleans(20, 30);
+        assertEquals(30, indices.length);
         int numTrue = 0;
         for (int i=0; i<indices.length; i++) {
             if (indices[i]) {
                 numTrue++;
             }
         }
-        assertEquals(2, numTrue);
+        assertEquals(20, numTrue);
     }
 
 }
