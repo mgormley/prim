@@ -21,7 +21,7 @@ public class IntArrays {
         }
     }
 
-    public static double sum(int[] vector) {
+    public static int sum(int[] vector) {
         int sum = 0;
         for (int i = 0; i < vector.length; i++) {
             sum += vector[i];

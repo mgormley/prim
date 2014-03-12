@@ -72,6 +72,10 @@ public class BitSetBinaryMatrix implements BinaryMatrix {
     public int getRowCount(int row) {
         return rowCounts[row];
     }
+    
+    public int getCount() {
+        return IntArrays.sum(columnCounts);
+    }
 
     public int getNumRows() {
         return numRows;
