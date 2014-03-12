@@ -161,4 +161,20 @@ public class BitSetBinaryMatrix implements BinaryMatrix {
         return sb.toString();
     }
 
+    public void setAll(boolean val) {
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < numCols; j++) {
+                set(i, j, val);
+            }
+        }
+    }
+
+    public boolean set(int row, int col, boolean val) {
+        if (val) {
+            return increment(row, col);
+        } else {
+            return decrement(row, col);
+        }
+    }
+
 }
