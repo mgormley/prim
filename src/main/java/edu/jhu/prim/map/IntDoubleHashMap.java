@@ -432,8 +432,8 @@ public class IntDoubleHashMap implements Serializable, IntDoubleMap {
         return previous;
     }
 
-    public void put(final int key, final double value) {
-        putAndGet(key, value);
+    public double put(final int key, final double value) {
+        return putAndGet(key, value);
     }
     
     /**

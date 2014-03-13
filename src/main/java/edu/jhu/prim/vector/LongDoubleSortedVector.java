@@ -84,8 +84,8 @@ public class LongDoubleSortedVector extends LongDoubleSortedMap implements LongD
     	put(idx, curVal + val);
     }
     
-    public void set(long idx, double val) {
-    	put(idx, val);
+    public double set(long idx, double val) {
+    	return put(idx, val);
     }
     
     @Override

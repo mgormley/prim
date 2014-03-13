@@ -78,11 +78,13 @@ public class LongDoubleDenseVector implements LongDoubleVector {
      * @param i The index to set.
      * @param value The value to set.
      */
-    public void set(long idx, double value) {
+    public double set(long idx, double value) {
         int i = SafeCast.safeLongToInt(idx);
         idxAfterLast = Math.max(idxAfterLast, i + 1);
         ensureCapacity(idxAfterLast);
+        double old = elements[i];
         elements[i] = value;
+        return old;
     }
 
     public void add(long idx, double value) {

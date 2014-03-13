@@ -6,7 +6,6 @@ import edu.jhu.prim.Primitives;
 import edu.jhu.prim.arrays.DoubleArrays;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
-import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.vector.IntDoubleHashVector.SparseBinaryOpApplier;
 
 
@@ -78,11 +77,13 @@ public class IntDoubleDenseVector implements IntDoubleVector {
      * @param i The index to set.
      * @param value The value to set.
      */
-    public void set(int idx, double value) {
+    public double set(int idx, double value) {
         int i = idx;
         idxAfterLast = Math.max(idxAfterLast, i + 1);
         ensureCapacity(idxAfterLast);
+        double old = elements[i];
         elements[i] = value;
+        return old;
     }
 
     public void add(int idx, double value) {
@@ -110,7 +111,7 @@ public class IntDoubleDenseVector implements IntDoubleVector {
 
     @Override
     public double dot(IntDoubleVector y) {
-        if (y instanceof IntDoubleSortedVector || y instanceof IntDoubleHashVector) {
+        if (y instanceof IntDoubleSortedVector || y instanceof IntDoubleUnsortedVector || y instanceof IntDoubleHashVector) {
             return y.dot(this);
         } else if (y instanceof IntDoubleDenseVector){
             IntDoubleDenseVector other = (IntDoubleDenseVector) y;

@@ -84,8 +84,8 @@ public class IntDoubleSortedVector extends IntDoubleSortedMap implements IntDoub
     	put(idx, curVal + val);
     }
     
-    public void set(int idx, double val) {
-    	put(idx, val);
+    public double set(int idx, double val) {
+    	return put(idx, val);
     }
     
     @Override

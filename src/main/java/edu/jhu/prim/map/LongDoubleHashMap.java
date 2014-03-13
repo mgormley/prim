@@ -432,8 +432,8 @@ public class LongDoubleHashMap implements Serializable, LongDoubleMap {
         return previous;
     }
 
-    public void put(final long key, final double value) {
-        putAndGet(key, value);
+    public double put(final long key, final double value) {
+        return putAndGet(key, value);
     }
     
     /**

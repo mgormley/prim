@@ -14,8 +14,8 @@ public interface LongDoubleVector extends Serializable {
     /** Gets the value at the specified index. */
     double get(long idx);
 
-    /** Sets the value at the specified index. */
-    void set(long idx, double val);
+    /** Sets the value at the specified index and returns the previous value. */
+    double set(long idx, double val);
 
     /** Adds to the current value at the specified index. */
     void add(long idx, double val);

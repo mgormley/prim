@@ -43,8 +43,8 @@ public class LongDoubleHashVector extends LongDoubleHashMap implements LongDoubl
     }
         
     @Override
-    public void set(long idx, double val) {
-        put(idx, val);
+    public double set(long idx, double val) {
+        return put(idx, val);
     }
 
     @Override
