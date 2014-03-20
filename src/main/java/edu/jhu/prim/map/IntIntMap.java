@@ -21,8 +21,8 @@ public interface IntIntMap extends Iterable<IntIntEntry>, Serializable {
     // TODO: rename to containsKey.
     boolean contains(int idx);
     
-    /** Puts the value with the specified index in the map, replacing the current value if it exists. */
-    void put(int idx, int val);
+    /** Puts the value with the specified index in the map, replacing the current value if it exists, and returning the previous value. */
+    int put(int idx, int val);
 
     /** Removes the entry with the given index. */
     void remove(int idx);

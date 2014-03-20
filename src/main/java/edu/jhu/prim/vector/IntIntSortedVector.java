@@ -84,8 +84,8 @@ public class IntIntSortedVector extends IntIntSortedMap implements IntIntVector 
     	put(idx, curVal + val);
     }
     
-    public void set(int idx, int val) {
-    	put(idx, val);
+    public int set(int idx, int val) {
+    	return put(idx, val);
     }
     
     @Override

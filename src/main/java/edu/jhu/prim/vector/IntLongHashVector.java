@@ -43,8 +43,8 @@ public class IntLongHashVector extends IntLongHashMap implements IntLongVector {
     }
         
     @Override
-    public void set(int idx, long val) {
-        put(idx, val);
+    public long set(int idx, long val) {
+        return put(idx, val);
     }
 
     @Override

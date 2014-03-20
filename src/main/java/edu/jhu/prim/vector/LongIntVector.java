@@ -14,8 +14,8 @@ public interface LongIntVector extends Serializable {
     /** Gets the value at the specified index. */
     int get(long idx);
 
-    /** Sets the value at the specified index. */
-    void set(long idx, int val);
+    /** Sets the value at the specified index and returns the previous value. */
+    int set(long idx, int val);
 
     /** Adds to the current value at the specified index. */
     void add(long idx, int val);

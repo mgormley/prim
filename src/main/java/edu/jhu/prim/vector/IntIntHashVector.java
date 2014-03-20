@@ -43,8 +43,8 @@ public class IntIntHashVector extends IntIntHashMap implements IntIntVector {
     }
         
     @Override
-    public void set(int idx, int val) {
-        put(idx, val);
+    public int set(int idx, int val) {
+        return put(idx, val);
     }
 
     @Override

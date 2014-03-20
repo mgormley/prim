@@ -80,9 +80,12 @@ public class IntIntVectorSlice implements IntIntVector {
      * @param i The index to set.
      * @param value The value to set.
      */
-    public void set(int idx, int value) {
+    public int set(int idx, int value) {
         checkIndex(idx);
-        elements[idx + start] = value;
+        int i = idx + start;
+        int old = elements[i];
+        elements[i] = value;
+        return old;
     }
 
     public void add(int idx, int value) {

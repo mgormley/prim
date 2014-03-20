@@ -6,6 +6,7 @@ import edu.jhu.prim.Primitives;
 import edu.jhu.prim.arrays.DoubleArrays;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
+import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.vector.IntDoubleHashVector.SparseBinaryOpApplier;
 
 

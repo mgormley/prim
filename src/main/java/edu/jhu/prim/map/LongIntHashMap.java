@@ -414,8 +414,8 @@ public class LongIntHashMap implements Serializable, LongIntMap {
         return previous;
     }
 
-    public void put(final long key, final int value) {
-        putAndGet(key, value);
+    public int put(final long key, final int value) {
+        return putAndGet(key, value);
     }
     
     /**

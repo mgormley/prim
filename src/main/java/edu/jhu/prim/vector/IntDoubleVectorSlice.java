@@ -5,6 +5,7 @@ import java.util.Arrays;
 import edu.jhu.prim.Primitives;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
+import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.vector.IntDoubleHashVector.SparseBinaryOpApplier;
 
 
@@ -81,8 +82,9 @@ public class IntDoubleVectorSlice implements IntDoubleVector {
      */
     public double set(int idx, double value) {
         checkIndex(idx);
-        double old = elements[idx + start];
-        elements[idx + start] = value;
+        int i = idx + start;
+        double old = elements[i];
+        elements[i] = value;
         return old;
     }
 

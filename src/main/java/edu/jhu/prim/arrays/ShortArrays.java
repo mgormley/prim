@@ -21,7 +21,7 @@ public class ShortArrays {
         }
     }
 
-    public static double sum(short[] vector) {
+    public static short sum(short[] vector) {
         short sum = 0;
         for (int i = 0; i < vector.length; i++) {
             sum += vector[i];

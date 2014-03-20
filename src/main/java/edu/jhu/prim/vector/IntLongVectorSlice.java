@@ -80,9 +80,12 @@ public class IntLongVectorSlice implements IntLongVector {
      * @param i The index to set.
      * @param value The value to set.
      */
-    public void set(int idx, long value) {
+    public long set(int idx, long value) {
         checkIndex(idx);
-        elements[idx + start] = value;
+        int i = idx + start;
+        long old = elements[i];
+        elements[i] = value;
+        return old;
     }
 
     public void add(int idx, long value) {

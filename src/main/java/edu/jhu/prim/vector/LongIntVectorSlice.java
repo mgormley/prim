@@ -80,9 +80,12 @@ public class LongIntVectorSlice implements LongIntVector {
      * @param i The index to set.
      * @param value The value to set.
      */
-    public void set(long idx, int value) {
+    public int set(long idx, int value) {
         checkIndex(idx);
-        elements[SafeCast.safeLongToInt(idx + start)] = value;
+        int i = SafeCast.safeLongToInt(idx + start);
+        int old = elements[i];
+        elements[i] = value;
+        return old;
     }
 
     public void add(long idx, int value) {

@@ -14,8 +14,8 @@ public interface IntIntVector extends Serializable {
     /** Gets the value at the specified index. */
     int get(int idx);
 
-    /** Sets the value at the specified index. */
-    void set(int idx, int val);
+    /** Sets the value at the specified index and returns the previous value. */
+    int set(int idx, int val);
 
     /** Adds to the current value at the specified index. */
     void add(int idx, int val);

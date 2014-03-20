@@ -78,11 +78,13 @@ public class IntLongDenseVector implements IntLongVector {
      * @param i The index to set.
      * @param value The value to set.
      */
-    public void set(int idx, long value) {
+    public long set(int idx, long value) {
         int i = idx;
         idxAfterLast = Math.max(idxAfterLast, i + 1);
         ensureCapacity(idxAfterLast);
+        long old = elements[i];
         elements[i] = value;
+        return old;
     }
 
     public void add(int idx, long value) {

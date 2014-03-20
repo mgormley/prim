@@ -21,7 +21,7 @@ public class LongArrays {
         }
     }
 
-    public static double sum(long[] vector) {
+    public static long sum(long[] vector) {
         long sum = 0;
         for (int i = 0; i < vector.length; i++) {
             sum += vector[i];

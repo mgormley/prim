@@ -414,8 +414,8 @@ public class IntIntHashMap implements Serializable, IntIntMap {
         return previous;
     }
 
-    public void put(final int key, final int value) {
-        putAndGet(key, value);
+    public int put(final int key, final int value) {
+        return putAndGet(key, value);
     }
     
     /**

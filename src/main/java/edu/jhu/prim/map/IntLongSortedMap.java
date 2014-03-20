@@ -129,17 +129,20 @@ public class IntLongSortedMap implements IntLongMap {
      * @see edu.jhu.util.vector.IntLongMap#put(int, long)
      */
 	@Override
-    public void put(int idx, long val) {
+    public long put(int idx, long val) {
+	    long old = 0;
 		int i = Arrays.binarySearch(indices, 0, used, idx);
 		if (i >= 0) {
 			// Just update the value.
+		    old = values[i];
 			values[i] = val;
-			return;
+			return old;
 		} 
 		int insertionPoint = -(i + 1);
 		indices = insert(indices, insertionPoint, idx);
 		values = insert(values, insertionPoint, val);
 		used++;
+		return old;
 	}
 	
     /* (non-Javadoc)

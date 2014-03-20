@@ -84,8 +84,8 @@ public class LongIntSortedVector extends LongIntSortedMap implements LongIntVect
     	put(idx, curVal + val);
     }
     
-    public void set(long idx, int val) {
-    	put(idx, val);
+    public int set(long idx, int val) {
+    	return put(idx, val);
     }
     
     @Override
