@@ -193,4 +193,15 @@ public class LongIntVectorSliceTest {
 
     }
     
+    @Test
+    public void testDimension() {
+        LongIntVector v1 = new LongIntDenseVector();
+        v1.set(1, toInt(11));
+        v1.set(2, toInt(22));
+        v1.set(4, toInt(44));
+        v1.set(5, toInt(55));
+        LongIntVectorSlice v2 = new LongIntVectorSlice((LongIntDenseVector)v1, 1, 3);
+        assertEquals(3, v2.getDimension());
+    }
+    
 }    

@@ -382,7 +382,7 @@ public class IntLongSortedVector extends IntLongSortedMap implements IntLongVect
     }
     
     public int getDimension() {
-        return IntArrays.max(indices)+1;
+        return Math.max(0, IntArrays.max(indices) + 1);
     }
 
     /** Gets a NEW array containing all the elements in this vector. */

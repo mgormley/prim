@@ -147,7 +147,7 @@ public abstract class AbstractIntLongVectorTest {
         v1.set(1, toLong(11));
         v1.set(2, toLong(22));
         v1.set(4, toLong(44));
-        assertEquals(4, v1.getDimension());
+        assertEquals(5, v1.getDimension());
     }
     
     protected abstract IntLongVector getIntLongVector();

@@ -147,7 +147,7 @@ public abstract class AbstractIntIntVectorTest {
         v1.set(1, toInt(11));
         v1.set(2, toInt(22));
         v1.set(4, toInt(44));
-        assertEquals(4, v1.getDimension());
+        assertEquals(5, v1.getDimension());
     }
     
     protected abstract IntIntVector getIntIntVector();

@@ -382,7 +382,7 @@ public class IntIntSortedVector extends IntIntSortedMap implements IntIntVector 
     }
     
     public int getDimension() {
-        return IntArrays.max(indices)+1;
+        return Math.max(0, IntArrays.max(indices) + 1);
     }
 
     /** Gets a NEW array containing all the elements in this vector. */

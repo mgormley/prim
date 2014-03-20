@@ -121,7 +121,7 @@ public class LongDoubleHashVector extends LongDoubleHashMap implements LongDoubl
                  max = keys[i];
             }
         }        
-        return max+1;
+        return Math.max(0, max + 1);
     }
     
     /** Gets a NEW array containing all the elements in this vector. */

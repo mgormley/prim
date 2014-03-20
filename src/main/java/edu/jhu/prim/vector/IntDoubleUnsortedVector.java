@@ -131,7 +131,7 @@ public class IntDoubleUnsortedVector extends Vector implements IntDoubleVector, 
 	}
 
     public int getDimension() {
-        return IntArrays.max(getInternalIndices())+1;
+        return Math.max(0, IntArrays.max(getInternalIndices()) + 1);
     }
 
     /** Gets a NEW array containing all the elements in this vector. */

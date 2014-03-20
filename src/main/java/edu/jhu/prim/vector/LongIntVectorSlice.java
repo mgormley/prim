@@ -36,6 +36,11 @@ public class LongIntVectorSlice implements LongIntVector {
         this.size = size;
     }
     
+    /**
+     * The current implementation assumes NO CHANGES will be made to the
+     * underlying dense vector except through this slice for the duration of
+     * this slice's existence.
+     */
     public LongIntVectorSlice(LongIntDenseVector vec, int start, int size) {
         // TODO: There's a rather odd case we're dealing with in which the dense
         // vector may actually have a larger internal representation than what
@@ -162,7 +167,7 @@ public class LongIntVectorSlice implements LongIntVector {
         return -1;
     }
     
-    public long getDimension() {
+    public long getDimension() {        
         return size;
     }
     

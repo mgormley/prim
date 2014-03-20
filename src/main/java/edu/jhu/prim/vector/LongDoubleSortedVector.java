@@ -382,7 +382,7 @@ public class LongDoubleSortedVector extends LongDoubleSortedMap implements LongD
     }
     
     public long getDimension() {
-        return LongArrays.max(indices)+1;
+        return Math.max(0, LongArrays.max(indices) + 1);
     }
 
     /** Gets a NEW array containing all the elements in this vector. */
