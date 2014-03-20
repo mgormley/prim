@@ -112,7 +112,7 @@ public class IntDoubleDenseVector implements IntDoubleVector {
 
     @Override
     public double dot(IntDoubleVector y) {
-        if (y instanceof IntDoubleSortedVector || y instanceof IntDoubleUnsortedVector || y instanceof IntDoubleHashVector) {
+        if (y instanceof IntDoubleSortedVector || y instanceof IntDoubleHashVector) {
             return y.dot(this);
         } else if (y instanceof IntDoubleDenseVector){
             IntDoubleDenseVector other = (IntDoubleDenseVector) y;
@@ -175,10 +175,7 @@ public class IntDoubleDenseVector implements IntDoubleVector {
         return -1;
     }
 
-    /**
-     * Gets a NEW array containing all the elements in this array list.
-     * @return The new array containing the elements in this list.
-     */
+    /** Gets a NEW array containing all the elements in this vector. */
     public double[] toNativeArray() {
         return Arrays.copyOf(elements, idxAfterLast);
     }
@@ -219,7 +216,7 @@ public class IntDoubleDenseVector implements IntDoubleVector {
      * 
      * @return The number of implicit entries.
      */
-    public int getNumImplicitEntries() {
+    public int getDimension() {
         return idxAfterLast;
     }
     

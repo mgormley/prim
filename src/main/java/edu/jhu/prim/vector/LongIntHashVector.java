@@ -1,5 +1,6 @@
 package edu.jhu.prim.vector;
 
+import edu.jhu.prim.arrays.LongArrays;
 import edu.jhu.prim.map.LongIntHashMap;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnLongIntToInt;
@@ -111,6 +112,28 @@ public class LongIntHashVector extends LongIntHashMap implements LongIntVector {
         // Also this will be very slow if other is a LongIntSortedVector since it will have to
         // call get() each time.
         this.apply(new SparseBinaryOpApplier2(this, other, new Lambda.IntProd()));
+    }
+
+    public long getDimension() {
+        long max = Long.MIN_VALUE;
+        for (int i=0; i<keys.length; i++) {
+            if (states[i] == FULL && keys[i] > max) {
+                 max = keys[i];
+            }
+        }        
+        return max+1;
+    }
+    
+    /** Gets a NEW array containing all the elements in this vector. */
+    public int[] toNativeArray() {
+        final int[] arr = new int[SafeCast.safeLongToInt(getDimension())];
+        apply(new FnLongIntToInt() {
+            public int call(long idx, int val) {
+                arr[SafeCast.safeLongToInt(idx)] = val;
+                return val;
+            }
+        });
+        return arr;
     }
     
     public static class SparseBinaryOpApplier implements FnLongIntToInt {

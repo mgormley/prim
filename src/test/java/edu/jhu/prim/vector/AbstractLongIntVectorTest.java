@@ -140,6 +140,16 @@ public abstract class AbstractLongIntVectorTest {
         assertEquals(55*0, toInt(v1.get(5)));        
     }
 
+    @Test
+    public void testDimension() {
+        LongIntVector v1 = getLongIntVector();
+        assertEquals(0, v1.getDimension());
+        v1.set(1, toInt(11));
+        v1.set(2, toInt(22));
+        v1.set(4, toInt(44));
+        assertEquals(4, v1.getDimension());
+    }
+    
     protected abstract LongIntVector getLongIntVector();
 
 }

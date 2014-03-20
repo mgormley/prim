@@ -381,6 +381,22 @@ public class LongIntSortedVector extends LongIntSortedMap implements LongIntVect
         return true;
     }
     
+    public long getDimension() {
+        return LongArrays.max(indices)+1;
+    }
+
+    /** Gets a NEW array containing all the elements in this vector. */
+    public int[] toNativeArray() {
+        final int[] arr = new int[SafeCast.safeLongToInt(getDimension())];
+        apply(new FnLongIntToInt() {
+            public int call(long idx, int val) {
+                arr[SafeCast.safeLongToInt(idx)] = val;
+                return val;
+            }
+        });
+        return arr;
+    }
+    
     @Override
     public int hashCode() {
         throw new RuntimeException("not implemented");

@@ -86,6 +86,7 @@ def get_re_subs_for_pair(dest_key, dest_val):
     # Prepend some replacements for generics in the unit tests. 
     if dest_key.prim == "int":
         repls += [("<Long,", "<Integer,")]
+        repls += [("Long.", "Integer.")]
     if dest_val.prim == "int":
         repls += [("Double>", "Integer>")] #TODO: should this have parens???
     # Conditional replacements

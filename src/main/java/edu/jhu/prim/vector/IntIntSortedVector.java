@@ -381,6 +381,22 @@ public class IntIntSortedVector extends IntIntSortedMap implements IntIntVector 
         return true;
     }
     
+    public int getDimension() {
+        return IntArrays.max(indices)+1;
+    }
+
+    /** Gets a NEW array containing all the elements in this vector. */
+    public int[] toNativeArray() {
+        final int[] arr = new int[getDimension()];
+        apply(new FnIntIntToInt() {
+            public int call(int idx, int val) {
+                arr[idx] = val;
+                return val;
+            }
+        });
+        return arr;
+    }
+    
     @Override
     public int hashCode() {
         throw new RuntimeException("not implemented");

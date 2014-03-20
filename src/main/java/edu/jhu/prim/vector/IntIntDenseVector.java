@@ -175,10 +175,7 @@ public class IntIntDenseVector implements IntIntVector {
         return -1;
     }
 
-    /**
-     * Gets a NEW array containing all the elements in this array list.
-     * @return The new array containing the elements in this list.
-     */
+    /** Gets a NEW array containing all the elements in this vector. */
     public int[] toNativeArray() {
         return Arrays.copyOf(elements, idxAfterLast);
     }
@@ -219,7 +216,7 @@ public class IntIntDenseVector implements IntIntVector {
      * 
      * @return The number of implicit entries.
      */
-    public int getNumImplicitEntries() {
+    public int getDimension() {
         return idxAfterLast;
     }
     

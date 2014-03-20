@@ -161,7 +161,11 @@ public class IntIntVectorSlice implements IntIntVector {
         }
         return -1;
     }
-
+    
+    public int getDimension() {
+        return size;
+    }
+    
     /**
      * Gets a NEW array containing all the elements in this array list.
      * @return The new array containing the elements in this list.

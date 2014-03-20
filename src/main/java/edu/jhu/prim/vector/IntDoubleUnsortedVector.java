@@ -3,6 +3,7 @@ package edu.jhu.prim.vector;
 import java.util.*;
 
 import travis.Vector;
+import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.map.IntDoubleEntry;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
 
@@ -111,25 +112,39 @@ public class IntDoubleUnsortedVector extends Vector implements IntDoubleVector, 
 		if(other instanceof IntDoubleUnsortedVector) {
 			IntDoubleUnsortedVector that = (IntDoubleUnsortedVector) other;
 			super.add(that);
+		} else {
+            // TODO: implement this using apply.
+		    throw new RuntimeException("Not yet implemented");
 		}
-		else throw reasonWhyICantImplThis();
 	}
 
 	@Override
 	public void subtract(IntDoubleVector other) {
-		throw reasonWhyICantImplThis();
+        // TODO: implement this using apply.
+        throw new RuntimeException("Not yet implemented");
 	}
 
 	@Override
 	public void product(IntDoubleVector other) {
-		throw reasonWhyICantImplThis();
+        // TODO: implement this using apply.
+        throw new RuntimeException("Not yet implemented");
 	}
-	
-	private RuntimeException reasonWhyICantImplThis() {
-		throw new RuntimeException("I can't implement some methods involving "
-				+ "IntDoubleVector because I don't know either their dimension "
-				+ "or the maximum non-zero index on which to call get()");
-	}
+
+    public int getDimension() {
+        return IntArrays.max(getInternalIndices())+1;
+    }
+
+    /** Gets a NEW array containing all the elements in this vector. */
+    public double[] toNativeArray() {
+        final double[] arr = new double[getDimension()];
+        apply(new FnIntDoubleToDouble() {
+            public double call(int idx, double val) {
+                arr[idx] = val;
+                return val;
+            }
+        });
+        return arr;
+    }
 
 	@Override
 	public IntDoubleVector copy() {
