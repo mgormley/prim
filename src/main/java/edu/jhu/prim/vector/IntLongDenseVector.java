@@ -112,9 +112,7 @@ public class IntLongDenseVector implements IntLongVector {
 
     @Override
     public long dot(IntLongVector y) {
-        if (y instanceof IntLongSortedVector || y instanceof IntLongHashVector) {
-            return y.dot(this);
-        } else if (y instanceof IntLongDenseVector){
+        if (y instanceof IntLongDenseVector){
             IntLongDenseVector other = (IntLongDenseVector) y;
             int max = Math.min(idxAfterLast, other.idxAfterLast);
             long dot = 0;
@@ -123,11 +121,7 @@ public class IntLongDenseVector implements IntLongVector {
             }
             return dot;
         } else {
-            long dot = 0;
-            for (int i=0; i<idxAfterLast; i++) {
-                dot += elements[i] * y.get(i);
-            }
-            return dot;
+            return y.dot(this);
         }
     }
     

@@ -112,9 +112,7 @@ public class IntIntDenseVector implements IntIntVector {
 
     @Override
     public int dot(IntIntVector y) {
-        if (y instanceof IntIntSortedVector || y instanceof IntIntHashVector) {
-            return y.dot(this);
-        } else if (y instanceof IntIntDenseVector){
+        if (y instanceof IntIntDenseVector){
             IntIntDenseVector other = (IntIntDenseVector) y;
             int max = Math.min(idxAfterLast, other.idxAfterLast);
             int dot = 0;
@@ -123,11 +121,7 @@ public class IntIntDenseVector implements IntIntVector {
             }
             return dot;
         } else {
-            int dot = 0;
-            for (int i=0; i<idxAfterLast; i++) {
-                dot += elements[i] * y.get(i);
-            }
-            return dot;
+            return y.dot(this);
         }
     }
     

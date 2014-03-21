@@ -112,9 +112,7 @@ public class IntDoubleDenseVector implements IntDoubleVector {
 
     @Override
     public double dot(IntDoubleVector y) {
-        if (y instanceof IntDoubleSortedVector || y instanceof IntDoubleHashVector) {
-            return y.dot(this);
-        } else if (y instanceof IntDoubleDenseVector){
+        if (y instanceof IntDoubleDenseVector){
             IntDoubleDenseVector other = (IntDoubleDenseVector) y;
             int max = Math.min(idxAfterLast, other.idxAfterLast);
             double dot = 0;
@@ -123,11 +121,7 @@ public class IntDoubleDenseVector implements IntDoubleVector {
             }
             return dot;
         } else {
-            double dot = 0;
-            for (int i=0; i<idxAfterLast; i++) {
-                dot += elements[i] * y.get(i);
-            }
-            return dot;
+            return y.dot(this);
         }
     }
     
