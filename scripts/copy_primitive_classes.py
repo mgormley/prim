@@ -200,7 +200,6 @@ if __name__ == "__main__":
                  "edu.jhu.prim.map.LongDoubleSortedMap",
                  "edu.jhu.prim.map.LongDoubleHashMap",
                  "edu.jhu.prim.sort.LongDoubleSort",
-                 # "edu.jhu.prim.set.LongHashSet",
                  "edu.jhu.prim.vector.LongDoubleVector",
                  "edu.jhu.prim.vector.LongDoubleSortedVector",
                  "edu.jhu.prim.vector.LongDoubleHashVector",
@@ -242,6 +241,7 @@ if __name__ == "__main__":
     copy_single(tds.get("long"), tds.get("short"), src_files)
     src_files = classes_to_files("main", ["edu.jhu.prim.arrays.LongArrays",
                                           "edu.jhu.prim.set.LongHashSet",
+                                          "edu.jhu.prim.set.LongSet",
                                           "edu.jhu.prim.iter.LongIter",
                                           "edu.jhu.prim.iter.LongArrayIter",
                                           "edu.jhu.prim.iter.LongIncrIter",

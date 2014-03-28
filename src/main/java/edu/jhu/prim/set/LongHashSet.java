@@ -10,7 +10,7 @@ import edu.jhu.prim.map.LongDoubleHashMap;
  * Hash set for long primitives.
  * @author mgormley
  */
-public class LongHashSet implements Serializable {
+public class LongHashSet implements LongSet, Serializable {
     
     private static final long serialVersionUID = 1L;
     private LongDoubleHashMap map;
