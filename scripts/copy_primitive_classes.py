@@ -64,6 +64,8 @@ def get_re_subs_for_single(src_prim, dest_prim):
     if src_prim.prim == "long" and dest_prim.prim == "int":
         repls += [("Long.", "Integer.")]
     repls += get_typedef_repls(src_prim, dest_prim)
+    # Corrections to always use.
+    repls += [("int serialVersionUID", "long serialVersionUID")]
     
     # Convert repls to regex replacements.
     re_subs = [(re.escape(k), v) for k, v in repls]

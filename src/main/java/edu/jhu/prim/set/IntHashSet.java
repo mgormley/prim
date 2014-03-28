@@ -22,7 +22,7 @@ public class IntHashSet implements Serializable {
     public IntHashSet(IntHashSet other) {
         this.map = new IntDoubleHashMap(other.map);
     }
-
+    
     public void add(int key) {
         map.put(key, 1);
     }
@@ -34,5 +34,5 @@ public class IntHashSet implements Serializable {
     public IntIter iterator() {
         return new IntArrayIter(map.getIndices());
     }
-
+    
 }
