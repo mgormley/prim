@@ -10,7 +10,7 @@ import edu.jhu.prim.map.IntDoubleHashMap;
  * Hash set for int primitives.
  * @author mgormley
  */
-public class IntHashSet implements Serializable {
+public class IntHashSet implements IntSet, Serializable {
     
     private static final long serialVersionUID = 1L;
     private IntDoubleHashMap map;
