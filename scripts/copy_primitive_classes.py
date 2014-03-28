@@ -235,6 +235,11 @@ if __name__ == "__main__":
     # and should be copied over to a primitive.
     src_files = classes_to_files("main", ["edu.jhu.prim.arrays.DoubleArrays"])    
     copy_single(tds.get("double"), tds.get("float"), src_files)
-    src_files = classes_to_files("main", ["edu.jhu.prim.arrays.LongArrays"])    
+    src_files = classes_to_files("main", ["edu.jhu.prim.arrays.LongArrays",
+                                          "edu.jhu.prim.set.LongHashSet",
+                                          "edu.jhu.prim.iter.LongIter",
+                                          "edu.jhu.prim.iter.LongArrayIter",
+                                          "edu.jhu.prim.iter.LongIncrIter",
+                                          ])
     copy_single(tds.get("long"), tds.get("short"), src_files)
     copy_single(tds.get("long"), tds.get("int"), src_files)
