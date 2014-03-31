@@ -190,6 +190,8 @@ public class LongDoubleUnsortedVector implements LongDoubleVector {
         vals = Arrays.copyOf(vals, newSize);
     }
 
+    /* START EXCLUDE ILV norms */
+    
     public int l0Norm() {
         compact();
         return top;
@@ -231,12 +233,26 @@ public class LongDoubleUnsortedVector implements LongDoubleVector {
 
     public void makeUnitVector() { scale(1d / l2Norm()); }
 
+    /**
+     * returns true if any values are NaN or Inf
+     */
+    public boolean hasBadValues() {
+        for(int i=0; i<top; i++) {
+            double v = vals[i];
+            boolean bad = Double.isNaN(v) || Double.isInfinite(v);
+            if(bad) return true;
+        }
+        return false;
+    }
+    
+    /* END EXCLUDE norms */
+
     public void scale(double factor) {
         // no need to compact here: a*x + a*y = a*(x+y)
         for(int i=0; i<top; i++)
             vals[i] *= factor;
     }
-
+    
     @Override
     public void add(LongDoubleVector other) {
         final LongDoubleUnsortedVector me = this;
@@ -380,16 +396,5 @@ public class LongDoubleUnsortedVector implements LongDoubleVector {
         sb.append("}");
         return sb.toString();
     }
-
-    /**
-     * returns true if any values are NaN or Inf
-     */
-    public boolean hasBadValues() {
-        for(int i=0; i<top; i++) {
-            double v = vals[i];
-            boolean bad = Double.isNaN(v) || Double.isInfinite(v);
-            if(bad) return true;
-        }
-        return false;
-    }
+    
 }
