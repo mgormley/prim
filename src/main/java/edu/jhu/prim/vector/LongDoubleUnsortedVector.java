@@ -402,7 +402,7 @@ public class LongDoubleUnsortedVector implements LongDoubleVector {
     @Override
     public long getDimension() {
         if (top-1 >= 0) {
-            return idx[top] + 1;
+            return idx[top-1] + 1;
         } else {
             return 0;
         }
