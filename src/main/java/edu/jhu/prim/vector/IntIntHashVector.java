@@ -1,5 +1,6 @@
 package edu.jhu.prim.vector;
 
+import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.map.IntIntHashMap;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
@@ -43,8 +44,8 @@ public class IntIntHashVector extends IntIntHashMap implements IntIntVector {
     }
         
     @Override
-    public void set(int idx, int val) {
-        put(idx, val);
+    public int set(int idx, int val) {
+        return put(idx, val);
     }
 
     @Override
@@ -111,6 +112,28 @@ public class IntIntHashVector extends IntIntHashMap implements IntIntVector {
         // Also this will be very slow if other is a IntIntSortedVector since it will have to
         // call get() each time.
         this.apply(new SparseBinaryOpApplier2(this, other, new Lambda.IntProd()));
+    }
+
+    public int getDimension() {
+        int max = Integer.MIN_VALUE;
+        for (int i=0; i<keys.length; i++) {
+            if (states[i] == FULL && keys[i] > max) {
+                 max = keys[i];
+            }
+        }        
+        return Math.max(0, max + 1);
+    }
+    
+    /** Gets a NEW array containing all the elements in this vector. */
+    public int[] toNativeArray() {
+        final int[] arr = new int[getDimension()];
+        apply(new FnIntIntToInt() {
+            public int call(int idx, int val) {
+                arr[idx] = val;
+                return val;
+            }
+        });
+        return arr;
     }
     
     public static class SparseBinaryOpApplier implements FnIntIntToInt {

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import edu.jhu.prim.Primitives;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
+import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.vector.IntDoubleHashVector.SparseBinaryOpApplier;
 
 
@@ -35,6 +36,11 @@ public class IntDoubleVectorSlice implements IntDoubleVector {
         this.size = size;
     }
     
+    /**
+     * The current implementation assumes NO CHANGES will be made to the
+     * underlying dense vector except through this slice for the duration of
+     * this slice's existence.
+     */
     public IntDoubleVectorSlice(IntDoubleDenseVector vec, int start, int size) {
         // TODO: There's a rather odd case we're dealing with in which the dense
         // vector may actually have a larger internal representation than what
@@ -81,8 +87,9 @@ public class IntDoubleVectorSlice implements IntDoubleVector {
      */
     public double set(int idx, double value) {
         checkIndex(idx);
-        double old = elements[idx + start];
-        elements[idx + start] = value;
+        int i = idx + start;
+        double old = elements[i];
+        elements[i] = value;
         return old;
     }
 
@@ -159,7 +166,11 @@ public class IntDoubleVectorSlice implements IntDoubleVector {
         }
         return -1;
     }
-
+    
+    public int getDimension() {        
+        return size;
+    }
+    
     /**
      * Gets a NEW array containing all the elements in this array list.
      * @return The new array containing the elements in this list.

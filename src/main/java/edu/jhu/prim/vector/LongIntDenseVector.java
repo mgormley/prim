@@ -78,11 +78,13 @@ public class LongIntDenseVector implements LongIntVector {
      * @param i The index to set.
      * @param value The value to set.
      */
-    public void set(long idx, int value) {
+    public int set(long idx, int value) {
         int i = SafeCast.safeLongToInt(idx);
         idxAfterLast = Math.max(idxAfterLast, i + 1);
         ensureCapacity(idxAfterLast);
+        int old = elements[i];
         elements[i] = value;
+        return old;
     }
 
     public void add(long idx, int value) {
@@ -110,9 +112,7 @@ public class LongIntDenseVector implements LongIntVector {
 
     @Override
     public int dot(LongIntVector y) {
-        if (y instanceof LongIntSortedVector || y instanceof LongIntHashVector) {
-            return y.dot(this);
-        } else if (y instanceof LongIntDenseVector){
+        if (y instanceof LongIntDenseVector){
             LongIntDenseVector other = (LongIntDenseVector) y;
             int max = Math.min(idxAfterLast, other.idxAfterLast);
             int dot = 0;
@@ -121,11 +121,7 @@ public class LongIntDenseVector implements LongIntVector {
             }
             return dot;
         } else {
-            int dot = 0;
-            for (int i=0; i<idxAfterLast; i++) {
-                dot += elements[i] * y.get(i);
-            }
-            return dot;
+            return y.dot(this);
         }
     }
     
@@ -173,10 +169,7 @@ public class LongIntDenseVector implements LongIntVector {
         return -1;
     }
 
-    /**
-     * Gets a NEW array containing all the elements in this array list.
-     * @return The new array containing the elements in this list.
-     */
+    /** Gets a NEW array containing all the elements in this vector. */
     public int[] toNativeArray() {
         return Arrays.copyOf(elements, idxAfterLast);
     }
@@ -217,7 +210,7 @@ public class LongIntDenseVector implements LongIntVector {
      * 
      * @return The number of implicit entries.
      */
-    public int getNumImplicitEntries() {
+    public long getDimension() {
         return idxAfterLast;
     }
     

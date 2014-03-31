@@ -193,4 +193,15 @@ public class IntDoubleVectorSliceTest {
 
     }
     
+    @Test
+    public void testDimension() {
+        IntDoubleVector v1 = new IntDoubleDenseVector();
+        v1.set(1, toDouble(11));
+        v1.set(2, toDouble(22));
+        v1.set(4, toDouble(44));
+        v1.set(5, toDouble(55));
+        IntDoubleVectorSlice v2 = new IntDoubleVectorSlice((IntDoubleDenseVector)v1, 1, 3);
+        assertEquals(3, v2.getDimension());
+    }
+    
 }    

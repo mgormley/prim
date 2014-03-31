@@ -130,7 +130,7 @@ public class IntDoubleSortedMap implements IntDoubleMap {
      */
 	@Override
     public double put(int idx, double val) {
-	    double old = 0d;
+	    double old = 0;
 		int i = Arrays.binarySearch(indices, 0, used, idx);
 		if (i >= 0) {
 			// Just update the value.

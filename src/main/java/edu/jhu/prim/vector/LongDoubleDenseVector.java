@@ -112,9 +112,7 @@ public class LongDoubleDenseVector implements LongDoubleVector {
 
     @Override
     public double dot(LongDoubleVector y) {
-        if (y instanceof LongDoubleSortedVector || y instanceof LongDoubleHashVector) {
-            return y.dot(this);
-        } else if (y instanceof LongDoubleDenseVector){
+        if (y instanceof LongDoubleDenseVector){
             LongDoubleDenseVector other = (LongDoubleDenseVector) y;
             int max = Math.min(idxAfterLast, other.idxAfterLast);
             double dot = 0;
@@ -123,11 +121,7 @@ public class LongDoubleDenseVector implements LongDoubleVector {
             }
             return dot;
         } else {
-            double dot = 0;
-            for (int i=0; i<idxAfterLast; i++) {
-                dot += elements[i] * y.get(i);
-            }
-            return dot;
+            return y.dot(this);
         }
     }
     
@@ -175,10 +169,7 @@ public class LongDoubleDenseVector implements LongDoubleVector {
         return -1;
     }
 
-    /**
-     * Gets a NEW array containing all the elements in this array list.
-     * @return The new array containing the elements in this list.
-     */
+    /** Gets a NEW array containing all the elements in this vector. */
     public double[] toNativeArray() {
         return Arrays.copyOf(elements, idxAfterLast);
     }
@@ -219,7 +210,7 @@ public class LongDoubleDenseVector implements LongDoubleVector {
      * 
      * @return The number of implicit entries.
      */
-    public int getNumImplicitEntries() {
+    public long getDimension() {
         return idxAfterLast;
     }
     

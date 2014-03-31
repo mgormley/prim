@@ -64,6 +64,8 @@ def get_re_subs_for_single(src_prim, dest_prim):
     if src_prim.prim == "long" and dest_prim.prim == "int":
         repls += [("Long.", "Integer.")]
     repls += get_typedef_repls(src_prim, dest_prim)
+    # Corrections to always use.
+    repls += [("int serialVersionUID", "long serialVersionUID")]
     
     # Convert repls to regex replacements.
     re_subs = [(re.escape(k), v) for k, v in repls]
@@ -88,6 +90,7 @@ def get_re_subs_for_pair(dest_key, dest_val):
         repls += [("<Long,", "<Integer,")]
         repls += [("<Long>", "<Integer>")]
         repls += [(" Long ", " Integer ")]
+        repls += [("Long.", "Integer.")]
     if dest_val.prim == "int":
         repls += [(",Double>", ",Integer>")]
         repls += [(", Double>", ", Integer>")]
@@ -203,7 +206,6 @@ if __name__ == "__main__":
                  "edu.jhu.prim.map.LongDoubleSortedMap",
                  "edu.jhu.prim.map.LongDoubleHashMap",
                  "edu.jhu.prim.sort.LongDoubleSort",
-                 # "edu.jhu.prim.set.LongHashSet",
                  "edu.jhu.prim.vector.LongDoubleVector",
                  "edu.jhu.prim.vector.LongDoubleSortedVector",
                  "edu.jhu.prim.vector.LongDoubleUnsortedVector",
@@ -241,6 +243,14 @@ if __name__ == "__main__":
     # and should be copied over to a primitive.
     src_files = classes_to_files("main", ["edu.jhu.prim.arrays.DoubleArrays"])    
     copy_single(tds.get("double"), tds.get("float"), src_files)
-    src_files = classes_to_files("main", ["edu.jhu.prim.arrays.LongArrays"])    
+    # For now we only copy one class for shorts.
+    src_files = classes_to_files("main", ["edu.jhu.prim.arrays.LongArrays"])
     copy_single(tds.get("long"), tds.get("short"), src_files)
+    src_files = classes_to_files("main", ["edu.jhu.prim.arrays.LongArrays",
+                                          "edu.jhu.prim.set.LongHashSet",
+                                          "edu.jhu.prim.set.LongSet",
+                                          "edu.jhu.prim.iter.LongIter",
+                                          "edu.jhu.prim.iter.LongArrayIter",
+                                          "edu.jhu.prim.iter.LongIncrIter",
+                                          ])
     copy_single(tds.get("long"), tds.get("int"), src_files)

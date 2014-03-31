@@ -193,4 +193,15 @@ public class IntIntVectorSliceTest {
 
     }
     
+    @Test
+    public void testDimension() {
+        IntIntVector v1 = new IntIntDenseVector();
+        v1.set(1, toInt(11));
+        v1.set(2, toInt(22));
+        v1.set(4, toInt(44));
+        v1.set(5, toInt(55));
+        IntIntVectorSlice v2 = new IntIntVectorSlice((IntIntDenseVector)v1, 1, 3);
+        assertEquals(3, v2.getDimension());
+    }
+    
 }    

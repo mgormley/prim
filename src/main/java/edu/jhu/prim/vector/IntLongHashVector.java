@@ -1,5 +1,6 @@
 package edu.jhu.prim.vector;
 
+import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.map.IntLongHashMap;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntLongToLong;
@@ -43,8 +44,8 @@ public class IntLongHashVector extends IntLongHashMap implements IntLongVector {
     }
         
     @Override
-    public void set(int idx, long val) {
-        put(idx, val);
+    public long set(int idx, long val) {
+        return put(idx, val);
     }
 
     @Override
@@ -111,6 +112,28 @@ public class IntLongHashVector extends IntLongHashMap implements IntLongVector {
         // Also this will be very slow if other is a IntLongSortedVector since it will have to
         // call get() each time.
         this.apply(new SparseBinaryOpApplier2(this, other, new Lambda.LongProd()));
+    }
+
+    public int getDimension() {
+        int max = Integer.MIN_VALUE;
+        for (int i=0; i<keys.length; i++) {
+            if (states[i] == FULL && keys[i] > max) {
+                 max = keys[i];
+            }
+        }        
+        return Math.max(0, max + 1);
+    }
+    
+    /** Gets a NEW array containing all the elements in this vector. */
+    public long[] toNativeArray() {
+        final long[] arr = new long[getDimension()];
+        apply(new FnIntLongToLong() {
+            public long call(int idx, long val) {
+                arr[idx] = val;
+                return val;
+            }
+        });
+        return arr;
     }
     
     public static class SparseBinaryOpApplier implements FnIntLongToLong {

@@ -381,6 +381,22 @@ public class IntDoubleSortedVector extends IntDoubleSortedMap implements IntDoub
         return true;
     }
     
+    public int getDimension() {
+        return Math.max(0, IntArrays.max(indices) + 1);
+    }
+
+    /** Gets a NEW array containing all the elements in this vector. */
+    public double[] toNativeArray() {
+        final double[] arr = new double[getDimension()];
+        apply(new FnIntDoubleToDouble() {
+            public double call(int idx, double val) {
+                arr[idx] = val;
+                return val;
+            }
+        });
+        return arr;
+    }
+    
     @Override
     public int hashCode() {
         throw new RuntimeException("not implemented");

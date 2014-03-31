@@ -14,8 +14,8 @@ public interface LongIntVector extends Serializable {
     /** Gets the value at the specified index. */
     int get(long idx);
 
-    /** Sets the value at the specified index. */
-    void set(long idx, int val);
+    /** Sets the value at the specified index and returns the previous value. */
+    int set(long idx, int val);
 
     /** Adds to the current value at the specified index. */
     void add(long idx, int val);
@@ -47,5 +47,24 @@ public interface LongIntVector extends Serializable {
     
     /** Gets a deep copy of this vector. */
     LongIntVector copy();
+    
+    /**
+     * Gets the number of implicit entries.
+     * 
+     * For a dense vector, this is just the size of the vector.
+     * 
+     * For a sparse vector, this is index after the last explicit entry in the
+     * vector. This corresponds to (1 + i) where i is the highest index
+     * explicitly represented.
+     * 
+     * The contract of this method is that for any j >=
+     * this.getNumImplicitEntries(), this.get(j) will return 0.
+     * 
+     * @return The number of implicit entries.
+     */
+    long getDimension();
+    
+    /** Gets a int array representation of this vector. */
+    int[] toNativeArray();
     
 }

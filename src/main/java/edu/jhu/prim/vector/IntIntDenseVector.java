@@ -78,11 +78,13 @@ public class IntIntDenseVector implements IntIntVector {
      * @param i The index to set.
      * @param value The value to set.
      */
-    public void set(int idx, int value) {
+    public int set(int idx, int value) {
         int i = idx;
         idxAfterLast = Math.max(idxAfterLast, i + 1);
         ensureCapacity(idxAfterLast);
+        int old = elements[i];
         elements[i] = value;
+        return old;
     }
 
     public void add(int idx, int value) {
@@ -110,9 +112,7 @@ public class IntIntDenseVector implements IntIntVector {
 
     @Override
     public int dot(IntIntVector y) {
-        if (y instanceof IntIntSortedVector || y instanceof IntIntHashVector) {
-            return y.dot(this);
-        } else if (y instanceof IntIntDenseVector){
+        if (y instanceof IntIntDenseVector){
             IntIntDenseVector other = (IntIntDenseVector) y;
             int max = Math.min(idxAfterLast, other.idxAfterLast);
             int dot = 0;
@@ -121,11 +121,7 @@ public class IntIntDenseVector implements IntIntVector {
             }
             return dot;
         } else {
-            int dot = 0;
-            for (int i=0; i<idxAfterLast; i++) {
-                dot += elements[i] * y.get(i);
-            }
-            return dot;
+            return y.dot(this);
         }
     }
     
@@ -173,10 +169,7 @@ public class IntIntDenseVector implements IntIntVector {
         return -1;
     }
 
-    /**
-     * Gets a NEW array containing all the elements in this array list.
-     * @return The new array containing the elements in this list.
-     */
+    /** Gets a NEW array containing all the elements in this vector. */
     public int[] toNativeArray() {
         return Arrays.copyOf(elements, idxAfterLast);
     }
@@ -217,7 +210,7 @@ public class IntIntDenseVector implements IntIntVector {
      * 
      * @return The number of implicit entries.
      */
-    public int getNumImplicitEntries() {
+    public int getDimension() {
         return idxAfterLast;
     }
     

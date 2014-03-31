@@ -130,7 +130,7 @@ public class LongDoubleSortedMap implements LongDoubleMap {
      */
 	@Override
     public double put(long idx, double val) {
-	    double old = 0d;
+	    double old = 0;
 		int i = Arrays.binarySearch(indices, 0, used, idx);
 		if (i >= 0) {
 			// Just update the value.

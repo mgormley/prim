@@ -84,8 +84,8 @@ public class LongIntSortedVector extends LongIntSortedMap implements LongIntVect
     	put(idx, curVal + val);
     }
     
-    public void set(long idx, int val) {
-    	put(idx, val);
+    public int set(long idx, int val) {
+    	return put(idx, val);
     }
     
     @Override
@@ -379,6 +379,22 @@ public class LongIntSortedVector extends LongIntSortedMap implements LongIntVect
             }
         }
         return true;
+    }
+    
+    public long getDimension() {
+        return Math.max(0, LongArrays.max(indices) + 1);
+    }
+
+    /** Gets a NEW array containing all the elements in this vector. */
+    public int[] toNativeArray() {
+        final int[] arr = new int[SafeCast.safeLongToInt(getDimension())];
+        apply(new FnLongIntToInt() {
+            public int call(long idx, int val) {
+                arr[SafeCast.safeLongToInt(idx)] = val;
+                return val;
+            }
+        });
+        return arr;
     }
     
     @Override

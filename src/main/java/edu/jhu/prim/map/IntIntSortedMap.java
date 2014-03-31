@@ -129,17 +129,20 @@ public class IntIntSortedMap implements IntIntMap {
      * @see edu.jhu.util.vector.IntIntMap#put(int, int)
      */
 	@Override
-    public void put(int idx, int val) {
+    public int put(int idx, int val) {
+	    int old = 0;
 		int i = Arrays.binarySearch(indices, 0, used, idx);
 		if (i >= 0) {
 			// Just update the value.
+		    old = values[i];
 			values[i] = val;
-			return;
+			return old;
 		} 
 		int insertionPoint = -(i + 1);
 		indices = insert(indices, insertionPoint, idx);
 		values = insert(values, insertionPoint, val);
 		used++;
+		return old;
 	}
 	
     /* (non-Javadoc)

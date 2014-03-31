@@ -36,6 +36,11 @@ public class LongDoubleVectorSlice implements LongDoubleVector {
         this.size = size;
     }
     
+    /**
+     * The current implementation assumes NO CHANGES will be made to the
+     * underlying dense vector except through this slice for the duration of
+     * this slice's existence.
+     */
     public LongDoubleVectorSlice(LongDoubleDenseVector vec, int start, int size) {
         // TODO: There's a rather odd case we're dealing with in which the dense
         // vector may actually have a larger internal representation than what
@@ -161,7 +166,11 @@ public class LongDoubleVectorSlice implements LongDoubleVector {
         }
         return -1;
     }
-
+    
+    public long getDimension() {        
+        return size;
+    }
+    
     /**
      * Gets a NEW array containing all the elements in this array list.
      * @return The new array containing the elements in this list.

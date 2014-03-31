@@ -140,6 +140,16 @@ public abstract class AbstractIntDoubleVectorTest {
         assertEquals(55*0, toInt(v1.get(5)));        
     }
 
+    @Test
+    public void testDimension() {
+        IntDoubleVector v1 = getIntDoubleVector();
+        assertEquals(0, v1.getDimension());
+        v1.set(1, toDouble(11));
+        v1.set(2, toDouble(22));
+        v1.set(4, toDouble(44));
+        assertEquals(5, v1.getDimension());
+    }
+    
     protected abstract IntDoubleVector getIntDoubleVector();
 
 }

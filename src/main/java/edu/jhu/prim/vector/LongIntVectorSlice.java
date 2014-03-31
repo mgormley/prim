@@ -36,6 +36,11 @@ public class LongIntVectorSlice implements LongIntVector {
         this.size = size;
     }
     
+    /**
+     * The current implementation assumes NO CHANGES will be made to the
+     * underlying dense vector except through this slice for the duration of
+     * this slice's existence.
+     */
     public LongIntVectorSlice(LongIntDenseVector vec, int start, int size) {
         // TODO: There's a rather odd case we're dealing with in which the dense
         // vector may actually have a larger internal representation than what
@@ -80,9 +85,12 @@ public class LongIntVectorSlice implements LongIntVector {
      * @param i The index to set.
      * @param value The value to set.
      */
-    public void set(long idx, int value) {
+    public int set(long idx, int value) {
         checkIndex(idx);
-        elements[SafeCast.safeLongToInt(idx + start)] = value;
+        int i = SafeCast.safeLongToInt(idx + start);
+        int old = elements[i];
+        elements[i] = value;
+        return old;
     }
 
     public void add(long idx, int value) {
@@ -158,7 +166,11 @@ public class LongIntVectorSlice implements LongIntVector {
         }
         return -1;
     }
-
+    
+    public long getDimension() {        
+        return size;
+    }
+    
     /**
      * Gets a NEW array containing all the elements in this array list.
      * @return The new array containing the elements in this list.

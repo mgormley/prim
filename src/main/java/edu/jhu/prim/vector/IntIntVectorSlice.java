@@ -36,6 +36,11 @@ public class IntIntVectorSlice implements IntIntVector {
         this.size = size;
     }
     
+    /**
+     * The current implementation assumes NO CHANGES will be made to the
+     * underlying dense vector except through this slice for the duration of
+     * this slice's existence.
+     */
     public IntIntVectorSlice(IntIntDenseVector vec, int start, int size) {
         // TODO: There's a rather odd case we're dealing with in which the dense
         // vector may actually have a larger internal representation than what
@@ -80,9 +85,12 @@ public class IntIntVectorSlice implements IntIntVector {
      * @param i The index to set.
      * @param value The value to set.
      */
-    public void set(int idx, int value) {
+    public int set(int idx, int value) {
         checkIndex(idx);
-        elements[idx + start] = value;
+        int i = idx + start;
+        int old = elements[i];
+        elements[i] = value;
+        return old;
     }
 
     public void add(int idx, int value) {
@@ -158,7 +166,11 @@ public class IntIntVectorSlice implements IntIntVector {
         }
         return -1;
     }
-
+    
+    public int getDimension() {        
+        return size;
+    }
+    
     /**
      * Gets a NEW array containing all the elements in this array list.
      * @return The new array containing the elements in this list.

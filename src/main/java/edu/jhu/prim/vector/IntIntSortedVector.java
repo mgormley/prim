@@ -84,8 +84,8 @@ public class IntIntSortedVector extends IntIntSortedMap implements IntIntVector 
     	put(idx, curVal + val);
     }
     
-    public void set(int idx, int val) {
-    	put(idx, val);
+    public int set(int idx, int val) {
+    	return put(idx, val);
     }
     
     @Override
@@ -379,6 +379,22 @@ public class IntIntSortedVector extends IntIntSortedMap implements IntIntVector 
             }
         }
         return true;
+    }
+    
+    public int getDimension() {
+        return Math.max(0, IntArrays.max(indices) + 1);
+    }
+
+    /** Gets a NEW array containing all the elements in this vector. */
+    public int[] toNativeArray() {
+        final int[] arr = new int[getDimension()];
+        apply(new FnIntIntToInt() {
+            public int call(int idx, int val) {
+                arr[idx] = val;
+                return val;
+            }
+        });
+        return arr;
     }
     
     @Override

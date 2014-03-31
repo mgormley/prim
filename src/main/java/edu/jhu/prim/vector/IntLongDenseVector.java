@@ -78,11 +78,13 @@ public class IntLongDenseVector implements IntLongVector {
      * @param i The index to set.
      * @param value The value to set.
      */
-    public void set(int idx, long value) {
+    public long set(int idx, long value) {
         int i = idx;
         idxAfterLast = Math.max(idxAfterLast, i + 1);
         ensureCapacity(idxAfterLast);
+        long old = elements[i];
         elements[i] = value;
+        return old;
     }
 
     public void add(int idx, long value) {
@@ -110,9 +112,7 @@ public class IntLongDenseVector implements IntLongVector {
 
     @Override
     public long dot(IntLongVector y) {
-        if (y instanceof IntLongSortedVector || y instanceof IntLongHashVector) {
-            return y.dot(this);
-        } else if (y instanceof IntLongDenseVector){
+        if (y instanceof IntLongDenseVector){
             IntLongDenseVector other = (IntLongDenseVector) y;
             int max = Math.min(idxAfterLast, other.idxAfterLast);
             long dot = 0;
@@ -121,11 +121,7 @@ public class IntLongDenseVector implements IntLongVector {
             }
             return dot;
         } else {
-            long dot = 0;
-            for (int i=0; i<idxAfterLast; i++) {
-                dot += elements[i] * y.get(i);
-            }
-            return dot;
+            return y.dot(this);
         }
     }
     
@@ -173,10 +169,7 @@ public class IntLongDenseVector implements IntLongVector {
         return -1;
     }
 
-    /**
-     * Gets a NEW array containing all the elements in this array list.
-     * @return The new array containing the elements in this list.
-     */
+    /** Gets a NEW array containing all the elements in this vector. */
     public long[] toNativeArray() {
         return Arrays.copyOf(elements, idxAfterLast);
     }
@@ -217,7 +210,7 @@ public class IntLongDenseVector implements IntLongVector {
      * 
      * @return The number of implicit entries.
      */
-    public int getNumImplicitEntries() {
+    public int getDimension() {
         return idxAfterLast;
     }
     
