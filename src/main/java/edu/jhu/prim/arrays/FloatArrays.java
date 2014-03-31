@@ -422,4 +422,24 @@ public class FloatArrays {
         }
     }
     
+    /** Checks in O(n) by linear search if the array contains the value. */
+    public static boolean contains(float[] array, float value, float delta) {
+        for (int i=0; i<array.length; i++) {
+            if (Primitives.equals(array[i], value, 1e-13)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /** Checks in O(n) by linear search if the array contains the value. */
+    public static boolean contains(float[][] array, float value, float delta) {
+        for (int i=0; i<array.length; i++) {
+            if (contains(array[i], value, (float) 1e-13)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
 }
