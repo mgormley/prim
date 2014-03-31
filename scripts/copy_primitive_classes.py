@@ -218,6 +218,7 @@ if __name__ == "__main__":
                  "edu.jhu.prim.map.LongDoubleHashMapTest",
                  "edu.jhu.prim.sort.LongDoubleSortTest",
                  "edu.jhu.prim.vector.LongDoubleSortedVectorTest",
+                 "edu.jhu.prim.vector.LongDoubleUnsortedVectorTest",
                  "edu.jhu.prim.vector.LongDoubleHashVectorTest",
                  "edu.jhu.prim.vector.LongDoubleDenseVectorTest",
                  "edu.jhu.prim.vector.LongDoubleVectorSliceTest",
