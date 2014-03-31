@@ -67,13 +67,11 @@ public class LongDoubleSort {
      * Performs an in-place quick sort on {@code index}. All the sorting operations on {@code index}
      * are mirrored in {@code values}.
      * Sorts in descending order.
-     * @return {@code index} - sorted.
      */
-    public static long[] sortIndexDesc(long[] index, double[] values) {
+    public static void sortIndexDesc(long[] index, double[] values) {
         LongArrays.scale(index, (long) -1);
         sortIndexAsc(index, values);
         LongArrays.scale(index, (long) -1);
-        return index;
     }
     
     /**
@@ -81,24 +79,20 @@ public class LongDoubleSort {
      * including {@code top}. All the sorting operations on {@code index}
      * are mirrored in {@code values}.
      * Sorts in descending order.
-     * @return {@code index} - sorted.
      */
-    public static long[] sortIndexDesc(long[] index, double[] values, int top) {
+    public static void sortIndexDesc(long[] index, double[] values, int top) {
         LongArrays.scale(index, (long) -1);
         sortIndexAsc(index, values, top - 1);
         LongArrays.scale(index, (long) -1);
-        return index;
     }
     
     /**
      * Performs an in-place quick sort on {@code index}. All the sorting operations on {@code index}
      * are mirrored in {@code values}.
      * Sorts in ascending order.
-     * @return {@code index} - sorted.
      */
-    public static long[] sortIndexAsc(long[] index, double[] values) {
+    public static void sortIndexAsc(long[] index, double[] values) {
         quicksortIndex(index, values, 0, index.length - 1);
-        return index;
     }
 
     /**
@@ -107,10 +101,9 @@ public class LongDoubleSort {
      * Sorts in ascending order.
      * @return {@code index} - sorted.
      */
-    public static long[] sortIndexAsc(long[] index, double[] values, int top) {
+    public static void sortIndexAsc(long[] index, double[] values, int top) {
         assert top <= index.length;
         quicksortIndex(index, values, 0, top - 1);
-        return index;
     }
 
     private static void quicksortIndex(long[] array, double[] values, int left, int right) {
