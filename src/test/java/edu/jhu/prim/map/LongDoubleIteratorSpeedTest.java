@@ -1,10 +1,14 @@
 package edu.jhu.prim.map;
 
+import java.util.Iterator;
+
 import org.junit.Test;
 
 import edu.jhu.prim.Primitives;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
 import edu.jhu.prim.vector.LongDoubleSortedVector;
+import edu.jhu.prim.vector.LongDoubleUnsortedVector;
+import edu.jhu.prim.vector.LongDoubleUnsortedVector.LongDouble;
 import edu.jhu.util.Timer;
 
 public class LongDoubleIteratorSpeedTest {
@@ -107,7 +111,29 @@ public class LongDoubleIteratorSpeedTest {
                 }
                 System.out.println("Primitive SortedMap (internal): " + timer.totMs());
             }
-            
+
+            {
+                Timer timer = new Timer();
+                long idxSum = 0;
+                double valSum = 0;
+                for (int t = 0; t < trials; t++) {
+                    LongDoubleUnsortedVector map = new LongDoubleUnsortedVector();
+                    for (int i = 0; i < max; i++) {
+                        map.add(Primitives.hashOfInt(i) % max, i);
+                    }
+                    map.compact();
+                    
+                    timer.start();
+                    Iterator<LongDouble> iter = map.indicesAndValues();
+                    while (iter.hasNext()) {
+                        LongDouble e = iter.next();
+                        idxSum += e.getKey();
+                        valSum += e.getValue();
+                    }
+                    timer.stop();
+                }
+                System.out.println("Primitive UnsortedMap (auto-boxing iterator): " + timer.totMs());
+            }
         }
     }
     

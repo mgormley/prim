@@ -420,5 +420,21 @@ public class LongDoubleUnsortedVector implements LongDoubleVector {
         });
         return arr;
     }
+
+    /**
+     * Gets the INTERNAL representation of the indices. Great care should be
+     * taken to avoid touching the values beyond the used indices.
+     */
+    public long[] getInternalIndices() {
+        return idx;
+    }
+
+    /**
+     * Gets the INTERNAL representation of the values. Great care should be
+     * taken to avoid touching the values beyond the used values.
+     */
+    public double[] getInternalValues() {
+        return vals;
+    }
     
 }
