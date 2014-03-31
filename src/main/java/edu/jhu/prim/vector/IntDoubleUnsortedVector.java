@@ -420,5 +420,26 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
         });
         return arr;
     }
+
+    /**
+     * Gets the INTERNAL representation of the indices. Great care should be
+     * taken to avoid touching the values beyond the used indices.
+     */
+    public int[] getInternalIndices() {
+        return idx;
+    }
+
+    /**
+     * Gets the INTERNAL representation of the values. Great care should be
+     * taken to avoid touching the values beyond the used values.
+     */
+    public double[] getInternalValues() {
+        return vals;
+    }
+    
+    /** Gets the INTERNAL number of used entries in this vector. */
+    public int getUsed() {
+        return top;
+    }
     
 }

@@ -437,4 +437,9 @@ public class LongDoubleUnsortedVector implements LongDoubleVector {
         return vals;
     }
     
+    /** Gets the INTERNAL number of used entries in this vector. */
+    public int getUsed() {
+        return top;
+    }
+    
 }

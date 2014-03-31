@@ -365,5 +365,26 @@ public class LongIntUnsortedVector implements LongIntVector {
         });
         return arr;
     }
+
+    /**
+     * Gets the INTERNAL representation of the indices. Great care should be
+     * taken to avoid touching the values beyond the used indices.
+     */
+    public long[] getInternalIndices() {
+        return idx;
+    }
+
+    /**
+     * Gets the INTERNAL representation of the values. Great care should be
+     * taken to avoid touching the values beyond the used values.
+     */
+    public int[] getInternalValues() {
+        return vals;
+    }
+    
+    /** Gets the INTERNAL number of used entries in this vector. */
+    public int getUsed() {
+        return top;
+    }
     
 }
