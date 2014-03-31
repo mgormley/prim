@@ -3,7 +3,6 @@ package edu.jhu.prim.vector;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.TreeMap;
 
 import edu.jhu.prim.sort.LongDoubleSort;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
@@ -99,37 +98,6 @@ public class LongDoubleUnsortedVector implements LongDoubleVector {
         return -1;
     }
 
-    public void oldCompact(boolean freeExtraMem) {
-
-        if(compacted) return;
-
-        TreeMap<Long, Double> sorted = new TreeMap<Long, Double>();
-        for(int i=0; i<top; i++) {
-            long key = idx[i];
-            Double old = sorted.get(key);
-            if(old == null) old = 0d;
-            sorted.put(key, old + vals[i]);
-        }
-
-        if(freeExtraMem) {
-            int n = sorted.size();
-            idx = Arrays.copyOf(idx, n);
-            vals = Arrays.copyOf(vals, n);
-        }
-
-        top = 0;
-        for(Long key : sorted.navigableKeySet()) {
-            double val = sorted.get(key);
-            if(val != 0d) {
-                idx[top] = key;
-                vals[top] = val;
-                top++;
-            }
-        }
-
-        compacted = true;
-    }
-    
     /**
      * sort indices and consolidate duplicate entries (only for sparse vectors)
      * @param freeExtraMem will allocate new arrays as small as possible to store indices/values
@@ -141,35 +109,15 @@ public class LongDoubleUnsortedVector implements LongDoubleVector {
 
         if(compacted) return;
         
-        final boolean verbose = false;
-        
-        if(verbose) {
-            System.out.println("[compact before] top=" + top);
-            System.out.println("                 idx=" + Arrays.toString(idx));
-            System.out.println("                 vals=" + Arrays.toString(vals));
-        }
-        
         // sort items by index (not including junk >=top)
         LongDoubleSort.sortIndexAsc(idx, vals, top);
 
-        if(verbose) {
-            System.out.println("[compact during] top=" + top);
-            System.out.println("                 idx=" + Arrays.toString(idx));
-            System.out.println("                 vals=" + Arrays.toString(vals));
-        }
-        
         // let add() remove duplicate entries
         int oldTop = top;
         top = 0;
         for(int i=0; i<oldTop; i++)
             add(idx[i], vals[i]);
 
-        if(verbose) {
-            System.out.println("[compact after] top=" + top);
-            System.out.println("                idx=" + Arrays.toString(idx));
-            System.out.println("                vals=" + Arrays.toString(vals));
-        }
-         
         if(freeExtraMem) {
             idx = Arrays.copyOf(idx, top);
             vals = Arrays.copyOf(vals, top);
