@@ -13,6 +13,7 @@ import edu.jhu.prim.util.SafeCast;
  * 
  * @author Travis Wolfe <twolfe18@gmail.com>
  */
+// TODO: Implement Iterable<LongDoubleEntry>.
 public class LongDoubleUnsortedVector implements LongDoubleVector {
 
     private static final long serialVersionUID = 1L;
