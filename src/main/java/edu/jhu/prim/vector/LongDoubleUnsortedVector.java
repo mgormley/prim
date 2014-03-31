@@ -9,6 +9,8 @@ import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
 import edu.jhu.prim.util.SafeCast;
 
 /**
+ * Lazily-sorted vector.
+ * 
  * @author Travis Wolfe <twolfe18@gmail.com>
  */
 public class LongDoubleUnsortedVector implements LongDoubleVector {
@@ -395,6 +397,24 @@ public class LongDoubleUnsortedVector implements LongDoubleVector {
         }
         sb.append("}");
         return sb.toString();
+    }
+
+    @Override
+    public long getDimension() {
+        return idx[top];
+    }
+
+    @Override
+    public double[] toNativeArray() {
+        compact();
+        final double[] arr = new double[SafeCast.safeLongToInt(getDimension())];
+        apply(new FnLongDoubleToDouble() {
+            public double call(long idx, double val) {
+                arr[SafeCast.safeLongToInt(idx)] = val;
+                return val;
+            }
+        });
+        return arr;
     }
     
 }
