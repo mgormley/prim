@@ -68,7 +68,7 @@ public class LongDoubleUnsortedVector implements LongDoubleVector {
         // if we need to do an O(#non-zero) operation here anyway, might as well compact
         compact();
         int i = findIndexMatching(index);
-        if(i < 0) return 0d;
+        if(i < 0) return 0;
         else return vals[i];
     }
 
@@ -157,7 +157,7 @@ public class LongDoubleUnsortedVector implements LongDoubleVector {
         if(i < 0) {
             add(index, value);
             compacted = false;
-            return 0d;
+            return 0;
         } else {
             double old = vals[i];
             vals[i] = value;
@@ -166,12 +166,12 @@ public class LongDoubleUnsortedVector implements LongDoubleVector {
     }
 
     public void add(long index, double value) {
-        if(value == 0d) return;
+        if(value == 0) return;
         long prevIdx = top > 0 ? idx[top-1] : -1;
         if(index == prevIdx) {
             //System.out.printf("[add] prevIndex=%d top=%d prevVal=%.2f index=%d value=%.2f\n", prevIdx, top, vals[top-1], index, value);
             vals[top-1] += value;
-            if(vals[top-1] == 0d)
+            if(vals[top-1] == 0)
                 top--;
         }
         else {
@@ -197,10 +197,10 @@ public class LongDoubleUnsortedVector implements LongDoubleVector {
 
     public double l1Norm() {
         compact();
-        double sum = 0d;
+        double sum = 0;
         for(int i=0; i<top; i++) {
             double v = vals[i];
-            if(v >= 0d) sum += v;
+            if(v >= 0) sum += v;
             else sum -= v;
         }
         return sum;
@@ -208,7 +208,7 @@ public class LongDoubleUnsortedVector implements LongDoubleVector {
 
     public double l2Norm() {
         compact();
-        double sum = 0d;
+        double sum = 0;
         for(int i=0; i<top; i++) {
             double v = vals[i];
             sum += v * v;
@@ -217,13 +217,13 @@ public class LongDoubleUnsortedVector implements LongDoubleVector {
     }
 
     public double lInfNorm() {
-        double biggest = 0d;
+        double biggest = 0;
         compact();
         for(int i=0; i<top; i++) {
             double v = vals[i];
-            if(v < 0d && v < biggest)
+            if(v < 0 && v < biggest)
                 biggest = v;
-            else if(v > 0d && v > biggest)
+            else if(v > 0 && v > biggest)
                 biggest = v;
         }
         return biggest >= 0 ? biggest : -biggest;
@@ -275,7 +275,7 @@ public class LongDoubleUnsortedVector implements LongDoubleVector {
 
     @Override
     public double dot(double[] other) {
-        double sum = 0d;
+        double sum = 0;
         for(int i=0; i<top; i++)
             sum += other[SafeCast.safeLongToInt(idx[i])] * vals[i];
         return sum;
@@ -291,7 +291,7 @@ public class LongDoubleUnsortedVector implements LongDoubleVector {
             }
             smaller.compact();
             bigger.compact();
-            double dot = 0d;
+            double dot = 0;
             int j = 0;
             long attempt = bigger.idx[j];
             for(int i=0; i<smaller.top; i++) {
