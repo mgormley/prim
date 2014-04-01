@@ -2,8 +2,9 @@ package edu.jhu.prim.vector;
 
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.Map;
 
+import edu.jhu.prim.iter.LongIter;
+import edu.jhu.prim.map.LongIntEntry;
 import edu.jhu.prim.sort.LongIntSort;
 import edu.jhu.prim.util.Lambda.FnLongIntToInt;
 import edu.jhu.prim.util.SafeCast;
@@ -13,8 +14,7 @@ import edu.jhu.prim.util.SafeCast;
  * 
  * @author Travis Wolfe <twolfe18@gmail.com>
  */
-// TODO: Implement Iterable<LongIntEntry>.
-public class LongIntUnsortedVector implements LongIntVector {
+public class LongIntUnsortedVector implements LongIntVector, Iterable<LongIntEntry> {
 
     private static final long serialVersionUID = 1L;
 
@@ -277,7 +277,7 @@ public class LongIntUnsortedVector implements LongIntVector {
         }
     }
 
-    public static class SparseIdxIter implements Iterator<Long> {
+    public static class SparseIdxIter implements LongIter {
         private int i = 0, top;
         private long[] idx;
         public SparseIdxIter(long[] idx, int top) {
@@ -287,57 +287,65 @@ public class LongIntUnsortedVector implements LongIntVector {
         @Override
         public boolean hasNext() { return i < top; }
         @Override
-        public Long next() { return idx[i++]; }
+        public long next() { return idx[i++]; }
         @Override
-        public void remove() { throw new UnsupportedOperationException(); }
+        public void reset() { i = 0; }
     }
 
-    public Iterator<Long> indices() {
+    public LongIter indices() {
         return new SparseIdxIter(idx, top);
     }
 
-    public static class LongInt implements Map.Entry<Long, Integer> {
-        public long index;
-        public int value;
-        public LongInt(long index, int value) {
-            this.index = index;
-            this.value = value;
+    public class LongIntEntryImpl implements LongIntEntry {
+        private int i;
+        public LongIntEntryImpl(int i) {
+            this.i = i;
         }
-        @Override
-        public Long getKey() { return index; }
-        @Override
-        public Integer getValue() { return value; }
-        @Override
-        public Integer setValue(Integer value) {
-            throw new UnsupportedOperationException();
+        public long index() {
+            return idx[i];
+        }
+        public int get() {
+            return vals[i];
         }
     }
 
-    public static class IdxValIter implements Iterator<LongInt> {
-        private int i = 0, top;
-        private long[] idx;
-        private int[] vals;
-        public IdxValIter(long[] idx, int[] vals, int top) {
-            this.idx = idx;
-            this.top = top;
-            this.vals = vals;
+    /**
+     * This iterator is fast in the case of for(Entry e : vector) { }, however a
+     * given entry should not be used after the following call to next().
+     */
+    public class LongIntIterator implements Iterator<LongIntEntry> {
+
+        // The current entry.
+        private LongIntEntryImpl entry = new LongIntEntryImpl(-1);
+
+        @Override
+        public boolean hasNext() {
+            return entry.i + 1 < top;
         }
+
         @Override
-        public boolean hasNext() { return i < top; }
-        @Override
-        public LongInt next() {
-            LongInt iv = new LongInt(idx[i], vals[i]);
-            i++;
-            return iv;
+        public LongIntEntry next() {
+            entry.i++;
+            return entry;
         }
+
         @Override
-        public void remove() { throw new UnsupportedOperationException(); }
+        public void remove() {
+            throw new RuntimeException("operation not supported");
+        }
+
     }
 
-    public Iterator<LongInt> indicesAndValues() {
-        return new IdxValIter(idx, vals, top);
+    /*
+     * (non-Javadoc)
+     * 
+     * @see edu.jhu.util.vector.LongIntMap#iterator()
+     */
+    @Override
+    public Iterator<LongIntEntry> iterator() {
+        return new LongIntIterator();
     }
-
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

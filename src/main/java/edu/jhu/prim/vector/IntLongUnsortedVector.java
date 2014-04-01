@@ -2,8 +2,9 @@ package edu.jhu.prim.vector;
 
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.Map;
 
+import edu.jhu.prim.iter.IntIter;
+import edu.jhu.prim.map.IntLongEntry;
 import edu.jhu.prim.sort.IntLongSort;
 import edu.jhu.prim.util.Lambda.FnIntLongToLong;
 import edu.jhu.prim.util.SafeCast;
@@ -13,8 +14,7 @@ import edu.jhu.prim.util.SafeCast;
  * 
  * @author Travis Wolfe <twolfe18@gmail.com>
  */
-// TODO: Implement Iterable<IntLongEntry>.
-public class IntLongUnsortedVector implements IntLongVector {
+public class IntLongUnsortedVector implements IntLongVector, Iterable<IntLongEntry> {
 
     private static final long serialVersionUID = 1L;
 
@@ -277,7 +277,7 @@ public class IntLongUnsortedVector implements IntLongVector {
         }
     }
 
-    public static class SparseIdxIter implements Iterator<Integer> {
+    public static class SparseIdxIter implements IntIter {
         private int i = 0, top;
         private int[] idx;
         public SparseIdxIter(int[] idx, int top) {
@@ -287,57 +287,65 @@ public class IntLongUnsortedVector implements IntLongVector {
         @Override
         public boolean hasNext() { return i < top; }
         @Override
-        public Integer next() { return idx[i++]; }
+        public int next() { return idx[i++]; }
         @Override
-        public void remove() { throw new UnsupportedOperationException(); }
+        public void reset() { i = 0; }
     }
 
-    public Iterator<Integer> indices() {
+    public IntIter indices() {
         return new SparseIdxIter(idx, top);
     }
 
-    public static class IntLong implements Map.Entry<Integer, Long> {
-        public int index;
-        public long value;
-        public IntLong(int index, long value) {
-            this.index = index;
-            this.value = value;
+    public class IntLongEntryImpl implements IntLongEntry {
+        private int i;
+        public IntLongEntryImpl(int i) {
+            this.i = i;
         }
-        @Override
-        public Integer getKey() { return index; }
-        @Override
-        public Long getValue() { return value; }
-        @Override
-        public Long setValue(Long value) {
-            throw new UnsupportedOperationException();
+        public int index() {
+            return idx[i];
+        }
+        public long get() {
+            return vals[i];
         }
     }
 
-    public static class IdxValIter implements Iterator<IntLong> {
-        private int i = 0, top;
-        private int[] idx;
-        private long[] vals;
-        public IdxValIter(int[] idx, long[] vals, int top) {
-            this.idx = idx;
-            this.top = top;
-            this.vals = vals;
+    /**
+     * This iterator is fast in the case of for(Entry e : vector) { }, however a
+     * given entry should not be used after the following call to next().
+     */
+    public class IntLongIterator implements Iterator<IntLongEntry> {
+
+        // The current entry.
+        private IntLongEntryImpl entry = new IntLongEntryImpl(-1);
+
+        @Override
+        public boolean hasNext() {
+            return entry.i + 1 < top;
         }
+
         @Override
-        public boolean hasNext() { return i < top; }
-        @Override
-        public IntLong next() {
-            IntLong iv = new IntLong(idx[i], vals[i]);
-            i++;
-            return iv;
+        public IntLongEntry next() {
+            entry.i++;
+            return entry;
         }
+
         @Override
-        public void remove() { throw new UnsupportedOperationException(); }
+        public void remove() {
+            throw new RuntimeException("operation not supported");
+        }
+
     }
 
-    public Iterator<IntLong> indicesAndValues() {
-        return new IdxValIter(idx, vals, top);
+    /*
+     * (non-Javadoc)
+     * 
+     * @see edu.jhu.util.vector.IntLongMap#iterator()
+     */
+    @Override
+    public Iterator<IntLongEntry> iterator() {
+        return new IntLongIterator();
     }
-
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

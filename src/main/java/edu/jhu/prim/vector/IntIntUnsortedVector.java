@@ -2,8 +2,9 @@ package edu.jhu.prim.vector;
 
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.Map;
 
+import edu.jhu.prim.iter.IntIter;
+import edu.jhu.prim.map.IntIntEntry;
 import edu.jhu.prim.sort.IntIntSort;
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
 import edu.jhu.prim.util.SafeCast;
@@ -13,8 +14,7 @@ import edu.jhu.prim.util.SafeCast;
  * 
  * @author Travis Wolfe <twolfe18@gmail.com>
  */
-// TODO: Implement Iterable<IntIntEntry>.
-public class IntIntUnsortedVector implements IntIntVector {
+public class IntIntUnsortedVector implements IntIntVector, Iterable<IntIntEntry> {
 
     private static final long serialVersionUID = 1L;
 
@@ -277,7 +277,7 @@ public class IntIntUnsortedVector implements IntIntVector {
         }
     }
 
-    public static class SparseIdxIter implements Iterator<Integer> {
+    public static class SparseIdxIter implements IntIter {
         private int i = 0, top;
         private int[] idx;
         public SparseIdxIter(int[] idx, int top) {
@@ -287,57 +287,65 @@ public class IntIntUnsortedVector implements IntIntVector {
         @Override
         public boolean hasNext() { return i < top; }
         @Override
-        public Integer next() { return idx[i++]; }
+        public int next() { return idx[i++]; }
         @Override
-        public void remove() { throw new UnsupportedOperationException(); }
+        public void reset() { i = 0; }
     }
 
-    public Iterator<Integer> indices() {
+    public IntIter indices() {
         return new SparseIdxIter(idx, top);
     }
 
-    public static class IntInt implements Map.Entry<Integer, Integer> {
-        public int index;
-        public int value;
-        public IntInt(int index, int value) {
-            this.index = index;
-            this.value = value;
+    public class IntIntEntryImpl implements IntIntEntry {
+        private int i;
+        public IntIntEntryImpl(int i) {
+            this.i = i;
         }
-        @Override
-        public Integer getKey() { return index; }
-        @Override
-        public Integer getValue() { return value; }
-        @Override
-        public Integer setValue(Integer value) {
-            throw new UnsupportedOperationException();
+        public int index() {
+            return idx[i];
+        }
+        public int get() {
+            return vals[i];
         }
     }
 
-    public static class IdxValIter implements Iterator<IntInt> {
-        private int i = 0, top;
-        private int[] idx;
-        private int[] vals;
-        public IdxValIter(int[] idx, int[] vals, int top) {
-            this.idx = idx;
-            this.top = top;
-            this.vals = vals;
+    /**
+     * This iterator is fast in the case of for(Entry e : vector) { }, however a
+     * given entry should not be used after the following call to next().
+     */
+    public class IntIntIterator implements Iterator<IntIntEntry> {
+
+        // The current entry.
+        private IntIntEntryImpl entry = new IntIntEntryImpl(-1);
+
+        @Override
+        public boolean hasNext() {
+            return entry.i + 1 < top;
         }
+
         @Override
-        public boolean hasNext() { return i < top; }
-        @Override
-        public IntInt next() {
-            IntInt iv = new IntInt(idx[i], vals[i]);
-            i++;
-            return iv;
+        public IntIntEntry next() {
+            entry.i++;
+            return entry;
         }
+
         @Override
-        public void remove() { throw new UnsupportedOperationException(); }
+        public void remove() {
+            throw new RuntimeException("operation not supported");
+        }
+
     }
 
-    public Iterator<IntInt> indicesAndValues() {
-        return new IdxValIter(idx, vals, top);
+    /*
+     * (non-Javadoc)
+     * 
+     * @see edu.jhu.util.vector.IntIntMap#iterator()
+     */
+    @Override
+    public Iterator<IntIntEntry> iterator() {
+        return new IntIntIterator();
     }
-
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
