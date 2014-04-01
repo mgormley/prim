@@ -9,6 +9,7 @@ import edu.jhu.prim.util.Lambda.FnIntLongToLong;
  * 
  * @author mgormley
  */
+//TODO: Extend Iterable<IntLongEntry>.
 public interface IntLongVector extends Serializable {
 
     /** Gets the value at the specified index. */

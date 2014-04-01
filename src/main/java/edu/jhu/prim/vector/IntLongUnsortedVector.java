@@ -13,6 +13,7 @@ import edu.jhu.prim.util.SafeCast;
  * 
  * @author Travis Wolfe <twolfe18@gmail.com>
  */
+// TODO: Implement Iterable<IntLongEntry>.
 public class IntLongUnsortedVector implements IntLongVector {
 
     private static final long serialVersionUID = 1L;
@@ -267,8 +268,13 @@ public class IntLongUnsortedVector implements IntLongVector {
                     break;
             }
             return dot;
+        } else {
+            long dot = 0;
+            for(int i=0; i<top; i++) {
+                dot += vals[i] * other.get(idx[i]);
+            }
+            return dot;
         }
-        else throw new RuntimeException("not supported");
     }
 
     public static class SparseIdxIter implements Iterator<Integer> {

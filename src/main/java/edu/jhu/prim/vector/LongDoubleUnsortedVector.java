@@ -323,8 +323,13 @@ public class LongDoubleUnsortedVector implements LongDoubleVector {
                     break;
             }
             return dot;
+        } else {
+            double dot = 0;
+            for(int i=0; i<top; i++) {
+                dot += vals[i] * other.get(idx[i]);
+            }
+            return dot;
         }
-        else throw new RuntimeException("not supported");
     }
 
     public static class SparseIdxIter implements Iterator<Long> {

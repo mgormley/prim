@@ -13,6 +13,7 @@ import edu.jhu.prim.util.SafeCast;
  * 
  * @author Travis Wolfe <twolfe18@gmail.com>
  */
+// TODO: Implement Iterable<IntDoubleEntry>.
 public class IntDoubleUnsortedVector implements IntDoubleVector {
 
     private static final long serialVersionUID = 1L;
@@ -322,8 +323,13 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
                     break;
             }
             return dot;
+        } else {
+            double dot = 0;
+            for(int i=0; i<top; i++) {
+                dot += vals[i] * other.get(idx[i]);
+            }
+            return dot;
         }
-        else throw new RuntimeException("not supported");
     }
 
     public static class SparseIdxIter implements Iterator<Integer> {

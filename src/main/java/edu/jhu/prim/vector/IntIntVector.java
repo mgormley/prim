@@ -9,6 +9,7 @@ import edu.jhu.prim.util.Lambda.FnIntIntToInt;
  * 
  * @author mgormley
  */
+//TODO: Extend Iterable<IntIntEntry>.
 public interface IntIntVector extends Serializable {
 
     /** Gets the value at the specified index. */

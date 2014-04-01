@@ -9,6 +9,7 @@ import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
  * 
  * @author mgormley
  */
+//TODO: Extend Iterable<IntDoubleEntry>.
 public interface IntDoubleVector extends Serializable {
 
     /** Gets the value at the specified index. */

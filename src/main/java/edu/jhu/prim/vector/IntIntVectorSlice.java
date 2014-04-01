@@ -16,6 +16,7 @@ import edu.jhu.prim.vector.IntIntHashVector.SparseBinaryOpApplier;
  * 
  * @author mgormley
  */
+//TODO: Implement Iterable<IntIntEntry>.
 public class IntIntVectorSlice implements IntIntVector {
 
     private static final long serialVersionUID = 1L;

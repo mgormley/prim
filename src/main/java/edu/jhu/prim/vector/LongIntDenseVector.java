@@ -9,7 +9,7 @@ import edu.jhu.prim.util.Lambda.FnLongIntToInt;
 import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.vector.LongIntHashVector.SparseBinaryOpApplier;
 
-
+//TODO: Implement Iterable<LongIntEntry>.
 public class LongIntDenseVector implements LongIntVector {
 
     private static final long serialVersionUID = 1L;

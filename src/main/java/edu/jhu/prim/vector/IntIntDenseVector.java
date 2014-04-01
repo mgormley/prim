@@ -9,7 +9,7 @@ import edu.jhu.prim.util.Lambda.FnIntIntToInt;
 import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.vector.IntIntHashVector.SparseBinaryOpApplier;
 
-
+//TODO: Implement Iterable<IntIntEntry>.
 public class IntIntDenseVector implements IntIntVector {
 
     private static final long serialVersionUID = 1L;

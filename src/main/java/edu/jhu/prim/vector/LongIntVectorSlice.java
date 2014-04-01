@@ -16,6 +16,7 @@ import edu.jhu.prim.vector.LongIntHashVector.SparseBinaryOpApplier;
  * 
  * @author mgormley
  */
+//TODO: Implement Iterable<LongIntEntry>.
 public class LongIntVectorSlice implements LongIntVector {
 
     private static final long serialVersionUID = 1L;
