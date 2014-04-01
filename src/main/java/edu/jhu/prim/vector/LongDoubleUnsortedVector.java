@@ -2,8 +2,9 @@ package edu.jhu.prim.vector;
 
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.Map;
 
+import edu.jhu.prim.iter.LongIter;
+import edu.jhu.prim.map.LongDoubleEntry;
 import edu.jhu.prim.sort.LongDoubleSort;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
 import edu.jhu.prim.util.SafeCast;
@@ -13,8 +14,7 @@ import edu.jhu.prim.util.SafeCast;
  * 
  * @author Travis Wolfe <twolfe18@gmail.com>
  */
-// TODO: Implement Iterable<LongDoubleEntry>.
-public class LongDoubleUnsortedVector implements LongDoubleVector {
+public class LongDoubleUnsortedVector implements LongDoubleVector, Iterable<LongDoubleEntry> {
 
     private static final long serialVersionUID = 1L;
 
@@ -332,7 +332,7 @@ public class LongDoubleUnsortedVector implements LongDoubleVector {
         }
     }
 
-    public static class SparseIdxIter implements Iterator<Long> {
+    public static class SparseIdxIter implements LongIter {
         private int i = 0, top;
         private long[] idx;
         public SparseIdxIter(long[] idx, int top) {
@@ -342,57 +342,65 @@ public class LongDoubleUnsortedVector implements LongDoubleVector {
         @Override
         public boolean hasNext() { return i < top; }
         @Override
-        public Long next() { return idx[i++]; }
+        public long next() { return idx[i++]; }
         @Override
-        public void remove() { throw new UnsupportedOperationException(); }
+        public void reset() { i = 0; }
     }
 
-    public Iterator<Long> indices() {
+    public LongIter indices() {
         return new SparseIdxIter(idx, top);
     }
 
-    public static class LongDouble implements Map.Entry<Long, Double> {
-        public long index;
-        public double value;
-        public LongDouble(long index, double value) {
-            this.index = index;
-            this.value = value;
+    public class LongDoubleEntryImpl implements LongDoubleEntry {
+        private int i;
+        public LongDoubleEntryImpl(int i) {
+            this.i = i;
         }
-        @Override
-        public Long getKey() { return index; }
-        @Override
-        public Double getValue() { return value; }
-        @Override
-        public Double setValue(Double value) {
-            throw new UnsupportedOperationException();
+        public long index() {
+            return idx[i];
+        }
+        public double get() {
+            return vals[i];
         }
     }
 
-    public static class IdxValIter implements Iterator<LongDouble> {
-        private int i = 0, top;
-        private long[] idx;
-        private double[] vals;
-        public IdxValIter(long[] idx, double[] vals, int top) {
-            this.idx = idx;
-            this.top = top;
-            this.vals = vals;
+    /**
+     * This iterator is fast in the case of for(Entry e : vector) { }, however a
+     * given entry should not be used after the following call to next().
+     */
+    public class LongDoubleIterator implements Iterator<LongDoubleEntry> {
+
+        // The current entry.
+        private LongDoubleEntryImpl entry = new LongDoubleEntryImpl(-1);
+
+        @Override
+        public boolean hasNext() {
+            return entry.i + 1 < top;
         }
+
         @Override
-        public boolean hasNext() { return i < top; }
-        @Override
-        public LongDouble next() {
-            LongDouble iv = new LongDouble(idx[i], vals[i]);
-            i++;
-            return iv;
+        public LongDoubleEntry next() {
+            entry.i++;
+            return entry;
         }
+
         @Override
-        public void remove() { throw new UnsupportedOperationException(); }
+        public void remove() {
+            throw new RuntimeException("operation not supported");
+        }
+
     }
 
-    public Iterator<LongDouble> indicesAndValues() {
-        return new IdxValIter(idx, vals, top);
+    /*
+     * (non-Javadoc)
+     * 
+     * @see edu.jhu.util.vector.LongDoubleMap#iterator()
+     */
+    @Override
+    public Iterator<LongDoubleEntry> iterator() {
+        return new LongDoubleIterator();
     }
-
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
