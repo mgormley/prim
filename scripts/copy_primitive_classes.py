@@ -88,9 +88,15 @@ def get_re_subs_for_pair(dest_key, dest_val):
     # Prepend some replacements for generics in the unit tests. 
     if dest_key.prim == "int":
         repls += [("<Long,", "<Integer,")]
+        repls += [("<Long>", "<Integer>")]
+        repls += [(" Long ", " Integer ")]
         repls += [("Long.", "Integer.")]
     if dest_val.prim == "int":
-        repls += [("Double>", "Integer>")] #TODO: should this have parens???
+        repls += [(",Double>", ",Integer>")]
+        repls += [(", Double>", ", Integer>")]
+        repls += [("<Double>", "<Integer>")]
+        repls += [(" Double ", " Integer ")]
+        repls += [("(Double ", "(Integer ")]
     # Conditional replacements
     if dest_val.is_integral:
         repls += [(", double delta", ""),
@@ -202,6 +208,7 @@ if __name__ == "__main__":
                  "edu.jhu.prim.sort.LongDoubleSort",
                  "edu.jhu.prim.vector.LongDoubleVector",
                  "edu.jhu.prim.vector.LongDoubleSortedVector",
+                 "edu.jhu.prim.vector.LongDoubleUnsortedVector",
                  "edu.jhu.prim.vector.LongDoubleHashVector",
                  "edu.jhu.prim.vector.LongDoubleDenseVector",
                  "edu.jhu.prim.vector.LongDoubleVectorSlice",
@@ -211,6 +218,7 @@ if __name__ == "__main__":
                  "edu.jhu.prim.map.LongDoubleHashMapTest",
                  "edu.jhu.prim.sort.LongDoubleSortTest",
                  "edu.jhu.prim.vector.LongDoubleSortedVectorTest",
+                 "edu.jhu.prim.vector.LongDoubleUnsortedVectorTest",
                  "edu.jhu.prim.vector.LongDoubleHashVectorTest",
                  "edu.jhu.prim.vector.LongDoubleDenseVectorTest",
                  "edu.jhu.prim.vector.LongDoubleVectorSliceTest",

@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 
-import edu.jhu.prim.sort.IntDoubleSort;
-import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
+import edu.jhu.prim.sort.LongDoubleSort;
+import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
 import edu.jhu.prim.util.SafeCast;
 
 /**
@@ -13,19 +13,20 @@ import edu.jhu.prim.util.SafeCast;
  * 
  * @author Travis Wolfe <twolfe18@gmail.com>
  */
-public class IntDoubleUnsortedVector implements IntDoubleVector {
+// TODO: Implement Iterable<LongDoubleEntry>.
+public class LongDoubleUnsortedVector implements LongDoubleVector {
 
     private static final long serialVersionUID = 1L;
 
     public boolean printWarnings = true;
 
-    protected int[] idx;
+    protected long[] idx;
     protected double[] vals;
     protected int top;          	// indices less than this are valid
     protected boolean compacted;    // are elements of idx sorted and unique?
 
     // private constructor: must call static methods to initialize
-    public IntDoubleUnsortedVector(int[] idx, double[] values) {
+    public LongDoubleUnsortedVector(long[] idx, double[] values) {
         if(idx != null && idx.length != values.length)
             throw new IllegalArgumentException();
         this.idx = idx;
@@ -34,15 +35,15 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
         this.compacted = false;
     }
 
-    public IntDoubleUnsortedVector(int initCapacity) {
-        idx = new int[initCapacity];
+    public LongDoubleUnsortedVector(int initCapacity) {
+        idx = new long[initCapacity];
         vals = new double[initCapacity];
         top = 0;
         compacted = true;
     }
 
     public static final int defaultSparseInitCapacity = 16;
-    public IntDoubleUnsortedVector() {
+    public LongDoubleUnsortedVector() {
         this(defaultSparseInitCapacity);
     }
 
@@ -51,8 +52,8 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
     }
 
     @Override
-    public IntDoubleUnsortedVector clone() {
-        IntDoubleUnsortedVector v = new IntDoubleUnsortedVector(0);
+    public LongDoubleUnsortedVector clone() {
+        LongDoubleUnsortedVector v = new LongDoubleUnsortedVector(0);
         v.idx = Arrays.copyOf(idx, idx.length);
         v.vals = Arrays.copyOf(vals, vals.length);
         v.top = top;
@@ -61,12 +62,12 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
     }
 
     @Override
-    public IntDoubleVector copy() {
+    public LongDoubleVector copy() {
         return clone();
     }
 
     @Override
-    public double get(int index) {
+    public double get(long index) {
         // if we need to do an O(#non-zero) operation here anyway, might as well compact
         compact();
         int i = findIndexMatching(index);
@@ -77,24 +78,24 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
     /**
      * @return -1 if not found
      */
-    private int findIndexMatching(int index) {
+    private int findIndexMatching(long index) {
         compact();
         return findIndexMatching(index, 0, top-1);
     }
 
-    private int findIndexMatching(int index, int imin, int imax) {
+    private int findIndexMatching(long index, int imin, int imax) {
         assert compacted;
-        int needle = index;
+        long needle = index;
         while(imin < imax) {
             int imid = (imax - imin) / 2 + imin; assert(imid < imax);
-            int mid = idx[imid];
+            long mid = idx[imid];
             if(mid < needle)
                 imin = imid + 1;
             else
                 imax = imid;
         }
         if(imax == imin) {
-            int found = idx[imin];
+            long found = idx[imin];
             if(found == needle) return imin;
         }
         return -1;
@@ -112,7 +113,7 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
         if(compacted) return;
         
         // sort items by index (not including junk >=top)
-        IntDoubleSort.sortIndexAsc(idx, vals, top);
+        LongDoubleSort.sortIndexAsc(idx, vals, top);
 
         // let add() remove duplicate entries
         int oldTop = top;
@@ -130,7 +131,7 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
 
     public void compact() { compact(false); }
     
-    public static boolean dbgEquals(IntDoubleUnsortedVector a, IntDoubleUnsortedVector b) {
+    public static boolean dbgEquals(LongDoubleUnsortedVector a, LongDoubleUnsortedVector b) {
         if(a.top != b.top) return false;
         if(a.compacted ^ b.compacted) return false;
         for(int i=0; i<a.top; i++) {
@@ -153,7 +154,7 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
     /**
      * NOTE: this is much less efficient than calls to add().
      */
-    public double set(int index, double value) {
+    public double set(long index, double value) {
         compact();
         int i = findIndexMatching(index);
         if(i < 0) {
@@ -167,9 +168,9 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
         }
     }
 
-    public void add(int index, double value) {
+    public void add(long index, double value) {
         if(value == 0) return;
-        int prevIdx = top > 0 ? idx[top-1] : -1;
+        long prevIdx = top > 0 ? idx[top-1] : -1;
         if(index == prevIdx) {
             //System.out.printf("[add] prevIndex=%d top=%d prevVal=%.2f index=%d value=%.2f\n", prevIdx, top, vals[top-1], index, value);
             vals[top-1] += value;
@@ -192,7 +193,7 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
         vals = Arrays.copyOf(vals, newSize);
     }
 
-    /*  */
+    /* START EXCLUDE ILV norms */
     
     public int l0Norm() {
         compact();
@@ -247,7 +248,7 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
         return false;
     }
     
-    /*  */
+    /* END EXCLUDE norms */
 
     public void scale(double factor) {
         // no need to compact here: a*x + a*y = a*(x+y)
@@ -256,11 +257,11 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
     }
     
     @Override
-    public void add(IntDoubleVector other) {
-        final IntDoubleUnsortedVector me = this;
-        other.apply(new FnIntDoubleToDouble() {
+    public void add(LongDoubleVector other) {
+        final LongDoubleUnsortedVector me = this;
+        other.apply(new FnLongDoubleToDouble() {
             @Override
-            public double call(int idx, double val) {
+            public double call(long idx, double val) {
                 me.add(idx, val);
                 return val; // only doing this for the side effects
             }
@@ -268,18 +269,18 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
     }
 
     @Override
-    public void apply(FnIntDoubleToDouble function) {
+    public void apply(FnLongDoubleToDouble function) {
         compact();
         for(int i=0; i<top; i++)
             vals[i] = function.call(idx[i], vals[i]);
     }
 
     @Override
-    public void subtract(IntDoubleVector other) {
-        final IntDoubleUnsortedVector me = this;
-        other.apply(new FnIntDoubleToDouble() {
+    public void subtract(LongDoubleVector other) {
+        final LongDoubleUnsortedVector me = this;
+        other.apply(new FnLongDoubleToDouble() {
             @Override
-            public double call(int idx, double val) {
+            public double call(long idx, double val) {
                 me.add(idx, - val);
                 return val; // only doing this for the side effects
             }
@@ -287,7 +288,7 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
     }
 
     @Override
-    public void product(IntDoubleVector other) {
+    public void product(LongDoubleVector other) {
         throw new RuntimeException("not supported");
     }
 
@@ -295,15 +296,15 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
     public double dot(double[] other) {
         double sum = 0;
         for(int i=0; i<top; i++)
-            sum += other[idx[i]] * vals[i];
+            sum += other[SafeCast.safeLongToInt(idx[i])] * vals[i];
         return sum;
     }
 
     @Override
-    public double dot(IntDoubleVector other) {
-        if(other instanceof IntDoubleUnsortedVector) {
-            IntDoubleUnsortedVector oth = (IntDoubleUnsortedVector) other;
-            IntDoubleUnsortedVector smaller = this, bigger = oth;
+    public double dot(LongDoubleVector other) {
+        if(other instanceof LongDoubleUnsortedVector) {
+            LongDoubleUnsortedVector oth = (LongDoubleUnsortedVector) other;
+            LongDoubleUnsortedVector smaller = this, bigger = oth;
             if(this.top > oth.top) {
                 smaller = oth; bigger = this;
             }
@@ -311,9 +312,9 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
             bigger.compact();
             double dot = 0;
             int j = 0;
-            int attempt = bigger.idx[j];
+            long attempt = bigger.idx[j];
             for(int i=0; i<smaller.top; i++) {
-                int needle = smaller.idx[i];
+                long needle = smaller.idx[i];
                 while(attempt < needle && j < bigger.top-1)
                     attempt = bigger.idx[++j];
                 if(attempt == needle)
@@ -326,34 +327,34 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
         else throw new RuntimeException("not supported");
     }
 
-    public static class SparseIdxIter implements Iterator<Integer> {
+    public static class SparseIdxIter implements Iterator<Long> {
         private int i = 0, top;
-        private int[] idx;
-        public SparseIdxIter(int[] idx, int top) {
+        private long[] idx;
+        public SparseIdxIter(long[] idx, int top) {
             this.idx = idx;
             this.top = top;
         }
         @Override
         public boolean hasNext() { return i < top; }
         @Override
-        public Integer next() { return idx[i++]; }
+        public Long next() { return idx[i++]; }
         @Override
         public void remove() { throw new UnsupportedOperationException(); }
     }
 
-    public Iterator<Integer> indices() {
+    public Iterator<Long> indices() {
         return new SparseIdxIter(idx, top);
     }
 
-    public static class IntDouble implements Map.Entry<Integer, Double> {
-        public int index;
+    public static class LongDouble implements Map.Entry<Long, Double> {
+        public long index;
         public double value;
-        public IntDouble(int index, double value) {
+        public LongDouble(long index, double value) {
             this.index = index;
             this.value = value;
         }
         @Override
-        public Integer getKey() { return index; }
+        public Long getKey() { return index; }
         @Override
         public Double getValue() { return value; }
         @Override
@@ -362,11 +363,11 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
         }
     }
 
-    public static class IdxValIter implements Iterator<IntDouble> {
+    public static class IdxValIter implements Iterator<LongDouble> {
         private int i = 0, top;
-        private int[] idx;
+        private long[] idx;
         private double[] vals;
-        public IdxValIter(int[] idx, double[] vals, int top) {
+        public IdxValIter(long[] idx, double[] vals, int top) {
             this.idx = idx;
             this.top = top;
             this.vals = vals;
@@ -374,8 +375,8 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
         @Override
         public boolean hasNext() { return i < top; }
         @Override
-        public IntDouble next() {
-            IntDouble iv = new IntDouble(idx[i], vals[i]);
+        public LongDouble next() {
+            LongDouble iv = new LongDouble(idx[i], vals[i]);
             i++;
             return iv;
         }
@@ -383,7 +384,7 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
         public void remove() { throw new UnsupportedOperationException(); }
     }
 
-    public Iterator<IntDouble> indicesAndValues() {
+    public Iterator<LongDouble> indicesAndValues() {
         return new IdxValIter(idx, vals, top);
     }
 
@@ -400,7 +401,7 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
     }
 
     @Override
-    public int getDimension() {
+    public long getDimension() {
         if (top-1 >= 0) {
             return idx[top-1] + 1;
         } else {
@@ -411,10 +412,10 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
     @Override
     public double[] toNativeArray() {
         compact();
-        final double[] arr = new double[getDimension()];
-        apply(new FnIntDoubleToDouble() {
-            public double call(int idx, double val) {
-                arr[idx] = val;
+        final double[] arr = new double[SafeCast.safeLongToInt(getDimension())];
+        apply(new FnLongDoubleToDouble() {
+            public double call(long idx, double val) {
+                arr[SafeCast.safeLongToInt(idx)] = val;
                 return val;
             }
         });
@@ -425,7 +426,7 @@ public class IntDoubleUnsortedVector implements IntDoubleVector {
      * Gets the INTERNAL representation of the indices. Great care should be
      * taken to avoid touching the values beyond the used indices.
      */
-    public int[] getInternalIndices() {
+    public long[] getInternalIndices() {
         return idx;
     }
 

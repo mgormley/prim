@@ -9,6 +9,7 @@ import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
  * 
  * @author mgormley
  */
+//TODO: Extend Iterable<LongDoubleEntry>.
 public interface LongDoubleVector extends Serializable {
 
     /** Gets the value at the specified index. */
