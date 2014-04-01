@@ -84,7 +84,7 @@ public class LogAddTableTest {
     }
     
     @Test
-    public void testRange() {
+    public void testRangeLogAdd() {
         Random random = new Random();
 
         int min = -10000;
@@ -104,14 +104,21 @@ public class LogAddTableTest {
                 assertTrue(diff < tolerance);
             }
         }
+    }
+
+    @Test
+    public void testRangeLogSubtract() {
+        Random random = new Random();
         
         // Check for logSubtract differences.
-        tolerance = 2.0;
-        for (int i=min; i<max; i += 10) {
-            for (int j=min; j<max; j += 10) {
+        int min = -100;
+        int max = 100;
+        double tolerance = 2.0;
+        for (int i=min; i<max; i += 1) {
+            for (int j=min; j<max; j += 1) {
                 if (i < j) { continue; }
-                double a = i+(random.nextDouble()*10);
-                double b = j+(random.nextDouble()*10);
+                double a = i;//+(random.nextDouble()*10);
+                double b = j;//+(random.nextDouble()*10);
                 
                 double tableSum = LogAddTable.logSubtract((double) Math.max(a, b), (double) Math.min(a, b)); 
                 double exactSum = FastMath.logSubtractExact((double) Math.max(a, b), (double) Math.min(a, b));
@@ -122,10 +129,19 @@ public class LogAddTableTest {
                 if (diff >= tolerance) {
                     System.out.println(String.format("a=%.2f b=%.2f (a-b)=%.2f diff=%g", a, b, (a-b), diff));
                 }
+                if (a == 52 && b == 20) {
+                    System.out.println(String.format("a=%.2f b=%.2f (a-b)=%.2f diff=%g", a, b, (a-b), diff));
+                    System.out.println(String.format("logSubTable=%g  logSubExact=%g", tableSum, exactSum));
+                }
                 assertTrue(diff < tolerance);
             }
         }
         
+    }
+    
+
+    @Test
+    public void testRangeLogSubtractAfterAdd() {
         // Find the point at which logAdd loses precision.
         //double j = 10d;
         for (int j : getList(1, 10, 20)) {
@@ -149,13 +165,22 @@ public class LogAddTableTest {
             }
         }
         
+    }
+    
+    @Test
+    public void testRangeLogSubtractAfterAddSpecialCase1() {
+        // Note: double precision of the mantissa is 53 bits. This equates to ~
+        // 16 decimal digits, more exactly: 53 * log_{10}(2) ~= 15.955.
+        //
         // Look at a specific case:
         double i=52;
         double j=20;
-        double logAdd = LogAddTable.logAdd((double) i, (double) j);
-        double logSubTable = LogAddTable.logSubtract(logAdd, (double) i); 
-        double logSubExact = FastMath.logSubtractExact(logAdd, (double) i); 
-        System.out.println(String.format("logSubTable=%g  logSubExact=%g logAdd=%g", logSubTable, logSubExact, logAdd));
+        double logAddTable = LogAddTable.logAdd((double) i, (double) j);
+        double logSubTable = LogAddTable.logSubtract(logAddTable, (double) i); 
+        double logSubExact = FastMath.logSubtractExact(logAddTable, (double) i); 
+        System.out.println(String.format("logSubTable=%g logSubExact=%g logAdd=%.50g", logSubTable, logSubExact, logAddTable));
+        // This is WAY off.
+        assertEquals(logSubExact, logSubTable, 1.0);
     }
     
     // Borrowed from Lists class for these tests.
