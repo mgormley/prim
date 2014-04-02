@@ -134,14 +134,28 @@ public class IntDoubleDenseVector implements IntDoubleVector {
 
     /** Updates this vector to be the entrywise sum of this vector with the other. */
     public void add(IntDoubleVector other) {
-        // TODO: Add special case for IntDoubleDenseVector.
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleAdd()));
+        if (other instanceof IntDoubleUnsortedVector) {
+            IntDoubleUnsortedVector vec = (IntDoubleUnsortedVector) other;
+            for (int i=0; i<vec.top; i++) {
+                this.elements[vec.idx[i]] += vec.vals[i];
+            }
+        } else {
+            //  TODO: Add special case for IntDoubleDenseVector.
+            other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleAdd()));
+        }
     }
     
     /** Updates this vector to be the entrywise difference of this vector with the other. */
     public void subtract(IntDoubleVector other) {
-        // TODO: Add special case for IntDoubleDenseVector.
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleSubtract()));
+        if (other instanceof IntDoubleUnsortedVector) {
+            IntDoubleUnsortedVector vec = (IntDoubleUnsortedVector) other;
+            for (int i=0; i<vec.top; i++) {
+                this.elements[vec.idx[i]] -= vec.vals[i];
+            }
+        } else {
+            // TODO: Add special case for IntDoubleDenseVector.
+            other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleSubtract()));
+        }
     }
     
     /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */

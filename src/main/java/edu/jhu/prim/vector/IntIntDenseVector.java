@@ -134,14 +134,28 @@ public class IntIntDenseVector implements IntIntVector {
 
     /** Updates this vector to be the entrywise sum of this vector with the other. */
     public void add(IntIntVector other) {
-        // TODO: Add special case for IntIntDenseVector.
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.IntAdd()));
+        if (other instanceof IntIntUnsortedVector) {
+            IntIntUnsortedVector vec = (IntIntUnsortedVector) other;
+            for (int i=0; i<vec.top; i++) {
+                this.elements[vec.idx[i]] += vec.vals[i];
+            }
+        } else {
+            //  TODO: Add special case for IntIntDenseVector.
+            other.apply(new SparseBinaryOpApplier(this, new Lambda.IntAdd()));
+        }
     }
     
     /** Updates this vector to be the entrywise difference of this vector with the other. */
     public void subtract(IntIntVector other) {
-        // TODO: Add special case for IntIntDenseVector.
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.IntSubtract()));
+        if (other instanceof IntIntUnsortedVector) {
+            IntIntUnsortedVector vec = (IntIntUnsortedVector) other;
+            for (int i=0; i<vec.top; i++) {
+                this.elements[vec.idx[i]] -= vec.vals[i];
+            }
+        } else {
+            // TODO: Add special case for IntIntDenseVector.
+            other.apply(new SparseBinaryOpApplier(this, new Lambda.IntSubtract()));
+        }
     }
     
     /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */

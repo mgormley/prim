@@ -134,14 +134,28 @@ public class LongIntDenseVector implements LongIntVector {
 
     /** Updates this vector to be the entrywise sum of this vector with the other. */
     public void add(LongIntVector other) {
-        // TODO: Add special case for LongIntDenseVector.
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.IntAdd()));
+        if (other instanceof LongIntUnsortedVector) {
+            LongIntUnsortedVector vec = (LongIntUnsortedVector) other;
+            for (int i=0; i<vec.top; i++) {
+                this.elements[SafeCast.safeLongToInt(vec.idx[i])] += vec.vals[i];
+            }
+        } else {
+            //  TODO: Add special case for LongIntDenseVector.
+            other.apply(new SparseBinaryOpApplier(this, new Lambda.IntAdd()));
+        }
     }
     
     /** Updates this vector to be the entrywise difference of this vector with the other. */
     public void subtract(LongIntVector other) {
-        // TODO: Add special case for LongIntDenseVector.
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.IntSubtract()));
+        if (other instanceof LongIntUnsortedVector) {
+            LongIntUnsortedVector vec = (LongIntUnsortedVector) other;
+            for (int i=0; i<vec.top; i++) {
+                this.elements[SafeCast.safeLongToInt(vec.idx[i])] -= vec.vals[i];
+            }
+        } else {
+            // TODO: Add special case for LongIntDenseVector.
+            other.apply(new SparseBinaryOpApplier(this, new Lambda.IntSubtract()));
+        }
     }
     
     /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */

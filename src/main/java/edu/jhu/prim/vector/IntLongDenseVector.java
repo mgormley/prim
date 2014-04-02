@@ -134,14 +134,28 @@ public class IntLongDenseVector implements IntLongVector {
 
     /** Updates this vector to be the entrywise sum of this vector with the other. */
     public void add(IntLongVector other) {
-        // TODO: Add special case for IntLongDenseVector.
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.LongAdd()));
+        if (other instanceof IntLongUnsortedVector) {
+            IntLongUnsortedVector vec = (IntLongUnsortedVector) other;
+            for (int i=0; i<vec.top; i++) {
+                this.elements[vec.idx[i]] += vec.vals[i];
+            }
+        } else {
+            //  TODO: Add special case for IntLongDenseVector.
+            other.apply(new SparseBinaryOpApplier(this, new Lambda.LongAdd()));
+        }
     }
     
     /** Updates this vector to be the entrywise difference of this vector with the other. */
     public void subtract(IntLongVector other) {
-        // TODO: Add special case for IntLongDenseVector.
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.LongSubtract()));
+        if (other instanceof IntLongUnsortedVector) {
+            IntLongUnsortedVector vec = (IntLongUnsortedVector) other;
+            for (int i=0; i<vec.top; i++) {
+                this.elements[vec.idx[i]] -= vec.vals[i];
+            }
+        } else {
+            // TODO: Add special case for IntLongDenseVector.
+            other.apply(new SparseBinaryOpApplier(this, new Lambda.LongSubtract()));
+        }
     }
     
     /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */

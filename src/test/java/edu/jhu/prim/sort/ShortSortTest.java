@@ -9,46 +9,46 @@ import org.junit.Test;
 
 import edu.jhu.prim.util.JUnitUtils;
 
-public class LongSortTest {
+public class ShortSortTest {
     
-    /* ---------- Longs only --------------*/
+    /* ---------- Shorts only --------------*/
     
     @Test
     public void testQuicksortAsc() {
-        long[] values = new long[]{ 1, 3, 2, -1, 5};
-        LongSort.sortAsc(values);
+        short[] values = new short[]{ 1, 3, 2, -1, 5};
+        ShortSort.sortAsc(values);
         System.out.println(Arrays.toString(values));
-        JUnitUtils.assertArrayEquals(new long[]{ -1, 1, 2, 3, 5}, values);
+        JUnitUtils.assertArrayEquals(new short[]{ -1, 1, 2, 3, 5}, values);
     }
     
     @Test
     public void testQuicksortDesc() {
-        long[] values = new long[]{ 1, 3, 2, -1, 5};
-        LongSort.sortDesc(values);
+        short[] values = new short[]{ 1, 3, 2, -1, 5};
+        ShortSort.sortDesc(values);
         System.out.println(Arrays.toString(values));
-        JUnitUtils.assertArrayEquals(new long[]{5, 3, 2, 1, -1}, values);
+        JUnitUtils.assertArrayEquals(new short[]{5, 3, 2, 1, -1}, values);
     }
     
     @Test
     public void testQuicksortOnRandomInput() {
         Random random = new Random();
-        long[] values = new long[]{ 1, 3, 2, -1, 5};
+        short[] values = new short[]{ 1, 3, 2, -1, 5};
         for (int i=0; i<10; i++) {            
             for (int j=0; j<values.length; j++) {
-                values[j] = (long) random.nextInt();
+                values[j] = (short) random.nextInt();
             }
-            LongSort.sortAsc(values);
+            ShortSort.sortAsc(values);
             System.out.println(Arrays.toString(values));
-            assertTrue(LongSort.isSortedAsc(values));
+            assertTrue(ShortSort.isSortedAsc(values));
         }
         
         for (int i=0; i<10; i++) {            
             for (int j=0; j<values.length; j++) {
-                values[j] = (long) random.nextInt();
+                values[j] = (short) random.nextInt();
             }
-            LongSort.sortDesc(values);
+            ShortSort.sortDesc(values);
             System.out.println(Arrays.toString(values));
-            assertTrue(LongSort.isSortedDesc(values));
+            assertTrue(ShortSort.isSortedDesc(values));
         }
     }
     

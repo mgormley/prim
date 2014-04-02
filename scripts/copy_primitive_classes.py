@@ -247,8 +247,8 @@ if __name__ == "__main__":
     # For now we only copy one class for shorts.
     src_files = classes_to_files("main", ["edu.jhu.prim.arrays.LongArrays",
                                           "edu.jhu.prim.sort.LongSort",
-                                          "edu.jhu.prim.sort.LongSortTest",
                                           ])
+    src_files = classes_to_files("test", ["edu.jhu.prim.sort.LongSortTest",])
     copy_single(tds.get("long"), tds.get("short"), src_files)
     copy_single(tds.get("long"), tds.get("int"), src_files)
     # Int only
