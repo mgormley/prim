@@ -134,14 +134,28 @@ public class LongDoubleDenseVector implements LongDoubleVector {
 
     /** Updates this vector to be the entrywise sum of this vector with the other. */
     public void add(LongDoubleVector other) {
-        // TODO: Add special case for LongDoubleDenseVector.
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleAdd()));
+        if (other instanceof LongDoubleUnsortedVector) {
+            LongDoubleUnsortedVector vec = (LongDoubleUnsortedVector) other;
+            for (int i=0; i<vec.top; i++) {
+                this.elements[SafeCast.safeLongToInt(vec.idx[i])] += vec.vals[i];
+            }
+        } else {
+            //  TODO: Add special case for LongDoubleDenseVector.
+            other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleAdd()));
+        }
     }
     
     /** Updates this vector to be the entrywise difference of this vector with the other. */
     public void subtract(LongDoubleVector other) {
-        // TODO: Add special case for LongDoubleDenseVector.
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleSubtract()));
+        if (other instanceof LongDoubleUnsortedVector) {
+            LongDoubleUnsortedVector vec = (LongDoubleUnsortedVector) other;
+            for (int i=0; i<vec.top; i++) {
+                this.elements[SafeCast.safeLongToInt(vec.idx[i])] -= vec.vals[i];
+            }
+        } else {
+            // TODO: Add special case for LongDoubleDenseVector.
+            other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleSubtract()));
+        }
     }
     
     /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */

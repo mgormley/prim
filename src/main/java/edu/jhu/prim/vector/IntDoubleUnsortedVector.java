@@ -7,7 +7,6 @@ import edu.jhu.prim.iter.IntIter;
 import edu.jhu.prim.map.IntDoubleEntry;
 import edu.jhu.prim.sort.IntDoubleSort;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
-import edu.jhu.prim.util.SafeCast;
 
 /**
  * Lazily-sorted vector.
