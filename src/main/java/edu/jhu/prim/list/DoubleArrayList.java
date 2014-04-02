@@ -14,9 +14,9 @@ public class DoubleArrayList implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** The internal array representing this list. */
-    private double[] elements;
+    protected double[] elements;
     /** The number of elements in the list. */
-    private int size;
+    protected int size;
     
     public DoubleArrayList() {
         this(8);

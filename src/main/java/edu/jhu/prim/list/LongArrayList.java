@@ -12,9 +12,9 @@ public class LongArrayList implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** The internal array representing this list. */
-    private long[] elements;
+    protected long[] elements;
     /** The number of elements in the list. */
-    private int size;
+    protected int size;
     
     public LongArrayList() {
         this(8);
