@@ -96,8 +96,8 @@ public class LongDoubleSortTest {
             double[] values = new double[size];
             long[] index = new long[size];
             for (int j=0; j<size; j++) {
-                values[j] = j;
-                index[j] = j;
+                values[j] = (double) j;
+                index[j] = (long) j;
             }
             DoubleArrays.shuffle(values);
             LongArrays.shuffle(index);
@@ -121,8 +121,8 @@ public class LongDoubleSortTest {
             double[] values = new double[size];
             long[] index = new long[size];
             for (int j=0; j<size; j++) {
-                values[j] = j;
-                index[j] = j;
+                values[j] = (double) j;
+                index[j] = (long) j;
             }
             DoubleArrays.shuffle(values);
             LongArrays.shuffle(index);
@@ -146,7 +146,7 @@ public class LongDoubleSortTest {
      */
     @Test
     public void testSortSpeed() {  
-        int numTrials = 10000;
+        int numTrials = 1000; // Add a zero for results above.
         int size = 1000;
         {
             Timer timer = new Timer();
@@ -155,8 +155,8 @@ public class LongDoubleSortTest {
                 double[] values = new double[size];
                 long[] index = new long[size];
                 for (int j=0; j<size; j++) {
-                    values[j] = j;
-                    index[j] = j;
+                    values[j] = (double) j;
+                    index[j] = (long) j;
                 }
                 DoubleArrays.shuffle(values);
                 LongArrays.shuffle(index);
@@ -179,8 +179,8 @@ public class LongDoubleSortTest {
                 double[] values = new double[size];
                 long[] index = new long[size];
                 for (int j=0; j<size; j++) {
-                    values[j] = j;
-                    index[j] = j;
+                    values[j] = (double) j;
+                    index[j] = (long) j;
                 }
                 DoubleArrays.shuffle(values);
                 LongArrays.shuffle(index);

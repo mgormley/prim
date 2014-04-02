@@ -1,10 +1,10 @@
 package edu.jhu.prim.sort;
 
-import edu.jhu.prim.arrays.IntArrays;
+import edu.jhu.prim.arrays.ShortArrays;
 
-public class IntSort {
+public class ShortSort {
 
-    public IntSort() {
+    public ShortSort() {
         // private constructor
     }
 
@@ -13,20 +13,20 @@ public class IntSort {
     /**
      * Performs an in-place quick sort on array. Sorts in descending order.
      */
-    public static void sortDesc(int[] array) {
-        IntArrays.scale(array, (int) -1);
+    public static void sortDesc(short[] array) {
+        ShortArrays.scale(array, (short) -1);
         sortAsc(array);
-        IntArrays.scale(array, (int) -1);
+        ShortArrays.scale(array, (short) -1);
     }
     
     /**
      * Performs an in-place quick sort on array. Sorts in acscending order.
      */
-    public static void sortAsc(int[] array) {
+    public static void sortAsc(short[] array) {
         quicksort(array, 0, array.length-1);
     }
     
-    private static void quicksort(int[] array, int left, int right) {
+    private static void quicksort(short[] array, int left, int right) {
         if (left < right) {
             // Choose a pivot index.
             // --> Here we choose the rightmost element which does the least
@@ -42,8 +42,8 @@ public class IntSort {
         }
     }
     
-    private static int partition(int[] array, int left, int right, int pivotIndex) {
-        int pivotValue = array[pivotIndex];
+    private static int partition(short[] array, int left, int right, int pivotIndex) {
+        short pivotValue = array[pivotIndex];
         // Move the pivot value to the rightmost position.
         swap(array, pivotIndex, right);
         // For each position between left and right, swap all the values less
@@ -60,7 +60,7 @@ public class IntSort {
         return storeIndex;
     }
     
-    public static int[] getIndexArray(int[] values) {
+    public static short[] getIndexArray(short[] values) {
         return getIndexArray(values.length);
     }
 
@@ -69,10 +69,10 @@ public class IntSort {
      * @param length The length of the array.
      * @return The new index array.
      */
-    public static int[] getIndexArray(int length) {
-        int[] index = new int[length];
+    public static short[] getIndexArray(int length) {
+        short[] index = new short[length];
         for (int i=0; i<index.length; i++) {
-            index[i] = (int) i;
+            index[i] = (short) i;
         }
         return index;
     }
@@ -80,13 +80,13 @@ public class IntSort {
     /**
      * Swaps the elements at positions i and j.
      */
-    private static void swap(int[] array, int i, int j) {
-        int valAtI = array[i];
+    private static void swap(short[] array, int i, int j) {
+        short valAtI = array[i];
         array[i] = array[j];
         array[j] = valAtI;
     }
         
-    public static boolean isSortedAsc(int[] array) {
+    public static boolean isSortedAsc(short[] array) {
     	for (int i=0; i<array.length-1; i++) {
     		if (array[i] > array[i+1]) {
     			return false;
@@ -95,7 +95,7 @@ public class IntSort {
     	return true;
     }
     
-    public static boolean isSortedDesc(int[] array) {
+    public static boolean isSortedDesc(short[] array) {
     	for (int i=0; i<array.length-1; i++) {
     		if (array[i] < array[i+1]) {
     			return false;
@@ -104,7 +104,7 @@ public class IntSort {
     	return true;
     }
     
-    public static boolean isSortedAscAndUnique(int[] array) {
+    public static boolean isSortedAscAndUnique(short[] array) {
         for (int i=0; i<array.length-1; i++) {
             if (array[i] >= array[i+1]) {
                 return false;

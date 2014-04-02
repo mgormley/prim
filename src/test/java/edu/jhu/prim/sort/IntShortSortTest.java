@@ -1,11 +1,16 @@
 package edu.jhu.prim.sort;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import edu.jhu.prim.arrays.ShortArrays;
+import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.util.JUnitUtils;
+import edu.jhu.util.Timer;
 
 public class IntShortSortTest {
         
@@ -81,6 +86,116 @@ public class IntShortSortTest {
         
         JUnitUtils.assertArrayEquals(new short[]{ -1, 2, 3, 5, 1 }, values);
         Assert.assertArrayEquals(new int[]{ 8, 5, 4, 3, 1 }, index);
+    }
+    
+    @Test
+    public void testRandomArraysSortAsc() {        
+        for (int i=0; i<10; i++) {           
+            // Get random arrays.
+            int size = 100;
+            short[] values = new short[size];
+            int[] index = new int[size];
+            for (int j=0; j<size; j++) {
+                values[j] = (short) j;
+                index[j] = (int) j;
+            }
+            ShortArrays.shuffle(values);
+            IntArrays.shuffle(index);
+            
+            // Sort and ONLY check the sorted array, not both.
+            assertTrue(!IntSort.isSortedAsc(index));
+            IntShortSort.sortIndexAsc(index, values);
+            assertTrue(IntSort.isSortedAsc(index));
+            
+            assertTrue(!ShortSort.isSortedAsc(values));
+            IntShortSort.sortValuesAsc(values, index);
+            assertTrue(ShortSort.isSortedAsc(values));
+        }
+    }
+    
+    @Test
+    public void testRandomArraysSortDesc() {        
+        for (int i=0; i<10; i++) {           
+            // Get random arrays.
+            int size = 100;
+            short[] values = new short[size];
+            int[] index = new int[size];
+            for (int j=0; j<size; j++) {
+                values[j] = (short) j;
+                index[j] = (int) j;
+            }
+            ShortArrays.shuffle(values);
+            IntArrays.shuffle(index);
+            
+            // Sort and ONLY check the sorted array, not both.
+            assertTrue(!IntSort.isSortedDesc(index));
+            IntShortSort.sortIndexDesc(index, values);
+            assertTrue(IntSort.isSortedDesc(index));
+            
+            assertTrue(!ShortSort.isSortedDesc(values));
+            IntShortSort.sortValuesDesc(values, index);
+            assertTrue(ShortSort.isSortedDesc(values));
+        }
+    }
+    
+
+    /** 
+     * OUTPUT:
+     * Total (ms) for recursive: 409.0
+     * Total (ms) for stack: 410.0
+     */
+    @Test
+    public void testSortSpeed() {  
+        int numTrials = 1000; // Add a zero for results above.
+        int size = 1000;
+        {
+            Timer timer = new Timer();
+            for (int trial=0; trial<numTrials; trial++) {           
+                // Get random arrays.
+                short[] values = new short[size];
+                int[] index = new int[size];
+                for (int j=0; j<size; j++) {
+                    values[j] = (short) j;
+                    index[j] = (int) j;
+                }
+                ShortArrays.shuffle(values);
+                IntArrays.shuffle(index);
+                
+                if (trial == numTrials/2) {
+                    timer = new Timer();
+                }
+                
+                timer.start();
+                IntShortSort.quicksortIndexRecursive(index, values, 0, index.length-1);
+                timer.stop();
+                
+            }
+            System.out.println("Total (ms) for recursive: " + timer.totMs());
+        }
+        {
+            Timer timer = new Timer();
+            for (int trial=0; trial<numTrials; trial++) {           
+                // Get random arrays.
+                short[] values = new short[size];
+                int[] index = new int[size];
+                for (int j=0; j<size; j++) {
+                    values[j] = (short) j;
+                    index[j] = (int) j;
+                }
+                ShortArrays.shuffle(values);
+                IntArrays.shuffle(index);
+
+                if (trial == numTrials/2) {
+                    timer = new Timer();
+                }
+                
+                timer.start();
+                IntShortSort.sortIndexAsc(index, values);
+                timer.stop();
+                
+            }
+            System.out.println("Total (ms) for stack: " + timer.totMs());
+        }
     }
     
 }

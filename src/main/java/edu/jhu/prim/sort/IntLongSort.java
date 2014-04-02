@@ -2,6 +2,7 @@ package edu.jhu.prim.sort;
 
 import edu.jhu.prim.arrays.LongArrays;
 import edu.jhu.prim.arrays.IntArrays;
+import edu.jhu.prim.list.IntStack;
 
 public class IntLongSort {
 
@@ -30,6 +31,33 @@ public class IntLongSort {
     }
 
     private static void quicksortValues(long[] array, int[] index, int left, int right) {
+        IntStack leftStack = new IntStack();
+        IntStack rightStack = new IntStack();
+        leftStack.add(left);
+        rightStack.add(right);
+        while (leftStack.size() > 0) {
+            left = leftStack.pop();
+            right = rightStack.pop();
+            if (left < right) {
+                // Choose a pivot index.
+                // --> Here we choose the rightmost element which does the least
+                // amount of work if the array is already sorted.
+                int pivotIndex = right;
+                // Partition the array so that everything less than
+                // values[pivotIndex] is on the left of pivotNewIndex and everything
+                // greater than or equal is on the right.
+                int pivotNewIndex = partitionValues(array, index, left, right, pivotIndex);
+                // "Recurse" on the left side.
+                leftStack.push(left);
+                rightStack.push(pivotNewIndex - 1);
+                // "Recurse" on the right side.
+                leftStack.push(pivotNewIndex + 1);
+                rightStack.push(right);
+            }
+        }
+    }
+
+    static void quicksortValuesRecursive(long[] array, int[] index, int left, int right) {
         if (left < right) {
             // Choose a pivot index.
             // --> Here we choose the rightmost element which does the least
@@ -105,8 +133,35 @@ public class IntLongSort {
         assert top <= index.length;
         quicksortIndex(index, values, 0, top - 1);
     }
-
+    
     private static void quicksortIndex(int[] array, long[] values, int left, int right) {
+        IntStack leftStack = new IntStack();
+        IntStack rightStack = new IntStack();
+        leftStack.add(left);
+        rightStack.add(right);
+        while (leftStack.size() > 0) {
+            left = leftStack.pop();
+            right = rightStack.pop();
+            if (left < right) {
+                // Choose a pivot index.
+                // --> Here we choose the rightmost element which does the least
+                // amount of work if the array is already sorted.
+                int pivotIndex = right;
+                // Partition the array so that everything less than
+                // values[pivotIndex] is on the left of pivotNewIndex and everything
+                // greater than or equal is on the right.
+                int pivotNewIndex = partitionIndex(array, values, left, right, pivotIndex);
+                // "Recurse" on the left side.
+                leftStack.push(left);
+                rightStack.push(pivotNewIndex - 1);
+                // "Recurse" on the right side.
+                leftStack.push(pivotNewIndex + 1);
+                rightStack.push(right);
+            }
+        }
+    }
+    
+    static void quicksortIndexRecursive(int[] array, long[] values, int left, int right) {
         if (left < right) {
             // Choose a pivot index.
             // --> Here we choose the rightmost element which does the least

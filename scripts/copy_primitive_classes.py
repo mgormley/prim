@@ -245,10 +245,14 @@ if __name__ == "__main__":
     src_files = classes_to_files("main", ["edu.jhu.prim.arrays.DoubleArrays"])    
     copy_single(tds.get("double"), tds.get("float"), src_files)
     # For now we only copy one class for shorts.
-    src_files = classes_to_files("main", ["edu.jhu.prim.arrays.LongArrays"])
-    copy_single(tds.get("long"), tds.get("short"), src_files)
     src_files = classes_to_files("main", ["edu.jhu.prim.arrays.LongArrays",
-                                          "edu.jhu.prim.set.LongHashSet",
+                                          "edu.jhu.prim.sort.LongSort",
+                                          "edu.jhu.prim.sort.LongSortTest",
+                                          ])
+    copy_single(tds.get("long"), tds.get("short"), src_files)
+    copy_single(tds.get("long"), tds.get("int"), src_files)
+    # Int only
+    src_files = classes_to_files("main", ["edu.jhu.prim.set.LongHashSet",
                                           "edu.jhu.prim.set.LongSet",
                                           "edu.jhu.prim.iter.LongIter",
                                           "edu.jhu.prim.iter.LongArrayIter",

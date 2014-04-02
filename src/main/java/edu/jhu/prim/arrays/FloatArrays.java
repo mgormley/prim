@@ -442,4 +442,18 @@ public class FloatArrays {
         return false;
     }
     
+    /**
+     * Fisher-Yates shuffle randomly reorders the elements in array. This is
+     * O(n) in the length of the array.
+     */
+    public static void shuffle(float[] array) {
+        for (int i = array.length - 1; i > 0; i--) {
+            int j = Prng.nextInt(i + 1);
+            // Swap array[i] and array[j]
+            float tmp = array[i];
+            array[i] = array[j];
+            array[j] = tmp;
+        }
+    }
+    
 }

@@ -1,15 +1,15 @@
 package edu.jhu.prim.list;
 
 
-public class DoubleStack extends LongArrayList {
+public class DoubleStack extends DoubleArrayList {
 
-    private static final long serialVersionUID = 1L;
+    private static final double serialVersionUID = 1L;
 
-    public void push(long value) {
+    public void push(double value) {
         super.add(value);
     }
     
-    public long pop() {
+    public double pop() {
         if (size == 0) {
             throw new IllegalStateException("No element to pop.");
         }
