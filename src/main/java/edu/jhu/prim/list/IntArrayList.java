@@ -12,9 +12,9 @@ public class IntArrayList implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** The internal array representing this list. */
-    private int[] elements;
+    protected int[] elements;
     /** The number of elements in the list. */
-    private int size;
+    protected int size;
     
     public IntArrayList() {
         this(8);
