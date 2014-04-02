@@ -1,6 +1,7 @@
 package edu.jhu.prim.sort;
 
 import edu.jhu.prim.arrays.DoubleArrays;
+import edu.jhu.prim.list.IntStack;
 
 public class DoubleSort {
 
@@ -27,6 +28,33 @@ public class DoubleSort {
     }
     
     private static void quicksort(double[] array, int left, int right) {
+        IntStack leftStack = new IntStack();
+        IntStack rightStack = new IntStack();
+        leftStack.add(left);
+        rightStack.add(right);
+        while (leftStack.size() > 0) {
+            left = leftStack.pop();
+            right = rightStack.pop();
+            if (left < right) {
+                // Choose a pivot index.
+                // --> Here we choose the rightmost element which does the least
+                // amount of work if the array is already sorted.
+                int pivotIndex = right;
+                // Partition the array so that everything less than
+                // values[pivotIndex] is on the left of pivotNewIndex and everything
+                // greater than or equal is on the right.
+                int pivotNewIndex = partition(array, left, right, pivotIndex);
+                // "Recurse" on the left side.
+                leftStack.push(left);
+                rightStack.push(pivotNewIndex - 1);
+                // "Recurse" on the right side.
+                leftStack.push(pivotNewIndex + 1);
+                rightStack.push(right);
+            }
+        }
+    }
+    
+    private static void quicksortRecursive(double[] array, int left, int right) {
         if (left < right) {
             // Choose a pivot index.
             // --> Here we choose the rightmost element which does the least
