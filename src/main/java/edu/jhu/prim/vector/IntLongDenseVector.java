@@ -137,7 +137,7 @@ public class IntLongDenseVector implements IntLongVector {
         if (other instanceof IntLongUnsortedVector) {
             IntLongUnsortedVector vec = (IntLongUnsortedVector) other;
             for (int i=0; i<vec.top; i++) {
-                this.elements[vec.idx[i]] += vec.vals[i];
+                this.add(vec.idx[i], vec.vals[i]);
             }
         } else {
             //  TODO: Add special case for IntLongDenseVector.
@@ -150,7 +150,7 @@ public class IntLongDenseVector implements IntLongVector {
         if (other instanceof IntLongUnsortedVector) {
             IntLongUnsortedVector vec = (IntLongUnsortedVector) other;
             for (int i=0; i<vec.top; i++) {
-                this.elements[vec.idx[i]] -= vec.vals[i];
+                this.add(vec.idx[i], -vec.vals[i]);
             }
         } else {
             // TODO: Add special case for IntLongDenseVector.

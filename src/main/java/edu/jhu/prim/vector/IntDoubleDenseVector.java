@@ -137,7 +137,7 @@ public class IntDoubleDenseVector implements IntDoubleVector {
         if (other instanceof IntDoubleUnsortedVector) {
             IntDoubleUnsortedVector vec = (IntDoubleUnsortedVector) other;
             for (int i=0; i<vec.top; i++) {
-                this.elements[vec.idx[i]] += vec.vals[i];
+                this.add(vec.idx[i], vec.vals[i]);
             }
         } else {
             //  TODO: Add special case for IntDoubleDenseVector.
@@ -150,7 +150,7 @@ public class IntDoubleDenseVector implements IntDoubleVector {
         if (other instanceof IntDoubleUnsortedVector) {
             IntDoubleUnsortedVector vec = (IntDoubleUnsortedVector) other;
             for (int i=0; i<vec.top; i++) {
-                this.elements[vec.idx[i]] -= vec.vals[i];
+                this.add(vec.idx[i], -vec.vals[i]);
             }
         } else {
             // TODO: Add special case for IntDoubleDenseVector.

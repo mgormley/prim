@@ -137,7 +137,7 @@ public class LongDoubleDenseVector implements LongDoubleVector {
         if (other instanceof LongDoubleUnsortedVector) {
             LongDoubleUnsortedVector vec = (LongDoubleUnsortedVector) other;
             for (int i=0; i<vec.top; i++) {
-                this.elements[SafeCast.safeLongToInt(vec.idx[i])] += vec.vals[i];
+                this.add(vec.idx[i], vec.vals[i]);
             }
         } else {
             //  TODO: Add special case for LongDoubleDenseVector.
@@ -150,7 +150,7 @@ public class LongDoubleDenseVector implements LongDoubleVector {
         if (other instanceof LongDoubleUnsortedVector) {
             LongDoubleUnsortedVector vec = (LongDoubleUnsortedVector) other;
             for (int i=0; i<vec.top; i++) {
-                this.elements[SafeCast.safeLongToInt(vec.idx[i])] -= vec.vals[i];
+                this.add(vec.idx[i], -vec.vals[i]);
             }
         } else {
             // TODO: Add special case for LongDoubleDenseVector.
