@@ -201,7 +201,7 @@ public class IntDoubleVectorSliceTest {
         v1.set(4, toDouble(44));
         v1.set(5, toDouble(55));
         IntDoubleVectorSlice v2 = new IntDoubleVectorSlice((IntDoubleDenseVector)v1, 1, 3);
-        assertEquals(3, v2.getDimension());
+        assertEquals(3, v2.getNumImplicitEntries());
     }
     
 }    

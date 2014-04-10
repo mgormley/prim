@@ -168,7 +168,7 @@ public class LongDoubleVectorSlice implements LongDoubleVector {
         return -1;
     }
     
-    public long getDimension() {        
+    public long getNumImplicitEntries() {        
         return size;
     }
     

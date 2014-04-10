@@ -168,7 +168,7 @@ public class LongIntVectorSlice implements LongIntVector {
         return -1;
     }
     
-    public long getDimension() {        
+    public long getNumImplicitEntries() {        
         return size;
     }
     

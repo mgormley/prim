@@ -359,7 +359,7 @@ public class IntIntUnsortedVector implements IntIntVector, Iterable<IntIntEntry>
     }
 
     @Override
-    public int getDimension() {
+    public int getNumImplicitEntries() {
         if (top-1 >= 0) {
             return idx[top-1] + 1;
         } else {
@@ -370,7 +370,7 @@ public class IntIntUnsortedVector implements IntIntVector, Iterable<IntIntEntry>
     @Override
     public int[] toNativeArray() {
         compact();
-        final int[] arr = new int[getDimension()];
+        final int[] arr = new int[getNumImplicitEntries()];
         apply(new FnIntIntToInt() {
             public int call(int idx, int val) {
                 arr[idx] = val;

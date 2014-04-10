@@ -143,11 +143,11 @@ public abstract class AbstractIntIntVectorTest {
     @Test
     public void testDimension() {
         IntIntVector v1 = getIntIntVector();
-        assertEquals(0, v1.getDimension());
+        assertEquals(0, v1.getNumImplicitEntries());
         v1.set(1, toInt(11));
         v1.set(2, toInt(22));
         v1.set(4, toInt(44));
-        assertEquals(5, v1.getDimension());
+        assertEquals(5, v1.getNumImplicitEntries());
     }
     
     protected abstract IntIntVector getIntIntVector();

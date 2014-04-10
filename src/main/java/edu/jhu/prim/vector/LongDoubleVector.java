@@ -63,7 +63,7 @@ public interface LongDoubleVector extends Serializable {
      * 
      * @return The number of implicit entries.
      */
-    long getDimension();
+    long getNumImplicitEntries();
     
     /** Gets a double array representation of this vector. */
     double[] toNativeArray();

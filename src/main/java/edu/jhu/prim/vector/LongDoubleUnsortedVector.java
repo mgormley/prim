@@ -414,7 +414,7 @@ public class LongDoubleUnsortedVector implements LongDoubleVector, Iterable<Long
     }
 
     @Override
-    public long getDimension() {
+    public long getNumImplicitEntries() {
         if (top-1 >= 0) {
             return idx[top-1] + 1;
         } else {
@@ -425,7 +425,7 @@ public class LongDoubleUnsortedVector implements LongDoubleVector, Iterable<Long
     @Override
     public double[] toNativeArray() {
         compact();
-        final double[] arr = new double[SafeCast.safeLongToInt(getDimension())];
+        final double[] arr = new double[SafeCast.safeLongToInt(getNumImplicitEntries())];
         apply(new FnLongDoubleToDouble() {
             public double call(long idx, double val) {
                 arr[SafeCast.safeLongToInt(idx)] = val;

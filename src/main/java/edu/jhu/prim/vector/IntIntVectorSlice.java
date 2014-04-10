@@ -168,7 +168,7 @@ public class IntIntVectorSlice implements IntIntVector {
         return -1;
     }
     
-    public int getDimension() {        
+    public int getNumImplicitEntries() {        
         return size;
     }
     

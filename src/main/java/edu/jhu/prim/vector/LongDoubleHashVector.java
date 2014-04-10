@@ -114,7 +114,7 @@ public class LongDoubleHashVector extends LongDoubleHashMap implements LongDoubl
         this.apply(new SparseBinaryOpApplier2(this, other, new Lambda.DoubleProd()));
     }
 
-    public long getDimension() {
+    public long getNumImplicitEntries() {
         long max = Long.MIN_VALUE;
         for (int i=0; i<keys.length; i++) {
             if (states[i] == FULL && keys[i] > max) {
@@ -126,7 +126,7 @@ public class LongDoubleHashVector extends LongDoubleHashMap implements LongDoubl
     
     /** Gets a NEW array containing all the elements in this vector. */
     public double[] toNativeArray() {
-        final double[] arr = new double[SafeCast.safeLongToInt(getDimension())];
+        final double[] arr = new double[SafeCast.safeLongToInt(getNumImplicitEntries())];
         apply(new FnLongDoubleToDouble() {
             public double call(long idx, double val) {
                 arr[SafeCast.safeLongToInt(idx)] = val;

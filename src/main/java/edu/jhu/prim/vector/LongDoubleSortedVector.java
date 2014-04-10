@@ -381,13 +381,13 @@ public class LongDoubleSortedVector extends LongDoubleSortedMap implements LongD
         return true;
     }
     
-    public long getDimension() {
+    public long getNumImplicitEntries() {
         return Math.max(0, LongArrays.max(indices) + 1);
     }
 
     /** Gets a NEW array containing all the elements in this vector. */
     public double[] toNativeArray() {
-        final double[] arr = new double[SafeCast.safeLongToInt(getDimension())];
+        final double[] arr = new double[SafeCast.safeLongToInt(getNumImplicitEntries())];
         apply(new FnLongDoubleToDouble() {
             public double call(long idx, double val) {
                 arr[SafeCast.safeLongToInt(idx)] = val;

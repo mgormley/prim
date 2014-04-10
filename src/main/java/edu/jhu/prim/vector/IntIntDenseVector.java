@@ -224,7 +224,7 @@ public class IntIntDenseVector implements IntIntVector {
      * 
      * @return The number of implicit entries.
      */
-    public int getDimension() {
+    public int getNumImplicitEntries() {
         return idxAfterLast;
     }
     

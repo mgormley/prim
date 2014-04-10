@@ -63,7 +63,7 @@ public interface IntIntVector extends Serializable {
      * 
      * @return The number of implicit entries.
      */
-    int getDimension();
+    int getNumImplicitEntries();
     
     /** Gets a int array representation of this vector. */
     int[] toNativeArray();

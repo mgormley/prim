@@ -114,7 +114,7 @@ public class IntLongHashVector extends IntLongHashMap implements IntLongVector {
         this.apply(new SparseBinaryOpApplier2(this, other, new Lambda.LongProd()));
     }
 
-    public int getDimension() {
+    public int getNumImplicitEntries() {
         int max = Integer.MIN_VALUE;
         for (int i=0; i<keys.length; i++) {
             if (states[i] == FULL && keys[i] > max) {
@@ -126,7 +126,7 @@ public class IntLongHashVector extends IntLongHashMap implements IntLongVector {
     
     /** Gets a NEW array containing all the elements in this vector. */
     public long[] toNativeArray() {
-        final long[] arr = new long[getDimension()];
+        final long[] arr = new long[getNumImplicitEntries()];
         apply(new FnIntLongToLong() {
             public long call(int idx, long val) {
                 arr[idx] = val;

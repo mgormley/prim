@@ -381,13 +381,13 @@ public class LongIntSortedVector extends LongIntSortedMap implements LongIntVect
         return true;
     }
     
-    public long getDimension() {
+    public long getNumImplicitEntries() {
         return Math.max(0, LongArrays.max(indices) + 1);
     }
 
     /** Gets a NEW array containing all the elements in this vector. */
     public int[] toNativeArray() {
-        final int[] arr = new int[SafeCast.safeLongToInt(getDimension())];
+        final int[] arr = new int[SafeCast.safeLongToInt(getNumImplicitEntries())];
         apply(new FnLongIntToInt() {
             public int call(long idx, int val) {
                 arr[SafeCast.safeLongToInt(idx)] = val;

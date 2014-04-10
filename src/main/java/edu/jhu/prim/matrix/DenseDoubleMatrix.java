@@ -36,7 +36,7 @@ public class DenseDoubleMatrix implements DoubleMatrix {
     }
 
     public DenseDoubleMatrix(IntDoubleDenseVector[] vectors) {
-        this(vectors.length, vectors[0].getDimension());
+        this(vectors.length, vectors[0].getNumImplicitEntries());
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numCols; col++) {
                 matrix[row][col] = vectors[row].get(col);

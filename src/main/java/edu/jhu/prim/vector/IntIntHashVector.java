@@ -114,7 +114,7 @@ public class IntIntHashVector extends IntIntHashMap implements IntIntVector {
         this.apply(new SparseBinaryOpApplier2(this, other, new Lambda.IntProd()));
     }
 
-    public int getDimension() {
+    public int getNumImplicitEntries() {
         int max = Integer.MIN_VALUE;
         for (int i=0; i<keys.length; i++) {
             if (states[i] == FULL && keys[i] > max) {
@@ -126,7 +126,7 @@ public class IntIntHashVector extends IntIntHashMap implements IntIntVector {
     
     /** Gets a NEW array containing all the elements in this vector. */
     public int[] toNativeArray() {
-        final int[] arr = new int[getDimension()];
+        final int[] arr = new int[getNumImplicitEntries()];
         apply(new FnIntIntToInt() {
             public int call(int idx, int val) {
                 arr[idx] = val;

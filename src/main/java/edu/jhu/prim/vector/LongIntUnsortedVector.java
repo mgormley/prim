@@ -359,7 +359,7 @@ public class LongIntUnsortedVector implements LongIntVector, Iterable<LongIntEnt
     }
 
     @Override
-    public long getDimension() {
+    public long getNumImplicitEntries() {
         if (top-1 >= 0) {
             return idx[top-1] + 1;
         } else {
@@ -370,7 +370,7 @@ public class LongIntUnsortedVector implements LongIntVector, Iterable<LongIntEnt
     @Override
     public int[] toNativeArray() {
         compact();
-        final int[] arr = new int[SafeCast.safeLongToInt(getDimension())];
+        final int[] arr = new int[SafeCast.safeLongToInt(getNumImplicitEntries())];
         apply(new FnLongIntToInt() {
             public int call(long idx, int val) {
                 arr[SafeCast.safeLongToInt(idx)] = val;

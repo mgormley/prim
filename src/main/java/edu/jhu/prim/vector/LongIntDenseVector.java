@@ -224,7 +224,7 @@ public class LongIntDenseVector implements LongIntVector {
      * 
      * @return The number of implicit entries.
      */
-    public long getDimension() {
+    public long getNumImplicitEntries() {
         return idxAfterLast;
     }
     

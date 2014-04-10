@@ -143,11 +143,11 @@ public abstract class AbstractLongDoubleVectorTest {
     @Test
     public void testDimension() {
         LongDoubleVector v1 = getLongDoubleVector();
-        assertEquals(0, v1.getDimension());
+        assertEquals(0, v1.getNumImplicitEntries());
         v1.set(1, toDouble(11));
         v1.set(2, toDouble(22));
         v1.set(4, toDouble(44));
-        assertEquals(5, v1.getDimension());
+        assertEquals(5, v1.getNumImplicitEntries());
     }
     
     protected abstract LongDoubleVector getLongDoubleVector();

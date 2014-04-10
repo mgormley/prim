@@ -381,13 +381,13 @@ public class IntIntSortedVector extends IntIntSortedMap implements IntIntVector 
         return true;
     }
     
-    public int getDimension() {
+    public int getNumImplicitEntries() {
         return Math.max(0, IntArrays.max(indices) + 1);
     }
 
     /** Gets a NEW array containing all the elements in this vector. */
     public int[] toNativeArray() {
-        final int[] arr = new int[getDimension()];
+        final int[] arr = new int[getNumImplicitEntries()];
         apply(new FnIntIntToInt() {
             public int call(int idx, int val) {
                 arr[idx] = val;

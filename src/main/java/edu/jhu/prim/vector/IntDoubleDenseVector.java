@@ -224,7 +224,7 @@ public class IntDoubleDenseVector implements IntDoubleVector {
      * 
      * @return The number of implicit entries.
      */
-    public int getDimension() {
+    public int getNumImplicitEntries() {
         return idxAfterLast;
     }
     

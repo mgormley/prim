@@ -114,7 +114,7 @@ public class IntDoubleHashVector extends IntDoubleHashMap implements IntDoubleVe
         this.apply(new SparseBinaryOpApplier2(this, other, new Lambda.DoubleProd()));
     }
 
-    public int getDimension() {
+    public int getNumImplicitEntries() {
         int max = Integer.MIN_VALUE;
         for (int i=0; i<keys.length; i++) {
             if (states[i] == FULL && keys[i] > max) {
@@ -126,7 +126,7 @@ public class IntDoubleHashVector extends IntDoubleHashMap implements IntDoubleVe
     
     /** Gets a NEW array containing all the elements in this vector. */
     public double[] toNativeArray() {
-        final double[] arr = new double[getDimension()];
+        final double[] arr = new double[getNumImplicitEntries()];
         apply(new FnIntDoubleToDouble() {
             public double call(int idx, double val) {
                 arr[idx] = val;

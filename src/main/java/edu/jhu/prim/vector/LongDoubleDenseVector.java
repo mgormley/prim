@@ -224,7 +224,7 @@ public class LongDoubleDenseVector implements LongDoubleVector {
      * 
      * @return The number of implicit entries.
      */
-    public long getDimension() {
+    public long getNumImplicitEntries() {
         return idxAfterLast;
     }
     

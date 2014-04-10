@@ -381,13 +381,13 @@ public class IntDoubleSortedVector extends IntDoubleSortedMap implements IntDoub
         return true;
     }
     
-    public int getDimension() {
+    public int getNumImplicitEntries() {
         return Math.max(0, IntArrays.max(indices) + 1);
     }
 
     /** Gets a NEW array containing all the elements in this vector. */
     public double[] toNativeArray() {
-        final double[] arr = new double[getDimension()];
+        final double[] arr = new double[getNumImplicitEntries()];
         apply(new FnIntDoubleToDouble() {
             public double call(int idx, double val) {
                 arr[idx] = val;

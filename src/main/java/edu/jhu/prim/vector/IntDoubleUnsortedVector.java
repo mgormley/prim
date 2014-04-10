@@ -414,7 +414,7 @@ public class IntDoubleUnsortedVector implements IntDoubleVector, Iterable<IntDou
     }
 
     @Override
-    public int getDimension() {
+    public int getNumImplicitEntries() {
         if (top-1 >= 0) {
             return idx[top-1] + 1;
         } else {
@@ -425,7 +425,7 @@ public class IntDoubleUnsortedVector implements IntDoubleVector, Iterable<IntDou
     @Override
     public double[] toNativeArray() {
         compact();
-        final double[] arr = new double[getDimension()];
+        final double[] arr = new double[getNumImplicitEntries()];
         apply(new FnIntDoubleToDouble() {
             public double call(int idx, double val) {
                 arr[idx] = val;
