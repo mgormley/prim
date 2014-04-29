@@ -10,6 +10,7 @@ import edu.jhu.prim.map.IntLongSortedMap;
 import edu.jhu.prim.sort.IntLongSort;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntLongToLong;
+import edu.jhu.prim.util.Lambda.FnIntLongToVoid;
 import edu.jhu.prim.util.Lambda.LambdaBinOpLong;
 import edu.jhu.prim.util.SafeCast;
 
@@ -63,11 +64,10 @@ public class IntLongSortedVector extends IntLongSortedMap implements IntLongVect
         // TODO: Exploit the number of non-zero entries in other.
         this();
         final IntLongSortedVector thisVec = this; 
-        other.apply(new FnIntLongToLong() {            
+        other.iterate(new FnIntLongToVoid() {
             @Override
-            public long call(int idx, long val) {
+            public void call(int idx, long val) {
                 thisVec.set(idx, val);
-                return val;
             }
         });
     }
@@ -388,10 +388,10 @@ public class IntLongSortedVector extends IntLongSortedMap implements IntLongVect
     /** Gets a NEW array containing all the elements in this vector. */
     public long[] toNativeArray() {
         final long[] arr = new long[getNumImplicitEntries()];
-        apply(new FnIntLongToLong() {
-            public long call(int idx, long val) {
+        iterate(new FnIntLongToVoid() {
+            @Override
+            public void call(int idx, long val) {
                 arr[idx] = val;
-                return val;
             }
         });
         return arr;

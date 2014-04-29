@@ -142,13 +142,13 @@ public class IntLongVectorSlice implements IntLongVector {
     /** Updates this vector to be the entrywise sum of this vector with the other. */
     public void add(IntLongVector other) {
         // TODO: Add special case for IntLongDenseVector.
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.LongAdd()));
+        other.iterate(new SparseBinaryOpApplier(this, new Lambda.LongAdd()));
     }
     
     /** Updates this vector to be the entrywise difference of this vector with the other. */
     public void subtract(IntLongVector other) {
         // TODO: Add special case for IntLongDenseVector.
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.LongSubtract()));
+        other.iterate(new SparseBinaryOpApplier(this, new Lambda.LongSubtract()));
     }
     
     /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */

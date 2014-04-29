@@ -47,11 +47,10 @@ public class IntDoubleDenseVector implements IntDoubleVector {
         // TODO: Exploit the number of non-zero entries in other.
         this();
         final IntDoubleDenseVector thisVec = this; 
-        other.apply(new FnIntDoubleToDouble() {            
+        other.iterate(new FnIntDoubleToVoid() {
             @Override
-            public double call(int idx, double val) {
+            public void call(int idx, double val) {
                 thisVec.set(idx, val);
-                return val;
             }
         });
     }
@@ -149,7 +148,7 @@ public class IntDoubleDenseVector implements IntDoubleVector {
             }
         } else {
             //  TODO: Add special case for IntDoubleDenseVector.
-            other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleAdd()));
+            other.iterate(new SparseBinaryOpApplier(this, new Lambda.DoubleAdd()));
         }
     }
     
@@ -162,7 +161,7 @@ public class IntDoubleDenseVector implements IntDoubleVector {
             }
         } else {
             // TODO: Add special case for IntDoubleDenseVector.
-            other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleSubtract()));
+            other.iterate(new SparseBinaryOpApplier(this, new Lambda.DoubleSubtract()));
         }
     }
     

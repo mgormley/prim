@@ -4,6 +4,7 @@ import edu.jhu.prim.arrays.LongArrays;
 import edu.jhu.prim.map.LongIntHashMap;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnLongIntToInt;
+import edu.jhu.prim.util.Lambda.FnLongIntToVoid;
 import edu.jhu.prim.util.Lambda.LambdaBinOpInt;
 import edu.jhu.prim.util.SafeCast;
 
@@ -28,11 +29,10 @@ public class LongIntHashVector extends LongIntHashMap implements LongIntVector {
     public LongIntHashVector(LongIntVector other) {
         this();
         final LongIntHashVector thisVec = this; 
-        other.apply(new FnLongIntToInt() {            
+        other.iterate(new FnLongIntToVoid() {
             @Override
-            public int call(long idx, int val) {
+            public void call(long idx, int val) {
                 thisVec.set(idx, val);
-                return val;
             }
         });
     }
@@ -98,12 +98,12 @@ public class LongIntHashVector extends LongIntHashMap implements LongIntVector {
 
     /** Updates this vector to be the entrywise sum of this vector with the other. */
     public void add(LongIntVector other) {
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.IntAdd()));
+        other.iterate(new SparseBinaryOpApplier(this, new Lambda.IntAdd()));
     }
     
     /** Updates this vector to be the entrywise difference of this vector with the other. */
     public void subtract(LongIntVector other) {
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.IntSubtract()));
+        other.iterate(new SparseBinaryOpApplier(this, new Lambda.IntSubtract()));
     }
     
     /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */
@@ -127,16 +127,16 @@ public class LongIntHashVector extends LongIntHashMap implements LongIntVector {
     /** Gets a NEW array containing all the elements in this vector. */
     public int[] toNativeArray() {
         final int[] arr = new int[SafeCast.safeLongToInt(getNumImplicitEntries())];
-        apply(new FnLongIntToInt() {
-            public int call(long idx, int val) {
+        iterate(new FnLongIntToVoid() {
+            @Override
+            public void call(long idx, int val) {
                 arr[SafeCast.safeLongToInt(idx)] = val;
-                return val;
             }
         });
         return arr;
     }
     
-    public static class SparseBinaryOpApplier implements FnLongIntToInt {
+    public static class SparseBinaryOpApplier implements FnLongIntToVoid {
         
         private LongIntVector modifiedVector;
         private LambdaBinOpInt lambda;
@@ -146,9 +146,8 @@ public class LongIntHashVector extends LongIntHashMap implements LongIntVector {
             this.lambda = lambda;
         }
         
-        public int call(long idx, int val) {
+        public void call(long idx, int val) {
             modifiedVector.set(idx, lambda.call(modifiedVector.get(idx), val));
-            return val;
         }
         
     }

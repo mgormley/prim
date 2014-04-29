@@ -205,11 +205,10 @@ public class IntIntUnsortedVector implements IntIntVector, Iterable<IntIntEntry>
     @Override
     public void add(IntIntVector other) {
         final IntIntUnsortedVector me = this;
-        other.apply(new FnIntIntToInt() {
+        other.iterate(new FnIntIntToVoid() {
             @Override
-            public int call(int idx, int val) {
+            public void call(int idx, int val) {
                 me.add(idx, val);
-                return val; // only doing this for the side effects
             }
         });
     }
@@ -233,11 +232,10 @@ public class IntIntUnsortedVector implements IntIntVector, Iterable<IntIntEntry>
     @Override
     public void subtract(IntIntVector other) {
         final IntIntUnsortedVector me = this;
-        other.apply(new FnIntIntToInt() {
+        other.iterate(new FnIntIntToVoid() {
             @Override
-            public int call(int idx, int val) {
+            public void call(int idx, int val) {
                 me.add(idx, - val);
-                return val; // only doing this for the side effects
             }
         });
     }
@@ -382,10 +380,10 @@ public class IntIntUnsortedVector implements IntIntVector, Iterable<IntIntEntry>
     public int[] toNativeArray() {
         compact();
         final int[] arr = new int[getNumImplicitEntries()];
-        apply(new FnIntIntToInt() {
-            public int call(int idx, int val) {
+        iterate(new FnIntIntToVoid() {
+            @Override
+            public void call(int idx, int val) {
                 arr[idx] = val;
-                return val;
             }
         });
         return arr;

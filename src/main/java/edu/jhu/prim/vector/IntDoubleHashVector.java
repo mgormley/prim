@@ -4,6 +4,7 @@ import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.map.IntDoubleHashMap;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
+import edu.jhu.prim.util.Lambda.FnIntDoubleToVoid;
 import edu.jhu.prim.util.Lambda.LambdaBinOpDouble;
 import edu.jhu.prim.util.SafeCast;
 
@@ -28,11 +29,10 @@ public class IntDoubleHashVector extends IntDoubleHashMap implements IntDoubleVe
     public IntDoubleHashVector(IntDoubleVector other) {
         this();
         final IntDoubleHashVector thisVec = this; 
-        other.apply(new FnIntDoubleToDouble() {            
+        other.iterate(new FnIntDoubleToVoid() {
             @Override
-            public double call(int idx, double val) {
+            public void call(int idx, double val) {
                 thisVec.set(idx, val);
-                return val;
             }
         });
     }
@@ -98,12 +98,12 @@ public class IntDoubleHashVector extends IntDoubleHashMap implements IntDoubleVe
 
     /** Updates this vector to be the entrywise sum of this vector with the other. */
     public void add(IntDoubleVector other) {
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleAdd()));
+        other.iterate(new SparseBinaryOpApplier(this, new Lambda.DoubleAdd()));
     }
     
     /** Updates this vector to be the entrywise difference of this vector with the other. */
     public void subtract(IntDoubleVector other) {
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleSubtract()));
+        other.iterate(new SparseBinaryOpApplier(this, new Lambda.DoubleSubtract()));
     }
     
     /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */
@@ -127,16 +127,16 @@ public class IntDoubleHashVector extends IntDoubleHashMap implements IntDoubleVe
     /** Gets a NEW array containing all the elements in this vector. */
     public double[] toNativeArray() {
         final double[] arr = new double[getNumImplicitEntries()];
-        apply(new FnIntDoubleToDouble() {
-            public double call(int idx, double val) {
+        iterate(new FnIntDoubleToVoid() {
+            @Override
+            public void call(int idx, double val) {
                 arr[idx] = val;
-                return val;
             }
         });
         return arr;
     }
     
-    public static class SparseBinaryOpApplier implements FnIntDoubleToDouble {
+    public static class SparseBinaryOpApplier implements FnIntDoubleToVoid {
         
         private IntDoubleVector modifiedVector;
         private LambdaBinOpDouble lambda;
@@ -146,9 +146,8 @@ public class IntDoubleHashVector extends IntDoubleHashMap implements IntDoubleVe
             this.lambda = lambda;
         }
         
-        public double call(int idx, double val) {
+        public void call(int idx, double val) {
             modifiedVector.set(idx, lambda.call(modifiedVector.get(idx), val));
-            return val;
         }
         
     }

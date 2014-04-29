@@ -10,6 +10,7 @@ import edu.jhu.prim.map.IntIntSortedMap;
 import edu.jhu.prim.sort.IntIntSort;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
+import edu.jhu.prim.util.Lambda.FnIntIntToVoid;
 import edu.jhu.prim.util.Lambda.LambdaBinOpInt;
 import edu.jhu.prim.util.SafeCast;
 
@@ -63,11 +64,10 @@ public class IntIntSortedVector extends IntIntSortedMap implements IntIntVector 
         // TODO: Exploit the number of non-zero entries in other.
         this();
         final IntIntSortedVector thisVec = this; 
-        other.apply(new FnIntIntToInt() {            
+        other.iterate(new FnIntIntToVoid() {
             @Override
-            public int call(int idx, int val) {
+            public void call(int idx, int val) {
                 thisVec.set(idx, val);
-                return val;
             }
         });
     }
@@ -388,10 +388,10 @@ public class IntIntSortedVector extends IntIntSortedMap implements IntIntVector 
     /** Gets a NEW array containing all the elements in this vector. */
     public int[] toNativeArray() {
         final int[] arr = new int[getNumImplicitEntries()];
-        apply(new FnIntIntToInt() {
-            public int call(int idx, int val) {
+        iterate(new FnIntIntToVoid() {
+            @Override
+            public void call(int idx, int val) {
                 arr[idx] = val;
-                return val;
             }
         });
         return arr;

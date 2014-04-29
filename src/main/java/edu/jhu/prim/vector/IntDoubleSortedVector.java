@@ -10,6 +10,7 @@ import edu.jhu.prim.map.IntDoubleSortedMap;
 import edu.jhu.prim.sort.IntDoubleSort;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
+import edu.jhu.prim.util.Lambda.FnIntDoubleToVoid;
 import edu.jhu.prim.util.Lambda.LambdaBinOpDouble;
 import edu.jhu.prim.util.SafeCast;
 
@@ -63,11 +64,10 @@ public class IntDoubleSortedVector extends IntDoubleSortedMap implements IntDoub
         // TODO: Exploit the number of non-zero entries in other.
         this();
         final IntDoubleSortedVector thisVec = this; 
-        other.apply(new FnIntDoubleToDouble() {            
+        other.iterate(new FnIntDoubleToVoid() {
             @Override
-            public double call(int idx, double val) {
+            public void call(int idx, double val) {
                 thisVec.set(idx, val);
-                return val;
             }
         });
     }
@@ -388,10 +388,10 @@ public class IntDoubleSortedVector extends IntDoubleSortedMap implements IntDoub
     /** Gets a NEW array containing all the elements in this vector. */
     public double[] toNativeArray() {
         final double[] arr = new double[getNumImplicitEntries()];
-        apply(new FnIntDoubleToDouble() {
-            public double call(int idx, double val) {
+        iterate(new FnIntDoubleToVoid() {
+            @Override
+            public void call(int idx, double val) {
                 arr[idx] = val;
-                return val;
             }
         });
         return arr;

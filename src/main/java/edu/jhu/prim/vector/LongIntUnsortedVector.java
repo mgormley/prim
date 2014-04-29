@@ -205,11 +205,10 @@ public class LongIntUnsortedVector implements LongIntVector, Iterable<LongIntEnt
     @Override
     public void add(LongIntVector other) {
         final LongIntUnsortedVector me = this;
-        other.apply(new FnLongIntToInt() {
+        other.iterate(new FnLongIntToVoid() {
             @Override
-            public int call(long idx, int val) {
+            public void call(long idx, int val) {
                 me.add(idx, val);
-                return val; // only doing this for the side effects
             }
         });
     }
@@ -233,11 +232,10 @@ public class LongIntUnsortedVector implements LongIntVector, Iterable<LongIntEnt
     @Override
     public void subtract(LongIntVector other) {
         final LongIntUnsortedVector me = this;
-        other.apply(new FnLongIntToInt() {
+        other.iterate(new FnLongIntToVoid() {
             @Override
-            public int call(long idx, int val) {
+            public void call(long idx, int val) {
                 me.add(idx, - val);
-                return val; // only doing this for the side effects
             }
         });
     }
@@ -382,10 +380,10 @@ public class LongIntUnsortedVector implements LongIntVector, Iterable<LongIntEnt
     public int[] toNativeArray() {
         compact();
         final int[] arr = new int[SafeCast.safeLongToInt(getNumImplicitEntries())];
-        apply(new FnLongIntToInt() {
-            public int call(long idx, int val) {
+        iterate(new FnLongIntToVoid() {
+            @Override
+            public void call(long idx, int val) {
                 arr[SafeCast.safeLongToInt(idx)] = val;
-                return val;
             }
         });
         return arr;

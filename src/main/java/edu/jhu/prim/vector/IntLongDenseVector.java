@@ -47,11 +47,10 @@ public class IntLongDenseVector implements IntLongVector {
         // TODO: Exploit the number of non-zero entries in other.
         this();
         final IntLongDenseVector thisVec = this; 
-        other.apply(new FnIntLongToLong() {            
+        other.iterate(new FnIntLongToVoid() {
             @Override
-            public long call(int idx, long val) {
+            public void call(int idx, long val) {
                 thisVec.set(idx, val);
-                return val;
             }
         });
     }
@@ -149,7 +148,7 @@ public class IntLongDenseVector implements IntLongVector {
             }
         } else {
             //  TODO: Add special case for IntLongDenseVector.
-            other.apply(new SparseBinaryOpApplier(this, new Lambda.LongAdd()));
+            other.iterate(new SparseBinaryOpApplier(this, new Lambda.LongAdd()));
         }
     }
     
@@ -162,7 +161,7 @@ public class IntLongDenseVector implements IntLongVector {
             }
         } else {
             // TODO: Add special case for IntLongDenseVector.
-            other.apply(new SparseBinaryOpApplier(this, new Lambda.LongSubtract()));
+            other.iterate(new SparseBinaryOpApplier(this, new Lambda.LongSubtract()));
         }
     }
     

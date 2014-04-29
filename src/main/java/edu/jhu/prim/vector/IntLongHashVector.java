@@ -4,6 +4,7 @@ import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.map.IntLongHashMap;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntLongToLong;
+import edu.jhu.prim.util.Lambda.FnIntLongToVoid;
 import edu.jhu.prim.util.Lambda.LambdaBinOpLong;
 import edu.jhu.prim.util.SafeCast;
 
@@ -28,11 +29,10 @@ public class IntLongHashVector extends IntLongHashMap implements IntLongVector {
     public IntLongHashVector(IntLongVector other) {
         this();
         final IntLongHashVector thisVec = this; 
-        other.apply(new FnIntLongToLong() {            
+        other.iterate(new FnIntLongToVoid() {
             @Override
-            public long call(int idx, long val) {
+            public void call(int idx, long val) {
                 thisVec.set(idx, val);
-                return val;
             }
         });
     }
@@ -98,12 +98,12 @@ public class IntLongHashVector extends IntLongHashMap implements IntLongVector {
 
     /** Updates this vector to be the entrywise sum of this vector with the other. */
     public void add(IntLongVector other) {
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.LongAdd()));
+        other.iterate(new SparseBinaryOpApplier(this, new Lambda.LongAdd()));
     }
     
     /** Updates this vector to be the entrywise difference of this vector with the other. */
     public void subtract(IntLongVector other) {
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.LongSubtract()));
+        other.iterate(new SparseBinaryOpApplier(this, new Lambda.LongSubtract()));
     }
     
     /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */
@@ -127,16 +127,16 @@ public class IntLongHashVector extends IntLongHashMap implements IntLongVector {
     /** Gets a NEW array containing all the elements in this vector. */
     public long[] toNativeArray() {
         final long[] arr = new long[getNumImplicitEntries()];
-        apply(new FnIntLongToLong() {
-            public long call(int idx, long val) {
+        iterate(new FnIntLongToVoid() {
+            @Override
+            public void call(int idx, long val) {
                 arr[idx] = val;
-                return val;
             }
         });
         return arr;
     }
     
-    public static class SparseBinaryOpApplier implements FnIntLongToLong {
+    public static class SparseBinaryOpApplier implements FnIntLongToVoid {
         
         private IntLongVector modifiedVector;
         private LambdaBinOpLong lambda;
@@ -146,9 +146,8 @@ public class IntLongHashVector extends IntLongHashMap implements IntLongVector {
             this.lambda = lambda;
         }
         
-        public long call(int idx, long val) {
+        public void call(int idx, long val) {
             modifiedVector.set(idx, lambda.call(modifiedVector.get(idx), val));
-            return val;
         }
         
     }

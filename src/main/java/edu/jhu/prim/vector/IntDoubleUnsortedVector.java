@@ -260,11 +260,10 @@ public class IntDoubleUnsortedVector implements IntDoubleVector, Iterable<IntDou
     @Override
     public void add(IntDoubleVector other) {
         final IntDoubleUnsortedVector me = this;
-        other.apply(new FnIntDoubleToDouble() {
+        other.iterate(new FnIntDoubleToVoid() {
             @Override
-            public double call(int idx, double val) {
+            public void call(int idx, double val) {
                 me.add(idx, val);
-                return val; // only doing this for the side effects
             }
         });
     }
@@ -288,11 +287,10 @@ public class IntDoubleUnsortedVector implements IntDoubleVector, Iterable<IntDou
     @Override
     public void subtract(IntDoubleVector other) {
         final IntDoubleUnsortedVector me = this;
-        other.apply(new FnIntDoubleToDouble() {
+        other.iterate(new FnIntDoubleToVoid() {
             @Override
-            public double call(int idx, double val) {
+            public void call(int idx, double val) {
                 me.add(idx, - val);
-                return val; // only doing this for the side effects
             }
         });
     }
@@ -437,10 +435,10 @@ public class IntDoubleUnsortedVector implements IntDoubleVector, Iterable<IntDou
     public double[] toNativeArray() {
         compact();
         final double[] arr = new double[getNumImplicitEntries()];
-        apply(new FnIntDoubleToDouble() {
-            public double call(int idx, double val) {
+        iterate(new FnIntDoubleToVoid() {
+            @Override
+            public void call(int idx, double val) {
                 arr[idx] = val;
-                return val;
             }
         });
         return arr;

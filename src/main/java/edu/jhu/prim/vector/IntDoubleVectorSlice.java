@@ -142,13 +142,13 @@ public class IntDoubleVectorSlice implements IntDoubleVector {
     /** Updates this vector to be the entrywise sum of this vector with the other. */
     public void add(IntDoubleVector other) {
         // TODO: Add special case for IntDoubleDenseVector.
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleAdd()));
+        other.iterate(new SparseBinaryOpApplier(this, new Lambda.DoubleAdd()));
     }
     
     /** Updates this vector to be the entrywise difference of this vector with the other. */
     public void subtract(IntDoubleVector other) {
         // TODO: Add special case for IntDoubleDenseVector.
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleSubtract()));
+        other.iterate(new SparseBinaryOpApplier(this, new Lambda.DoubleSubtract()));
     }
     
     /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */

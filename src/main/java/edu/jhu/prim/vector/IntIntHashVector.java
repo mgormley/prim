@@ -4,6 +4,7 @@ import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.map.IntIntHashMap;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
+import edu.jhu.prim.util.Lambda.FnIntIntToVoid;
 import edu.jhu.prim.util.Lambda.LambdaBinOpInt;
 import edu.jhu.prim.util.SafeCast;
 
@@ -28,11 +29,10 @@ public class IntIntHashVector extends IntIntHashMap implements IntIntVector {
     public IntIntHashVector(IntIntVector other) {
         this();
         final IntIntHashVector thisVec = this; 
-        other.apply(new FnIntIntToInt() {            
+        other.iterate(new FnIntIntToVoid() {
             @Override
-            public int call(int idx, int val) {
+            public void call(int idx, int val) {
                 thisVec.set(idx, val);
-                return val;
             }
         });
     }
@@ -98,12 +98,12 @@ public class IntIntHashVector extends IntIntHashMap implements IntIntVector {
 
     /** Updates this vector to be the entrywise sum of this vector with the other. */
     public void add(IntIntVector other) {
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.IntAdd()));
+        other.iterate(new SparseBinaryOpApplier(this, new Lambda.IntAdd()));
     }
     
     /** Updates this vector to be the entrywise difference of this vector with the other. */
     public void subtract(IntIntVector other) {
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.IntSubtract()));
+        other.iterate(new SparseBinaryOpApplier(this, new Lambda.IntSubtract()));
     }
     
     /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */
@@ -127,16 +127,16 @@ public class IntIntHashVector extends IntIntHashMap implements IntIntVector {
     /** Gets a NEW array containing all the elements in this vector. */
     public int[] toNativeArray() {
         final int[] arr = new int[getNumImplicitEntries()];
-        apply(new FnIntIntToInt() {
-            public int call(int idx, int val) {
+        iterate(new FnIntIntToVoid() {
+            @Override
+            public void call(int idx, int val) {
                 arr[idx] = val;
-                return val;
             }
         });
         return arr;
     }
     
-    public static class SparseBinaryOpApplier implements FnIntIntToInt {
+    public static class SparseBinaryOpApplier implements FnIntIntToVoid {
         
         private IntIntVector modifiedVector;
         private LambdaBinOpInt lambda;
@@ -146,9 +146,8 @@ public class IntIntHashVector extends IntIntHashMap implements IntIntVector {
             this.lambda = lambda;
         }
         
-        public int call(int idx, int val) {
+        public void call(int idx, int val) {
             modifiedVector.set(idx, lambda.call(modifiedVector.get(idx), val));
-            return val;
         }
         
     }

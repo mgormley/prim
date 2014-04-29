@@ -142,13 +142,13 @@ public class IntIntVectorSlice implements IntIntVector {
     /** Updates this vector to be the entrywise sum of this vector with the other. */
     public void add(IntIntVector other) {
         // TODO: Add special case for IntIntDenseVector.
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.IntAdd()));
+        other.iterate(new SparseBinaryOpApplier(this, new Lambda.IntAdd()));
     }
     
     /** Updates this vector to be the entrywise difference of this vector with the other. */
     public void subtract(IntIntVector other) {
         // TODO: Add special case for IntIntDenseVector.
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.IntSubtract()));
+        other.iterate(new SparseBinaryOpApplier(this, new Lambda.IntSubtract()));
     }
     
     /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */
