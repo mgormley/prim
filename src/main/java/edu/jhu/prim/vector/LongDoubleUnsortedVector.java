@@ -260,11 +260,10 @@ public class LongDoubleUnsortedVector implements LongDoubleVector, Iterable<Long
     @Override
     public void add(LongDoubleVector other) {
         final LongDoubleUnsortedVector me = this;
-        other.apply(new FnLongDoubleToDouble() {
+        other.iterate(new FnLongDoubleToVoid() {
             @Override
-            public double call(long idx, double val) {
+            public void call(long idx, double val) {
                 me.add(idx, val);
-                return val; // only doing this for the side effects
             }
         });
     }
@@ -288,11 +287,10 @@ public class LongDoubleUnsortedVector implements LongDoubleVector, Iterable<Long
     @Override
     public void subtract(LongDoubleVector other) {
         final LongDoubleUnsortedVector me = this;
-        other.apply(new FnLongDoubleToDouble() {
+        other.iterate(new FnLongDoubleToVoid() {
             @Override
-            public double call(long idx, double val) {
+            public void call(long idx, double val) {
                 me.add(idx, - val);
-                return val; // only doing this for the side effects
             }
         });
     }
@@ -437,10 +435,10 @@ public class LongDoubleUnsortedVector implements LongDoubleVector, Iterable<Long
     public double[] toNativeArray() {
         compact();
         final double[] arr = new double[SafeCast.safeLongToInt(getNumImplicitEntries())];
-        apply(new FnLongDoubleToDouble() {
-            public double call(long idx, double val) {
+        iterate(new FnLongDoubleToVoid() {
+            @Override
+            public void call(long idx, double val) {
                 arr[SafeCast.safeLongToInt(idx)] = val;
-                return val;
             }
         });
         return arr;

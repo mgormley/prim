@@ -47,11 +47,10 @@ public class LongDoubleDenseVector implements LongDoubleVector {
         // TODO: Exploit the number of non-zero entries in other.
         this();
         final LongDoubleDenseVector thisVec = this; 
-        other.apply(new FnLongDoubleToDouble() {            
+        other.iterate(new FnLongDoubleToVoid() {
             @Override
-            public double call(long idx, double val) {
+            public void call(long idx, double val) {
                 thisVec.set(idx, val);
-                return val;
             }
         });
     }
@@ -149,7 +148,7 @@ public class LongDoubleDenseVector implements LongDoubleVector {
             }
         } else {
             //  TODO: Add special case for LongDoubleDenseVector.
-            other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleAdd()));
+            other.iterate(new SparseBinaryOpApplier(this, new Lambda.DoubleAdd()));
         }
     }
     
@@ -162,7 +161,7 @@ public class LongDoubleDenseVector implements LongDoubleVector {
             }
         } else {
             // TODO: Add special case for LongDoubleDenseVector.
-            other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleSubtract()));
+            other.iterate(new SparseBinaryOpApplier(this, new Lambda.DoubleSubtract()));
         }
     }
     

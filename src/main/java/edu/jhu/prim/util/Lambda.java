@@ -57,23 +57,23 @@ public class Lambda {
     /* -------------------- Iterate functions over vector entries ---------------------- */
 
     public interface FnIntIntToVoid {
-        public int call(int idx, int val);
+        public void call(int idx, int val);
     }
 
     public interface FnIntLongToVoid {
-        public long call(int idx, long val);
+        public void call(int idx, long val);
     }
 
     public interface FnLongIntToVoid {
-        public int call(long idx, int val);
+        public void call(long idx, int val);
     }
     
     public interface FnIntDoubleToVoid {
-        public double call(int idx, double val);
+        public void call(int idx, double val);
     }
     
     public interface FnLongDoubleToVoid {
-        public double call(long idx, double val);
+        public void call(long idx, double val);
     }
     
     /* -------------------- Doubles ---------------------- */

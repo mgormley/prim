@@ -4,6 +4,7 @@ import edu.jhu.prim.arrays.LongArrays;
 import edu.jhu.prim.map.LongDoubleHashMap;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
+import edu.jhu.prim.util.Lambda.FnLongDoubleToVoid;
 import edu.jhu.prim.util.Lambda.LambdaBinOpDouble;
 import edu.jhu.prim.util.SafeCast;
 
@@ -28,11 +29,10 @@ public class LongDoubleHashVector extends LongDoubleHashMap implements LongDoubl
     public LongDoubleHashVector(LongDoubleVector other) {
         this();
         final LongDoubleHashVector thisVec = this; 
-        other.apply(new FnLongDoubleToDouble() {            
+        other.iterate(new FnLongDoubleToVoid() {
             @Override
-            public double call(long idx, double val) {
+            public void call(long idx, double val) {
                 thisVec.set(idx, val);
-                return val;
             }
         });
     }
@@ -98,12 +98,12 @@ public class LongDoubleHashVector extends LongDoubleHashMap implements LongDoubl
 
     /** Updates this vector to be the entrywise sum of this vector with the other. */
     public void add(LongDoubleVector other) {
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleAdd()));
+        other.iterate(new SparseBinaryOpApplier(this, new Lambda.DoubleAdd()));
     }
     
     /** Updates this vector to be the entrywise difference of this vector with the other. */
     public void subtract(LongDoubleVector other) {
-        other.apply(new SparseBinaryOpApplier(this, new Lambda.DoubleSubtract()));
+        other.iterate(new SparseBinaryOpApplier(this, new Lambda.DoubleSubtract()));
     }
     
     /** Updates this vector to be the entrywise product (i.e. Hadamard product) of this vector with the other. */
@@ -127,16 +127,16 @@ public class LongDoubleHashVector extends LongDoubleHashMap implements LongDoubl
     /** Gets a NEW array containing all the elements in this vector. */
     public double[] toNativeArray() {
         final double[] arr = new double[SafeCast.safeLongToInt(getNumImplicitEntries())];
-        apply(new FnLongDoubleToDouble() {
-            public double call(long idx, double val) {
+        iterate(new FnLongDoubleToVoid() {
+            @Override
+            public void call(long idx, double val) {
                 arr[SafeCast.safeLongToInt(idx)] = val;
-                return val;
             }
         });
         return arr;
     }
     
-    public static class SparseBinaryOpApplier implements FnLongDoubleToDouble {
+    public static class SparseBinaryOpApplier implements FnLongDoubleToVoid {
         
         private LongDoubleVector modifiedVector;
         private LambdaBinOpDouble lambda;
@@ -146,9 +146,8 @@ public class LongDoubleHashVector extends LongDoubleHashMap implements LongDoubl
             this.lambda = lambda;
         }
         
-        public double call(long idx, double val) {
+        public void call(long idx, double val) {
             modifiedVector.set(idx, lambda.call(modifiedVector.get(idx), val));
-            return val;
         }
         
     }

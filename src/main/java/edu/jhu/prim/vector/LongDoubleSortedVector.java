@@ -10,6 +10,7 @@ import edu.jhu.prim.map.LongDoubleSortedMap;
 import edu.jhu.prim.sort.LongDoubleSort;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
+import edu.jhu.prim.util.Lambda.FnLongDoubleToVoid;
 import edu.jhu.prim.util.Lambda.LambdaBinOpDouble;
 import edu.jhu.prim.util.SafeCast;
 
@@ -63,11 +64,10 @@ public class LongDoubleSortedVector extends LongDoubleSortedMap implements LongD
         // TODO: Exploit the number of non-zero entries in other.
         this();
         final LongDoubleSortedVector thisVec = this; 
-        other.apply(new FnLongDoubleToDouble() {            
+        other.iterate(new FnLongDoubleToVoid() {
             @Override
-            public double call(long idx, double val) {
+            public void call(long idx, double val) {
                 thisVec.set(idx, val);
-                return val;
             }
         });
     }
@@ -388,10 +388,10 @@ public class LongDoubleSortedVector extends LongDoubleSortedMap implements LongD
     /** Gets a NEW array containing all the elements in this vector. */
     public double[] toNativeArray() {
         final double[] arr = new double[SafeCast.safeLongToInt(getNumImplicitEntries())];
-        apply(new FnLongDoubleToDouble() {
-            public double call(long idx, double val) {
+        iterate(new FnLongDoubleToVoid() {
+            @Override
+            public void call(long idx, double val) {
                 arr[SafeCast.safeLongToInt(idx)] = val;
-                return val;
             }
         });
         return arr;
