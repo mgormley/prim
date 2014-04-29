@@ -5,6 +5,7 @@ import java.util.Arrays;
 import edu.jhu.prim.Primitives;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
+import edu.jhu.prim.util.Lambda.FnLongDoubleToVoid;
 import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.vector.LongDoubleHashVector.SparseBinaryOpApplier;
 
@@ -128,6 +129,13 @@ public class LongDoubleVectorSlice implements LongDoubleVector {
     public void apply(FnLongDoubleToDouble function) {
         for (int i=0; i< size; i++) {
             elements[i + start] = function.call(i, elements[i + start]);
+        }
+    }
+
+    @Override
+    public void iterate(FnLongDoubleToVoid function) {
+        for (int i=0; i< size; i++) {
+            function.call(i, elements[i + start]);
         }
     }
 

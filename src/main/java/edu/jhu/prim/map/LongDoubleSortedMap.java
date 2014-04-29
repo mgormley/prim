@@ -11,6 +11,7 @@ import edu.jhu.prim.sort.LongDoubleSort;
 import edu.jhu.prim.sort.LongSort;
 import edu.jhu.prim.tuple.Pair;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
+import edu.jhu.prim.util.Lambda.FnLongDoubleToVoid;
 
 /**
  * A primitives map from longs to doubles. The map is stored by keeping a sorted
@@ -165,6 +166,12 @@ public class LongDoubleSortedMap implements LongDoubleMap {
     public void apply(FnLongDoubleToDouble lambda) {
         for (int i=0; i<used; i++) {
             values[i] = lambda.call(indices[i], values[i]);
+        }
+    }
+
+    public void iterate(FnLongDoubleToVoid lambda) {
+        for (int i=0; i<used; i++) {
+            lambda.call(indices[i], values[i]);
         }
     }
 	

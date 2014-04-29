@@ -3,6 +3,7 @@ package edu.jhu.prim.vector;
 import java.io.Serializable;
 
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
+import edu.jhu.prim.util.Lambda.FnLongDoubleToVoid;
 
 /** 
  * Vector with long indices and double values.
@@ -36,6 +37,13 @@ public interface LongDoubleVector extends Serializable {
      * visited.
      */
     void apply(FnLongDoubleToDouble function);
+
+    /**
+     * Calls the function on each (explicit) entry in the vector. The caller
+     * should make no assumptions about the order in which the entries will be
+     * visited.
+     */
+    void iterate(FnLongDoubleToVoid function);
     
     /** Updates this vector to be the entrywise sum of this vector with the other. */
     void add(LongDoubleVector other);

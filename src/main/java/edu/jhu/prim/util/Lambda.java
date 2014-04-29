@@ -32,7 +32,7 @@ public class Lambda {
         public V call(T obj1, S obj2);
     }
     
-    /* -------------------- Functions over vector entries ---------------------- */
+    /* -------------------- Apply functions over vector entries ---------------------- */
 
     public interface FnIntIntToInt {
         public int call(int idx, int val);
@@ -51,6 +51,28 @@ public class Lambda {
     }
     
     public interface FnLongDoubleToDouble {
+        public double call(long idx, double val);
+    }
+    
+    /* -------------------- Iterate functions over vector entries ---------------------- */
+
+    public interface FnIntIntToVoid {
+        public int call(int idx, int val);
+    }
+
+    public interface FnIntLongToVoid {
+        public long call(int idx, long val);
+    }
+
+    public interface FnLongIntToVoid {
+        public int call(long idx, int val);
+    }
+    
+    public interface FnIntDoubleToVoid {
+        public double call(int idx, double val);
+    }
+    
+    public interface FnLongDoubleToVoid {
         public double call(long idx, double val);
     }
     

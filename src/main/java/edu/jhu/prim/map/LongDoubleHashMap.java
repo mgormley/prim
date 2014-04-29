@@ -28,6 +28,7 @@ import java.util.NoSuchElementException;
 import edu.jhu.prim.Primitives;
 import edu.jhu.prim.tuple.Pair;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
+import edu.jhu.prim.util.Lambda.FnLongDoubleToVoid;
 
 /**
  * NOTICE: Changes made to this class:
@@ -710,6 +711,14 @@ public class LongDoubleHashMap implements Serializable, LongDoubleMap {
         for (int i=0; i<keys.length; i++) {
             if (states[i] == FULL) {
                 values[i] = lambda.call(keys[i], values[i]);
+            }
+        }
+    }
+    
+    public void iterate(FnLongDoubleToVoid lambda) {
+        for (int i=0; i<keys.length; i++) {
+            if (states[i] == FULL) {
+                lambda.call(keys[i], values[i]);
             }
         }
     }

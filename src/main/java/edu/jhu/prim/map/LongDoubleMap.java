@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
+import edu.jhu.prim.util.Lambda.FnLongDoubleToVoid;
 
 /**
  * A primitives map from longs to doubles.
@@ -37,6 +38,9 @@ public interface LongDoubleMap extends Iterable<LongDoubleEntry>, Serializable {
     /** Applies the function to each entry in the map. */
     void apply(FnLongDoubleToDouble lambda);
 
+    /** Calls the function on each entry in the map. */
+    void iterate(FnLongDoubleToVoid function);
+    
     /**
      * Returns an iterator over the entries in the map. CAUTION: This tends to
      * be slower than using the equivalent apply().

@@ -6,6 +6,7 @@ import edu.jhu.prim.Primitives;
 import edu.jhu.prim.arrays.DoubleArrays;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
+import edu.jhu.prim.util.Lambda.FnLongDoubleToVoid;
 import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.vector.LongDoubleHashVector.SparseBinaryOpApplier;
 
@@ -124,11 +125,18 @@ public class LongDoubleDenseVector implements LongDoubleVector {
             return y.dot(this);
         }
     }
-    
+
     @Override
     public void apply(FnLongDoubleToDouble function) {
         for (int i=0; i<idxAfterLast; i++) {
             elements[i] = function.call(i, elements[i]);
+        }
+    }
+    
+    @Override
+    public void iterate(FnLongDoubleToVoid function) {
+        for (int i=0; i<idxAfterLast; i++) {
+            function.call(i, elements[i]);
         }
     }
 
