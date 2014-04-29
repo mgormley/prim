@@ -5,6 +5,7 @@ import java.util.Arrays;
 import edu.jhu.prim.Primitives;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntLongToLong;
+import edu.jhu.prim.util.Lambda.FnIntLongToVoid;
 import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.vector.IntLongHashVector.SparseBinaryOpApplier;
 
@@ -128,6 +129,13 @@ public class IntLongVectorSlice implements IntLongVector {
     public void apply(FnIntLongToLong function) {
         for (int i=0; i< size; i++) {
             elements[i + start] = function.call(i, elements[i + start]);
+        }
+    }
+
+    @Override
+    public void iterate(FnIntLongToVoid function) {
+        for (int i=0; i< size; i++) {
+            function.call(i, elements[i + start]);
         }
     }
 

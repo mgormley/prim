@@ -28,6 +28,7 @@ import java.util.NoSuchElementException;
 import edu.jhu.prim.Primitives;
 import edu.jhu.prim.tuple.Pair;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
+import edu.jhu.prim.util.Lambda.FnIntDoubleToVoid;
 
 /**
  * NOTICE: Changes made to this class:
@@ -710,6 +711,14 @@ public class IntDoubleHashMap implements Serializable, IntDoubleMap {
         for (int i=0; i<keys.length; i++) {
             if (states[i] == FULL) {
                 values[i] = lambda.call(keys[i], values[i]);
+            }
+        }
+    }
+    
+    public void iterate(FnIntDoubleToVoid lambda) {
+        for (int i=0; i<keys.length; i++) {
+            if (states[i] == FULL) {
+                lambda.call(keys[i], values[i]);
             }
         }
     }

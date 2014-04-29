@@ -6,6 +6,7 @@ import edu.jhu.prim.Primitives;
 import edu.jhu.prim.arrays.DoubleArrays;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
+import edu.jhu.prim.util.Lambda.FnIntDoubleToVoid;
 import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.vector.IntDoubleHashVector.SparseBinaryOpApplier;
 
@@ -124,11 +125,18 @@ public class IntDoubleDenseVector implements IntDoubleVector {
             return y.dot(this);
         }
     }
-    
+
     @Override
     public void apply(FnIntDoubleToDouble function) {
         for (int i=0; i<idxAfterLast; i++) {
             elements[i] = function.call(i, elements[i]);
+        }
+    }
+    
+    @Override
+    public void iterate(FnIntDoubleToVoid function) {
+        for (int i=0; i<idxAfterLast; i++) {
+            function.call(i, elements[i]);
         }
     }
 

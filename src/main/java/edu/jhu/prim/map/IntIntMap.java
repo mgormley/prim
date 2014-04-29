@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
+import edu.jhu.prim.util.Lambda.FnIntIntToVoid;
 
 /**
  * A primitives map from ints to ints.
@@ -37,6 +38,9 @@ public interface IntIntMap extends Iterable<IntIntEntry>, Serializable {
     /** Applies the function to each entry in the map. */
     void apply(FnIntIntToInt lambda);
 
+    /** Calls the function on each entry in the map. */
+    void iterate(FnIntIntToVoid function);
+    
     /**
      * Returns an iterator over the entries in the map. CAUTION: This tends to
      * be slower than using the equivalent apply().

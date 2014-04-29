@@ -3,6 +3,7 @@ package edu.jhu.prim.vector;
 import java.io.Serializable;
 
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
+import edu.jhu.prim.util.Lambda.FnIntIntToVoid;
 
 /** 
  * Vector with int indices and int values.
@@ -36,6 +37,13 @@ public interface IntIntVector extends Serializable {
      * visited.
      */
     void apply(FnIntIntToInt function);
+
+    /**
+     * Calls the function on each (explicit) entry in the vector. The caller
+     * should make no assumptions about the order in which the entries will be
+     * visited.
+     */
+    void iterate(FnIntIntToVoid function);
     
     /** Updates this vector to be the entrywise sum of this vector with the other. */
     void add(IntIntVector other);

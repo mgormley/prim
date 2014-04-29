@@ -5,6 +5,7 @@ import java.util.Arrays;
 import edu.jhu.prim.Primitives;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
+import edu.jhu.prim.util.Lambda.FnIntDoubleToVoid;
 import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.vector.IntDoubleHashVector.SparseBinaryOpApplier;
 
@@ -128,6 +129,13 @@ public class IntDoubleVectorSlice implements IntDoubleVector {
     public void apply(FnIntDoubleToDouble function) {
         for (int i=0; i< size; i++) {
             elements[i + start] = function.call(i, elements[i + start]);
+        }
+    }
+
+    @Override
+    public void iterate(FnIntDoubleToVoid function) {
+        for (int i=0; i< size; i++) {
+            function.call(i, elements[i + start]);
         }
     }
 

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import edu.jhu.prim.Primitives;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
+import edu.jhu.prim.util.Lambda.FnIntIntToVoid;
 import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.vector.IntIntHashVector.SparseBinaryOpApplier;
 
@@ -128,6 +129,13 @@ public class IntIntVectorSlice implements IntIntVector {
     public void apply(FnIntIntToInt function) {
         for (int i=0; i< size; i++) {
             elements[i + start] = function.call(i, elements[i + start]);
+        }
+    }
+
+    @Override
+    public void iterate(FnIntIntToVoid function) {
+        for (int i=0; i< size; i++) {
+            function.call(i, elements[i + start]);
         }
     }
 

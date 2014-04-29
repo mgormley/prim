@@ -7,6 +7,7 @@ import edu.jhu.prim.iter.IntIter;
 import edu.jhu.prim.map.IntLongEntry;
 import edu.jhu.prim.sort.IntLongSort;
 import edu.jhu.prim.util.Lambda.FnIntLongToLong;
+import edu.jhu.prim.util.Lambda.FnIntLongToVoid;
 import edu.jhu.prim.util.SafeCast;
 
 /**
@@ -216,8 +217,17 @@ public class IntLongUnsortedVector implements IntLongVector, Iterable<IntLongEnt
     @Override
     public void apply(FnIntLongToLong function) {
         compact();
-        for(int i=0; i<top; i++)
+        for(int i=0; i<top; i++) {
             vals[i] = function.call(idx[i], vals[i]);
+        }
+    }
+
+    @Override
+    public void iterate(FnIntLongToVoid function) {
+        compact();
+        for(int i=0; i<top; i++) {
+            function.call(idx[i], vals[i]);
+        }
     }
 
     @Override
@@ -360,6 +370,7 @@ public class IntLongUnsortedVector implements IntLongVector, Iterable<IntLongEnt
 
     @Override
     public int getNumImplicitEntries() {
+        compact();
         if (top-1 >= 0) {
             return idx[top-1] + 1;
         } else {

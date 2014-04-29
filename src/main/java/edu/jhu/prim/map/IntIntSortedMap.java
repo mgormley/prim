@@ -11,6 +11,7 @@ import edu.jhu.prim.sort.IntIntSort;
 import edu.jhu.prim.sort.IntSort;
 import edu.jhu.prim.tuple.Pair;
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
+import edu.jhu.prim.util.Lambda.FnIntIntToVoid;
 
 /**
  * A primitives map from ints to ints. The map is stored by keeping a sorted
@@ -165,6 +166,12 @@ public class IntIntSortedMap implements IntIntMap {
     public void apply(FnIntIntToInt lambda) {
         for (int i=0; i<used; i++) {
             values[i] = lambda.call(indices[i], values[i]);
+        }
+    }
+
+    public void iterate(FnIntIntToVoid lambda) {
+        for (int i=0; i<used; i++) {
+            lambda.call(indices[i], values[i]);
         }
     }
 	

@@ -6,6 +6,7 @@ import edu.jhu.prim.Primitives;
 import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
+import edu.jhu.prim.util.Lambda.FnIntIntToVoid;
 import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.vector.IntIntHashVector.SparseBinaryOpApplier;
 
@@ -124,11 +125,18 @@ public class IntIntDenseVector implements IntIntVector {
             return y.dot(this);
         }
     }
-    
+
     @Override
     public void apply(FnIntIntToInt function) {
         for (int i=0; i<idxAfterLast; i++) {
             elements[i] = function.call(i, elements[i]);
+        }
+    }
+    
+    @Override
+    public void iterate(FnIntIntToVoid function) {
+        for (int i=0; i<idxAfterLast; i++) {
+            function.call(i, elements[i]);
         }
     }
 

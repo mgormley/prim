@@ -28,6 +28,7 @@ import java.util.NoSuchElementException;
 import edu.jhu.prim.Primitives;
 import edu.jhu.prim.tuple.Pair;
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
+import edu.jhu.prim.util.Lambda.FnIntIntToVoid;
 
 /**
  * NOTICE: Changes made to this class:
@@ -692,6 +693,14 @@ public class IntIntHashMap implements Serializable, IntIntMap {
         for (int i=0; i<keys.length; i++) {
             if (states[i] == FULL) {
                 values[i] = lambda.call(keys[i], values[i]);
+            }
+        }
+    }
+    
+    public void iterate(FnIntIntToVoid lambda) {
+        for (int i=0; i<keys.length; i++) {
+            if (states[i] == FULL) {
+                lambda.call(keys[i], values[i]);
             }
         }
     }

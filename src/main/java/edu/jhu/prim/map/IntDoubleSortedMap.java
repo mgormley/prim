@@ -11,6 +11,7 @@ import edu.jhu.prim.sort.IntDoubleSort;
 import edu.jhu.prim.sort.IntSort;
 import edu.jhu.prim.tuple.Pair;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
+import edu.jhu.prim.util.Lambda.FnIntDoubleToVoid;
 
 /**
  * A primitives map from ints to doubles. The map is stored by keeping a sorted
@@ -165,6 +166,12 @@ public class IntDoubleSortedMap implements IntDoubleMap {
     public void apply(FnIntDoubleToDouble lambda) {
         for (int i=0; i<used; i++) {
             values[i] = lambda.call(indices[i], values[i]);
+        }
+    }
+
+    public void iterate(FnIntDoubleToVoid lambda) {
+        for (int i=0; i<used; i++) {
+            lambda.call(indices[i], values[i]);
         }
     }
 	

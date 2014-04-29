@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
+import edu.jhu.prim.util.Lambda.FnIntDoubleToVoid;
 
 /**
  * A primitives map from ints to doubles.
@@ -37,6 +38,9 @@ public interface IntDoubleMap extends Iterable<IntDoubleEntry>, Serializable {
     /** Applies the function to each entry in the map. */
     void apply(FnIntDoubleToDouble lambda);
 
+    /** Calls the function on each entry in the map. */
+    void iterate(FnIntDoubleToVoid function);
+    
     /**
      * Returns an iterator over the entries in the map. CAUTION: This tends to
      * be slower than using the equivalent apply().

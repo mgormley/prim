@@ -7,6 +7,7 @@ import edu.jhu.prim.iter.IntIter;
 import edu.jhu.prim.map.IntDoubleEntry;
 import edu.jhu.prim.sort.IntDoubleSort;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
+import edu.jhu.prim.util.Lambda.FnIntDoubleToVoid;
 import edu.jhu.prim.util.SafeCast;
 
 /**
@@ -271,8 +272,17 @@ public class IntDoubleUnsortedVector implements IntDoubleVector, Iterable<IntDou
     @Override
     public void apply(FnIntDoubleToDouble function) {
         compact();
-        for(int i=0; i<top; i++)
+        for(int i=0; i<top; i++) {
             vals[i] = function.call(idx[i], vals[i]);
+        }
+    }
+
+    @Override
+    public void iterate(FnIntDoubleToVoid function) {
+        compact();
+        for(int i=0; i<top; i++) {
+            function.call(idx[i], vals[i]);
+        }
     }
 
     @Override
@@ -415,6 +425,7 @@ public class IntDoubleUnsortedVector implements IntDoubleVector, Iterable<IntDou
 
     @Override
     public int getNumImplicitEntries() {
+        compact();
         if (top-1 >= 0) {
             return idx[top-1] + 1;
         } else {

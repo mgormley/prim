@@ -7,6 +7,7 @@ import edu.jhu.prim.iter.IntIter;
 import edu.jhu.prim.map.IntIntEntry;
 import edu.jhu.prim.sort.IntIntSort;
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
+import edu.jhu.prim.util.Lambda.FnIntIntToVoid;
 import edu.jhu.prim.util.SafeCast;
 
 /**
@@ -216,8 +217,17 @@ public class IntIntUnsortedVector implements IntIntVector, Iterable<IntIntEntry>
     @Override
     public void apply(FnIntIntToInt function) {
         compact();
-        for(int i=0; i<top; i++)
+        for(int i=0; i<top; i++) {
             vals[i] = function.call(idx[i], vals[i]);
+        }
+    }
+
+    @Override
+    public void iterate(FnIntIntToVoid function) {
+        compact();
+        for(int i=0; i<top; i++) {
+            function.call(idx[i], vals[i]);
+        }
     }
 
     @Override
@@ -360,6 +370,7 @@ public class IntIntUnsortedVector implements IntIntVector, Iterable<IntIntEntry>
 
     @Override
     public int getNumImplicitEntries() {
+        compact();
         if (top-1 >= 0) {
             return idx[top-1] + 1;
         } else {

@@ -6,6 +6,7 @@ import edu.jhu.prim.Primitives;
 import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnLongIntToInt;
+import edu.jhu.prim.util.Lambda.FnLongIntToVoid;
 import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.vector.LongIntHashVector.SparseBinaryOpApplier;
 
@@ -124,11 +125,18 @@ public class LongIntDenseVector implements LongIntVector {
             return y.dot(this);
         }
     }
-    
+
     @Override
     public void apply(FnLongIntToInt function) {
         for (int i=0; i<idxAfterLast; i++) {
             elements[i] = function.call(i, elements[i]);
+        }
+    }
+    
+    @Override
+    public void iterate(FnLongIntToVoid function) {
+        for (int i=0; i<idxAfterLast; i++) {
+            function.call(i, elements[i]);
         }
     }
 

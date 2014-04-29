@@ -11,6 +11,7 @@ import edu.jhu.prim.sort.IntLongSort;
 import edu.jhu.prim.sort.IntSort;
 import edu.jhu.prim.tuple.Pair;
 import edu.jhu.prim.util.Lambda.FnIntLongToLong;
+import edu.jhu.prim.util.Lambda.FnIntLongToVoid;
 
 /**
  * A primitives map from ints to longs. The map is stored by keeping a sorted
@@ -165,6 +166,12 @@ public class IntLongSortedMap implements IntLongMap {
     public void apply(FnIntLongToLong lambda) {
         for (int i=0; i<used; i++) {
             values[i] = lambda.call(indices[i], values[i]);
+        }
+    }
+
+    public void iterate(FnIntLongToVoid lambda) {
+        for (int i=0; i<used; i++) {
+            lambda.call(indices[i], values[i]);
         }
     }
 	

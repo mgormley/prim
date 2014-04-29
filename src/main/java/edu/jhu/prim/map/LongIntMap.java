@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 
 import edu.jhu.prim.util.Lambda.FnLongIntToInt;
+import edu.jhu.prim.util.Lambda.FnLongIntToVoid;
 
 /**
  * A primitives map from longs to ints.
@@ -37,6 +38,9 @@ public interface LongIntMap extends Iterable<LongIntEntry>, Serializable {
     /** Applies the function to each entry in the map. */
     void apply(FnLongIntToInt lambda);
 
+    /** Calls the function on each entry in the map. */
+    void iterate(FnLongIntToVoid function);
+    
     /**
      * Returns an iterator over the entries in the map. CAUTION: This tends to
      * be slower than using the equivalent apply().
