@@ -333,6 +333,12 @@ public class DoubleArrays {
         }
     }
 
+    public static void scale(double[][] array, double alpha) {
+        for (int i=0; i<array.length; i++) {
+            scale(array[i], alpha);
+        }
+    }
+
     public static double mean(double[] array) {
         return sum(array) / array.length;
     }
