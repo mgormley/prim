@@ -34,4 +34,25 @@ public class BitSetBinaryMatrixTest {
         assertEquals(bsbm.getColumnCount(4), 2);
     }
     
+    @Test
+    public void testAnd() {
+        BitSetBinaryMatrix mat1 = new BitSetBinaryMatrix(2, 2);
+        mat1.set(0, 0, true);
+        mat1.set(0, 1, true);
+        mat1.set(1, 0, true);
+        mat1.set(1, 1, false);
+        
+        BitSetBinaryMatrix mat2 = new BitSetBinaryMatrix(2, 2);
+        mat2.set(0, 0, true);
+        mat2.set(0, 1, false);
+        mat2.set(1, 0, true);
+        mat2.set(1, 1, true);
+
+        mat1.and(mat2);
+        assertEquals(mat1.get(0, 0), true);
+        assertEquals(mat1.get(0, 1), false);
+        assertEquals(mat1.get(1, 0), true);
+        assertEquals(mat1.get(1, 1), false);
+    }
+    
 }

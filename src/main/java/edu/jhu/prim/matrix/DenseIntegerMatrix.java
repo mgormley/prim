@@ -55,6 +55,10 @@ public class DenseIntegerMatrix implements IntegerMatrix {
 		return matrix[row][col];
 	}
 
+    public void fill(int value) {
+        IntArrays.fill(matrix, value);        
+    }
+    
     public void set(int row, int col, int value) {
         matrix[row][col] = value;
     }
@@ -153,8 +157,6 @@ public class DenseIntegerMatrix implements IntegerMatrix {
 
         }
 
-    }
-
-    
+    }    
 
 }
