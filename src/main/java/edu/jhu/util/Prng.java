@@ -30,6 +30,10 @@ public class Prng {
     public static void setRandom(Random curRandom) {
         Prng.curRandom = curRandom;
     }
+    
+    public static Random getRandom() {
+        return curRandom;
+    }
 
     static {
         DEFAULT_SEED = 123456789101112l;
