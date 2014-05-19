@@ -24,7 +24,8 @@ public class Multinomials {
         return props;
     }
     
-    public static void normalizeProps(double[] props) {
+    /** Normalize the proportions and return their sum. */
+    public static double normalizeProps(double[] props) {
         double propSum = DoubleArrays.sum(props);
         if (propSum != 0) {
             for (int d = 0; d < props.length; d++) {
@@ -36,9 +37,11 @@ public class Multinomials {
                 props[d] = 1.0 / (double)props.length;
             }
         }
+        return propSum;
     }
     
-    public static void normalizeLogProps(double[] logProps) {
+    /** In the log-semiring, normalize the proportions and return their sum. */
+    public static double normalizeLogProps(double[] logProps) {
         double logPropSum = DoubleArrays.logSum(logProps);
         if (logPropSum != Double.NEGATIVE_INFINITY) {
             for (int d = 0; d < logProps.length; d++) {
@@ -51,6 +54,7 @@ public class Multinomials {
                 logProps[d] = uniform;
             }
         }
+        return logPropSum;
     }
 
     /**
