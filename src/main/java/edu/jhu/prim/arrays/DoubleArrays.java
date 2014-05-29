@@ -148,6 +148,14 @@ public class DoubleArrays {
         return sum;
     }
 
+    public static double prod(double[] vector) {
+        double prod = 1;
+        for(int i=0; i<vector.length; i++) {
+            prod *= vector[i];
+        }
+        return prod;
+    }
+
     public static void assertNoZeroes(double[] draw, double[] logDraw) {
         assertNoZeros(draw);
         assertNoNegInfs(logDraw);
@@ -375,6 +383,30 @@ public class DoubleArrays {
         assert (array1.length == array2.length);
         for (int i=0; i<array1.length; i++) {
             array1[i] += array2[i];
+        }
+    }
+    
+    /** Each element of the second array is subtracted from each element of the first. */
+    public static void subtract(double[] array1, double[] array2) {
+        assert (array1.length == array2.length);
+        for (int i=0; i<array1.length; i++) {
+            array1[i] -= array2[i];
+        }
+    }
+    
+    /** Each element of the second array is multiplied with each element of the first. */
+    public static void multiply(double[] array1, double[] array2) {
+        assert (array1.length == array2.length);
+        for (int i=0; i<array1.length; i++) {
+            array1[i] *= array2[i];
+        }
+    }
+    
+    /** Each element of the first array is divided by each element of the second. */
+    public static void divide(double[] array1, double[] array2) {
+        assert (array1.length == array2.length);
+        for (int i=0; i<array1.length; i++) {
+            array1[i] /= array2[i];
         }
     }
     

@@ -265,5 +265,30 @@ public class LongDoubleDenseVector implements LongDoubleVector {
         }
         return elements;
     }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("LongDoubleDenseVector [");
+        for (int i=0; i<idxAfterLast; i++) {
+            sb.append(elements[i]);
+            if (i < idxAfterLast - 1) {
+                sb.append(", ");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
+    }
 
+    public double infinityNorm() {
+        double maxAbs = 0;
+        for (int i=0; i<idxAfterLast; i++) {
+            double abs = Math.abs(elements[i]);
+            if (abs > maxAbs) {
+                maxAbs = abs;
+            }
+        }
+        return maxAbs;
+    }
+    
 }

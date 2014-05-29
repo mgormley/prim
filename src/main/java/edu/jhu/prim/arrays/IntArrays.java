@@ -29,6 +29,14 @@ public class IntArrays {
         return sum;
     }
 
+    public static int prod(int[] vector) {
+        int prod = 1;
+        for (int i = 0; i < vector.length; i++) {
+            prod *= vector[i];
+        }
+        return prod;
+    }
+
     public static int max(int[] array) {
         int max = Integer.MIN_VALUE;
         for (int i = 0; i < array.length; i++) {
