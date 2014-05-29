@@ -1,17 +1,31 @@
 package edu.jhu.util;
 
-public class Timer {
+import java.io.Serializable;
 
+public class Timer implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
+
+    private boolean isRunning;
+    private long startTime;
     private int numStarts;
     private long totMs;
-    private long startTime;
-    private boolean isRunning;
+    // The sum of the squares of the splits.
+    private long sumSqMs;
+    // The maximum split time.
+    private long maxSplitMs;
     
     public Timer() {
+        reset();
+    }
+
+    public void reset() {
         numStarts = 0;
         totMs = 0;
         startTime = 0;
         isRunning = false;
+        sumSqMs = 0;
+        maxSplitMs = 0;
     }
 
     public void start() {
@@ -27,7 +41,10 @@ public class Timer {
         if (isRunning != true) {
             throw new IllegalStateException("Timer is not running");
         }
-        totMs += elapsedSinceLastStart();
+        long split = elapsedSinceLastStart();
+        totMs += split;
+        sumSqMs += split*split;
+        if (split > maxSplitMs) { maxSplitMs = split; }
         isRunning = false;
     }
 
@@ -35,8 +52,8 @@ public class Timer {
         stop();
         start();
     }
-
-    private long elapsedSinceLastStart() {
+    
+    public long elapsedSinceLastStart() {
         return System.currentTimeMillis() - startTime;
     }
 
@@ -86,6 +103,23 @@ public class Timer {
         return totMs() / numStarts / 1000.0;
     }
 
+    public double maxSplitMs() {
+        return maxSplitMs;
+    }
+    
+    public double maxSplitSec() {
+        return maxSplitMs / 1000.0;
+    }
+    
+    public double stdDevMs() {
+        double avgMs = avgMs();
+        return Math.sqrt(numStarts / (numStarts - 1) * (sumSqMs / numStarts - avgMs*avgMs));
+    }
+    
+    public double stdDevSec() {
+        return stdDevMs() / 1000.0;
+    }
+
     public static String durAsStr(double milliseconds) {
         long timeInSeconds = (long)(milliseconds / 1000.0);
         long hours, minutes, seconds;
@@ -95,6 +129,14 @@ public class Timer {
         timeInSeconds = timeInSeconds - (minutes * 60);
         seconds = timeInSeconds;
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
+    /** Adds the stats from the other timer to this one. (Threadsafe) */
+    public synchronized void add(Timer other) {
+        this.numStarts += other.numStarts;
+        this.totMs += other.totMs;
+        this.maxSplitMs = Math.max(this.maxSplitMs, other.maxSplitMs);
+        this.sumSqMs += other.sumSqMs;
     }
 
 }

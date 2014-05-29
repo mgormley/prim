@@ -64,4 +64,29 @@ public class TimerTest {
         }
     }
     
+    @Test
+    public void testMaxSplit() throws InterruptedException {
+        Timer timer = new Timer();
+        for (int i=10; i<=30; i += 10) {
+            timer.start();
+            Thread.sleep(i);
+            timer.stop();
+        }
+        Assert.assertEquals(30, timer.maxSplitMs(), ERROR_IN_MS); 
+    }
+
+    @Test
+    public void testStdDev() throws InterruptedException {
+        Timer timer = new Timer();
+        for (int i=10; i<=30; i += 10) {
+            timer.start();
+            Thread.sleep(i);
+            timer.stop();
+        }
+        Assert.assertEquals(Math.sqrt((sq(10 - 20) + sq(20-20) + sq(30-20)) / 2), timer.stdDevMs(), ERROR_IN_MS); 
+    }
+    
+    private static double sq(double v) {
+        return v * v;
+    }
 }
