@@ -265,5 +265,30 @@ public class IntIntDenseVector implements IntIntVector {
         }
         return elements;
     }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("IntIntDenseVector [");
+        for (int i=0; i<idxAfterLast; i++) {
+            sb.append(elements[i]);
+            if (i < idxAfterLast - 1) {
+                sb.append(", ");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
+    }
 
+    public int infinityNorm() {
+        int maxAbs = 0;
+        for (int i=0; i<idxAfterLast; i++) {
+            int abs = Math.abs(elements[i]);
+            if (abs > maxAbs) {
+                maxAbs = abs;
+            }
+        }
+        return maxAbs;
+    }
+    
 }

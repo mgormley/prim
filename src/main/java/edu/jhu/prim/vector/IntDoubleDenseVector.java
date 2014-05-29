@@ -265,7 +265,7 @@ public class IntDoubleDenseVector implements IntDoubleVector {
         }
         return elements;
     }
-
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -289,6 +289,6 @@ public class IntDoubleDenseVector implements IntDoubleVector {
             }
         }
         return maxAbs;
-    }    
-
+    }
+    
 }

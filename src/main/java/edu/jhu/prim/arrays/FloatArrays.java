@@ -148,6 +148,14 @@ public class FloatArrays {
         return sum;
     }
 
+    public static float prod(float[] vector) {
+        float prod = 1;
+        for(int i=0; i<vector.length; i++) {
+            prod *= vector[i];
+        }
+        return prod;
+    }
+
     public static void assertNoZeroes(float[] draw, float[] logDraw) {
         assertNoZeros(draw);
         assertNoNegInfs(logDraw);
@@ -333,6 +341,12 @@ public class FloatArrays {
         }
     }
 
+    public static void scale(float[][] array, float alpha) {
+        for (int i=0; i<array.length; i++) {
+            scale(array[i], alpha);
+        }
+    }
+
     public static float mean(float[] array) {
         return sum(array) / array.length;
     }
@@ -369,6 +383,30 @@ public class FloatArrays {
         assert (array1.length == array2.length);
         for (int i=0; i<array1.length; i++) {
             array1[i] += array2[i];
+        }
+    }
+    
+    /** Each element of the second array is subtracted from each element of the first. */
+    public static void subtract(float[] array1, float[] array2) {
+        assert (array1.length == array2.length);
+        for (int i=0; i<array1.length; i++) {
+            array1[i] -= array2[i];
+        }
+    }
+    
+    /** Each element of the second array is multiplied with each element of the first. */
+    public static void multiply(float[] array1, float[] array2) {
+        assert (array1.length == array2.length);
+        for (int i=0; i<array1.length; i++) {
+            array1[i] *= array2[i];
+        }
+    }
+    
+    /** Each element of the first array is divided by each element of the second. */
+    public static void divide(float[] array1, float[] array2) {
+        assert (array1.length == array2.length);
+        for (int i=0; i<array1.length; i++) {
+            array1[i] /= array2[i];
         }
     }
     
