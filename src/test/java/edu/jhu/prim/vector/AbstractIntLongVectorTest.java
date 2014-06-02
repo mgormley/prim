@@ -163,14 +163,22 @@ public abstract class AbstractIntLongVectorTest {
     @Test
     public void testGetProd() {
         IntLongVector v1 = getIntLongVector();
+        v1.set(0, toLong(1));
         v1.set(1, toLong(11));
         v1.set(3, toLong(33));
         v1.set(2, toLong(22));
         
-        assertEquals(0, v1.getProd());
-        
-        v1.set(0, toLong(1));
         assertEquals(11*33*22, v1.getProd());
+    }
+    
+    @Test
+    public void testGetProdImplicits() {
+        IntLongVector v1 = getIntLongVector();
+        v1.set(1, toLong(11));
+        v1.set(3, toLong(33));
+        v1.set(2, toLong(22));
+        // Test case where there are implicit zeros.
+        assertEquals(0, v1.getProd());        
     }
     
     @Test
@@ -193,6 +201,39 @@ public abstract class AbstractIntLongVectorTest {
         v1.set(5, toLong(-33));
         
         assertEquals(3, v1.getArgmax());
+    }
+    
+    @Test
+    public void testGetMin() {
+        IntLongVector v1 = getIntLongVector();
+        v1.set(1, toLong(11));
+        v1.set(3, toLong(33));
+        v1.set(2, toLong(22));
+        v1.set(5, toLong(-33));
+
+        assertEquals(-33, v1.getMin());
+    }
+
+    @Test
+    public void testGetArgmin() {
+        IntLongVector v1 = getIntLongVector();
+        v1.set(1, toLong(11));
+        v1.set(3, toLong(33));
+        v1.set(2, toLong(22));
+        v1.set(5, toLong(-33));
+        
+        assertEquals(5, v1.getArgmin());
+    }
+    
+    @Test
+    public void testGetL2Norm() {
+        IntLongVector v1 = getIntLongVector();
+        v1.set(1, toLong(11));
+        v1.set(3, toLong(33));
+        v1.set(2, toLong(-22));
+        v1.set(5, toLong(-55));
+        
+        assertEquals(11*11 + 33*33 + 22*22 + 55*55, v1.getL2Norm());
     }
     
     @Test

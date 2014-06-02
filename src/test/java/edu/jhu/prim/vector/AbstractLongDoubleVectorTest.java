@@ -163,14 +163,22 @@ public abstract class AbstractLongDoubleVectorTest {
     @Test
     public void testGetProd() {
         LongDoubleVector v1 = getLongDoubleVector();
+        v1.set(0, toDouble(1));
         v1.set(1, toDouble(11));
         v1.set(3, toDouble(33));
         v1.set(2, toDouble(22));
         
-        assertEquals(0, v1.getProd(), 1e-13);
-        
-        v1.set(0, toDouble(1));
         assertEquals(11*33*22, v1.getProd(), 1e-13);
+    }
+    
+    @Test
+    public void testGetProdImplicits() {
+        LongDoubleVector v1 = getLongDoubleVector();
+        v1.set(1, toDouble(11));
+        v1.set(3, toDouble(33));
+        v1.set(2, toDouble(22));
+        // Test case where there are implicit zeros.
+        assertEquals(0, v1.getProd(), 1e-13);        
     }
     
     @Test

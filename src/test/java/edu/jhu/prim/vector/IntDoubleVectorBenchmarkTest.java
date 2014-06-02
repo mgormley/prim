@@ -8,7 +8,7 @@ public class IntDoubleVectorBenchmarkTest {
 
     private Random rand = new Random(9001);
     
-    @Test
+    //@Test
     public void speedTest() {
         int dimension = 125000;
         double[] weights = new double[dimension];

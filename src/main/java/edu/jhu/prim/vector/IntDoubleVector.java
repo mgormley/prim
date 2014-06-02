@@ -76,19 +76,28 @@ public interface IntDoubleVector extends Serializable {
     /** Gets a double array representation of this vector. */
     double[] toNativeArray();
     
-    /** Gets the sum of all the entries in this vector. */
+    /** Gets the sum of all the explicit entries in this vector. */
     double getSum();
 
-    /** Gets the product of all the entries in this vector. */
+    /** Gets the product of all the explicit entries in this vector. */
     double getProd();
 
-    /** Gets the max of all the entries in this vector. */
+    /** Gets the max of all the explicit entries in this vector. */
     double getMax();
 
-    /** Gets the index of the max of all the entries in this vector. */
+    /** Gets the index of the max of all the explicit entries in this vector. */
     int getArgmax();
+    
+    /** Gets the min of all the explicit entries in this vector. */
+    double getMin();
 
-    /** Gets the sum of all the entries in this vector. */
+    /** Gets the index of the min of all the explicit entries in this vector. */
+    int getArgmin();
+
+    /** Gets the sum of the squares all the explicit entries in this vector. */
+    double getL2Norm();
+
+    /** Gets the sum of all the explicit entries in this vector. */
     double getInfNorm();
     
 }

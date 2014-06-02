@@ -163,14 +163,22 @@ public abstract class AbstractIntIntVectorTest {
     @Test
     public void testGetProd() {
         IntIntVector v1 = getIntIntVector();
+        v1.set(0, toInt(1));
         v1.set(1, toInt(11));
         v1.set(3, toInt(33));
         v1.set(2, toInt(22));
         
-        assertEquals(0, v1.getProd());
-        
-        v1.set(0, toInt(1));
         assertEquals(11*33*22, v1.getProd());
+    }
+    
+    @Test
+    public void testGetProdImplicits() {
+        IntIntVector v1 = getIntIntVector();
+        v1.set(1, toInt(11));
+        v1.set(3, toInt(33));
+        v1.set(2, toInt(22));
+        // Test case where there are implicit zeros.
+        assertEquals(0, v1.getProd());        
     }
     
     @Test
@@ -193,6 +201,39 @@ public abstract class AbstractIntIntVectorTest {
         v1.set(5, toInt(-33));
         
         assertEquals(3, v1.getArgmax());
+    }
+    
+    @Test
+    public void testGetMin() {
+        IntIntVector v1 = getIntIntVector();
+        v1.set(1, toInt(11));
+        v1.set(3, toInt(33));
+        v1.set(2, toInt(22));
+        v1.set(5, toInt(-33));
+
+        assertEquals(-33, v1.getMin());
+    }
+
+    @Test
+    public void testGetArgmin() {
+        IntIntVector v1 = getIntIntVector();
+        v1.set(1, toInt(11));
+        v1.set(3, toInt(33));
+        v1.set(2, toInt(22));
+        v1.set(5, toInt(-33));
+        
+        assertEquals(5, v1.getArgmin());
+    }
+    
+    @Test
+    public void testGetL2Norm() {
+        IntIntVector v1 = getIntIntVector();
+        v1.set(1, toInt(11));
+        v1.set(3, toInt(33));
+        v1.set(2, toInt(-22));
+        v1.set(5, toInt(-55));
+        
+        assertEquals(11*11 + 33*33 + 22*22 + 55*55, v1.getL2Norm());
     }
     
     @Test

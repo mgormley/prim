@@ -76,19 +76,28 @@ public interface IntIntVector extends Serializable {
     /** Gets a int array representation of this vector. */
     int[] toNativeArray();
     
-    /** Gets the sum of all the entries in this vector. */
+    /** Gets the sum of all the explicit entries in this vector. */
     int getSum();
 
-    /** Gets the product of all the entries in this vector. */
+    /** Gets the product of all the explicit entries in this vector. */
     int getProd();
 
-    /** Gets the max of all the entries in this vector. */
+    /** Gets the max of all the explicit entries in this vector. */
     int getMax();
 
-    /** Gets the index of the max of all the entries in this vector. */
+    /** Gets the index of the max of all the explicit entries in this vector. */
     int getArgmax();
+    
+    /** Gets the min of all the explicit entries in this vector. */
+    int getMin();
 
-    /** Gets the sum of all the entries in this vector. */
+    /** Gets the index of the min of all the explicit entries in this vector. */
+    int getArgmin();
+
+    /** Gets the sum of the squares all the explicit entries in this vector. */
+    int getL2Norm();
+
+    /** Gets the sum of all the explicit entries in this vector. */
     int getInfNorm();
     
 }

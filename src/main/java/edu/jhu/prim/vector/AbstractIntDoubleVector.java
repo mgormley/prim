@@ -56,6 +56,42 @@ public abstract class AbstractIntDoubleVector {
         return argmax.v;
     }
     
+    public double getMin() {
+        final MutableDouble min = new MutableDouble(Double.POSITIVE_INFINITY);
+        this.iterate(new FnIntDoubleToVoid() {
+            public void call(int idx, double val) {
+                if (val < min.v) {
+                    min.v = val;
+                }
+            }
+        });
+        return min.v;
+    }
+    
+    public int getArgmin() {
+        final MutableInt argmin = new MutableInt(-1);
+        final MutableDouble min = new MutableDouble(Double.POSITIVE_INFINITY);
+        this.iterate(new FnIntDoubleToVoid() {
+            public void call(int idx, double val) {
+                if (val < min.v) {
+                    argmin.v = idx;
+                    min.v = val;
+                }
+            }
+        });
+        return argmin.v;
+    }
+    
+    public double getL2Norm() {
+        final MutableDouble sum = new MutableDouble(0);
+        this.iterate(new FnIntDoubleToVoid() {
+            public void call(int idx, double val) {
+                sum.v += val*val;
+            }
+        });
+        return sum.v;
+    }
+    
     public double getInfNorm() {
         final MutableDouble maxAbs = new MutableDouble(Double.NEGATIVE_INFINITY);
         this.iterate(new FnIntDoubleToVoid() {

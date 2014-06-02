@@ -57,7 +57,7 @@ public abstract class AbstractLongDoubleVector {
     }
     
     public double getMin() {
-        final MutableDouble min = new MutableDouble(Double.NEGATIVE_INFINITY);
+        final MutableDouble min = new MutableDouble(Double.POSITIVE_INFINITY);
         this.iterate(new FnLongDoubleToVoid() {
             public void call(long idx, double val) {
                 if (val < min.v) {
@@ -70,7 +70,7 @@ public abstract class AbstractLongDoubleVector {
     
     public long getArgmin() {
         final MutableLong argmin = new MutableLong(-1);
-        final MutableDouble min = new MutableDouble(Double.NEGATIVE_INFINITY);
+        final MutableDouble min = new MutableDouble(Double.POSITIVE_INFINITY);
         this.iterate(new FnLongDoubleToVoid() {
             public void call(long idx, double val) {
                 if (val < min.v) {

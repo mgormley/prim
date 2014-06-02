@@ -56,6 +56,42 @@ public abstract class AbstractIntLongVector {
         return argmax.v;
     }
     
+    public long getMin() {
+        final MutableLong min = new MutableLong(9223372036854775806l);
+        this.iterate(new FnIntLongToVoid() {
+            public void call(int idx, long val) {
+                if (val < min.v) {
+                    min.v = val;
+                }
+            }
+        });
+        return min.v;
+    }
+    
+    public int getArgmin() {
+        final MutableInt argmin = new MutableInt(-1);
+        final MutableLong min = new MutableLong(9223372036854775806l);
+        this.iterate(new FnIntLongToVoid() {
+            public void call(int idx, long val) {
+                if (val < min.v) {
+                    argmin.v = idx;
+                    min.v = val;
+                }
+            }
+        });
+        return argmin.v;
+    }
+    
+    public long getL2Norm() {
+        final MutableLong sum = new MutableLong(0);
+        this.iterate(new FnIntLongToVoid() {
+            public void call(int idx, long val) {
+                sum.v += val*val;
+            }
+        });
+        return sum.v;
+    }
+    
     public long getInfNorm() {
         final MutableLong maxAbs = new MutableLong(-9223372036854775806l);
         this.iterate(new FnIntLongToVoid() {
