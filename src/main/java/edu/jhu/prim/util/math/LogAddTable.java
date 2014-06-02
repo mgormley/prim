@@ -28,6 +28,16 @@ public class LogAddTable {
     }
 
     public static double logAdd(double a, double b) {
+        if (Double.NEGATIVE_INFINITY == a) {
+            return b;
+        } else if (Double.NEGATIVE_INFINITY == b) {
+            return a;
+        } else if (a == Double.POSITIVE_INFINITY) {
+            return Double.POSITIVE_INFINITY;
+        } else if (b == Double.POSITIVE_INFINITY) {
+            return Double.POSITIVE_INFINITY;
+        }
+        
         if (b > a) {
             double temp = a;
             a = b;

@@ -50,12 +50,16 @@ public class FastMath {
     }
 
     public static double logAddExact(double x, double y) {
-    
+            
         // p = 0 or q = 0, where x = log(p), y = log(q)
         if (Double.NEGATIVE_INFINITY == x) {
             return y;
         } else if (Double.NEGATIVE_INFINITY == y) {
             return x;
+        } else if (x == Double.POSITIVE_INFINITY) {
+            return Double.POSITIVE_INFINITY;
+        } else if (y == Double.POSITIVE_INFINITY) {
+            return Double.POSITIVE_INFINITY;
         }
     
         // p != 0 && q != 0

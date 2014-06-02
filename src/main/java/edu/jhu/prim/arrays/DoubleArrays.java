@@ -493,5 +493,36 @@ public class DoubleArrays {
             array[j] = tmp;
         }
     }
+
+    /** Gets the first index of a given value in an array or -1 if not present. */
+    public static int indexOf(double[] array, double val) {
+        for (int i=0; i<array.length; i++) {
+            if (array[i] == val) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    /** Gets the last index of a given value in an array or -1 if not present. */
+    public static int lastIndexOf(double[] array, double val) {
+        for (int i=array.length-1; i >= 0; i--) {
+            if (array[i] == val) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    /** Gets the number of times a given value occurs in an array. */
+    public static int count(double[] array, double val) {
+        int count = 0;
+        for (int i=0; i<array.length; i++) {
+            if (array[i] == val) {
+                count++;
+            }
+        }
+        return count;
+    }
     
 }

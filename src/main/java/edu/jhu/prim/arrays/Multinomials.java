@@ -1,5 +1,7 @@
 package edu.jhu.prim.arrays;
 
+import java.util.Arrays;
+
 import edu.jhu.prim.Primitives;
 import edu.jhu.prim.util.math.FastMath;
 import edu.jhu.util.Prng;
@@ -27,14 +29,26 @@ public class Multinomials {
     /** Normalize the proportions and return their sum. */
     public static double normalizeProps(double[] props) {
         double propSum = DoubleArrays.sum(props);
-        if (propSum != 0) {
+        if (propSum == 0) {
             for (int d = 0; d < props.length; d++) {
-                props[d] /= propSum;
-                assert(!Double.isNaN(props[d]));
+                props[d] = 1.0 / (double)props.length;
+            }
+        } else if (propSum == Double.POSITIVE_INFINITY) {
+            int count = DoubleArrays.count(props, Double.POSITIVE_INFINITY);
+            if (count == 0) {
+                throw new RuntimeException("Unable to normalize since sum is infinite but contains no infinities: " + Arrays.toString(props));
+            }
+            for (int d=0; d<props.length; d++) {
+                if (props[d] == Double.POSITIVE_INFINITY) {
+                    props[d] = 1.0 / (double) count;
+                } else {
+                    props[d] = 0.0;
+                }
             }
         } else {
             for (int d = 0; d < props.length; d++) {
-                props[d] = 1.0 / (double)props.length;
+                props[d] /= propSum;
+                assert(!Double.isNaN(props[d]));
             }
         }
         return propSum;
@@ -43,16 +57,29 @@ public class Multinomials {
     /** In the log-semiring, normalize the proportions and return their sum. */
     public static double normalizeLogProps(double[] logProps) {
         double logPropSum = DoubleArrays.logSum(logProps);
-        if (logPropSum != Double.NEGATIVE_INFINITY) {
-            for (int d = 0; d < logProps.length; d++) {
-                logProps[d] -= logPropSum;
-                assert(!Double.isNaN(logProps[d]));
-            }
-        } else {
+        if (logPropSum == Double.NEGATIVE_INFINITY) {
             double uniform = FastMath.log(1.0 / (double)logProps.length);
             for (int d = 0; d < logProps.length; d++) {
                 logProps[d] = uniform;
             }
+        } else if (logPropSum == Double.POSITIVE_INFINITY) {
+            int count = DoubleArrays.count(logProps, Double.POSITIVE_INFINITY);
+            if (count == 0) {
+                throw new RuntimeException("Unable to normalize since sum is infinite but contains no infinities: " + Arrays.toString(logProps));
+            }
+            double constant = FastMath.log(1.0 / (double) count);
+            for (int d=0; d<logProps.length; d++) {
+                if (logProps[d] == Double.POSITIVE_INFINITY) {
+                    logProps[d] = constant;
+                } else {
+                    logProps[d] = Double.NEGATIVE_INFINITY;
+                }
+            }
+        } else {
+            for (int d = 0; d < logProps.length; d++) {
+                logProps[d] -= logPropSum;
+                assert(!Double.isNaN(logProps[d]));
+            }            
         }
         return logPropSum;
     }

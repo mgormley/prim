@@ -1,13 +1,27 @@
 package edu.jhu.prim.arrays;
 
+import static org.junit.Assert.*;
+
 import java.util.Arrays;
 
 import org.junit.Test;
 
+import edu.jhu.prim.util.math.FastMath;
 import edu.jhu.util.Timer;
 
 public class DoubleArraysTest {
 
+    @Test
+    public void testLogSum() {
+        assertEquals(Double.POSITIVE_INFINITY, DoubleArrays.logSum(new double[]{ Double.POSITIVE_INFINITY, 0.1}), 1e-13);
+        boolean old = FastMath.useLogAddTable;
+        FastMath.useLogAddTable = false;
+        assertEquals(Double.POSITIVE_INFINITY, DoubleArrays.logSum(new double[]{ Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY}), 1e-13);
+        FastMath.useLogAddTable = true;
+        assertEquals(Double.POSITIVE_INFINITY, DoubleArrays.logSum(new double[]{ Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY}), 1e-13);
+        FastMath.useLogAddTable = old;
+    }
+    
     @Test
     public void testFillSpeed() {
         int trials = 10000;
