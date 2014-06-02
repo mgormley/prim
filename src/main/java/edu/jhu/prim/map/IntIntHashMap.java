@@ -29,6 +29,7 @@ import edu.jhu.prim.Primitives;
 import edu.jhu.prim.tuple.Pair;
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
 import edu.jhu.prim.util.Lambda.FnIntIntToVoid;
+import edu.jhu.prim.vector.AbstractIntIntVector;
 
 /**
  * NOTICE: Changes made to this class:
@@ -48,7 +49,7 @@ import edu.jhu.prim.util.Lambda.FnIntIntToVoid;
  * @version $Id: OpenIntToIntHashMap.java 1421448 2012-12-13 19:45:57Z tn $
  * @since 2.0
  */
-public class IntIntHashMap implements Serializable, IntIntMap {
+public class IntIntHashMap extends AbstractIntIntVector implements Serializable, IntIntMap {
 
     /** Status indicator for free table entries. */
     protected static final byte FREE    = 0;

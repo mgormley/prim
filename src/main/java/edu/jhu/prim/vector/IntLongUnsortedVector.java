@@ -15,7 +15,7 @@ import edu.jhu.prim.util.SafeCast;
  * 
  * @author Travis Wolfe <twolfe18@gmail.com>
  */
-public class IntLongUnsortedVector implements IntLongVector, Iterable<IntLongEntry> {
+public class IntLongUnsortedVector extends AbstractIntLongVector implements IntLongVector, Iterable<IntLongEntry> {
 
     private static final long serialVersionUID = 1L;
 

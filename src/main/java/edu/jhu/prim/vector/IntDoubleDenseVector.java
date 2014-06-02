@@ -11,7 +11,7 @@ import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.vector.IntDoubleHashVector.SparseBinaryOpApplier;
 
 //TODO: Implement Iterable<IntDoubleEntry>.
-public class IntDoubleDenseVector implements IntDoubleVector {
+public class IntDoubleDenseVector extends AbstractIntDoubleVector implements IntDoubleVector {
 
     private static final long serialVersionUID = 1L;
 

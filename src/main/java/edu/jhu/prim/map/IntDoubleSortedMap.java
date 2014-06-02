@@ -12,6 +12,7 @@ import edu.jhu.prim.sort.IntSort;
 import edu.jhu.prim.tuple.Pair;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToVoid;
+import edu.jhu.prim.vector.AbstractIntDoubleVector;
 
 /**
  * A primitives map from ints to doubles. The map is stored by keeping a sorted
@@ -20,7 +21,7 @@ import edu.jhu.prim.util.Lambda.FnIntDoubleToVoid;
  * 
  * @author mgormley
  */
-public class IntDoubleSortedMap implements IntDoubleMap {
+public class IntDoubleSortedMap extends AbstractIntDoubleVector implements IntDoubleMap {
     
     private static final long serialVersionUID = 1L;
 	protected int[] indices;

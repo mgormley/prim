@@ -18,7 +18,7 @@ import edu.jhu.prim.vector.IntDoubleHashVector.SparseBinaryOpApplier;
  * @author mgormley
  */
 //TODO: Implement Iterable<IntDoubleEntry>.
-public class IntDoubleVectorSlice implements IntDoubleVector {
+public class IntDoubleVectorSlice extends AbstractIntDoubleVector implements IntDoubleVector {
 
     private static final long serialVersionUID = 1L;
 

@@ -76,4 +76,19 @@ public interface LongIntVector extends Serializable {
     /** Gets a int array representation of this vector. */
     int[] toNativeArray();
     
+    /** Gets the sum of all the entries in this vector. */
+    int getSum();
+
+    /** Gets the product of all the entries in this vector. */
+    int getProd();
+
+    /** Gets the max of all the entries in this vector. */
+    int getMax();
+
+    /** Gets the index of the max of all the entries in this vector. */
+    long getArgmax();
+
+    /** Gets the sum of all the entries in this vector. */
+    int getInfNorm();
+    
 }

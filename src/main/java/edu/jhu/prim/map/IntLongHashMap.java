@@ -29,6 +29,7 @@ import edu.jhu.prim.Primitives;
 import edu.jhu.prim.tuple.Pair;
 import edu.jhu.prim.util.Lambda.FnIntLongToLong;
 import edu.jhu.prim.util.Lambda.FnIntLongToVoid;
+import edu.jhu.prim.vector.AbstractIntLongVector;
 
 /**
  * NOTICE: Changes made to this class:
@@ -48,7 +49,7 @@ import edu.jhu.prim.util.Lambda.FnIntLongToVoid;
  * @version $Id: OpenIntToLongHashMap.java 1421448 2012-12-13 19:45:57Z tn $
  * @since 2.0
  */
-public class IntLongHashMap implements Serializable, IntLongMap {
+public class IntLongHashMap extends AbstractIntLongVector implements Serializable, IntLongMap {
 
     /** Status indicator for free table entries. */
     protected static final byte FREE    = 0;

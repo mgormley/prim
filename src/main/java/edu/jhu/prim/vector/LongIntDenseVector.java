@@ -11,7 +11,7 @@ import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.vector.LongIntHashVector.SparseBinaryOpApplier;
 
 //TODO: Implement Iterable<LongIntEntry>.
-public class LongIntDenseVector implements LongIntVector {
+public class LongIntDenseVector extends AbstractLongIntVector implements LongIntVector {
 
     private static final long serialVersionUID = 1L;
 

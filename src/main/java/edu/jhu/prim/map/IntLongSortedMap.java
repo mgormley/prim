@@ -12,6 +12,7 @@ import edu.jhu.prim.sort.IntSort;
 import edu.jhu.prim.tuple.Pair;
 import edu.jhu.prim.util.Lambda.FnIntLongToLong;
 import edu.jhu.prim.util.Lambda.FnIntLongToVoid;
+import edu.jhu.prim.vector.AbstractIntLongVector;
 
 /**
  * A primitives map from ints to longs. The map is stored by keeping a sorted
@@ -20,7 +21,7 @@ import edu.jhu.prim.util.Lambda.FnIntLongToVoid;
  * 
  * @author mgormley
  */
-public class IntLongSortedMap implements IntLongMap {
+public class IntLongSortedMap extends AbstractIntLongVector implements IntLongMap {
     
     private static final long serialVersionUID = 1L;
 	protected int[] indices;

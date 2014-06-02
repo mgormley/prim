@@ -153,4 +153,35 @@ public class Primitives {
         }
         assert(Math.abs(a - b) < 0.000000000001);
     }
+    
+    public static class MutableLong {
+        public long v;
+        public MutableLong() { }
+        public MutableLong(long v) { this.v = v; }
+    }
+
+    public static class MutableInt {
+        public int v;
+        public MutableInt() { }
+        public MutableInt(int v) { this.v = v; }
+    }
+    
+    public static class MutableShort {
+        public short v;
+        public MutableShort() { }
+        public MutableShort(short v) { this.v = v; }
+    }
+    
+    public static class MutableDouble {
+        public double v;
+        public MutableDouble() { }
+        public MutableDouble(double v) { this.v = v; }
+    }
+
+    public static class MutableFloat {
+        public float v;
+        public MutableFloat() { }
+        public MutableFloat(float v) { this.v = v; }
+    }
+    
  }

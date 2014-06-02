@@ -15,7 +15,7 @@ import edu.jhu.prim.util.SafeCast;
  * 
  * @author Travis Wolfe <twolfe18@gmail.com>
  */
-public class IntDoubleUnsortedVector implements IntDoubleVector, Iterable<IntDoubleEntry> {
+public class IntDoubleUnsortedVector extends AbstractIntDoubleVector implements IntDoubleVector, Iterable<IntDoubleEntry> {
 
     private static final long serialVersionUID = 1L;
 
