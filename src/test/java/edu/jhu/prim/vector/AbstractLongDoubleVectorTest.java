@@ -196,6 +196,39 @@ public abstract class AbstractLongDoubleVectorTest {
     }
     
     @Test
+    public void testGetMin() {
+        LongDoubleVector v1 = getLongDoubleVector();
+        v1.set(1, toDouble(11));
+        v1.set(3, toDouble(33));
+        v1.set(2, toDouble(22));
+        v1.set(5, toDouble(-33));
+
+        assertEquals(-33, v1.getMin(), 1e-13);
+    }
+
+    @Test
+    public void testGetArgmin() {
+        LongDoubleVector v1 = getLongDoubleVector();
+        v1.set(1, toDouble(11));
+        v1.set(3, toDouble(33));
+        v1.set(2, toDouble(22));
+        v1.set(5, toDouble(-33));
+        
+        assertEquals(5, v1.getArgmin());
+    }
+    
+    @Test
+    public void testGetL2Norm() {
+        LongDoubleVector v1 = getLongDoubleVector();
+        v1.set(1, toDouble(11));
+        v1.set(3, toDouble(33));
+        v1.set(2, toDouble(-22));
+        v1.set(5, toDouble(-55));
+        
+        assertEquals(11*11 + 33*33 + 22*22 + 55*55, v1.getL2Norm(), 1e-13);
+    }
+    
+    @Test
     public void testGetInfNorm() {
         LongDoubleVector v1 = getLongDoubleVector();
         v1.set(1, toDouble(11));
