@@ -212,6 +212,7 @@ if __name__ == "__main__":
                  "edu.jhu.prim.vector.LongDoubleHashVector",
                  "edu.jhu.prim.vector.LongDoubleDenseVector",
                  "edu.jhu.prim.vector.LongDoubleVectorSlice",
+                 "edu.jhu.prim.vector.AbstractLongDoubleVector",
                  ]
     test_classes = [
                  "edu.jhu.prim.map.LongDoubleSortedMapTest",

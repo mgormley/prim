@@ -15,7 +15,7 @@ import edu.jhu.prim.util.SafeCast;
  * 
  * @author Travis Wolfe <twolfe18@gmail.com>
  */
-public class LongDoubleUnsortedVector implements LongDoubleVector, Iterable<LongDoubleEntry> {
+public class LongDoubleUnsortedVector extends AbstractLongDoubleVector implements LongDoubleVector, Iterable<LongDoubleEntry> {
 
     private static final long serialVersionUID = 1L;
 

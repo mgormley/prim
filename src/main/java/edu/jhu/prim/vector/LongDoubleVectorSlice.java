@@ -18,7 +18,7 @@ import edu.jhu.prim.vector.LongDoubleHashVector.SparseBinaryOpApplier;
  * @author mgormley
  */
 //TODO: Implement Iterable<LongDoubleEntry>.
-public class LongDoubleVectorSlice implements LongDoubleVector {
+public class LongDoubleVectorSlice extends AbstractLongDoubleVector implements LongDoubleVector {
 
     private static final long serialVersionUID = 1L;
 

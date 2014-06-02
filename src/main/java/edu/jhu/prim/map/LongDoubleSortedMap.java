@@ -12,6 +12,7 @@ import edu.jhu.prim.sort.LongSort;
 import edu.jhu.prim.tuple.Pair;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToVoid;
+import edu.jhu.prim.vector.AbstractLongDoubleVector;
 
 /**
  * A primitives map from longs to doubles. The map is stored by keeping a sorted
@@ -20,7 +21,7 @@ import edu.jhu.prim.util.Lambda.FnLongDoubleToVoid;
  * 
  * @author mgormley
  */
-public class LongDoubleSortedMap implements LongDoubleMap {
+public class LongDoubleSortedMap extends AbstractLongDoubleVector implements LongDoubleMap {
     
     private static final long serialVersionUID = 1L;
 	protected long[] indices;
