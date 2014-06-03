@@ -39,6 +39,8 @@ def file_to_str(filename):
     
 def str_to_file(s, filename):
     # Write the new string to that file
+    if not os.path.exists(os.path.dirname(filename)):
+        os.makedirs(os.path.dirname(filename))
     f = open(filename, 'w')
     f.write(s)
     f.close()
@@ -172,6 +174,7 @@ def get_re_subs_for_pair(dest_key, dest_val):
 
 def copy_and_sub(re_subs, src_files):
     dest_files = map(lambda f : re_sub_all(re_subs, f), src_files)
+    dest_files = [x.replace("/java/", "/java_generated/") for x in dest_files]
     for sf, df in zip(src_files, dest_files):
         assert sf != df
         print "Current destination file:", df
