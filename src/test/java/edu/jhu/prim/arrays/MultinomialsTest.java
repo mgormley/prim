@@ -68,19 +68,5 @@ public class MultinomialsTest {
         assertEquals(0.2 * Math.log(0.2 / 0.1) + 0.3 * Math.log(0.3 / 0.4) + 0.5 * Math.log(0.5 / 0.5), 
                 Multinomials.klDivergence(p, q), 1e-10);
     }
-    
-    @Test
-    public void testJavaNaNs() {
-        assertEquals(Double.POSITIVE_INFINITY, 0 + Double.POSITIVE_INFINITY, 1e-13);
-        assertEquals(Double.POSITIVE_INFINITY, 2 + Double.POSITIVE_INFINITY, 1e-13);
-        assertEquals(Double.POSITIVE_INFINITY, -2 + Double.POSITIVE_INFINITY, 1e-13);
-        assertEquals(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY + Double.POSITIVE_INFINITY, 1e-13);
-        assertEquals(Double.NaN, Double.NEGATIVE_INFINITY + Double.POSITIVE_INFINITY, 1e-13);
-        
-        assertEquals(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY - Double.POSITIVE_INFINITY, 1e-13);
-        assertEquals(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY - Double.NEGATIVE_INFINITY, 1e-13);
-        assertEquals(Double.NaN, Double.POSITIVE_INFINITY - Double.POSITIVE_INFINITY, 1e-13);
-        assertEquals(Double.NaN, Double.NEGATIVE_INFINITY - Double.NEGATIVE_INFINITY, 1e-13);
-    }
 
 }
