@@ -38,9 +38,10 @@ public class Multinomials {
             if (count == 0) {
                 throw new RuntimeException("Unable to normalize since sum is infinite but contains no infinities: " + Arrays.toString(props));
             }
+            double constant = 1.0 / (double) count;
             for (int d=0; d<props.length; d++) {
                 if (props[d] == Double.POSITIVE_INFINITY) {
-                    props[d] = 1.0 / (double) count;
+                    props[d] = constant;
                 } else {
                     props[d] = 0.0;
                 }

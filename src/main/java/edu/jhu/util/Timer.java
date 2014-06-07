@@ -113,7 +113,7 @@ public class Timer implements Serializable {
     
     public double stdDevMs() {
         double avgMs = avgMs();
-        return Math.sqrt(numStarts / (numStarts - 1) * (sumSqMs / numStarts - avgMs*avgMs));
+        return Math.sqrt(numStarts / (numStarts - 1.0) * (sumSqMs / numStarts - avgMs*avgMs));
     }
     
     public double stdDevSec() {
