@@ -100,15 +100,6 @@
     </plugins>
   </build>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.8</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-
   <scm>
     <developerConnection>scm:git:file:///home/hltcoe/mgormley/public/git_repos/prim.git</developerConnection>
     <!-- <connection>scm:git:git://github.com/hertzsprung/redis-launcher.git</connection> 
@@ -136,5 +127,14 @@
       <url>http://localhost:8081/artifactory/libs-snapshot-local</url>
     </snapshotRepository>
   </distributionManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.8</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 
 </project>
