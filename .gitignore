@@ -6,7 +6,11 @@
 java.hprof.txt
 warn.log
 tmp
- 
+.project
+.classpath
+.pydevproject
+.settings
+
 # /
 /target
 /tests
