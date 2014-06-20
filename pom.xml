@@ -7,7 +7,41 @@
   <version>2.0.5-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>edu.jhu.prim</name>
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>Prim - A Java Primitives Library.</description>
+  <url>https://github.com/mgormley/prim</url>
+
+  <developers>
+    <developer>
+      <email>mrg@cs.jhu.edu</email>
+      <name>Matt Gormley</name>
+      <url>https://github.com/mgormley</url>
+      <id>mgormley</id>
+    </developer>
+    <developer>
+      <email>travis@cs.jhu.edu</email>
+      <name>Travis Wolfe</name>
+      <url>https://github.com/twolfe18</url>
+      <id>twolfe18</id>
+    </developer>
+  </developers>
+
+  <prerequisites>
+    <maven>3.0.4</maven>
+  </prerequisites>
+
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git:git@github.com:mgormley/prim.git</connection>
+    <url>scm:git:git@github.com:mgormley/prim.git</url>
+    <developerConnection>scm:git:git@github.com:mgormley/prim.git</developerConnection>
+  </scm>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -24,7 +58,7 @@
           <useIncrementalCompilation>true</useIncrementalCompilation>
           <fork>true</fork>
         </configuration>
-        <version>3.0</version>
+        <version>3.1</version>
       </plugin>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -37,33 +71,6 @@
             <descriptorRef>jar-with-dependencies</descriptorRef>
           </descriptorRefs>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <!-- Uncomment the executions section below to deploy javadocs. -->
-        <!-- 
-        <executions>
-          <execution>
-            <id>attach-javadocs</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-        -->
       </plugin>
       <!-- The following plugin includes alternate source directories in the compilation -->
       <plugin>
@@ -97,14 +104,90 @@
           </execution>
         </executions>
       </plugin>
+	<!-- Nexus Staging Maven plugin for deploying to Maven Central -->
+	<plugin>
+	  <groupId>org.sonatype.plugins</groupId>
+	  <artifactId>nexus-staging-maven-plugin</artifactId>
+	  <version>1.6.1</version>
+	  <extensions>true</extensions>
+	  <configuration>
+            <serverId>ossrh</serverId>
+            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+	  </configuration>
+	</plugin>
     </plugins>
   </build>
 
-  <scm>
-    <developerConnection>scm:git:file:///home/hltcoe/mgormley/public/git_repos/prim.git</developerConnection>
-    <!-- <connection>scm:git:git://github.com/hertzsprung/redis-launcher.git</connection> 
-      <url>http://github.com/hertzsprung/redis-launcher</url> -->
-  </scm>
+  <profiles>
+    <profile> 
+      <id>release</id>
+      <build>
+	<plugins>
+	  <!-- These plugins will only run at release time -->
+	  <plugin>
+	    <groupId>org.apache.maven.plugins</groupId>
+	    <artifactId>maven-source-plugin</artifactId>
+	    <executions>
+	      <execution>
+		<id>attach-sources</id>
+		<phase>verify</phase>
+		<goals>
+		  <goal>jar-no-fork</goal>
+		</goals>
+	      </execution>
+	    </executions>
+	    <version>2.2.1</version>
+	  </plugin>
+	  <plugin>
+	    <groupId>org.apache.maven.plugins</groupId>
+	    <artifactId>maven-javadoc-plugin</artifactId>
+	    <configuration>
+	      <quiet />
+	    </configuration>
+	    <executions>
+	      <execution>
+		<id>attach-javadoc</id>
+		<phase>verify</phase>
+		<goals>
+		  <goal>jar</goal>
+		</goals>
+	      </execution>
+	    </executions>
+	    <version>2.9.1</version>
+	  </plugin>
+	  <!-- GPG signing plugin for deploying to Maven Central -->
+	  <plugin>
+	    <groupId>org.apache.maven.plugins</groupId>
+	    <artifactId>maven-gpg-plugin</artifactId>
+	    <version>1.5</version>
+	    <executions>
+              <execution>
+		<id>sign-artifacts</id>
+		<phase>verify</phase>
+		<goals>
+		  <goal>sign</goal>
+		</goals>
+              </execution>
+	    </executions>
+	  </plugin>
+	</plugins>
+      </build>
+    </profile>
+  </profiles>
+
+  <!-- For deploying to Maven Central -->
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
+
 
 <!-- For deploying to COE. -->
 <!--
@@ -115,6 +198,7 @@
   </parent>
 -->
 <!-- For deploying to CLSP. -->
+<!--
   <distributionManagement>
     <repository>
       <id>checker</id>
@@ -127,6 +211,7 @@
       <url>http://localhost:8081/artifactory/libs-snapshot-local</url>
     </snapshotRepository>
   </distributionManagement>
+-->
 
   <dependencies>
     <dependency>
