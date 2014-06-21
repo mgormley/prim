@@ -2,7 +2,7 @@
 
 # Summary
 
-Prim is a Java primitives library akin to GNU Trove or the like. It
+Prim is a Java primitives library akin to GNU Trove. It
 differs by focusing heavily on sparse representations of vectors and
 matrices.
 
@@ -15,6 +15,7 @@ LongIntSortedVector, etc.
 # Using Prim
 
 The latest version is deployed on Maven Central:
+
     <dependency>
       <groupId>edu.jhu.prim</groupId>
       <artifactId>prim</artifactId>
@@ -30,11 +31,11 @@ only.
 
 * Compile the code from the command line:
 
-    mvn compile
+        mvn compile
 
 * To build a single jar with all the dependencies included:
 
-    mvn compile assembly:single
+        mvn compile assembly:single
 
 # Development
 
@@ -50,7 +51,7 @@ simply run the following from the root directory:
 
 * Create local versions of the .project and .classpath files for Eclipse:
 
-    mvn eclipse:eclipse
+        mvn eclipse:eclipse
 
 * Add M2_REPO environment variable to
   Eclipse. http://maven.apache.org/guides/mini/guide-ide-eclipse.html
