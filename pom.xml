@@ -104,18 +104,6 @@
           </execution>
         </executions>
       </plugin>
-	<!-- Nexus Staging Maven plugin for deploying to Maven Central -->
-	<plugin>
-	  <groupId>org.sonatype.plugins</groupId>
-	  <artifactId>nexus-staging-maven-plugin</artifactId>
-	  <version>1.6.1</version>
-	  <extensions>true</extensions>
-	  <configuration>
-            <serverId>ossrh</serverId>
-            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-            <autoReleaseAfterClose>true</autoReleaseAfterClose>
-	  </configuration>
-	</plugin>
     </plugins>
   </build>
 
@@ -171,22 +159,50 @@
               </execution>
 	    </executions>
 	  </plugin>
+      <!-- Nexus Staging Maven plugin for deploying to Maven Central -->
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.1</version>
+        <extensions>true</extensions>
+        <configuration>
+                <serverId>ossrh</serverId>
+                <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
 	</plugins>
       </build>
+      <!-- For deploying to Maven Central -->
+      <distributionManagement>
+	<snapshotRepository>
+	  <id>ossrh</id>
+	  <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+	</snapshotRepository>
+	<repository>
+	  <id>ossrh</id>
+	  <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+	</repository>
+      </distributionManagement>
+    </profile>
+    <profile>
+      <id>clsp</id>
+      <!-- For deploying to CLSP. -->
+      <distributionManagement>
+	<repository>
+	  <id>checker</id>
+	  <name>checker-releases</name>
+	  <url>http://localhost:8081/artifactory/libs-release-local</url>
+	</repository>
+	<snapshotRepository>
+	  <id>checker</id>
+	  <name>checker-snapshots</name>
+	  <url>http://localhost:8081/artifactory/libs-snapshot-local</url>
+	</snapshotRepository>
+      </distributionManagement>
     </profile>
   </profiles>
 
-  <!-- For deploying to Maven Central -->
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
 
 
 <!-- For deploying to COE. -->
@@ -196,21 +212,6 @@
     <artifactId>parent</artifactId>
     <version>1.0.0</version>
   </parent>
--->
-<!-- For deploying to CLSP. -->
-<!--
-  <distributionManagement>
-    <repository>
-      <id>checker</id>
-      <name>checker-releases</name>
-      <url>http://localhost:8081/artifactory/libs-release-local</url>
-    </repository>
-    <snapshotRepository>
-      <id>checker</id>
-      <name>checker-snapshots</name>
-      <url>http://localhost:8081/artifactory/libs-snapshot-local</url>
-    </snapshotRepository>
-  </distributionManagement>
 -->
 
   <dependencies>
