@@ -51,5 +51,5 @@ public class Triple<X,Y,Z> {
 		result = 37*result + (z == null ? 0 : z.hashCode());
 		return result;
 	}
-	
+    
 }
