@@ -48,5 +48,9 @@ public class LongHashSet implements LongSet {
     public LongIter iterator() {
         return new LongArrayIter(map.getIndices());
     }
+
+    public int size() {
+        return map.size();
+    }
     
 }

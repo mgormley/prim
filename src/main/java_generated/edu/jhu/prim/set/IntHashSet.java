@@ -48,5 +48,9 @@ public class IntHashSet implements IntSet {
     public IntIter iterator() {
         return new IntArrayIter(map.getIndices());
     }
+
+    public int size() {
+        return map.size();
+    }
     
 }

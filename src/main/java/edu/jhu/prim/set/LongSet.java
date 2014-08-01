@@ -14,5 +14,6 @@ public interface LongSet extends Serializable {
     void add(long... keys);
     boolean contains(long key);
     LongIter iterator();
+    int size();
     
 }

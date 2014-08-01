@@ -14,5 +14,6 @@ public interface IntSet extends Serializable {
     void add(int... keys);
     boolean contains(int key);
     IntIter iterator();
+    int size();
     
 }
