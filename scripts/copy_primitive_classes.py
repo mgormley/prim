@@ -21,7 +21,8 @@ def get_typedef_repls(src, dest):
             (src.const, dest.const)]
     
 def get_typedefs():
-    return {"short" : TypeDef("Short", "short", "SHORT", True),
+    return {"byte" : TypeDef("Byte", "byte", "BYTE", True),
+            "short" : TypeDef("Short", "short", "SHORT", True),
             "int" : TypeDef("Int", "int", "INT", True),
             "long" : TypeDef("Long", "long", "LONG", True),
             "float" : TypeDef("Float", "float", "FLOAT", False),
@@ -261,6 +262,7 @@ if __name__ == "__main__":
                                           ]) + \
                 classes_to_files("test", ["edu.jhu.prim.sort.LongSortTest",])
     copy_single(tds.get("long"), tds.get("short"), src_files)
+    copy_single(tds.get("long"), tds.get("byte"), src_files)
     copy_single(tds.get("long"), tds.get("int"), src_files)
     # Int only
     src_files = classes_to_files("main", ["edu.jhu.prim.set.LongHashSet",

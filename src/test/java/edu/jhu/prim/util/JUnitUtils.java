@@ -45,8 +45,8 @@ public class JUnitUtils {
             Assert.assertEquals(newLogPhi[k].length, logPhi[k].length); 
         }
     }
-
-    public static void assertArrayEquals(int[] a1, int[] a2) {
+    
+    public static void assertArrayEquals(byte[] a1, byte[] a2) {
         Assert.assertEquals(a1.length, a2.length);
         for (int i=0; i<a1.length; i++) {
             Assert.assertEquals(a1[i], a2[i]);
@@ -54,6 +54,13 @@ public class JUnitUtils {
     }
     
     public static void assertArrayEquals(short[] a1, short[] a2) {
+        Assert.assertEquals(a1.length, a2.length);
+        for (int i=0; i<a1.length; i++) {
+            Assert.assertEquals(a1[i], a2[i]);
+        }
+    }
+
+    public static void assertArrayEquals(int[] a1, int[] a2) {
         Assert.assertEquals(a1.length, a2.length);
         for (int i=0; i<a1.length; i++) {
             Assert.assertEquals(a1[i], a2[i]);
