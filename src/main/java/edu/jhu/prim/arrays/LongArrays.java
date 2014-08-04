@@ -29,6 +29,14 @@ public class LongArrays {
         return sum;
     }
 
+    public static long prod(long[] vector) {
+        long prod = 1;
+        for (int i = 0; i < vector.length; i++) {
+            prod *= vector[i];
+        }
+        return prod;
+    }
+
     public static long max(long[] array) {
         long max = Long.MIN_VALUE;
         for (int i = 0; i < array.length; i++) {
@@ -226,6 +234,47 @@ public class LongArrays {
             numCommonIndices++;
         }
         return numCommonIndices;
+    }
+
+    /**
+     * Gets a copy of the array with the specified entry removed.
+     * 
+     * @param a The input array.
+     * @param idx The entry to remove.
+     * @return A new array with the entry removed.
+     */
+    public static long[] removeEntry(long[] a, int idx) {
+        long[] b = new long[a.length - 1];
+        for (int i = 0; i < b.length; i++) {
+            if (i < idx) {
+                b[i] = a[i];
+            } else {
+                b[i] = a[i + 1];
+            }
+        }
+        return b;
+    }
+
+    /**
+     * Gets a copy of the array with an entry inserted.
+     * 
+     * @param a The input array.
+     * @param idx The position at which to insert.
+     * @param val The value to insert.
+     * @return A new array with the inserted value.
+     */
+    public static long[] insertEntry(long[] a, int idx, int val) {
+        long[] b = new long[a.length + 1];
+        for (int i = 0; i < b.length; i++) {
+            if (i < idx) {
+                b[i] = a[i];
+            } else if (i == idx) {
+                b[idx] = val;
+            } else {
+                b[i] = a[i - 1];
+            }
+        }
+        return b;
     }
 
 }
