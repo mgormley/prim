@@ -263,7 +263,7 @@ public class LongArrays {
      * @param val The value to insert.
      * @return A new array with the inserted value.
      */
-    public static long[] insertEntry(long[] a, int idx, int val) {
+    public static long[] insertEntry(long[] a, int idx, long val) {
         long[] b = new long[a.length + 1];
         for (int i = 0; i < b.length; i++) {
             if (i < idx) {

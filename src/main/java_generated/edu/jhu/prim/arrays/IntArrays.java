@@ -236,42 +236,42 @@ public class IntArrays {
         return numCommonIndices;
     }
 
-    /** 
-     * Gets a copy of the array with the specified entry removed. 
+    /**
+     * Gets a copy of the array with the specified entry removed.
      * 
      * @param a The input array.
      * @param idx The entry to remove.
      * @return A new array with the entry removed.
      */
     public static int[] removeEntry(int[] a, int idx) {
-        int[] b = new int[a.length-1];
-        for (int i=0; i<b.length; i++) {
+        int[] b = new int[a.length - 1];
+        for (int i = 0; i < b.length; i++) {
             if (i < idx) {
                 b[i] = a[i];
             } else {
-                b[i] = a[i+1];
+                b[i] = a[i + 1];
             }
         }
         return b;
     }
 
-    /** 
-     * Gets a copy of the array with an entry inserted. 
-     *
+    /**
+     * Gets a copy of the array with an entry inserted.
+     * 
      * @param a The input array.
      * @param idx The position at which to insert.
      * @param val The value to insert.
      * @return A new array with the inserted value.
      */
     public static int[] insertEntry(int[] a, int idx, int val) {
-        int[] b = new int[a.length+1];
-        for (int i=0; i<b.length; i++) {
+        int[] b = new int[a.length + 1];
+        for (int i = 0; i < b.length; i++) {
             if (i < idx) {
                 b[i] = a[i];
             } else if (i == idx) {
-                b[idx] = val;        
+                b[idx] = val;
             } else {
-                b[i] = a[i-1];
+                b[i] = a[i - 1];
             }
         }
         return b;

@@ -206,9 +206,8 @@ if __name__ == "__main__":
     # ------------------ Copy Primitive Type Pairs --------------------
     #
     # Create a list of main/test classes which are defined for a pair of primitives (Long and Double)
-    # and should be copied over to a new pair of primitives.
-    
-    main_classes = [
+    # and should be copied over to a new pair of primitives.    
+    src_files = classes_to_files("main", [
                  "edu.jhu.prim.map.LongDoubleMap",
                  "edu.jhu.prim.map.LongDoubleEntry",
                  "edu.jhu.prim.map.LongDoubleSortedMap",
@@ -221,8 +220,8 @@ if __name__ == "__main__":
                  "edu.jhu.prim.vector.LongDoubleDenseVector",
                  "edu.jhu.prim.vector.LongDoubleVectorSlice",
                  "edu.jhu.prim.vector.AbstractLongDoubleVector",
-                 ]
-    test_classes = [
+                 ]) + \
+                classes_to_files("test", [
                  "edu.jhu.prim.map.LongDoubleSortedMapTest",
                  "edu.jhu.prim.map.LongDoubleHashMapTest",
                  "edu.jhu.prim.sort.LongDoubleSortTest",
@@ -232,16 +231,14 @@ if __name__ == "__main__":
                  "edu.jhu.prim.vector.LongDoubleDenseVectorTest",
                  "edu.jhu.prim.vector.LongDoubleVectorSliceTest",
                  "edu.jhu.prim.vector.AbstractLongDoubleVectorTest",
-                 ]
-    src_files = classes_to_files("main", main_classes) + classes_to_files("test", test_classes)
-
+                 ])
     copy_pair(tds.get("int"), tds.get("double"), src_files)
     copy_pair(tds.get("int"), tds.get("long"), src_files)    
     copy_pair(tds.get("long"), tds.get("int"), src_files)
     copy_pair(tds.get("int"), tds.get("int"), src_files)    
     # TODO: ShortInt doesn't work because the literal 0 must be manually cast to a short.
-    src_files = classes_to_files("main", ["edu.jhu.prim.sort.LongDoubleSort"]) \
-                + classes_to_files("test", ["edu.jhu.prim.sort.LongDoubleSortTest"])
+    src_files = classes_to_files("main", ["edu.jhu.prim.sort.LongDoubleSort"]) + \
+                classes_to_files("test", ["edu.jhu.prim.sort.LongDoubleSortTest"])
     copy_pair(tds.get("int"), tds.get("short"), src_files)
     
     # ------------------ Copy Primitive Type Singletons --------------------
@@ -255,8 +252,8 @@ if __name__ == "__main__":
     # Short and Int
     src_files = classes_to_files("main", ["edu.jhu.prim.arrays.LongArrays",
                                           "edu.jhu.prim.sort.LongSort",
-                                          ])
-    src_files = classes_to_files("test", ["edu.jhu.prim.sort.LongSortTest",])
+                                          ]) + \
+                classes_to_files("test", ["edu.jhu.prim.sort.LongSortTest",])
     copy_single(tds.get("long"), tds.get("short"), src_files)
     copy_single(tds.get("long"), tds.get("int"), src_files)
     # Int only
