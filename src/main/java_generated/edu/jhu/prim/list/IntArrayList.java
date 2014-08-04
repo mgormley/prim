@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 /**
- * Array list for int primitives.
+ * Array list of int primitives.
  * @author mgormley
  */
 public class IntArrayList implements Serializable {
@@ -86,7 +86,7 @@ public class IntArrayList implements Serializable {
             this.add(values.elements[i]);
         }
     }
-
+    
     /**
      * Gets the index of the first element in this list with the specified
      * value, or -1 if it is not present.
@@ -102,7 +102,7 @@ public class IntArrayList implements Serializable {
         }
         return -1;
     }
-    
+
     /**
      * Gets a NEW array containing all the elements in this array list.
      * @return The new array containing the elements in this list.
@@ -124,7 +124,7 @@ public class IntArrayList implements Serializable {
         this.trimToSize();
         return elements;
     }
-    
+
     /**
      * Gets the internal representation of this list. CAUTION: this should not
      * be called without carefully handling the result.

@@ -201,8 +201,13 @@ def classes_to_files(main_test, classes):
     return src_files
 
 if __name__ == "__main__":
+    tds = get_typedefs()
+    
+    # ------------------ Copy Primitive Type Pairs --------------------
+    #
     # Create a list of main/test classes which are defined for a pair of primitives (Long and Double)
     # and should be copied over to a new pair of primitives.
+    
     main_classes = [
                  "edu.jhu.prim.map.LongDoubleMap",
                  "edu.jhu.prim.map.LongDoubleEntry",
@@ -230,25 +235,24 @@ if __name__ == "__main__":
                  ]
     src_files = classes_to_files("main", main_classes) + classes_to_files("test", test_classes)
 
-    tds = get_typedefs()
     copy_pair(tds.get("int"), tds.get("double"), src_files)
-    copy_pair(tds.get("int"), tds.get("long"), src_files)
-    
-    #TODO: IntInt/LongInt sort of works, but requires the removal of some duplicate methods/constructors:
+    copy_pair(tds.get("int"), tds.get("long"), src_files)    
     copy_pair(tds.get("long"), tds.get("int"), src_files)
-    copy_pair(tds.get("int"), tds.get("int"), src_files)
-    
+    copy_pair(tds.get("int"), tds.get("int"), src_files)    
     # TODO: ShortInt doesn't work because the literal 0 must be manually cast to a short.
-    src_files = classes_to_files("main", ["edu.jhu.prim.sort.LongDoubleSort"])    
-    src_files += classes_to_files("test", ["edu.jhu.prim.sort.LongDoubleSortTest"])
+    src_files = classes_to_files("main", ["edu.jhu.prim.sort.LongDoubleSort"]) \
+                + classes_to_files("test", ["edu.jhu.prim.sort.LongDoubleSortTest"])
     copy_pair(tds.get("int"), tds.get("short"), src_files)
     
-    
+    # ------------------ Copy Primitive Type Singletons --------------------
+    #
     # Create a list of main/test classes which are defined for a single primitive
     # and should be copied over to a primitive.
+    
+    # Float only
     src_files = classes_to_files("main", ["edu.jhu.prim.arrays.DoubleArrays"])    
     copy_single(tds.get("double"), tds.get("float"), src_files)
-    # For now we only copy one class for shorts.
+    # Short and Int
     src_files = classes_to_files("main", ["edu.jhu.prim.arrays.LongArrays",
                                           "edu.jhu.prim.sort.LongSort",
                                           ])
@@ -261,5 +265,7 @@ if __name__ == "__main__":
                                           "edu.jhu.prim.iter.LongIter",
                                           "edu.jhu.prim.iter.LongArrayIter",
                                           "edu.jhu.prim.iter.LongIncrIter",
+                                          "edu.jhu.prim.list.LongArrayList",
+                                          "edu.jhu.prim.list.LongStack",
                                           ])
     copy_single(tds.get("long"), tds.get("int"), src_files)
