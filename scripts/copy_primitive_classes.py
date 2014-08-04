@@ -56,6 +56,24 @@ def re_sub_all(re_subs, s):
         print "Number of substitutions for %s-->%s: %d" % (k, v, num_subs)
     return s
 
+def get_re_subs_for_all():
+    repls = [#("getIntIndexArray", "getIndexArray"),
+             ("int serialVersionUID", "long serialVersionUID"),
+             ("short serialVersionUID", "long serialVersionUID"),
+             ("byte serialVersionUID", "long serialVersionUID"),
+             # TODO: The MIN_VALUEs and MAX_VALUEs are not being sorted properly.
+             ("Long.POSITIVE_INFINITY", "9223372036854775806l"),
+             ("Long.NEGATIVE_INFINITY", "-9223372036854775806l"),
+             ("Int.POSITIVE_INFINITY", "2147483646"),
+             ("Int.NEGATIVE_INFINITY", "-2147483646"),
+             ("Short.POSITIVE_INFINITY", "32767"),
+             ("Short.NEGATIVE_INFINITY", "-32768"),
+             ]
+    
+    # Convert repls to regex replacements.
+    re_subs = [(re.escape(k), v) for k, v in repls]
+    return re_subs
+
 def get_re_subs_for_single(src_prim, dest_prim):
     '''Gets regular expression pairs for use in re.subn (called by re_sub_all). 
         For use when a single source document, is copied and a single primative type 
@@ -66,13 +84,11 @@ def get_re_subs_for_single(src_prim, dest_prim):
     if src_prim.prim == "long" and dest_prim.prim == "int":
         repls += [("Long.", "Integer.")]
     repls += get_typedef_repls(src_prim, dest_prim)
-    # Corrections to always use.
-    repls += [("int serialVersionUID", "long serialVersionUID")]
     
     # Convert repls to regex replacements.
     re_subs = [(re.escape(k), v) for k, v in repls]
+    re_subs += get_re_subs_for_all() 
     re_subs += add_re_subs
-    assert len(re_subs) == len(repls) + len(add_re_subs)
            
     return re_subs
     
@@ -111,18 +127,6 @@ def get_re_subs_for_pair(dest_key, dest_val):
     # Add the primary replacements.
     repls += get_typedef_repls(src_key, dest_key)
     repls += get_typedef_repls(src_val, dest_val)
-
-    # Special cases to always use.
-    repls += [#("getIntIndexArray", "getIndexArray"),
-             ("int serialVersionUID", "long serialVersionUID"),
-             # TODO: The MIN_VALUEs and MAX_VALUEs are not being sorted properly.
-             ("Long.POSITIVE_INFINITY", "9223372036854775806l"),
-             ("Long.NEGATIVE_INFINITY", "-9223372036854775806l"),
-             ("Int.POSITIVE_INFINITY", "2147483646"),
-             ("Int.NEGATIVE_INFINITY", "-2147483646"),
-             ("Short.POSITIVE_INFINITY", "32767"),
-             ("Short.NEGATIVE_INFINITY", "-32768"),
-             ]
     
     # Additional regular expression replacements to be concatenated at the end.
     add_re_subs = []
@@ -167,8 +171,8 @@ def get_re_subs_for_pair(dest_key, dest_val):
     
     # Convert repls to regex replacements.
     re_subs = [(re.escape(k), v) for k, v in repls]
+    re_subs += get_re_subs_for_all() 
     re_subs += add_re_subs
-    assert len(re_subs) == len(repls) + len(add_re_subs)
            
     return re_subs
 
@@ -252,6 +256,8 @@ if __name__ == "__main__":
     # Short and Int
     src_files = classes_to_files("main", ["edu.jhu.prim.arrays.LongArrays",
                                           "edu.jhu.prim.sort.LongSort",
+                                          "edu.jhu.prim.list.LongArrayList",
+                                          "edu.jhu.prim.list.LongStack",
                                           ]) + \
                 classes_to_files("test", ["edu.jhu.prim.sort.LongSortTest",])
     copy_single(tds.get("long"), tds.get("short"), src_files)
@@ -264,5 +270,5 @@ if __name__ == "__main__":
                                           "edu.jhu.prim.iter.LongIncrIter",
                                           "edu.jhu.prim.list.LongArrayList",
                                           "edu.jhu.prim.list.LongStack",
-                                          ])
+                                          ]) 
     copy_single(tds.get("long"), tds.get("int"), src_files)
