@@ -411,7 +411,7 @@ public class FloatArrays {
     }
     
     public static float l1norm(float[] array) {
-        float l1norm = 0.0;
+        float l1norm = 0;
         for (int i=0; i<array.length; i++) {
             l1norm += Math.abs(array[i]);
         }
@@ -419,7 +419,7 @@ public class FloatArrays {
     }
     
     public static float l2norm(float[] array) {
-        float l2norm = 0.0;
+        float l2norm = 0;
         for (int i=0; i<array.length; i++) {
             l2norm += array[i] * array[i];
         }

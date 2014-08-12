@@ -411,7 +411,7 @@ public class DoubleArrays {
     }
     
     public static double l1norm(double[] array) {
-        double l1norm = 0.0;
+        double l1norm = 0;
         for (int i=0; i<array.length; i++) {
             l1norm += Math.abs(array[i]);
         }
@@ -419,7 +419,7 @@ public class DoubleArrays {
     }
     
     public static double l2norm(double[] array) {
-        double l2norm = 0.0;
+        double l2norm = 0;
         for (int i=0; i<array.length; i++) {
             l2norm += array[i] * array[i];
         }
