@@ -423,7 +423,7 @@ public class FloatArrays {
         for (int i=0; i<array.length; i++) {
             l2norm += array[i] * array[i];
         }
-        return Math.sqrt(l2norm);
+        return (float) Math.sqrt(l2norm);
     }
     
     public static float infinityNorm(float[] gradient) {

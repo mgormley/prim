@@ -423,7 +423,7 @@ public class DoubleArrays {
         for (int i=0; i<array.length; i++) {
             l2norm += array[i] * array[i];
         }
-        return Math.sqrt(l2norm);
+        return (double) Math.sqrt(l2norm);
     }
     
     public static double infinityNorm(double[] gradient) {
