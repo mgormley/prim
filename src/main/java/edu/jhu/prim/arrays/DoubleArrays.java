@@ -410,6 +410,22 @@ public class DoubleArrays {
         }
     }
     
+    public static double l1norm(double[] array) {
+        double l1norm = 0.0;
+        for (int i=0; i<array.length; i++) {
+            l1norm += Math.abs(array[i]);
+        }
+        return l1norm;
+    }
+    
+    public static double l2norm(double[] array) {
+        double l2norm = 0.0;
+        for (int i=0; i<array.length; i++) {
+            l2norm += array[i] * array[i];
+        }
+        return Math.sqrt(l2norm);
+    }
+    
     public static double infinityNorm(double[] gradient) {
         double maxAbs = 0;
         for (int i=0; i<gradient.length; i++) {
