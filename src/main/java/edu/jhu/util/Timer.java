@@ -60,7 +60,7 @@ public class Timer implements Serializable {
     /**
      * Gets the number of times that timer has been started or split.
      */
-    public Object getCount() {
+    public int getCount() {
         return numStarts;
     }
 
