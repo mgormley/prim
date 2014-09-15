@@ -2,6 +2,7 @@ package edu.jhu.prim.set;
 
 import edu.jhu.prim.iter.IntArrayIter;
 import edu.jhu.prim.iter.IntIter;
+import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.map.IntDoubleHashMap;
 
 /**
@@ -24,11 +25,20 @@ public class IntHashSet implements IntSet {
     public IntHashSet(IntHashSet other) {
         this.map = new IntDoubleHashMap(other.map);
     }
+    
+    public IntHashSet(IntArrayList list) {
+        this();        
+        add(list);
+    }
 
     public static IntHashSet fromArray(int... keys) {
         IntHashSet set = new IntHashSet();
         set.add(keys);
         return set;
+    }
+    
+    public void add(int key) {
+        map.put(key, 1);
     }
 
     public void add(int... keys) {
@@ -36,9 +46,12 @@ public class IntHashSet implements IntSet {
             this.add(key);
         }
     }
-    
-    public void add(int key) {
-        map.put(key, 1);
+
+    public void add(IntArrayList list) {
+        int[] arr = list.getInternalElements();
+        for (int i=0; i<list.size(); i++) {
+            this.add(arr[i]);
+        }
     }
 
     public boolean contains(int key) {
