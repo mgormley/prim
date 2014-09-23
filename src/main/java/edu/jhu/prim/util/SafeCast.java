@@ -2,6 +2,11 @@ package edu.jhu.prim.util;
 
 public class SafeCast {
 
+    private static long MAX_UNSIGNED_BYTE = 0xff;
+    private static long MAX_UNSIGNED_SHORT = 0xffff;
+    private static long MAX_UNSIGNED_INT = 0xffffffff;
+    private static long MAX_UNSIGNED_LONG = 0xffffffffffffffffl;
+    
     private SafeCast() {
         // Private constructor.
     }
@@ -18,6 +23,28 @@ public class SafeCast {
             throw new IllegalStateException("Cannot convert int to short: " + i);
         }
         return (short)i;
+    }
+    
+    public static byte safeIntToUnsignedByte(int i) {
+        if (i > (int) MAX_UNSIGNED_BYTE || i < (int) 0) {
+            throw new IllegalStateException("Cannot convert int to unsigned byte: " + i);
+        }
+        return (byte)i;
+    }
+    
+    public static short safeIntToUnsignedShort(int i) {
+        if (i > (int) MAX_UNSIGNED_SHORT || i < (int) 0) {
+            throw new IllegalStateException("Cannot convert int to unsigned short: " + i);
+        }
+        return (short)i;
+    }
+
+    public static int safeUnsignedByteToInt(byte b) {
+        return b & 0xff;
+    }
+    
+    public static int safeUnsignedShortToInt(short s) {
+        return s & 0xffff;
     }
     
     public static int safeLongToInt(long l) {
