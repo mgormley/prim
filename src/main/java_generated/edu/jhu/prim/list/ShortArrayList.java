@@ -48,7 +48,7 @@ public class ShortArrayList implements Serializable {
      */
     public short get(int i) {
         if (i < 0 || i >= size) {
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException("Index out of bounds: " + i);
         }
         return elements[i];
     }
