@@ -76,6 +76,10 @@ public class Lambda {
         public void call(long idx, double val);
     }
     
+    public interface FnObjDoubleToVoid<T> {
+        public void call(T idx, double val);
+    }
+    
     /* -------------------- Doubles ---------------------- */
 
     /** A unary operator on doubles. */
