@@ -189,4 +189,16 @@ public class BitSetBinaryMatrix implements BinaryMatrix {
         }
     }
 
+    public void or(BitSetBinaryMatrix other) {
+        if (this.numRows != other.numRows || this.numCols != other.numCols) {
+            throw new IllegalArgumentException("matrices must have the same dimensions");
+        }
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < numCols; j++) {
+                boolean or = this.get(i, j) || other.get(i, j);
+                set(i, j, or);
+            }
+        }
+    }
+
 }
