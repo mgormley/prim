@@ -54,6 +54,10 @@ public class Lambda {
         public double call(long idx, double val);
     }
     
+    public interface FnLongLongToLong {
+        public long call(long idx, long val);
+    }
+    
     /* -------------------- Iterate functions over vector entries ---------------------- */
 
     public interface FnIntIntToVoid {

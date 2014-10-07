@@ -246,6 +246,11 @@ public class LongIntUnsortedVector extends AbstractLongIntVector implements Long
     }
 
     @Override
+    public int getProd() {
+        throw new RuntimeException("not supported");
+    }
+    
+    @Override
     public int dot(int[] other) {
         int sum = 0;
         for(int i=0; i<top; i++)

@@ -301,6 +301,11 @@ public class LongDoubleUnsortedVector extends AbstractLongDoubleVector implement
     }
 
     @Override
+    public double getProd() {
+        throw new RuntimeException("not supported");
+    }
+    
+    @Override
     public double dot(double[] other) {
         double sum = 0;
         for(int i=0; i<top; i++)

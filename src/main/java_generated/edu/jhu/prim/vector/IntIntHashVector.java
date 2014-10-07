@@ -170,4 +170,9 @@ public class IntIntHashVector extends IntIntHashMap implements IntIntVector {
         
     }
 
+    @Override
+    public int getProd() {
+        throw new RuntimeException("not supported");
+    }
+
 }

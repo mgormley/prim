@@ -246,6 +246,11 @@ public class IntLongSortedVector extends IntLongSortedMap implements IntLongVect
         return prod;
     }
 
+    @Override
+    public long getProd() {
+        throw new RuntimeException("not supported");
+    }    
+
     /**
      * Applies the function to every pair of entries in this vector and an
      * other. If the call is skipping zeros, then the function is only applied

@@ -246,6 +246,11 @@ public class IntLongUnsortedVector extends AbstractIntLongVector implements IntL
     }
 
     @Override
+    public long getProd() {
+        throw new RuntimeException("not supported");
+    }
+    
+    @Override
     public long dot(long[] other) {
         long sum = 0;
         for(int i=0; i<top; i++)
