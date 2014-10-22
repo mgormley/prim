@@ -6,8 +6,6 @@ import edu.jhu.prim.util.Lambda.FnLongDoubleToVoid;
 
 public abstract class AbstractLongDoubleVector {
 
-    private static final long serialVersionUID = 1L;
-    
     public abstract void iterate(FnLongDoubleToVoid function);
     
     public double getSum() {

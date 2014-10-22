@@ -161,6 +161,17 @@ public class LongDoubleHashMap extends AbstractLongDoubleVector implements Seria
         mask  = source.mask;
         count = source.count;
     }
+    
+    /** Builds a map with the given keys and values. */
+    public LongDoubleHashMap(long[] keys, double[] vals) {
+        this(keys.length);
+        if (keys.length != vals.length) {
+            throw new IllegalStateException("keys and vals must be of the same length");
+        }
+        for (int i=0; i<keys.length; i++) {
+            this.put(keys[i], vals[i]);
+        }
+    }
 
     /**
      * Compute the capacity needed for a given size.

@@ -1,6 +1,5 @@
 package edu.jhu.prim.vector;
 
-import edu.jhu.prim.arrays.LongArrays;
 import edu.jhu.prim.map.LongDoubleHashMap;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
@@ -35,6 +34,11 @@ public class LongDoubleHashVector extends LongDoubleHashMap implements LongDoubl
                 thisVec.set(idx, val);
             }
         });
+    }
+
+    /** Builds a vector with the given keys and values. */
+    public LongDoubleHashVector(long[] keys, double[] vals) {
+        super(keys, vals);
     }
     
     /** Gets a deep copy of this vector. */

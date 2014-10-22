@@ -9,7 +9,6 @@ import edu.jhu.prim.map.LongDoubleEntry;
 import edu.jhu.prim.map.LongDoubleSortedMap;
 import edu.jhu.prim.sort.LongDoubleSort;
 import edu.jhu.prim.util.Lambda;
-import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToVoid;
 import edu.jhu.prim.util.Lambda.LambdaBinOpDouble;
 import edu.jhu.prim.util.SafeCast;
