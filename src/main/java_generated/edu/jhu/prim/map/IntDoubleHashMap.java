@@ -110,14 +110,6 @@ public class IntDoubleHashMap extends AbstractIntDoubleVector implements Seriali
     /*  */
     
     /**
-     * Build an empty map with default size
-     * @param missingEntries value to return when a missing entry is fetched
-     */
-    public IntDoubleHashMap(final double missingEntries) {
-        this(DEFAULT_EXPECTED_SIZE, missingEntries);
-    }
-
-    /**
      * Build an empty map with specified size and using NaN for missing entries.
      * @param expectedSize expected number of elements in the map
      */

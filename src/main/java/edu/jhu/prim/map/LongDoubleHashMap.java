@@ -110,14 +110,6 @@ public class LongDoubleHashMap extends AbstractLongDoubleVector implements Seria
     /* START EXCLUDE ILV 1 */
     
     /**
-     * Build an empty map with default size
-     * @param missingEntries value to return when a missing entry is fetched
-     */
-    public LongDoubleHashMap(final double missingEntries) {
-        this(DEFAULT_EXPECTED_SIZE, missingEntries);
-    }
-
-    /**
      * Build an empty map with specified size and using NaN for missing entries.
      * @param expectedSize expected number of elements in the map
      */
