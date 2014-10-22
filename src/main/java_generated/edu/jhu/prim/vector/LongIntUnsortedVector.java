@@ -19,23 +19,19 @@ public class LongIntUnsortedVector extends AbstractLongIntVector implements Long
 
     private static final long serialVersionUID = 1L;
 
+    public static final int defaultSparseInitCapacity = 16;
+    
     public boolean printWarnings = true;
-
+    
     protected long[] idx;
     protected int[] vals;
     protected int top;          	// indices less than this are valid
     protected boolean compacted;    // are elements of idx sorted and unique?
 
-    // private constructor: must call static methods to initialize
-    public LongIntUnsortedVector(long[] idx, int[] values) {
-        if(idx != null && idx.length != values.length)
-            throw new IllegalArgumentException();
-        this.idx = idx;
-        this.vals = values;
-        this.top = idx.length;
-        this.compacted = false;
+    public LongIntUnsortedVector() {
+        this(defaultSparseInitCapacity);
     }
-
+    
     public LongIntUnsortedVector(int initCapacity) {
         idx = new long[initCapacity];
         vals = new int[initCapacity];
@@ -43,9 +39,24 @@ public class LongIntUnsortedVector extends AbstractLongIntVector implements Long
         compacted = true;
     }
 
-    public static final int defaultSparseInitCapacity = 16;
-    public LongIntUnsortedVector() {
-        this(defaultSparseInitCapacity);
+    /** Copy constructor. */
+    public LongIntUnsortedVector(LongIntUnsortedVector other) {
+        this(other.idx.length);
+        for (int i=0; i<other.top; i++) {
+            this.idx[i] = other.idx[i];
+            this.vals[i] = other.vals[i];
+        }
+        this.top = other.top;
+        this.compacted = other.compacted;
+    }
+    
+    public LongIntUnsortedVector(long[] idx, int[] values) {
+        if(idx != null && idx.length != values.length)
+            throw new IllegalArgumentException();
+        this.idx = idx;
+        this.vals = values;
+        this.top = idx.length;
+        this.compacted = false;
     }
 
     protected int capacity() {

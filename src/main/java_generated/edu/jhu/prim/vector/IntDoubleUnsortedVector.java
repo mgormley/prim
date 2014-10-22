@@ -19,23 +19,19 @@ public class IntDoubleUnsortedVector extends AbstractIntDoubleVector implements 
 
     private static final long serialVersionUID = 1L;
 
+    public static final int defaultSparseInitCapacity = 16;
+    
     public boolean printWarnings = true;
-
+    
     protected int[] idx;
     protected double[] vals;
     protected int top;          	// indices less than this are valid
     protected boolean compacted;    // are elements of idx sorted and unique?
 
-    // private constructor: must call static methods to initialize
-    public IntDoubleUnsortedVector(int[] idx, double[] values) {
-        if(idx != null && idx.length != values.length)
-            throw new IllegalArgumentException();
-        this.idx = idx;
-        this.vals = values;
-        this.top = idx.length;
-        this.compacted = false;
+    public IntDoubleUnsortedVector() {
+        this(defaultSparseInitCapacity);
     }
-
+    
     public IntDoubleUnsortedVector(int initCapacity) {
         idx = new int[initCapacity];
         vals = new double[initCapacity];
@@ -43,9 +39,24 @@ public class IntDoubleUnsortedVector extends AbstractIntDoubleVector implements 
         compacted = true;
     }
 
-    public static final int defaultSparseInitCapacity = 16;
-    public IntDoubleUnsortedVector() {
-        this(defaultSparseInitCapacity);
+    /** Copy constructor. */
+    public IntDoubleUnsortedVector(IntDoubleUnsortedVector other) {
+        this(other.idx.length);
+        for (int i=0; i<other.top; i++) {
+            this.idx[i] = other.idx[i];
+            this.vals[i] = other.vals[i];
+        }
+        this.top = other.top;
+        this.compacted = other.compacted;
+    }
+    
+    public IntDoubleUnsortedVector(int[] idx, double[] values) {
+        if(idx != null && idx.length != values.length)
+            throw new IllegalArgumentException();
+        this.idx = idx;
+        this.vals = values;
+        this.top = idx.length;
+        this.compacted = false;
     }
 
     protected int capacity() {

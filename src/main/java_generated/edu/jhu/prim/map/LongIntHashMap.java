@@ -64,7 +64,7 @@ public class LongIntHashMap extends AbstractLongIntVector implements Serializabl
     private static final long serialVersionUID = -3646337053166149105L;
 
     /** Load factor for the map. */
-    private static final float LOAD_FACTOR = 0.5f;
+    private static final float LOAD_FACTOR = 0.75f;
 
     /** Default starting size.
      * <p>This must be a power of two for bit mask to work properly. </p>
