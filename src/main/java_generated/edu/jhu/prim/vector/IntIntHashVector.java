@@ -1,6 +1,5 @@
 package edu.jhu.prim.vector;
 
-import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.map.IntIntHashMap;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
@@ -35,6 +34,11 @@ public class IntIntHashVector extends IntIntHashMap implements IntIntVector {
                 thisVec.set(idx, val);
             }
         });
+    }
+
+    /** Builds a vector with the given keys and values. */
+    public IntIntHashVector(int[] keys, int[] vals) {
+        super(keys, vals);
     }
     
     /** Gets a deep copy of this vector. */

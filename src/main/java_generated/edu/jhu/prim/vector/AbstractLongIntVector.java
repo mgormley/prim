@@ -6,8 +6,6 @@ import edu.jhu.prim.util.Lambda.FnLongIntToVoid;
 
 public abstract class AbstractLongIntVector {
 
-    private static final long serialVersionUID = 1L;
-    
     public abstract void iterate(FnLongIntToVoid function);
     
     public int getSum() {

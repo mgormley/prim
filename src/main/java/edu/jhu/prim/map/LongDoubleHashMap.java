@@ -164,7 +164,7 @@ public class LongDoubleHashMap extends AbstractLongDoubleVector implements Seria
     
     /** Builds a map with the given keys and values. */
     public LongDoubleHashMap(long[] keys, double[] vals) {
-        this(keys.length);
+        this(keys.length, Primitives.DEFAULT_MISSING_ENTRY_DOUBLE);
         if (keys.length != vals.length) {
             throw new IllegalStateException("keys and vals must be of the same length");
         }

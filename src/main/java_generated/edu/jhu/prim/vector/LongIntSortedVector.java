@@ -9,7 +9,6 @@ import edu.jhu.prim.map.LongIntEntry;
 import edu.jhu.prim.map.LongIntSortedMap;
 import edu.jhu.prim.sort.LongIntSort;
 import edu.jhu.prim.util.Lambda;
-import edu.jhu.prim.util.Lambda.FnLongIntToInt;
 import edu.jhu.prim.util.Lambda.FnLongIntToVoid;
 import edu.jhu.prim.util.Lambda.LambdaBinOpInt;
 import edu.jhu.prim.util.SafeCast;
