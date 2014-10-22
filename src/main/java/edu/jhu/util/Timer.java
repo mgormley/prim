@@ -95,6 +95,13 @@ public class Timer implements Serializable {
     public double totSec() {
         return totMs() / 1000.0;
     }
+    
+    /**
+     * Gets the total number of minutes.
+     */
+    public double totMin() {
+        return totMs() / 1000.0 / 60.0;
+    }
 
     /**
      * Gets the average number of seconds.
