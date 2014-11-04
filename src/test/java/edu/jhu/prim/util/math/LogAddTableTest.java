@@ -90,7 +90,7 @@ public class LogAddTableTest {
         int min = -10000;
         int max = 10000;
         // Check for logAdd differences.
-        double tolerance = 1e-1;
+        double tolerance = 1e-13;
         for (int i=min; i<max; i += 10) {
             for (int j=min; j<max; j += 10) {
                 double a = i+(random.nextDouble()*10);
