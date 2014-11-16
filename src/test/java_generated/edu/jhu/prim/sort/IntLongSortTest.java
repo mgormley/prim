@@ -19,7 +19,7 @@ public class IntLongSortTest {
     @Test
     public void testIntLongSortValuesAsc() {
         long[] values = new long[]{ 1, 3, 2, -1, 5};
-        int[] index = IntLongSort.getIntIndexArray(values);
+        int[] index = IntArrays.range(values.length);
         IntLongSort.sortValuesAsc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
@@ -31,7 +31,7 @@ public class IntLongSortTest {
     @Test
     public void testIntLongSortValuesDesc() {
         long[] values = new long[]{ 1, 3, 2, -1, 5};
-        int[] index = IntLongSort.getIntIndexArray(values);
+        int[] index = IntArrays.range(values.length);
         IntLongSort.sortValuesDesc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
@@ -43,7 +43,7 @@ public class IntLongSortTest {
     @Test
     public void testIntLongSortValuesInfinitiesAsc() {
         long[] values = new long[]{ 1, 9223372036854775806l, 2, -1, -9223372036854775806l, 5};
-        int[] index = IntLongSort.getIntIndexArray(values);
+        int[] index = IntArrays.range(values.length);
         IntLongSort.sortValuesAsc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
@@ -55,7 +55,7 @@ public class IntLongSortTest {
     @Test
     public void testIntLongSortValuesInfinitiesDesc() {
         long[] values = new long[]{ 1, 9223372036854775806l, 2, -1, -9223372036854775806l, 5};
-        int[] index = IntLongSort.getIntIndexArray(values);
+        int[] index = IntArrays.range(values.length);
         IntLongSort.sortValuesDesc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));

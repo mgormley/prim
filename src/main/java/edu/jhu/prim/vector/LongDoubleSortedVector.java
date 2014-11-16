@@ -7,7 +7,6 @@ import edu.jhu.prim.list.DoubleArrayList;
 import edu.jhu.prim.list.LongArrayList;
 import edu.jhu.prim.map.LongDoubleEntry;
 import edu.jhu.prim.map.LongDoubleSortedMap;
-import edu.jhu.prim.sort.LongDoubleSort;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToVoid;
 import edu.jhu.prim.util.Lambda.LambdaBinOpDouble;
@@ -40,7 +39,7 @@ public class LongDoubleSortedVector extends LongDoubleSortedMap implements LongD
 	}
 
 	public LongDoubleSortedVector(double[] denseRow) {
-		this(LongDoubleSort.getLongIndexArray(denseRow.length), denseRow);
+		this(LongArrays.range(denseRow.length), denseRow);
 	}
 	
 	/** Copy constructor. */

@@ -16,20 +16,24 @@ public class Lambda {
     }
 
     // TODO: Generalize this.
-    public interface LambdaOne<T> {
+    public interface FnO1ToVoid<T> {
         public void call(T obj);
     }
     
-    public interface LambdaOneToOne<T,S> {
+    public interface FnO1ToO2<T,S> {
         public S call(T obj);
     }
 
-    public interface LambdaTwo<T,S> {
+    public interface FnO1O2ToVoid<T,S> {
         public void call(T obj1, S obj2);
     }
 
-    public interface LambdaTwoToOne<T,S,V> {
+    public interface FnO1O2ToO3<T,S,V> {
         public V call(T obj1, S obj2);
+    }
+    
+    public interface FnIntToVoid {
+        public void call(int idx);
     }
     
     /* -------------------- Apply functions over vector entries ---------------------- */

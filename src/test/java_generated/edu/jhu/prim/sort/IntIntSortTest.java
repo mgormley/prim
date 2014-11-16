@@ -19,7 +19,7 @@ public class IntIntSortTest {
     @Test
     public void testIntIntSortValuesAsc() {
         int[] values = new int[]{ 1, 3, 2, -1, 5};
-        int[] index = IntIntSort.getIntIndexArray(values);
+        int[] index = IntArrays.range(values.length);
         IntIntSort.sortValuesAsc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
@@ -31,7 +31,7 @@ public class IntIntSortTest {
     @Test
     public void testIntIntSortValuesDesc() {
         int[] values = new int[]{ 1, 3, 2, -1, 5};
-        int[] index = IntIntSort.getIntIndexArray(values);
+        int[] index = IntArrays.range(values.length);
         IntIntSort.sortValuesDesc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
@@ -43,7 +43,7 @@ public class IntIntSortTest {
     @Test
     public void testIntIntSortValuesInfinitiesAsc() {
         int[] values = new int[]{ 1, 2147483646, 2, -1, -2147483646, 5};
-        int[] index = IntIntSort.getIntIndexArray(values);
+        int[] index = IntArrays.range(values.length);
         IntIntSort.sortValuesAsc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
@@ -55,7 +55,7 @@ public class IntIntSortTest {
     @Test
     public void testIntIntSortValuesInfinitiesDesc() {
         int[] values = new int[]{ 1, 2147483646, 2, -1, -2147483646, 5};
-        int[] index = IntIntSort.getIntIndexArray(values);
+        int[] index = IntArrays.range(values.length);
         IntIntSort.sortValuesDesc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));

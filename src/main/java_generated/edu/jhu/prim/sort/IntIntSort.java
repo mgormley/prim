@@ -220,27 +220,4 @@ public class IntIntSort {
 
     /*  */
 
-    /**
-     * Gets an array where array[i] = i.
-     * @param values The length of the index array will be values.length.
-     * @return The new index array.
-     */
-    public static int[] getIntIndexArray(int[] values) {
-        return getIntIndexArray(values.length);
-    }
-    
-    /**
-     * Gets an array where array[i] = i.
-     * @param length The length of the array.
-     * @return The new index array.
-     */
-    public static int[] getIntIndexArray(int length) {
-        int[] index = new int[length];
-        for (int i=0; i<index.length; i++) {
-            // TODO: This should maybe be a safe cast for the benefit of non-IntInt classes.
-            index[i] = (int) i;
-        }
-        return index;
-    }
-
 }

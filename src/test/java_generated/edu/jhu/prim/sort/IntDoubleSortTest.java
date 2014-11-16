@@ -19,7 +19,7 @@ public class IntDoubleSortTest {
     @Test
     public void testIntDoubleSortValuesAsc() {
         double[] values = new double[]{ 1, 3, 2, -1, 5};
-        int[] index = IntDoubleSort.getIntIndexArray(values);
+        int[] index = IntArrays.range(values.length);
         IntDoubleSort.sortValuesAsc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
@@ -31,7 +31,7 @@ public class IntDoubleSortTest {
     @Test
     public void testIntDoubleSortValuesDesc() {
         double[] values = new double[]{ 1, 3, 2, -1, 5};
-        int[] index = IntDoubleSort.getIntIndexArray(values);
+        int[] index = IntArrays.range(values.length);
         IntDoubleSort.sortValuesDesc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
@@ -43,7 +43,7 @@ public class IntDoubleSortTest {
     @Test
     public void testIntDoubleSortValuesInfinitiesAsc() {
         double[] values = new double[]{ 1, Double.POSITIVE_INFINITY, 2, -1, Double.NEGATIVE_INFINITY, 5};
-        int[] index = IntDoubleSort.getIntIndexArray(values);
+        int[] index = IntArrays.range(values.length);
         IntDoubleSort.sortValuesAsc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
@@ -55,7 +55,7 @@ public class IntDoubleSortTest {
     @Test
     public void testIntDoubleSortValuesInfinitiesDesc() {
         double[] values = new double[]{ 1, Double.POSITIVE_INFINITY, 2, -1, Double.NEGATIVE_INFINITY, 5};
-        int[] index = IntDoubleSort.getIntIndexArray(values);
+        int[] index = IntArrays.range(values.length);
         IntDoubleSort.sortValuesDesc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));

@@ -19,7 +19,7 @@ public class IntShortSortTest {
     @Test
     public void testIntShortSortValuesAsc() {
         short[] values = new short[]{ 1, 3, 2, -1, 5};
-        int[] index = IntShortSort.getIntIndexArray(values);
+        int[] index = IntArrays.range(values.length);
         IntShortSort.sortValuesAsc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
@@ -31,7 +31,7 @@ public class IntShortSortTest {
     @Test
     public void testIntShortSortValuesDesc() {
         short[] values = new short[]{ 1, 3, 2, -1, 5};
-        int[] index = IntShortSort.getIntIndexArray(values);
+        int[] index = IntArrays.range(values.length);
         IntShortSort.sortValuesDesc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
@@ -43,7 +43,7 @@ public class IntShortSortTest {
     @Test
     public void testIntShortSortValuesInfinitiesAsc() {
         short[] values = new short[]{ 1, 32767, 2, -1, -32768, 5};
-        int[] index = IntShortSort.getIntIndexArray(values);
+        int[] index = IntArrays.range(values.length);
         IntShortSort.sortValuesAsc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
@@ -55,7 +55,7 @@ public class IntShortSortTest {
     @Test
     public void testIntShortSortValuesInfinitiesDesc() {
         short[] values = new short[]{ 1, 32767, 2, -1, -32768, 5};
-        int[] index = IntShortSort.getIntIndexArray(values);
+        int[] index = IntArrays.range(values.length);
         IntShortSort.sortValuesDesc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));

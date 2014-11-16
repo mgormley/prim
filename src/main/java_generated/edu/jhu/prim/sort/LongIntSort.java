@@ -231,27 +231,4 @@ public class LongIntSort {
 
     /*  */
 
-    /**
-     * Gets an array where array[i] = i.
-     * @param values The length of the index array will be values.length.
-     * @return The new index array.
-     */
-    public static long[] getLongIndexArray(int[] values) {
-        return getLongIndexArray(values.length);
-    }
-    
-    /**
-     * Gets an array where array[i] = i.
-     * @param length The length of the array.
-     * @return The new index array.
-     */
-    public static long[] getLongIndexArray(int length) {
-        long[] index = new long[length];
-        for (int i=0; i<index.length; i++) {
-            // TODO: This should maybe be a safe cast for the benefit of non-LongInt classes.
-            index[i] = (long) i;
-        }
-        return index;
-    }
-
 }

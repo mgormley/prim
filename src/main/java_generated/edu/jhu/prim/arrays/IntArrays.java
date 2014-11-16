@@ -277,4 +277,18 @@ public class IntArrays {
         return b;
     }
 
+    /**
+     * Gets an array where array[i] = i.
+     * @param length The length of the array.
+     * @return The new index array.
+     */
+    public static int[] range(int length) {
+        int[] index = new int[length];
+        for (int i=0; i<index.length; i++) {
+            // TODO: This should maybe be a safe cast for the benefit of non-IntDouble classes.
+            index[i] = (int) i;
+        }
+        return index;
+    }
+
 }

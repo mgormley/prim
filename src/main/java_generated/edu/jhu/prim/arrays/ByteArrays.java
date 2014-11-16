@@ -277,4 +277,18 @@ public class ByteArrays {
         return b;
     }
 
+    /**
+     * Gets an array where array[i] = i.
+     * @param length The length of the array.
+     * @return The new index array.
+     */
+    public static byte[] range(int length) {
+        byte[] index = new byte[length];
+        for (int i=0; i<index.length; i++) {
+            // TODO: This should maybe be a safe cast for the benefit of non-ByteDouble classes.
+            index[i] = (byte) i;
+        }
+        return index;
+    }
+
 }

@@ -277,4 +277,18 @@ public class LongArrays {
         return b;
     }
 
+    /**
+     * Gets an array where array[i] = i.
+     * @param length The length of the array.
+     * @return The new index array.
+     */
+    public static long[] range(int length) {
+        long[] index = new long[length];
+        for (int i=0; i<index.length; i++) {
+            // TODO: This should maybe be a safe cast for the benefit of non-LongDouble classes.
+            index[i] = (long) i;
+        }
+        return index;
+    }
+
 }
