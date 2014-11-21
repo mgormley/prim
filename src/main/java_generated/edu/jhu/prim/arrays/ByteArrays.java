@@ -2,6 +2,7 @@ package edu.jhu.prim.arrays;
 
 import java.util.Arrays;
 
+import edu.jhu.prim.Primitives;
 import edu.jhu.util.Prng;
 
 /**
@@ -275,6 +276,26 @@ public class ByteArrays {
             }
         }
         return b;
+    }
+    
+    /** Checks in O(n) by linear search if the array contains the value. */
+    public static boolean contains(byte[] array, byte value) {
+        for (int i=0; i<array.length; i++) {
+            if (Primitives.equals(array[i], value)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /** Checks in O(n) by linear search if the array contains the value. */
+    public static boolean contains(byte[][] array, byte value) {
+        for (int i=0; i<array.length; i++) {
+            if (contains(array[i], value)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

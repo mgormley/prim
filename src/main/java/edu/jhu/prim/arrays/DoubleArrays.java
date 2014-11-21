@@ -479,7 +479,7 @@ public class DoubleArrays {
     /** Checks in O(n) by linear search if the array contains the value. */
     public static boolean contains(double[] array, double value, double delta) {
         for (int i=0; i<array.length; i++) {
-            if (Primitives.equals(array[i], value, 1e-13)) {
+            if (Primitives.equals(array[i], value, delta)) {
                 return true;
             }
         }
@@ -489,7 +489,7 @@ public class DoubleArrays {
     /** Checks in O(n) by linear search if the array contains the value. */
     public static boolean contains(double[][] array, double value, double delta) {
         for (int i=0; i<array.length; i++) {
-            if (contains(array[i], value, (double) 1e-13)) {
+            if (contains(array[i], value, delta)) {
                 return true;
             }
         }
