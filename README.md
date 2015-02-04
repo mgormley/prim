@@ -14,7 +14,7 @@ LongIntSortedVector, etc.
 
 # Using Prim
 
-The latest version is deployed on Maven Central:
+The latest public version is deployed on Maven Central:
 
     <dependency>
       <groupId>edu.jhu.prim</groupId>
