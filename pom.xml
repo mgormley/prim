@@ -59,7 +59,6 @@
           <useIncrementalCompilation>true</useIncrementalCompilation>
           <fork>true</fork>
         </configuration>
-        <version>3.1</version>
       </plugin>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
