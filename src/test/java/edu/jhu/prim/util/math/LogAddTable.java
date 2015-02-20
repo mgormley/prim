@@ -5,6 +5,7 @@ package edu.jhu.prim.util.math;
  * A port of Jason Smith's C++ LogTable code, used for POS tagging.
  * @author mgormley
  */
+@Deprecated
 public class LogAddTable {
 
     // Be careful changing this, logAdd depends on both this and logAddMin being

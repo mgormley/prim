@@ -26,7 +26,7 @@ public class FastMath {
      */
     public static double logAdd(double x, double y) {
         if (FastMath.useLogAddTable) {
-            return LogAddTable.logAdd(x,y);
+            return SmoothedLogAddTable.logAdd(x,y);
         } else {
             return FastMath.logAddExact(x,y);
         }
@@ -43,7 +43,7 @@ public class FastMath {
      */
     public static double logSubtract(double x, double y) {
         if (FastMath.useLogAddTable) {
-            return LogAddTable.logSubtract(x,y);
+            return SmoothedLogAddTable.logSubtract(x,y);
         } else {
             return FastMath.logSubtractExact(x,y);
         }
