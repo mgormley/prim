@@ -1,8 +1,8 @@
 package edu.jhu.prim.util.math;
 
 /**
- * A port of Tim Vieira's log-add table with linear interpolation, which is itself a port of my port
- * of Jason Smith's log add table implementation.
+ * A port of Tim Vieira's log-add table with linear interpolation, which is itself a port of Matt
+ * Gormley's port of Jason Smith's log add table implementation.
  * 
  * This version of Tim's code includes a few additional tweaks to increase precision at the
  * boundaries of the function by backing off to the exact version of the function.
@@ -14,8 +14,11 @@ public class SmoothedLogAddTable {
     static final double MIN = -128;
     static final double MAX = 0.0;
     private static final double WID = MAX-MIN;
+    // The number of entries in the table.
     private static final int TBL = 65536;
     private static final double INC = TBL*1.0/WID;
+    // This is a magic number chosen empirically to balance speed and accuracy.
+    private static final int NUM_TBL_ENTRIES_TO_CUTOFF = 13;
     // Log-add table.
     private static final double[] laTbl = new double[TBL+2];
     // Log-subtract table.
@@ -60,7 +63,7 @@ public class SmoothedLogAddTable {
         int i = (int) x; // Round down.
         
         //System.out.printf("TBL-i=%d i=%d negDiff=%g ", TBL-i, i, negDiff);
-        if (TBL-i <= 13) {
+        if (TBL-i <= NUM_TBL_ENTRIES_TO_CUTOFF) {
             return FastMath.logAddExact(a, b);
         } else {
             return a + laTbl[i] + (x - i)*(laTbl[i+1] - laTbl[i]);
@@ -79,7 +82,7 @@ public class SmoothedLogAddTable {
         double x = (((negDiff - MIN) * INC));
         int i = (int) x; // Round down.            
         //System.out.printf("TBL-i=%d i=%d negDiff=%g ", TBL-i, i, negDiff);
-        if (TBL-i <= 13) {
+        if (TBL-i <= NUM_TBL_ENTRIES_TO_CUTOFF) {
             return FastMath.logSubtractExact(a, b);
         } else if (x == i) {
             // This case is for when we don't use any logSubtractExact calls.
