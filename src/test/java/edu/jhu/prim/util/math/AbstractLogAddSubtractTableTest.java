@@ -169,7 +169,7 @@ public abstract class AbstractLogAddSubtractTableTest {
         double minStart = maxStart - 1;
         int numDivs = 100;
         double div = 2;
-        assertCorrectRangeLogAdd(maxStart, minStart, numDivs, div);
+        assertCorrectRangeLogAdd(maxStart, minStart, numDivs, div, 1e-13);
     }
 
     @Test
@@ -179,7 +179,7 @@ public abstract class AbstractLogAddSubtractTableTest {
         double minStart = maxStart - 100;
         int numDivs = 100;
         double div = 0.5;        
-        assertCorrectRangeLogAdd(maxStart, minStart, numDivs, div);
+        assertCorrectRangeLogAdd(maxStart, minStart, numDivs, div, 1e-13);
     } 
     
     @Test
@@ -189,7 +189,7 @@ public abstract class AbstractLogAddSubtractTableTest {
         double minStart = maxStart - 1;
         int numDivs = 100;
         double div = 2;
-        assertCorrectRangeLogSubtract(maxStart, minStart, numDivs, div);
+        assertCorrectRangeLogSubtract(maxStart, minStart, numDivs, div, 1e-13);
     }
 
     @Test
@@ -199,7 +199,7 @@ public abstract class AbstractLogAddSubtractTableTest {
         double minStart = maxStart - 100;
         int numDivs = 100;
         double div = 0.5;
-        assertCorrectRangeLogSubtract(maxStart, minStart, numDivs, div);
+        assertCorrectRangeLogSubtract(maxStart, minStart, numDivs, div, 1e-13);
     }
     
     /* ----------- This suite of tests ensures that the function behaves well around many start points. ----------- */
@@ -211,18 +211,19 @@ public abstract class AbstractLogAddSubtractTableTest {
             double minStart = maxStart - 1;
             int numDivs = 100;
             double div = 2;
-            assertCorrectRangeLogAdd(maxStart, minStart, numDivs, div);
+            assertCorrectRangeLogAdd(maxStart, minStart, numDivs, div, 1e-13);
         }
     }
 
     @Test
     public void testRangeLogAdd_DecreasingDifferences_ManyStarts() {
+        Random random = new Random();
         // Check for logAdd differences.
         for (double maxStart = -52; maxStart < 52; maxStart++) {
-            double minStart = maxStart - 1;
+            double minStart = maxStart - 100;
             int numDivs = 100;
-            double div = 0.5;
-            assertCorrectRangeLogAdd(maxStart, minStart, numDivs, div);
+            double mult = 0.5;
+            assertCorrectRangeLogAdd(maxStart, minStart, numDivs, mult, 1e-3);
         }
     } 
     
@@ -230,10 +231,10 @@ public abstract class AbstractLogAddSubtractTableTest {
     public void testRangeLogSubtract_IncreasingDifferences_ManyStarts() {
         // Check for logSubtract differences.
         for (double maxStart = -52; maxStart < 52; maxStart++) {
-            double minStart = maxStart - 100;
+            double minStart = maxStart - 1;
             int numDivs = 100;
-            double div = 2;
-            assertCorrectRangeLogSubtract(maxStart, minStart, numDivs, div);
+            double mult = 2;
+            assertCorrectRangeLogSubtract(maxStart, minStart, numDivs, mult, 1e-13);
         }
     }
 
@@ -241,30 +242,30 @@ public abstract class AbstractLogAddSubtractTableTest {
     public void testRangeLogSubtract_DecreasingDifferences_ManyStarts() {
         // Check for logSubtract differences.
         for (double maxStart = -52; maxStart < 52; maxStart++) {
-            double minStart = maxStart - 1;
+            double minStart = maxStart - 100;
             int numDivs = 100;
-            double div = 0.5;
-            assertCorrectRangeLogSubtract(maxStart, minStart, numDivs, div);
+            double mult = 0.5;
+            assertCorrectRangeLogSubtract(maxStart, minStart, numDivs, mult, 1e-13);
         }
     } 
         
-    protected void assertCorrectRangeLogAdd(double maxStart, double minStart, int numDivs, double div) {
+    protected void assertCorrectRangeLogAdd(double maxStart, double minStart, int numDivs, double div, double tolerance) {
         double diff = maxStart - minStart;
         double a = maxStart;
         double b = maxStart - diff;
         for (int i=0; i<numDivs; i++) {
-            assertCorrectLogAdd(a, b, 1e-13, true);
+            assertCorrectLogAdd(a, b, tolerance, true);
             diff *= div;
             b = maxStart - diff;
         }
     }   
     
-    protected void assertCorrectRangeLogSubtract(double maxStart, double minStart, int numDivs, double div) {
+    protected void assertCorrectRangeLogSubtract(double maxStart, double minStart, int numDivs, double div, double tolerance) {
         double diff = maxStart - minStart;
         double a = maxStart;
         double b = maxStart - diff;
         for (int i=0; i<numDivs; i++) {
-            assertCorrectLogSubtract(a, b, 1e-13, true);
+            assertCorrectLogSubtract(a, b, tolerance, true);
             diff *= div;
             b = maxStart - diff;
         }

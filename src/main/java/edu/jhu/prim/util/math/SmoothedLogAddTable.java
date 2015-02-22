@@ -77,7 +77,7 @@ public class SmoothedLogAddTable {
             return a;
         }
         double x = (((negDiff - MIN) * INC));
-        int i = (int) x; // Round down.        
+        int i = (int) x; // Round down.            
         //System.out.printf("TBL-i=%d i=%d negDiff=%g ", TBL-i, i, negDiff);
         if (TBL-i <= 13) {
             return FastMath.logSubtractExact(a, b);
