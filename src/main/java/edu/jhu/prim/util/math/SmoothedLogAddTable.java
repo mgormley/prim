@@ -11,14 +11,16 @@ package edu.jhu.prim.util.math;
  */
 public class SmoothedLogAddTable {
 
+    // Settings: 
+    //  - For precision of 1e-11, use MAX=-4 and TBL=65536*32.
+    //  - For precision of 1e-8,  use MAX=-2 and TBL=65536*4.
+    
     static final double MIN = -128;
-    static final double MAX = 0.0;
+    static final double MAX = -4;
     private static final double WID = MAX-MIN;
     // The number of entries in the table.
-    private static final int TBL = 65536;
+    private static final int TBL = 65536*32;
     private static final double INC = TBL*1.0/WID;
-    // This is a magic number chosen empirically to balance speed and accuracy.
-    private static final int NUM_TBL_ENTRIES_TO_CUTOFF = 13;
     // Log-add table.
     private static final double[] laTbl = new double[TBL+2];
     // Log-subtract table.
@@ -55,7 +57,9 @@ public class SmoothedLogAddTable {
         }
 
         double negDiff = b - a;
-        if (negDiff < MIN) {
+        if (negDiff > MAX) {
+            return FastMath.logAddExact(a, b);
+        } else if (negDiff < MIN) {
             // The function behaves linearly below this point.
             return a;
         }
@@ -63,11 +67,7 @@ public class SmoothedLogAddTable {
         int i = (int) x; // Round down.
         
         //System.out.printf("TBL-i=%d i=%d negDiff=%g ", TBL-i, i, negDiff);
-        if (TBL-i <= NUM_TBL_ENTRIES_TO_CUTOFF) {
-            return FastMath.logAddExact(a, b);
-        } else {
-            return a + laTbl[i] + (x - i)*(laTbl[i+1] - laTbl[i]);
-        }
+        return a + laTbl[i] + (x - i)*(laTbl[i+1] - laTbl[i]);
     }
 
     public static double logSubtract(double a, double b) {
@@ -75,16 +75,16 @@ public class SmoothedLogAddTable {
             throw new IllegalStateException("a must be >= b. a=" + a + " b=" + b);
         }
         double negDiff = b - a;
-        if (negDiff < MIN) {
+        if (negDiff > MAX) {
+            return FastMath.logSubtractExact(a, b);
+        } else if (negDiff < MIN) {
             // The function behaves linearly below this point.
             return a;
         }
         double x = (((negDiff - MIN) * INC));
         int i = (int) x; // Round down.            
         //System.out.printf("TBL-i=%d i=%d negDiff=%g ", TBL-i, i, negDiff);
-        if (TBL-i <= NUM_TBL_ENTRIES_TO_CUTOFF) {
-            return FastMath.logSubtractExact(a, b);
-        } else if (x == i) {
+        if (x == i) {
             // This case is for when we don't use any logSubtractExact calls.
             // It ensures that lsTbl[i+1] won't be out of bounds.
             return a + lsTbl[i];

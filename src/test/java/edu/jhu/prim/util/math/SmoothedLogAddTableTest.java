@@ -12,12 +12,12 @@ public class SmoothedLogAddTableTest extends AbstractLogAddSubtractTableTest {
         return SmoothedLogAddTable.logSubtract(a, b);
     }
    
-    protected double getToleranceForLogAddRandomTest() {
-        return 1e-6;
+    protected double getToleranceForLogAdd() {
+        return 1e-11;
     }
     
-    protected double getToleranceForLogSubtractRandomTest() {
-        return 1e-3;
+    protected double getToleranceForLogSubtract() {
+        return 1e-11;
     }
     
 }

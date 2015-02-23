@@ -18,14 +18,14 @@ public abstract class AbstractLogAddSubtractTableTest {
     protected abstract double logAdd(double a, double b);
     protected abstract double logSubtract(double a, double b);
 
-    protected abstract double getToleranceForLogAddRandomTest();
-    protected abstract double getToleranceForLogSubtractRandomTest();
-
+    protected abstract double getToleranceForLogAdd();
+    protected abstract double getToleranceForLogSubtract();
     
     @Test
     public void testLogAddEqualValues() {
         double largestNegDouble = -Double.MAX_VALUE;
         assertEquals(FastMath.logAddExact(-1, -1), logAdd(-1, -1), 1e-13);
+        assertEquals(FastMath.logAddExact(-4, -4), logAdd(-4, -4), 1e-13);
         assertEquals(FastMath.logAddExact(largestNegDouble, largestNegDouble), logAdd(largestNegDouble, largestNegDouble), 1e-13);
     }
     
@@ -33,6 +33,7 @@ public abstract class AbstractLogAddSubtractTableTest {
     public void testLogSubtractEqualValues() {
         double largestNegDouble = -Double.MAX_VALUE;
         assertEquals(FastMath.logSubtractExact(-1, -1), logSubtract(-1, -1), 1e-13);
+        assertEquals(FastMath.logSubtractExact(-4, -4), logSubtract(-4, -4), 1e-13);
         assertEquals(FastMath.logSubtractExact(largestNegDouble, largestNegDouble), logSubtract(largestNegDouble, largestNegDouble), 1e-13);
     }        
     
@@ -44,7 +45,7 @@ public abstract class AbstractLogAddSubtractTableTest {
         double max = 100;
         double incr = 1;
         // Check for logAdd differences.
-        double tolerance = getToleranceForLogAddRandomTest();
+        double tolerance = getToleranceForLogAdd();
         double worstTolerance = 0;
         for (double i=min; i<max; i += incr) {
             for (double j=min; j<max; j += incr) {
@@ -65,7 +66,7 @@ public abstract class AbstractLogAddSubtractTableTest {
         double min = -100;
         double max = 100;
         double incr = 1;
-        double tolerance = getToleranceForLogSubtractRandomTest();
+        double tolerance = getToleranceForLogSubtract();
         double worstTolerance = 0;
         for (double i=min; i<max; i += incr) {
             for (double j=min; j<max; j += incr) {
@@ -169,7 +170,7 @@ public abstract class AbstractLogAddSubtractTableTest {
         double minStart = maxStart - 1;
         int numDivs = 100;
         double div = 2;
-        assertCorrectRangeLogAdd(maxStart, minStart, numDivs, div, 1e-13);
+        assertCorrectRangeLogAdd(maxStart, minStart, numDivs, div, getToleranceForLogAdd());
     }
 
     @Test
@@ -179,7 +180,7 @@ public abstract class AbstractLogAddSubtractTableTest {
         double minStart = maxStart - 100;
         int numDivs = 100;
         double div = 0.5;        
-        assertCorrectRangeLogAdd(maxStart, minStart, numDivs, div, 1e-13);
+        assertCorrectRangeLogAdd(maxStart, minStart, numDivs, div, getToleranceForLogAdd());
     } 
     
     @Test
@@ -189,7 +190,7 @@ public abstract class AbstractLogAddSubtractTableTest {
         double minStart = maxStart - 1;
         int numDivs = 100;
         double div = 2;
-        assertCorrectRangeLogSubtract(maxStart, minStart, numDivs, div, 1e-13);
+        assertCorrectRangeLogSubtract(maxStart, minStart, numDivs, div, getToleranceForLogSubtract());
     }
 
     @Test
@@ -199,7 +200,7 @@ public abstract class AbstractLogAddSubtractTableTest {
         double minStart = maxStart - 100;
         int numDivs = 100;
         double div = 0.5;
-        assertCorrectRangeLogSubtract(maxStart, minStart, numDivs, div, 1e-13);
+        assertCorrectRangeLogSubtract(maxStart, minStart, numDivs, div, getToleranceForLogSubtract());
     }
     
     /* ----------- This suite of tests ensures that the function behaves well around many start points. ----------- */
@@ -211,7 +212,7 @@ public abstract class AbstractLogAddSubtractTableTest {
             double minStart = maxStart - 1;
             int numDivs = 100;
             double div = 2;
-            assertCorrectRangeLogAdd(maxStart, minStart, numDivs, div, 1e-13);
+            assertCorrectRangeLogAdd(maxStart, minStart, numDivs, div, getToleranceForLogAdd());
         }
     }
 
@@ -223,7 +224,7 @@ public abstract class AbstractLogAddSubtractTableTest {
             double minStart = maxStart - 100;
             int numDivs = 100;
             double mult = 0.5;
-            assertCorrectRangeLogAdd(maxStart, minStart, numDivs, mult, 1e-3);
+            assertCorrectRangeLogAdd(maxStart, minStart, numDivs, mult, getToleranceForLogAdd());
         }
     } 
     
@@ -234,7 +235,7 @@ public abstract class AbstractLogAddSubtractTableTest {
             double minStart = maxStart - 1;
             int numDivs = 100;
             double mult = 2;
-            assertCorrectRangeLogSubtract(maxStart, minStart, numDivs, mult, 1e-13);
+            assertCorrectRangeLogSubtract(maxStart, minStart, numDivs, mult, getToleranceForLogSubtract());
         }
     }
 
@@ -245,7 +246,7 @@ public abstract class AbstractLogAddSubtractTableTest {
             double minStart = maxStart - 100;
             int numDivs = 100;
             double mult = 0.5;
-            assertCorrectRangeLogSubtract(maxStart, minStart, numDivs, mult, 1e-13);
+            assertCorrectRangeLogSubtract(maxStart, minStart, numDivs, mult, getToleranceForLogSubtract());
         }
     } 
         
@@ -281,7 +282,7 @@ public abstract class AbstractLogAddSubtractTableTest {
         if (alwaysPrint || !(diff < tol)) {
             System.out.println(String.format("a=%g b=%g (a-b)=%7.2g diff=%7g table=%7g exact=%7g", a, b, (a-b), diff, table, exact));
         }
-        assertTrue(diff < tol);
+        if (!(diff < tol)) { assertEquals(exact, table, tol); }
         return diff;
     } 
         
@@ -295,7 +296,7 @@ public abstract class AbstractLogAddSubtractTableTest {
         if (alwaysPrint || !(diff < tol)) {
             System.out.println(String.format("a=%g b=%g (a-b)=%7.2g diff=%7g table=%7g exact=%7g", a, b, (a-b), diff, table, exact));
         }
-        assertTrue(diff < tol);
+        if (!(diff < tol)) { assertEquals(exact, table, tol); }
         return diff;
     }
     
