@@ -74,6 +74,14 @@ public class SmoothedLogAddTable {
         if (b > a) {            
             throw new IllegalStateException("a must be >= b. a=" + a + " b=" + b);
         }
+        if (Double.NEGATIVE_INFINITY == b) {
+            return a;
+        } else if (Double.NEGATIVE_INFINITY == a) {
+            return b;
+        } else if (a == b) {
+            return Double.NEGATIVE_INFINITY;
+        }
+        
         double negDiff = b - a;
         if (negDiff > MAX) {
             return FastMath.logSubtractExact(a, b);

@@ -22,11 +22,16 @@ public abstract class AbstractLogAddSubtractTableTest {
     protected abstract double getToleranceForLogSubtract();
     
     @Test
+    public void testInfinities() {
+    }
+    
+    @Test
     public void testLogAddEqualValues() {
         double largestNegDouble = -Double.MAX_VALUE;
         assertEquals(FastMath.logAddExact(-1, -1), logAdd(-1, -1), 1e-13);
         assertEquals(FastMath.logAddExact(-4, -4), logAdd(-4, -4), 1e-13);
         assertEquals(FastMath.logAddExact(largestNegDouble, largestNegDouble), logAdd(largestNegDouble, largestNegDouble), 1e-13);
+        assertEquals(FastMath.logAddExact(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY), logAdd(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY), 1e-13);
     }
     
     @Test
@@ -35,6 +40,7 @@ public abstract class AbstractLogAddSubtractTableTest {
         assertEquals(FastMath.logSubtractExact(-1, -1), logSubtract(-1, -1), 1e-13);
         assertEquals(FastMath.logSubtractExact(-4, -4), logSubtract(-4, -4), 1e-13);
         assertEquals(FastMath.logSubtractExact(largestNegDouble, largestNegDouble), logSubtract(largestNegDouble, largestNegDouble), 1e-13);
+        assertEquals(FastMath.logSubtractExact(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY), logSubtract(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY), 1e-13);
     }        
     
     @Test
