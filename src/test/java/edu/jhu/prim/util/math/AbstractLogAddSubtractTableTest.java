@@ -413,6 +413,46 @@ public abstract class AbstractLogAddSubtractTableTest {
         System.out.println(FastMath.logAddExact(0, 0));
     }
     
+    @Test
+    public void testFloatingPointPrecision() {
+        // Original computation.
+        System.out.println(89+23);
+        System.out.println(7+145);
+        System.out.println(logAdd(7+145, 89+23));
+        System.out.println(logSubtract(logAdd(7+145, 89+23), 7+145));
+        //
+        // Try scaling. (doesn't help.)
+        //
+        System.out.println(89+23-200);
+        System.out.println(7+145-200);
+        System.out.println(logAdd(7+145-200, 89+23-200));
+        System.out.println(logAdd(7+145-200, 89+23-200)+200);
+        System.out.println(logSubtract(logAdd(7+145-200, 89+23-200), 7+145-200)+200);
+        
+        // Find the point at which logAdd loses precision.
+        //double j = 10d;
+        for (int j : new int[]{1, 10, 20}) {
+            for (boolean useExact : new boolean[]{true, false}) {
+                for (int i = j - 40; i < j + 40; i++) {
+                    double diff;
+                    if (useExact) {
+                        diff = FastMath.logSubtractExact(FastMath.logAddExact((double) i, (double) j), (double) i);
+                    } else {
+                        diff = logSubtract(logAdd((double) i, (double) j), (double) i); 
+                    }
+                    System.out.println(String.format("exact=%7s j=%2d i=%2d (i-j)=%2d eq0=%7s diff=%g", ""+useExact, j, i, (i-j), 
+                            ""+(diff == Double.NEGATIVE_INFINITY), diff));
+                    if (diff == Double.NEGATIVE_INFINITY) {
+                        //System.out.println(String.format("exact=%7s j=%2d i=%2d (i-j)=%2d eq0=%7s diff=%g", ""+useExact, j, i, (i-j), 
+                                //""+(diff == Double.NEGATIVE_INFINITY), diff));
+                        break;
+                    }
+                }
+            }
+        }
+        
+    }
+    
     /* -------------------- The ABOVE tests only print. -------------------- */
     
 }
