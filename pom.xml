@@ -4,12 +4,16 @@
 
   <groupId>edu.jhu.prim</groupId>
   <artifactId>prim</artifactId>
-  <version>3.0.9</version>
+  <version>3.0.10-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>${project.groupId}:${project.artifactId}</name>
   <description>Prim - A Java Primitives Library.</description>
   <url>https://github.com/mgormley/prim</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
 
   <developers>
     <developer>
@@ -42,10 +46,6 @@
     <url>scm:git:git@github.com:mgormley/prim.git</url>
     <developerConnection>scm:git:git@github.com:mgormley/prim.git</developerConnection>
   </scm>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
 
   <build>
     <plugins>
