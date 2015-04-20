@@ -9,6 +9,7 @@ import edu.jhu.prim.sort.IntDoubleSort;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToVoid;
 import edu.jhu.prim.util.SafeCast;
+import edu.jhu.prim.util.math.FastMath;
 
 /**
  * Lazily-sorted vector.
@@ -230,7 +231,7 @@ public class IntDoubleUnsortedVector extends AbstractIntDoubleVector implements 
             double v = vals[i];
             sum += v * v;
         }
-        return Math.sqrt(sum);
+        return FastMath.sqrt(sum);
     }
 
     public double lInfNorm() {
@@ -246,7 +247,7 @@ public class IntDoubleUnsortedVector extends AbstractIntDoubleVector implements 
         return biggest >= 0 ? biggest : -biggest;
     }
 
-    public void makeUnitVector() { scale(1d / l2Norm()); }
+    public void makeUnitVector() { scale(1 / l2Norm()); }
 
     /**
      * returns true if any values are NaN or Inf

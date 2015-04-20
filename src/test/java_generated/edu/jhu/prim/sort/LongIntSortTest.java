@@ -7,9 +7,10 @@ import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 
+import edu.jhu.prim.Primitives;
 import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.arrays.LongArrays;
-import edu.jhu.prim.util.JUnitUtils;
+import edu.jhu.prim.util.IntJUnitUtils;
 import edu.jhu.util.Timer;
 
 public class LongIntSortTest {
@@ -24,7 +25,7 @@ public class LongIntSortTest {
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new int[]{ -1, 1, 2, 3, 5}, values);
+        IntJUnitUtils.assertArrayEquals(new int[]{ -1, 1, 2, 3, 5}, values);
         Assert.assertArrayEquals(new long[]{ 3, 0, 2, 1, 4}, index);
     }
     
@@ -36,7 +37,7 @@ public class LongIntSortTest {
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new int[]{ 5, 3, 2, 1, -1}, values);
+        IntJUnitUtils.assertArrayEquals(new int[]{ 5, 3, 2, 1, -1}, values);
         Assert.assertArrayEquals(new long[]{ 4, 1, 2, 0, 3}, index);
     }
     
@@ -48,7 +49,7 @@ public class LongIntSortTest {
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
 
-        JUnitUtils.assertArrayEquals(new int[]{-2147483646, -1, 1, 2, 5, 2147483646}, values);
+        IntJUnitUtils.assertArrayEquals(new int[]{-2147483646, -1, 1, 2, 5, 2147483646}, values);
         Assert.assertArrayEquals(new long[]{ 4, 3, 0, 2, 5, 1 }, index);
     }
     
@@ -60,7 +61,7 @@ public class LongIntSortTest {
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new int[]{2147483646,  5, 2, 1, -1, -2147483646}, values);
+        IntJUnitUtils.assertArrayEquals(new int[]{2147483646,  5, 2, 1, -1, -2147483646}, values);
         Assert.assertArrayEquals(new long[]{ 1, 5, 2, 0, 3, 4 }, index);
     }    
 
@@ -72,7 +73,7 @@ public class LongIntSortTest {
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new int[]{ 1, 5, 3, 2, -1 }, values);
+        IntJUnitUtils.assertArrayEquals(new int[]{ 1, 5, 3, 2, -1 }, values);
         Assert.assertArrayEquals(new long[]{ 1, 3, 4, 5, 8 }, index);
     }
 
@@ -84,7 +85,7 @@ public class LongIntSortTest {
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new int[]{ -1, 2, 3, 5, 1 }, values);
+        IntJUnitUtils.assertArrayEquals(new int[]{ -1, 2, 3, 5, 1 }, values);
         Assert.assertArrayEquals(new long[]{ 8, 5, 4, 3, 1 }, index);
     }
     

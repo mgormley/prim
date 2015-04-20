@@ -7,7 +7,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import edu.jhu.prim.util.JUnitUtils;
+import edu.jhu.prim.util.ByteJUnitUtils;
 
 public class ByteSortTest {
     
@@ -18,7 +18,7 @@ public class ByteSortTest {
         byte[] values = new byte[]{ 1, 3, 2, -1, 5};
         ByteSort.sortAsc(values);
         System.out.println(Arrays.toString(values));
-        JUnitUtils.assertArrayEquals(new byte[]{ -1, 1, 2, 3, 5}, values);
+        ByteJUnitUtils.assertArrayEquals(new byte[]{ -1, 1, 2, 3, 5}, values);
     }
     
     @Test
@@ -26,7 +26,7 @@ public class ByteSortTest {
         byte[] values = new byte[]{ 1, 3, 2, -1, 5};
         ByteSort.sortDesc(values);
         System.out.println(Arrays.toString(values));
-        JUnitUtils.assertArrayEquals(new byte[]{5, 3, 2, 1, -1}, values);
+        ByteJUnitUtils.assertArrayEquals(new byte[]{5, 3, 2, 1, -1}, values);
     }
     
     @Test

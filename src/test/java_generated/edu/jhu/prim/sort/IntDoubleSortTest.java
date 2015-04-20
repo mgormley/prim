@@ -7,9 +7,10 @@ import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 
+import edu.jhu.prim.Primitives;
 import edu.jhu.prim.arrays.DoubleArrays;
 import edu.jhu.prim.arrays.IntArrays;
-import edu.jhu.prim.util.JUnitUtils;
+import edu.jhu.prim.util.DoubleJUnitUtils;
 import edu.jhu.util.Timer;
 
 public class IntDoubleSortTest {
@@ -24,7 +25,7 @@ public class IntDoubleSortTest {
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new double[]{ -1, 1, 2, 3, 5}, values, 1e-13);
+        DoubleJUnitUtils.assertArrayEquals(new double[]{ -1, 1, 2, 3, 5}, values, Primitives.DEFAULT_DOUBLE_DELTA);
         Assert.assertArrayEquals(new int[]{ 3, 0, 2, 1, 4}, index);
     }
     
@@ -36,7 +37,7 @@ public class IntDoubleSortTest {
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new double[]{ 5, 3, 2, 1, -1}, values, 1e-13);
+        DoubleJUnitUtils.assertArrayEquals(new double[]{ 5, 3, 2, 1, -1}, values, Primitives.DEFAULT_DOUBLE_DELTA);
         Assert.assertArrayEquals(new int[]{ 4, 1, 2, 0, 3}, index);
     }
     
@@ -48,7 +49,7 @@ public class IntDoubleSortTest {
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
 
-        JUnitUtils.assertArrayEquals(new double[]{Double.NEGATIVE_INFINITY, -1, 1, 2, 5, Double.POSITIVE_INFINITY}, values, 1e-13);
+        DoubleJUnitUtils.assertArrayEquals(new double[]{Double.NEGATIVE_INFINITY, -1, 1, 2, 5, Double.POSITIVE_INFINITY}, values, Primitives.DEFAULT_DOUBLE_DELTA);
         Assert.assertArrayEquals(new int[]{ 4, 3, 0, 2, 5, 1 }, index);
     }
     
@@ -60,7 +61,7 @@ public class IntDoubleSortTest {
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new double[]{Double.POSITIVE_INFINITY,  5, 2, 1, -1, Double.NEGATIVE_INFINITY}, values, 1e-13);
+        DoubleJUnitUtils.assertArrayEquals(new double[]{Double.POSITIVE_INFINITY,  5, 2, 1, -1, Double.NEGATIVE_INFINITY}, values, Primitives.DEFAULT_DOUBLE_DELTA);
         Assert.assertArrayEquals(new int[]{ 1, 5, 2, 0, 3, 4 }, index);
     }    
 
@@ -72,7 +73,7 @@ public class IntDoubleSortTest {
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new double[]{ 1, 5, 3, 2, -1 }, values, 1e-13);
+        DoubleJUnitUtils.assertArrayEquals(new double[]{ 1, 5, 3, 2, -1 }, values, Primitives.DEFAULT_DOUBLE_DELTA);
         Assert.assertArrayEquals(new int[]{ 1, 3, 4, 5, 8 }, index);
     }
 
@@ -84,7 +85,7 @@ public class IntDoubleSortTest {
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new double[]{ -1, 2, 3, 5, 1 }, values, 1e-13);
+        DoubleJUnitUtils.assertArrayEquals(new double[]{ -1, 2, 3, 5, 1 }, values, Primitives.DEFAULT_DOUBLE_DELTA);
         Assert.assertArrayEquals(new int[]{ 8, 5, 4, 3, 1 }, index);
     }
     

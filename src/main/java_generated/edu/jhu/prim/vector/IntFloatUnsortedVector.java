@@ -4,10 +4,10 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 import edu.jhu.prim.iter.IntIter;
-import edu.jhu.prim.map.IntIntEntry;
-import edu.jhu.prim.sort.IntIntSort;
-import edu.jhu.prim.util.Lambda.FnIntIntToInt;
-import edu.jhu.prim.util.Lambda.FnIntIntToVoid;
+import edu.jhu.prim.map.IntFloatEntry;
+import edu.jhu.prim.sort.IntFloatSort;
+import edu.jhu.prim.util.Lambda.FnIntFloatToFloat;
+import edu.jhu.prim.util.Lambda.FnIntFloatToVoid;
 import edu.jhu.prim.util.SafeCast;
 import edu.jhu.prim.util.math.FastMath;
 
@@ -16,7 +16,7 @@ import edu.jhu.prim.util.math.FastMath;
  * 
  * @author Travis Wolfe <twolfe18@gmail.com>
  */
-public class IntIntUnsortedVector extends AbstractIntIntVector implements IntIntVector, Iterable<IntIntEntry> {
+public class IntFloatUnsortedVector extends AbstractIntFloatVector implements IntFloatVector, Iterable<IntFloatEntry> {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,23 +25,23 @@ public class IntIntUnsortedVector extends AbstractIntIntVector implements IntInt
     public boolean printWarnings = true;
     
     protected int[] idx;
-    protected int[] vals;
+    protected float[] vals;
     protected int top;          	// indices less than this are valid
     protected boolean compacted;    // are elements of idx sorted and unique?
 
-    public IntIntUnsortedVector() {
+    public IntFloatUnsortedVector() {
         this(defaultSparseInitCapacity);
     }
     
-    public IntIntUnsortedVector(int initCapacity) {
+    public IntFloatUnsortedVector(int initCapacity) {
         idx = new int[initCapacity];
-        vals = new int[initCapacity];
+        vals = new float[initCapacity];
         top = 0;
         compacted = true;
     }
 
     /** Copy constructor. */
-    public IntIntUnsortedVector(IntIntUnsortedVector other) {
+    public IntFloatUnsortedVector(IntFloatUnsortedVector other) {
         this(other.idx.length);
         for (int i=0; i<other.top; i++) {
             this.idx[i] = other.idx[i];
@@ -51,7 +51,7 @@ public class IntIntUnsortedVector extends AbstractIntIntVector implements IntInt
         this.compacted = other.compacted;
     }
     
-    public IntIntUnsortedVector(int[] idx, int[] values) {
+    public IntFloatUnsortedVector(int[] idx, float[] values) {
         if(idx != null && idx.length != values.length)
             throw new IllegalArgumentException();
         this.idx = idx;
@@ -65,8 +65,8 @@ public class IntIntUnsortedVector extends AbstractIntIntVector implements IntInt
     }
 
     @Override
-    public IntIntUnsortedVector clone() {
-        IntIntUnsortedVector v = new IntIntUnsortedVector(0);
+    public IntFloatUnsortedVector clone() {
+        IntFloatUnsortedVector v = new IntFloatUnsortedVector(0);
         v.idx = Arrays.copyOf(idx, idx.length);
         v.vals = Arrays.copyOf(vals, vals.length);
         v.top = top;
@@ -75,12 +75,12 @@ public class IntIntUnsortedVector extends AbstractIntIntVector implements IntInt
     }
 
     @Override
-    public IntIntVector copy() {
+    public IntFloatVector copy() {
         return clone();
     }
 
     @Override
-    public int get(int index) {
+    public float get(int index) {
         // if we need to do an O(#non-zero) operation here anyway, might as well compact
         compact();
         int i = findIndexMatching(index);
@@ -126,7 +126,7 @@ public class IntIntUnsortedVector extends AbstractIntIntVector implements IntInt
         if(compacted) return;
         
         // sort items by index (not including junk >=top)
-        IntIntSort.sortIndexAsc(idx, vals, top);
+        IntFloatSort.sortIndexAsc(idx, vals, top);
 
         // let add() remove duplicate entries
         int oldTop = top;
@@ -144,7 +144,7 @@ public class IntIntUnsortedVector extends AbstractIntIntVector implements IntInt
 
     public void compact() { compact(false); }
     
-    public static boolean dbgEquals(IntIntUnsortedVector a, IntIntUnsortedVector b) {
+    public static boolean dbgEquals(IntFloatUnsortedVector a, IntFloatUnsortedVector b) {
         if(a.top != b.top) return false;
         if(a.compacted ^ b.compacted) return false;
         for(int i=0; i<a.top; i++) {
@@ -167,7 +167,7 @@ public class IntIntUnsortedVector extends AbstractIntIntVector implements IntInt
     /**
      * NOTE: this is much less efficient than calls to add().
      */
-    public int set(int index, int value) {
+    public float set(int index, float value) {
         compact();
         int i = findIndexMatching(index);
         if(i < 0) {
@@ -175,13 +175,13 @@ public class IntIntUnsortedVector extends AbstractIntIntVector implements IntInt
             compacted = false;
             return 0;
         } else {
-            int old = vals[i];
+            float old = vals[i];
             vals[i] = value;
             return old;
         }
     }
 
-    public void add(int index, int value) {
+    public void add(int index, float value) {
         if(value == 0) return;
         int prevIdx = top > 0 ? idx[top-1] : -1;
         if(index == prevIdx) {
@@ -207,26 +207,81 @@ public class IntIntUnsortedVector extends AbstractIntIntVector implements IntInt
     }
 
     /*  */
+    
+    public int l0Norm() {
+        compact();
+        return top;
+    }
 
-    public void scale(int factor) {
+    public float l1Norm() {
+        compact();
+        float sum = 0;
+        for(int i=0; i<top; i++) {
+            float v = vals[i];
+            if(v >= 0) sum += v;
+            else sum -= v;
+        }
+        return sum;
+    }
+
+    public float l2Norm() {
+        compact();
+        float sum = 0;
+        for(int i=0; i<top; i++) {
+            float v = vals[i];
+            sum += v * v;
+        }
+        return FastMath.sqrt(sum);
+    }
+
+    public float lInfNorm() {
+        float biggest = 0;
+        compact();
+        for(int i=0; i<top; i++) {
+            float v = vals[i];
+            if(v < 0 && v < biggest)
+                biggest = v;
+            else if(v > 0 && v > biggest)
+                biggest = v;
+        }
+        return biggest >= 0 ? biggest : -biggest;
+    }
+
+    public void makeUnitVector() { scale(1 / l2Norm()); }
+
+    /**
+     * returns true if any values are NaN or Inf
+     */
+    public boolean hasBadValues() {
+        for(int i=0; i<top; i++) {
+            float v = vals[i];
+            boolean bad = Float.isNaN(v) || Float.isInfinite(v);
+            if(bad) return true;
+        }
+        return false;
+    }
+    
+    /*  */
+
+    public void scale(float factor) {
         // no need to compact here: a*x + a*y = a*(x+y)
         for(int i=0; i<top; i++)
             vals[i] *= factor;
     }
     
     @Override
-    public void add(IntIntVector other) {
-        final IntIntUnsortedVector me = this;
-        other.iterate(new FnIntIntToVoid() {
+    public void add(IntFloatVector other) {
+        final IntFloatUnsortedVector me = this;
+        other.iterate(new FnIntFloatToVoid() {
             @Override
-            public void call(int idx, int val) {
+            public void call(int idx, float val) {
                 me.add(idx, val);
             }
         });
     }
 
     @Override
-    public void apply(FnIntIntToInt function) {
+    public void apply(FnIntFloatToFloat function) {
         compact();
         for(int i=0; i<top; i++) {
             vals[i] = function.call(idx[i], vals[i]);
@@ -234,7 +289,7 @@ public class IntIntUnsortedVector extends AbstractIntIntVector implements IntInt
     }
 
     @Override
-    public void iterate(FnIntIntToVoid function) {
+    public void iterate(FnIntFloatToVoid function) {
         compact();
         for(int i=0; i<top; i++) {
             function.call(idx[i], vals[i]);
@@ -242,45 +297,45 @@ public class IntIntUnsortedVector extends AbstractIntIntVector implements IntInt
     }
 
     @Override
-    public void subtract(IntIntVector other) {
-        final IntIntUnsortedVector me = this;
-        other.iterate(new FnIntIntToVoid() {
+    public void subtract(IntFloatVector other) {
+        final IntFloatUnsortedVector me = this;
+        other.iterate(new FnIntFloatToVoid() {
             @Override
-            public void call(int idx, int val) {
+            public void call(int idx, float val) {
                 me.add(idx, - val);
             }
         });
     }
 
     @Override
-    public void product(IntIntVector other) {
+    public void product(IntFloatVector other) {
         throw new RuntimeException("not supported");
     }
 
     @Override
-    public int getProd() {
+    public float getProd() {
         throw new RuntimeException("not supported");
     }
     
     @Override
-    public int dot(int[] other) {
-        int sum = 0;
+    public float dot(float[] other) {
+        float sum = 0;
         for(int i=0; i<top; i++)
             sum += other[idx[i]] * vals[i];
         return sum;
     }
 
     @Override
-    public int dot(IntIntVector other) {
-        if(other instanceof IntIntUnsortedVector) {
-            IntIntUnsortedVector oth = (IntIntUnsortedVector) other;
-            IntIntUnsortedVector smaller = this, bigger = oth;
+    public float dot(IntFloatVector other) {
+        if(other instanceof IntFloatUnsortedVector) {
+            IntFloatUnsortedVector oth = (IntFloatUnsortedVector) other;
+            IntFloatUnsortedVector smaller = this, bigger = oth;
             if(this.top > oth.top) {
                 smaller = oth; bigger = this;
             }
             smaller.compact();
             bigger.compact();
-            int dot = 0;
+            float dot = 0;
             int j = 0;
             int attempt = bigger.idx[j];
             for(int i=0; i<smaller.top; i++) {
@@ -294,7 +349,7 @@ public class IntIntUnsortedVector extends AbstractIntIntVector implements IntInt
             }
             return dot;
         } else {
-            int dot = 0;
+            float dot = 0;
             for(int i=0; i<top; i++) {
                 dot += vals[i] * other.get(idx[i]);
             }
@@ -321,15 +376,15 @@ public class IntIntUnsortedVector extends AbstractIntIntVector implements IntInt
         return new SparseIdxIter(idx, top);
     }
 
-    public class IntIntEntryImpl implements IntIntEntry {
+    public class IntFloatEntryImpl implements IntFloatEntry {
         private int i;
-        public IntIntEntryImpl(int i) {
+        public IntFloatEntryImpl(int i) {
             this.i = i;
         }
         public int index() {
             return idx[i];
         }
-        public int get() {
+        public float get() {
             return vals[i];
         }
     }
@@ -338,10 +393,10 @@ public class IntIntUnsortedVector extends AbstractIntIntVector implements IntInt
      * This iterator is fast in the case of for(Entry e : vector) { }, however a
      * given entry should not be used after the following call to next().
      */
-    public class IntIntIterator implements Iterator<IntIntEntry> {
+    public class IntFloatIterator implements Iterator<IntFloatEntry> {
 
         // The current entry.
-        private IntIntEntryImpl entry = new IntIntEntryImpl(-1);
+        private IntFloatEntryImpl entry = new IntFloatEntryImpl(-1);
 
         @Override
         public boolean hasNext() {
@@ -349,7 +404,7 @@ public class IntIntUnsortedVector extends AbstractIntIntVector implements IntInt
         }
 
         @Override
-        public IntIntEntry next() {
+        public IntFloatEntry next() {
             entry.i++;
             return entry;
         }
@@ -364,11 +419,11 @@ public class IntIntUnsortedVector extends AbstractIntIntVector implements IntInt
     /*
      * (non-Javadoc)
      * 
-     * @see edu.jhu.util.vector.IntIntMap#iterator()
+     * @see edu.jhu.util.vector.IntFloatMap#iterator()
      */
     @Override
-    public Iterator<IntIntEntry> iterator() {
-        return new IntIntIterator();
+    public Iterator<IntFloatEntry> iterator() {
+        return new IntFloatIterator();
     }
     
     @Override
@@ -394,12 +449,12 @@ public class IntIntUnsortedVector extends AbstractIntIntVector implements IntInt
     }
 
     @Override
-    public int[] toNativeArray() {
+    public float[] toNativeArray() {
         compact();
-        final int[] arr = new int[getNumImplicitEntries()];
-        iterate(new FnIntIntToVoid() {
+        final float[] arr = new float[getNumImplicitEntries()];
+        iterate(new FnIntFloatToVoid() {
             @Override
-            public void call(int idx, int val) {
+            public void call(int idx, float val) {
                 arr[idx] = val;
             }
         });
@@ -418,7 +473,7 @@ public class IntIntUnsortedVector extends AbstractIntIntVector implements IntInt
      * Gets the INTERNAL representation of the values. Great care should be
      * taken to avoid touching the values beyond the used values.
      */
-    public int[] getInternalValues() {
+    public float[] getInternalValues() {
         return vals;
     }
     

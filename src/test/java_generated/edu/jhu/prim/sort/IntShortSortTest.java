@@ -7,9 +7,10 @@ import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 
+import edu.jhu.prim.Primitives;
 import edu.jhu.prim.arrays.ShortArrays;
 import edu.jhu.prim.arrays.IntArrays;
-import edu.jhu.prim.util.JUnitUtils;
+import edu.jhu.prim.util.ShortJUnitUtils;
 import edu.jhu.util.Timer;
 
 public class IntShortSortTest {
@@ -24,7 +25,7 @@ public class IntShortSortTest {
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new short[]{ -1, 1, 2, 3, 5}, values);
+        ShortJUnitUtils.assertArrayEquals(new short[]{ -1, 1, 2, 3, 5}, values);
         Assert.assertArrayEquals(new int[]{ 3, 0, 2, 1, 4}, index);
     }
     
@@ -36,7 +37,7 @@ public class IntShortSortTest {
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new short[]{ 5, 3, 2, 1, -1}, values);
+        ShortJUnitUtils.assertArrayEquals(new short[]{ 5, 3, 2, 1, -1}, values);
         Assert.assertArrayEquals(new int[]{ 4, 1, 2, 0, 3}, index);
     }
     
@@ -48,7 +49,7 @@ public class IntShortSortTest {
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
 
-        JUnitUtils.assertArrayEquals(new short[]{-32768, -1, 1, 2, 5, 32767}, values);
+        ShortJUnitUtils.assertArrayEquals(new short[]{-32768, -1, 1, 2, 5, 32767}, values);
         Assert.assertArrayEquals(new int[]{ 4, 3, 0, 2, 5, 1 }, index);
     }
     
@@ -60,7 +61,7 @@ public class IntShortSortTest {
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new short[]{32767,  5, 2, 1, -1, -32768}, values);
+        ShortJUnitUtils.assertArrayEquals(new short[]{32767,  5, 2, 1, -1, -32768}, values);
         Assert.assertArrayEquals(new int[]{ 1, 5, 2, 0, 3, 4 }, index);
     }    
 
@@ -72,7 +73,7 @@ public class IntShortSortTest {
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new short[]{ 1, 5, 3, 2, -1 }, values);
+        ShortJUnitUtils.assertArrayEquals(new short[]{ 1, 5, 3, 2, -1 }, values);
         Assert.assertArrayEquals(new int[]{ 1, 3, 4, 5, 8 }, index);
     }
 
@@ -84,7 +85,7 @@ public class IntShortSortTest {
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new short[]{ -1, 2, 3, 5, 1 }, values);
+        ShortJUnitUtils.assertArrayEquals(new short[]{ -1, 2, 3, 5, 1 }, values);
         Assert.assertArrayEquals(new int[]{ 8, 5, 4, 3, 1 }, index);
     }
     

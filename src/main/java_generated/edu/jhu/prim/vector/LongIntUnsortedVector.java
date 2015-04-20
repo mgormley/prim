@@ -9,6 +9,7 @@ import edu.jhu.prim.sort.LongIntSort;
 import edu.jhu.prim.util.Lambda.FnLongIntToInt;
 import edu.jhu.prim.util.Lambda.FnLongIntToVoid;
 import edu.jhu.prim.util.SafeCast;
+import edu.jhu.prim.util.math.FastMath;
 
 /**
  * Lazily-sorted vector.

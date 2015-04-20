@@ -7,7 +7,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import edu.jhu.prim.util.JUnitUtils;
+import edu.jhu.prim.util.DoubleJUnitUtils;
 
 public class DoubleSortTest {
     
@@ -18,7 +18,7 @@ public class DoubleSortTest {
         double[] values = new double[]{ 1.0f, 3.0f, 2.0f, -1.0, 5.0};
         DoubleSort.sortAsc(values);
         System.out.println(Arrays.toString(values));
-        JUnitUtils.assertArrayEquals(new double[]{ -1.0, 1.0f, 2.0, 3.0f, 5.0}, values, 1e-13);
+        DoubleJUnitUtils.assertArrayEquals(new double[]{ -1.0, 1.0f, 2.0, 3.0f, 5.0}, values, 1e-13);
     }
     
     @Test
@@ -26,7 +26,7 @@ public class DoubleSortTest {
         double[] values = new double[]{ 1.0f, 3.0f, 2.0f, -1.0, 5.0};
         DoubleSort.sortDesc(values);
         System.out.println(Arrays.toString(values));
-        JUnitUtils.assertArrayEquals(new double[]{5.0, 3.0, 2.0, 1.0, -1.0}, values, 1e-13);
+        DoubleJUnitUtils.assertArrayEquals(new double[]{5.0, 3.0, 2.0, 1.0, -1.0}, values, 1e-13);
     }
     
     @Test

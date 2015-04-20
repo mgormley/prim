@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import edu.jhu.prim.util.JUnitUtils;
+import edu.jhu.prim.util.DoubleJUnitUtils;
 
 public class SparseColDoubleMatrixTest {
 
@@ -26,7 +26,7 @@ public class SparseColDoubleMatrixTest {
         DenseDoubleMatrix cMat = aMat.multT(bMat, true, false);
         
         System.out.println(Arrays.deepToString(cMat.getMatrix()).replace('[', '{').replace(']', '}'));
-        JUnitUtils.assertArrayEquals(abMatArr, cMat.getMatrix(), 1e-13);
+        DoubleJUnitUtils.assertArrayEquals(abMatArr, cMat.getMatrix(), 1e-13);
     }
     
     @Test
@@ -49,7 +49,7 @@ public class SparseColDoubleMatrixTest {
         DenseDoubleMatrix cMat = aMat.multT(bMat, true, true);
         
         System.out.println(Arrays.deepToString(cMat.getMatrix()).replace('[', '{').replace(']', '}'));
-        JUnitUtils.assertArrayEquals(abMatArr, cMat.getMatrix(), 1e-13);
+        DoubleJUnitUtils.assertArrayEquals(abMatArr, cMat.getMatrix(), 1e-13);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class SparseColDoubleMatrixTest {
         DenseDoubleMatrix cMat = aMat.multT(bMat, true, false);
         
         System.out.println(Arrays.deepToString(cMat.getMatrix()).replace('[', '{').replace(']', '}'));
-        JUnitUtils.assertArrayEquals(abMatArr, cMat.getMatrix(), 1e-13);
+        DoubleJUnitUtils.assertArrayEquals(abMatArr, cMat.getMatrix(), 1e-13);
     }
     
     @Test
@@ -93,7 +93,7 @@ public class SparseColDoubleMatrixTest {
         DenseDoubleMatrix cMat = aMat.multT(bMat, true, true);
         
         System.out.println(Arrays.deepToString(cMat.getMatrix()).replace('[', '{').replace(']', '}'));
-        JUnitUtils.assertArrayEquals(abMatArr, cMat.getMatrix(), 1e-13);
+        DoubleJUnitUtils.assertArrayEquals(abMatArr, cMat.getMatrix(), 1e-13);
     }
 
 

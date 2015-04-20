@@ -8,84 +8,84 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import edu.jhu.prim.Primitives;
-import edu.jhu.prim.arrays.LongArrays;
+import edu.jhu.prim.arrays.FloatArrays;
 import edu.jhu.prim.arrays.IntArrays;
-import edu.jhu.prim.util.LongJUnitUtils;
+import edu.jhu.prim.util.FloatJUnitUtils;
 import edu.jhu.util.Timer;
 
-public class IntLongSortTest {
+public class IntFloatSortTest {
         
-    /* ---------- Ints and Longs --------------*/
+    /* ---------- Ints and Floats --------------*/
     
     @Test
-    public void testIntLongSortValuesAsc() {
-        long[] values = new long[]{ 1, 3, 2, -1, 5};
+    public void testIntFloatSortValuesAsc() {
+        float[] values = new float[]{ 1, 3, 2, -1, 5};
         int[] index = IntArrays.range(values.length);
-        IntLongSort.sortValuesAsc(values, index);
+        IntFloatSort.sortValuesAsc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        LongJUnitUtils.assertArrayEquals(new long[]{ -1, 1, 2, 3, 5}, values);
+        FloatJUnitUtils.assertArrayEquals(new float[]{ -1, 1, 2, 3, 5}, values, Primitives.DEFAULT_FLOAT_DELTA);
         Assert.assertArrayEquals(new int[]{ 3, 0, 2, 1, 4}, index);
     }
     
     @Test
-    public void testIntLongSortValuesDesc() {
-        long[] values = new long[]{ 1, 3, 2, -1, 5};
+    public void testIntFloatSortValuesDesc() {
+        float[] values = new float[]{ 1, 3, 2, -1, 5};
         int[] index = IntArrays.range(values.length);
-        IntLongSort.sortValuesDesc(values, index);
+        IntFloatSort.sortValuesDesc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        LongJUnitUtils.assertArrayEquals(new long[]{ 5, 3, 2, 1, -1}, values);
+        FloatJUnitUtils.assertArrayEquals(new float[]{ 5, 3, 2, 1, -1}, values, Primitives.DEFAULT_FLOAT_DELTA);
         Assert.assertArrayEquals(new int[]{ 4, 1, 2, 0, 3}, index);
     }
     
     @Test
-    public void testIntLongSortValuesInfinitiesAsc() {
-        long[] values = new long[]{ 1, 9223372036854775806l, 2, -1, -9223372036854775806l, 5};
+    public void testIntFloatSortValuesInfinitiesAsc() {
+        float[] values = new float[]{ 1, Float.POSITIVE_INFINITY, 2, -1, Float.NEGATIVE_INFINITY, 5};
         int[] index = IntArrays.range(values.length);
-        IntLongSort.sortValuesAsc(values, index);
+        IntFloatSort.sortValuesAsc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
 
-        LongJUnitUtils.assertArrayEquals(new long[]{-9223372036854775806l, -1, 1, 2, 5, 9223372036854775806l}, values);
+        FloatJUnitUtils.assertArrayEquals(new float[]{Float.NEGATIVE_INFINITY, -1, 1, 2, 5, Float.POSITIVE_INFINITY}, values, Primitives.DEFAULT_FLOAT_DELTA);
         Assert.assertArrayEquals(new int[]{ 4, 3, 0, 2, 5, 1 }, index);
     }
     
     @Test
-    public void testIntLongSortValuesInfinitiesDesc() {
-        long[] values = new long[]{ 1, 9223372036854775806l, 2, -1, -9223372036854775806l, 5};
+    public void testIntFloatSortValuesInfinitiesDesc() {
+        float[] values = new float[]{ 1, Float.POSITIVE_INFINITY, 2, -1, Float.NEGATIVE_INFINITY, 5};
         int[] index = IntArrays.range(values.length);
-        IntLongSort.sortValuesDesc(values, index);
+        IntFloatSort.sortValuesDesc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        LongJUnitUtils.assertArrayEquals(new long[]{9223372036854775806l,  5, 2, 1, -1, -9223372036854775806l}, values);
+        FloatJUnitUtils.assertArrayEquals(new float[]{Float.POSITIVE_INFINITY,  5, 2, 1, -1, Float.NEGATIVE_INFINITY}, values, Primitives.DEFAULT_FLOAT_DELTA);
         Assert.assertArrayEquals(new int[]{ 1, 5, 2, 0, 3, 4 }, index);
     }    
 
     @Test
-    public void testIntLongSortIndexAsc() {
-        long[] values = new long[]{ 1, 3, 2, -1, 5};
+    public void testIntFloatSortIndexAsc() {
+        float[] values = new float[]{ 1, 3, 2, -1, 5};
         int[] index = new int[] { 1, 4, 5, 8, 3};
-        IntLongSort.sortIndexAsc(index, values);
+        IntFloatSort.sortIndexAsc(index, values);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        LongJUnitUtils.assertArrayEquals(new long[]{ 1, 5, 3, 2, -1 }, values);
+        FloatJUnitUtils.assertArrayEquals(new float[]{ 1, 5, 3, 2, -1 }, values, Primitives.DEFAULT_FLOAT_DELTA);
         Assert.assertArrayEquals(new int[]{ 1, 3, 4, 5, 8 }, index);
     }
 
     @Test
-    public void testIntLongSortIndexDesc() {
-        long[] values = new long[]{ 1, 3, 2, -1, 5};
+    public void testIntFloatSortIndexDesc() {
+        float[] values = new float[]{ 1, 3, 2, -1, 5};
         int[] index = new int[] { 1, 4, 5, 8, 3};
-        IntLongSort.sortIndexDesc(index, values);
+        IntFloatSort.sortIndexDesc(index, values);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        LongJUnitUtils.assertArrayEquals(new long[]{ -1, 2, 3, 5, 1 }, values);
+        FloatJUnitUtils.assertArrayEquals(new float[]{ -1, 2, 3, 5, 1 }, values, Primitives.DEFAULT_FLOAT_DELTA);
         Assert.assertArrayEquals(new int[]{ 8, 5, 4, 3, 1 }, index);
     }
     
@@ -94,23 +94,23 @@ public class IntLongSortTest {
         for (int i=0; i<10; i++) {           
             // Get random arrays.
             int size = 100;
-            long[] values = new long[size];
+            float[] values = new float[size];
             int[] index = new int[size];
             for (int j=0; j<size; j++) {
-                values[j] = (long) j;
+                values[j] = (float) j;
                 index[j] = (int) j;
             }
-            LongArrays.shuffle(values);
+            FloatArrays.shuffle(values);
             IntArrays.shuffle(index);
             
             // Sort and ONLY check the sorted array, not both.
             assertTrue(!IntSort.isSortedAsc(index));
-            IntLongSort.sortIndexAsc(index, values);
+            IntFloatSort.sortIndexAsc(index, values);
             assertTrue(IntSort.isSortedAsc(index));
             
-            assertTrue(!LongSort.isSortedAsc(values));
-            IntLongSort.sortValuesAsc(values, index);
-            assertTrue(LongSort.isSortedAsc(values));
+            assertTrue(!FloatSort.isSortedAsc(values));
+            IntFloatSort.sortValuesAsc(values, index);
+            assertTrue(FloatSort.isSortedAsc(values));
         }
     }
     
@@ -119,23 +119,23 @@ public class IntLongSortTest {
         for (int i=0; i<10; i++) {           
             // Get random arrays.
             int size = 100;
-            long[] values = new long[size];
+            float[] values = new float[size];
             int[] index = new int[size];
             for (int j=0; j<size; j++) {
-                values[j] = (long) j;
+                values[j] = (float) j;
                 index[j] = (int) j;
             }
-            LongArrays.shuffle(values);
+            FloatArrays.shuffle(values);
             IntArrays.shuffle(index);
             
             // Sort and ONLY check the sorted array, not both.
             assertTrue(!IntSort.isSortedDesc(index));
-            IntLongSort.sortIndexDesc(index, values);
+            IntFloatSort.sortIndexDesc(index, values);
             assertTrue(IntSort.isSortedDesc(index));
             
-            assertTrue(!LongSort.isSortedDesc(values));
-            IntLongSort.sortValuesDesc(values, index);
-            assertTrue(LongSort.isSortedDesc(values));
+            assertTrue(!FloatSort.isSortedDesc(values));
+            IntFloatSort.sortValuesDesc(values, index);
+            assertTrue(FloatSort.isSortedDesc(values));
         }
     }
     
@@ -153,13 +153,13 @@ public class IntLongSortTest {
             Timer timer = new Timer();
             for (int trial=0; trial<numTrials; trial++) {           
                 // Get random arrays.
-                long[] values = new long[size];
+                float[] values = new float[size];
                 int[] index = new int[size];
                 for (int j=0; j<size; j++) {
-                    values[j] = (long) j;
+                    values[j] = (float) j;
                     index[j] = (int) j;
                 }
-                LongArrays.shuffle(values);
+                FloatArrays.shuffle(values);
                 IntArrays.shuffle(index);
                 
                 if (trial == numTrials/2) {
@@ -167,7 +167,7 @@ public class IntLongSortTest {
                 }
                 
                 timer.start();
-                IntLongSort.quicksortIndexRecursive(index, values, 0, index.length-1);
+                IntFloatSort.quicksortIndexRecursive(index, values, 0, index.length-1);
                 timer.stop();
                 
             }
@@ -177,13 +177,13 @@ public class IntLongSortTest {
             Timer timer = new Timer();
             for (int trial=0; trial<numTrials; trial++) {           
                 // Get random arrays.
-                long[] values = new long[size];
+                float[] values = new float[size];
                 int[] index = new int[size];
                 for (int j=0; j<size; j++) {
-                    values[j] = (long) j;
+                    values[j] = (float) j;
                     index[j] = (int) j;
                 }
-                LongArrays.shuffle(values);
+                FloatArrays.shuffle(values);
                 IntArrays.shuffle(index);
 
                 if (trial == numTrials/2) {
@@ -191,7 +191,7 @@ public class IntLongSortTest {
                 }
                 
                 timer.start();
-                IntLongSort.sortIndexAsc(index, values);
+                IntFloatSort.sortIndexAsc(index, values);
                 timer.stop();
                 
             }

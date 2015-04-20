@@ -7,7 +7,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import edu.jhu.prim.util.JUnitUtils;
+import edu.jhu.prim.util.IntJUnitUtils;
 
 public class IntSortTest {
     
@@ -18,7 +18,7 @@ public class IntSortTest {
         int[] values = new int[]{ 1, 3, 2, -1, 5};
         IntSort.sortAsc(values);
         System.out.println(Arrays.toString(values));
-        JUnitUtils.assertArrayEquals(new int[]{ -1, 1, 2, 3, 5}, values);
+        IntJUnitUtils.assertArrayEquals(new int[]{ -1, 1, 2, 3, 5}, values);
     }
     
     @Test
@@ -26,7 +26,7 @@ public class IntSortTest {
         int[] values = new int[]{ 1, 3, 2, -1, 5};
         IntSort.sortDesc(values);
         System.out.println(Arrays.toString(values));
-        JUnitUtils.assertArrayEquals(new int[]{5, 3, 2, 1, -1}, values);
+        IntJUnitUtils.assertArrayEquals(new int[]{5, 3, 2, 1, -1}, values);
     }
     
     @Test

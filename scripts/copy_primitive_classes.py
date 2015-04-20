@@ -123,6 +123,7 @@ def get_re_subs_for_pair(dest_key, dest_val):
                   (", double zeroThreshold", ""),
                   (", zeroThreshold", ""),
                   (", 1e-13", ""),
+                  (", Primitives.DEFAULT_DOUBLE_DELTA", ""),
                   ]
         
     # Add the primary replacements.
@@ -238,6 +239,7 @@ if __name__ == "__main__":
                  "edu.jhu.prim.vector.AbstractLongDoubleVectorTest",
                  ])
     copy_pair(tds.get("int"), tds.get("double"), src_files)
+    copy_pair(tds.get("int"), tds.get("float"), src_files)
     copy_pair(tds.get("int"), tds.get("long"), src_files)    
     copy_pair(tds.get("long"), tds.get("int"), src_files)
     copy_pair(tds.get("int"), tds.get("int"), src_files)    
@@ -252,7 +254,10 @@ if __name__ == "__main__":
     # and should be copied over to a primitive.
     
     # Float only
-    src_files = classes_to_files("main", ["edu.jhu.prim.arrays.DoubleArrays"])    
+    src_files = classes_to_files("main", ["edu.jhu.prim.arrays.DoubleArrays",
+                                          "edu.jhu.prim.list.DoubleArrayList",
+                                          "edu.jhu.prim.sort.DoubleSort",
+                                          ])    
     copy_single(tds.get("double"), tds.get("float"), src_files)
     # Short and Int
     src_files = classes_to_files("main", ["edu.jhu.prim.arrays.LongArrays",

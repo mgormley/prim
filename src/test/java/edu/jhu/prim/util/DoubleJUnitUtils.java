@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 import org.junit.Assert;
 
-public class JUnitUtils {
+public class DoubleJUnitUtils {
 
-    private JUnitUtils() {
+    private DoubleJUnitUtils() {
         // private constructor
     }
 
@@ -43,41 +43,6 @@ public class JUnitUtils {
         Assert.assertEquals(newLogPhi.length, logPhi.length);
         for (int k=0; k<logPhi.length; k++) {
             Assert.assertEquals(newLogPhi[k].length, logPhi[k].length); 
-        }
-    }
-    
-    public static void assertArrayEquals(byte[] a1, byte[] a2) {
-        Assert.assertEquals(a1.length, a2.length);
-        for (int i=0; i<a1.length; i++) {
-            Assert.assertEquals(a1[i], a2[i]);
-        }
-    }
-    
-    public static void assertArrayEquals(short[] a1, short[] a2) {
-        Assert.assertEquals(a1.length, a2.length);
-        for (int i=0; i<a1.length; i++) {
-            Assert.assertEquals(a1[i], a2[i]);
-        }
-    }
-
-    public static void assertArrayEquals(int[] a1, int[] a2) {
-        Assert.assertEquals(a1.length, a2.length);
-        for (int i=0; i<a1.length; i++) {
-            Assert.assertEquals(a1[i], a2[i]);
-        }
-    }
-
-    public static void assertArrayEquals(long[] a1, long[] a2) {
-        Assert.assertEquals(a1.length, a2.length);
-        for (int i=0; i<a1.length; i++) {
-            Assert.assertEquals(a1[i], a2[i]);
-        }
-    }
-
-    public static void assertArrayEquals(boolean[] a1, boolean[] a2) {
-        Assert.assertEquals(a1.length, a2.length);
-        for (int i=0; i<a1.length; i++) {
-            Assert.assertEquals("at position " + i, a1[i], a2[i]);
         }
     }
     

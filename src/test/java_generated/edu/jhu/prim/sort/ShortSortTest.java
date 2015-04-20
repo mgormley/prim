@@ -7,7 +7,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import edu.jhu.prim.util.JUnitUtils;
+import edu.jhu.prim.util.ShortJUnitUtils;
 
 public class ShortSortTest {
     
@@ -18,7 +18,7 @@ public class ShortSortTest {
         short[] values = new short[]{ 1, 3, 2, -1, 5};
         ShortSort.sortAsc(values);
         System.out.println(Arrays.toString(values));
-        JUnitUtils.assertArrayEquals(new short[]{ -1, 1, 2, 3, 5}, values);
+        ShortJUnitUtils.assertArrayEquals(new short[]{ -1, 1, 2, 3, 5}, values);
     }
     
     @Test
@@ -26,7 +26,7 @@ public class ShortSortTest {
         short[] values = new short[]{ 1, 3, 2, -1, 5};
         ShortSort.sortDesc(values);
         System.out.println(Arrays.toString(values));
-        JUnitUtils.assertArrayEquals(new short[]{5, 3, 2, 1, -1}, values);
+        ShortJUnitUtils.assertArrayEquals(new short[]{5, 3, 2, 1, -1}, values);
     }
     
     @Test
