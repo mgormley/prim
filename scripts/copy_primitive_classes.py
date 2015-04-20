@@ -226,7 +226,7 @@ if __name__ == "__main__":
                     "edu.jhu.prim.vector.LongDoubleDenseVector",
                     "edu.jhu.prim.vector.LongDoubleVectorSlice",
                     "edu.jhu.prim.vector.AbstractLongDoubleVector",
-                 ]) + \
+                    ]) + \
                 classes_to_files("test", [
                     "edu.jhu.prim.map.LongDoubleSortedMapTest",
                     "edu.jhu.prim.map.LongDoubleHashMapTest",
@@ -237,7 +237,7 @@ if __name__ == "__main__":
                     "edu.jhu.prim.vector.LongDoubleDenseVectorTest",
                     "edu.jhu.prim.vector.LongDoubleVectorSliceTest",
                     "edu.jhu.prim.vector.AbstractLongDoubleVectorTest",
-                 ])
+                    ])
     copy_pair(tds.get("int"), tds.get("double"), src_files)
     copy_pair(tds.get("int"), tds.get("float"), src_files)
     copy_pair(tds.get("int"), tds.get("long"), src_files)    
@@ -258,10 +258,10 @@ if __name__ == "__main__":
                     "edu.jhu.prim.arrays.DoubleArrays",
                     "edu.jhu.prim.list.DoubleArrayList",
                     "edu.jhu.prim.sort.DoubleSort",
-                  ]) + \
+                    ]) + \
                 classes_to_files("test", [
                     "edu.jhu.prim.util.DoubleJUnitUtils",
-                 ]) 
+                    ]) 
     copy_single(tds.get("double"), tds.get("float"), src_files)
     # Boolean, Byte, Short, Int
     src_files = classes_to_files("main", [
@@ -278,12 +278,13 @@ if __name__ == "__main__":
     copy_single(tds.get("long"), tds.get("byte"), src_files)
     copy_single(tds.get("long"), tds.get("int"), src_files)
     # Int only
-    src_files = classes_to_files("main", ["edu.jhu.prim.set.LongHashSet",
-                                          "edu.jhu.prim.set.LongSet",
-                                          "edu.jhu.prim.iter.LongIter",
-                                          "edu.jhu.prim.iter.LongArrayIter",
-                                          "edu.jhu.prim.iter.LongIncrIter",
-                                          "edu.jhu.prim.list.LongArrayList",
-                                          "edu.jhu.prim.list.LongStack",
-                                          ]) 
+    src_files = classes_to_files("main", [
+                    "edu.jhu.prim.set.LongHashSet",
+                    "edu.jhu.prim.set.LongSet",
+                    "edu.jhu.prim.iter.LongIter",
+                    "edu.jhu.prim.iter.LongArrayIter",
+                    "edu.jhu.prim.iter.LongIncrIter",
+                    "edu.jhu.prim.list.LongArrayList",
+                    "edu.jhu.prim.list.LongStack",
+                    ]) 
     copy_single(tds.get("long"), tds.get("int"), src_files)
