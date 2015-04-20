@@ -256,10 +256,12 @@ if __name__ == "__main__":
     # Float only
     src_files = classes_to_files("main", [
                     "edu.jhu.prim.arrays.DoubleArrays",
-                    "edu.jhu.prim.list.DoubleArrayList",
                     "edu.jhu.prim.sort.DoubleSort",
+                    "edu.jhu.prim.list.DoubleArrayList",
+                    "edu.jhu.prim.list.DoubleStack",
                     ]) + \
                 classes_to_files("test", [
+                    "edu.jhu.prim.sort.DoubleSortTest",
                     "edu.jhu.prim.util.DoubleJUnitUtils",
                     ]) 
     copy_single(tds.get("double"), tds.get("float"), src_files)
@@ -284,7 +286,5 @@ if __name__ == "__main__":
                     "edu.jhu.prim.iter.LongIter",
                     "edu.jhu.prim.iter.LongArrayIter",
                     "edu.jhu.prim.iter.LongIncrIter",
-                    "edu.jhu.prim.list.LongArrayList",
-                    "edu.jhu.prim.list.LongStack",
                     ]) 
     copy_single(tds.get("long"), tds.get("int"), src_files)
