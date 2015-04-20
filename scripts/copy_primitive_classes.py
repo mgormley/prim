@@ -214,29 +214,29 @@ if __name__ == "__main__":
     # Create a list of main/test classes which are defined for a pair of primitives (Long and Double)
     # and should be copied over to a new pair of primitives.    
     src_files = classes_to_files("main", [
-                 "edu.jhu.prim.map.LongDoubleMap",
-                 "edu.jhu.prim.map.LongDoubleEntry",
-                 "edu.jhu.prim.map.LongDoubleSortedMap",
-                 "edu.jhu.prim.map.LongDoubleHashMap",
-                 "edu.jhu.prim.sort.LongDoubleSort",
-                 "edu.jhu.prim.vector.LongDoubleVector",
-                 "edu.jhu.prim.vector.LongDoubleSortedVector",
-                 "edu.jhu.prim.vector.LongDoubleUnsortedVector",
-                 "edu.jhu.prim.vector.LongDoubleHashVector",
-                 "edu.jhu.prim.vector.LongDoubleDenseVector",
-                 "edu.jhu.prim.vector.LongDoubleVectorSlice",
-                 "edu.jhu.prim.vector.AbstractLongDoubleVector",
+                    "edu.jhu.prim.map.LongDoubleMap",
+                    "edu.jhu.prim.map.LongDoubleEntry",
+                    "edu.jhu.prim.map.LongDoubleSortedMap",
+                    "edu.jhu.prim.map.LongDoubleHashMap",
+                    "edu.jhu.prim.sort.LongDoubleSort",
+                    "edu.jhu.prim.vector.LongDoubleVector",
+                    "edu.jhu.prim.vector.LongDoubleSortedVector",
+                    "edu.jhu.prim.vector.LongDoubleUnsortedVector",
+                    "edu.jhu.prim.vector.LongDoubleHashVector",
+                    "edu.jhu.prim.vector.LongDoubleDenseVector",
+                    "edu.jhu.prim.vector.LongDoubleVectorSlice",
+                    "edu.jhu.prim.vector.AbstractLongDoubleVector",
                  ]) + \
                 classes_to_files("test", [
-                 "edu.jhu.prim.map.LongDoubleSortedMapTest",
-                 "edu.jhu.prim.map.LongDoubleHashMapTest",
-                 "edu.jhu.prim.sort.LongDoubleSortTest",
-                 "edu.jhu.prim.vector.LongDoubleSortedVectorTest",
-                 "edu.jhu.prim.vector.LongDoubleUnsortedVectorTest",
-                 "edu.jhu.prim.vector.LongDoubleHashVectorTest",
-                 "edu.jhu.prim.vector.LongDoubleDenseVectorTest",
-                 "edu.jhu.prim.vector.LongDoubleVectorSliceTest",
-                 "edu.jhu.prim.vector.AbstractLongDoubleVectorTest",
+                    "edu.jhu.prim.map.LongDoubleSortedMapTest",
+                    "edu.jhu.prim.map.LongDoubleHashMapTest",
+                    "edu.jhu.prim.sort.LongDoubleSortTest",
+                    "edu.jhu.prim.vector.LongDoubleSortedVectorTest",
+                    "edu.jhu.prim.vector.LongDoubleUnsortedVectorTest",
+                    "edu.jhu.prim.vector.LongDoubleHashVectorTest",
+                    "edu.jhu.prim.vector.LongDoubleDenseVectorTest",
+                    "edu.jhu.prim.vector.LongDoubleVectorSliceTest",
+                    "edu.jhu.prim.vector.AbstractLongDoubleVectorTest",
                  ])
     copy_pair(tds.get("int"), tds.get("double"), src_files)
     copy_pair(tds.get("int"), tds.get("float"), src_files)
@@ -254,18 +254,26 @@ if __name__ == "__main__":
     # and should be copied over to a primitive.
     
     # Float only
-    src_files = classes_to_files("main", ["edu.jhu.prim.arrays.DoubleArrays",
-                                          "edu.jhu.prim.list.DoubleArrayList",
-                                          "edu.jhu.prim.sort.DoubleSort",
-                                          ])    
+    src_files = classes_to_files("main", [
+                    "edu.jhu.prim.arrays.DoubleArrays",
+                    "edu.jhu.prim.list.DoubleArrayList",
+                    "edu.jhu.prim.sort.DoubleSort",
+                  ]) + \
+                classes_to_files("test", [
+                    "edu.jhu.prim.util.DoubleJUnitUtils",
+                 ]) 
     copy_single(tds.get("double"), tds.get("float"), src_files)
-    # Short and Int
-    src_files = classes_to_files("main", ["edu.jhu.prim.arrays.LongArrays",
-                                          "edu.jhu.prim.sort.LongSort",
-                                          "edu.jhu.prim.list.LongArrayList",
-                                          "edu.jhu.prim.list.LongStack",
-                                          ]) + \
-                classes_to_files("test", ["edu.jhu.prim.sort.LongSortTest",])
+    # Boolean, Byte, Short, Int
+    src_files = classes_to_files("main", [
+                    "edu.jhu.prim.arrays.LongArrays",
+                    "edu.jhu.prim.sort.LongSort",
+                    "edu.jhu.prim.list.LongArrayList",
+                    "edu.jhu.prim.list.LongStack",
+                    ]) + \
+                classes_to_files("test", [
+                    "edu.jhu.prim.sort.LongSortTest",
+                    "edu.jhu.prim.util.LongJUnitUtils",
+                    ])
     copy_single(tds.get("long"), tds.get("short"), src_files)
     copy_single(tds.get("long"), tds.get("byte"), src_files)
     copy_single(tds.get("long"), tds.get("int"), src_files)
