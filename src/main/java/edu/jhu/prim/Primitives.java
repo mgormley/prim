@@ -1,5 +1,7 @@
 package edu.jhu.prim;
 
+import java.io.Serializable;
+
 
 /**
  * Methods and constants for primitive collections.
@@ -211,31 +213,36 @@ public class Primitives {
         assert(Math.abs(a - b) < 0.000000000001);
     }
     
-    public static class MutableLong {
+    public static class MutableLong implements Serializable {
+        private static final long serialVersionUID = 1L;
         public long v;
         public MutableLong() { }
         public MutableLong(long v) { this.v = v; }
     }
 
-    public static class MutableInt {
+    public static class MutableInt implements Serializable {
+        private static final long serialVersionUID = 1L;
         public int v;
         public MutableInt() { }
         public MutableInt(int v) { this.v = v; }
     }
     
-    public static class MutableShort {
+    public static class MutableShort implements Serializable {
+        private static final long serialVersionUID = 1L;
         public short v;
         public MutableShort() { }
         public MutableShort(short v) { this.v = v; }
     }
     
-    public static class MutableDouble {
+    public static class MutableDouble implements Serializable {
+        private static final long serialVersionUID = 1L;
         public double v;
         public MutableDouble() { }
         public MutableDouble(double v) { this.v = v; }
     }
 
-    public static class MutableFloat {
+    public static class MutableFloat implements Serializable {
+        private static final long serialVersionUID = 1L;
         public float v;
         public MutableFloat() { }
         public MutableFloat(float v) { this.v = v; }
