@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.sort.IntSort;
-import edu.jhu.util.Prng;
+import edu.jhu.prim.util.Prng;
 
 public class Sample {
 
