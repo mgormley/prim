@@ -10,11 +10,11 @@ public class Prng {
     
     public static final long DEFAULT_SEED;
 
-    // Using default seed
-    public static Random javaRandom;
-        
-    public static Random curRandom;
-    public static long seed;
+
+    private static Random javaRandom;        
+    private static Random curRandom;
+    private static long seed;
+    private static boolean multiThreadAccess;
     
     private Prng() {
         // private constructor.
@@ -25,6 +25,15 @@ public class Prng {
         System.out.println("SEED="+seed);
         javaRandom = new Random(seed);
         setRandom(javaRandom);
+    }
+    
+    public static long getSeed() {
+        return seed;
+    }
+    
+    public static void init(long seed, boolean multiThreadAccess) {
+        seed(seed);
+        Prng.multiThreadAccess = multiThreadAccess;
     }
 
     public static void setRandom(Random curRandom) {
@@ -37,9 +46,8 @@ public class Prng {
 
     static {
         DEFAULT_SEED = 123456789101112l;
-        //DEFAULT_SEED = System.currentTimeMillis();
         System.out.println("WARNING: pseudo random number generator is not thread safe");
-        seed(DEFAULT_SEED);
+        init(DEFAULT_SEED, false);
     }
     
     
