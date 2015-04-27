@@ -6,7 +6,7 @@ import java.util.HashSet;
 
 import edu.jhu.prim.tuple.OrderedPair;
 import edu.jhu.prim.tuple.UnorderedPair;
-import edu.jhu.prim.util.Prng;
+import edu.jhu.prim.util.random.Prng;
 
 public class PairSampler {
 

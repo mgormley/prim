@@ -3,7 +3,7 @@ package edu.jhu.prim.arrays;
 import java.util.Arrays;
 
 import edu.jhu.prim.Primitives;
-import edu.jhu.prim.util.Prng;
+import edu.jhu.prim.util.random.Prng;
 
 /**
  * Utility methods and math for short arrays of varying dimensionalities.
