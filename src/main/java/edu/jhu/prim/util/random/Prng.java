@@ -60,34 +60,58 @@ public class Prng {
     
     public static double nextDouble() {
         if (useThreadLocalRandom) {
-            return ThreadLocalRandom.current().nextDouble(); 
+            return ThreadLocalRandom.current().nextDouble();
         } else {
             return curRandom.nextDouble();
         }
     }
     
-    public static double nextFloat() {
-        return curRandom.nextFloat();
+    public static float nextFloat() {
+        if (useThreadLocalRandom) {
+            return ThreadLocalRandom.current().nextFloat();
+        } else {
+            return curRandom.nextFloat();
+        }
     }
     
     public static boolean nextBoolean() {
-        return curRandom.nextBoolean();
+        if (useThreadLocalRandom) {
+            return ThreadLocalRandom.current().nextBoolean();
+        } else {
+            return curRandom.nextBoolean();
+        }
     }
 
     public static short nextShort() {
-        return (short) curRandom.nextInt();
+        if (useThreadLocalRandom) {
+            return (short) ThreadLocalRandom.current().nextInt();
+        } else {
+            return (short) curRandom.nextInt();
+        }
     }
     
     public static int nextInt() {
-        return curRandom.nextInt();
+        if (useThreadLocalRandom) {
+            return ThreadLocalRandom.current().nextInt();
+        } else {
+            return curRandom.nextInt();
+        }
     }
     
     public static int nextInt(int n) {
-        return curRandom.nextInt(n);
+        if (useThreadLocalRandom) {
+            return ThreadLocalRandom.current().nextInt(n);
+        } else {
+            return curRandom.nextInt(n);
+        }
     }
 
     public static long nextLong() {
-        return curRandom.nextLong();
+        if (useThreadLocalRandom) {
+            return ThreadLocalRandom.current().nextLong();
+        } else {
+            return curRandom.nextLong();
+        }
     }
     
     /* ----- Getters / Setters ----- */
