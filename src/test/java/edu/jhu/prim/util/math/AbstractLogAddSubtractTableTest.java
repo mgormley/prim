@@ -97,7 +97,7 @@ public abstract class AbstractLogAddSubtractTableTest {
         //double j = 10d;
         for (int j : getList(1, 10, 20)) {
             for (int i = j - 40; i < j + 40; i++) {
-                assertCorrectLogSubtractAfterLogAdd(i, j, 1e-4, true);                    
+                assertCorrectLogSubtractAfterLogAdd(i, j, getToleranceForLogSubtract(), true);                    
             }
         }        
     }
