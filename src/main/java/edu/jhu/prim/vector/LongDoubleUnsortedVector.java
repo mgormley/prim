@@ -311,11 +311,6 @@ public class LongDoubleUnsortedVector extends AbstractLongDoubleVector implement
     public void product(LongDoubleVector other) {
         throw new RuntimeException("not supported");
     }
-
-    @Override
-    public double getProd() {
-        throw new RuntimeException("not supported");
-    }
     
     @Override
     public double dot(double[] other) {

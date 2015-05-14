@@ -174,9 +174,4 @@ public class LongDoubleHashVector extends LongDoubleHashMap implements LongDoubl
         
     }
 
-    @Override
-    public double getProd() {
-        throw new RuntimeException("not supported");
-    }
-
 }
