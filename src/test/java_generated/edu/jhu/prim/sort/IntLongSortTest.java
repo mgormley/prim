@@ -1,5 +1,6 @@
 package edu.jhu.prim.sort;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -43,25 +44,25 @@ public class IntLongSortTest {
     
     @Test
     public void testIntLongSortValuesInfinitiesAsc() {
-        long[] values = new long[]{ 1, 9223372036854775806l, 2, -1, -9223372036854775806l, 5};
+        long[] values = new long[]{ 1, Long.MAX_VALUE, 2, -1, Long.MIN_VALUE, 5};
         int[] index = IntArrays.range(values.length);
         IntLongSort.sortValuesAsc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
 
-        LongJUnitUtils.assertArrayEquals(new long[]{-9223372036854775806l, -1, 1, 2, 5, 9223372036854775806l}, values);
+        LongJUnitUtils.assertArrayEquals(new long[]{Long.MIN_VALUE, -1, 1, 2, 5, Long.MAX_VALUE}, values);
         Assert.assertArrayEquals(new int[]{ 4, 3, 0, 2, 5, 1 }, index);
     }
     
     @Test
     public void testIntLongSortValuesInfinitiesDesc() {
-        long[] values = new long[]{ 1, 9223372036854775806l, 2, -1, -9223372036854775806l, 5};
+        long[] values = new long[]{ 1, Long.MAX_VALUE, 2, -1, Long.MIN_VALUE, 5};
         int[] index = IntArrays.range(values.length);
         IntLongSort.sortValuesDesc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        LongJUnitUtils.assertArrayEquals(new long[]{9223372036854775806l,  5, 2, 1, -1, -9223372036854775806l}, values);
+        LongJUnitUtils.assertArrayEquals(new long[]{Long.MAX_VALUE,  5, 2, 1, -1, Long.MIN_VALUE}, values);
         Assert.assertArrayEquals(new int[]{ 1, 5, 2, 0, 3, 4 }, index);
     }    
 
@@ -167,9 +168,8 @@ public class IntLongSortTest {
                 }
                 
                 timer.start();
-                IntLongSort.quicksortIndexRecursive(index, values, 0, index.length-1);
-                timer.stop();
-                
+                IntLongSort.quicksortIndexRecursive(index, values, 0, index.length-1, true);
+                timer.stop();                
             }
             System.out.println("Total (ms) for recursive: " + timer.totMs());
         }
@@ -196,6 +196,76 @@ public class IntLongSortTest {
                 
             }
             System.out.println("Total (ms) for stack: " + timer.totMs());
+        }
+    }
+    
+    @Test
+    public void testSortSpeedPresorted() {  
+        int numTrials = 1; // Add a zero for results above.
+        int size = Byte.MAX_VALUE;
+        {
+            Timer timer = new Timer();
+            for (int trial=0; trial<numTrials; trial++) {           
+                IntLongSort.numSwaps = 0;
+                long[] values = new long[size];
+                int[] index = new int[size];
+                for (int j=0; j<size; j++) {
+                    values[j] = (long) -j;
+                    index[j] = (int) -j;
+                }
+
+                if (trial == numTrials/2) {
+                    timer = new Timer();
+                }
+                assertTrue(IntSort.isSortedDesc(index));
+                timer.start();
+                IntLongSort.sortIndexDesc(index, values);
+                timer.stop();     
+                assertTrue(IntSort.isSortedDesc(index));
+                assertEquals(0, IntLongSort.numSwaps);
+
+                assertTrue(LongSort.isSortedDesc(values));
+                timer.start();
+                IntLongSort.sortValuesDesc(values, index);
+                timer.stop();
+                assertTrue(LongSort.isSortedDesc(values));
+                assertEquals(0, IntLongSort.numSwaps);   
+            }
+            System.out.println("Num swaps: " + IntLongSort.numSwaps);
+            System.out.println("Total (ms) for descending: " + timer.totMs());
+            assertEquals(0, IntLongSort.numSwaps);
+        }
+        {
+            Timer timer = new Timer();
+            for (int trial=0; trial<numTrials; trial++) {  
+                IntLongSort.numSwaps = 0;
+                long[] values = new long[size];
+                int[] index = new int[size];
+                for (int j=0; j<size; j++) {
+                    values[j] = (long) j;
+                    index[j] = (int) j;
+                }
+                
+                if (trial == numTrials/2) {
+                    timer = new Timer();
+                }
+                assertTrue(IntSort.isSortedAsc(index));
+                timer.start();
+                IntLongSort.sortIndexAsc(index, values);
+                timer.stop();     
+                assertTrue(IntSort.isSortedAsc(index));
+                assertEquals(0, IntLongSort.numSwaps);
+
+                assertTrue(LongSort.isSortedAsc(values));
+                timer.start();
+                IntLongSort.sortValuesAsc(values, index);
+                timer.stop();
+                assertTrue(LongSort.isSortedAsc(values));
+                assertEquals(0, IntLongSort.numSwaps);                
+            }
+            System.out.println("Num swaps: " + IntLongSort.numSwaps);
+            System.out.println("Total (ms) for ascending: " + timer.totMs());
+            assertEquals(0, IntLongSort.numSwaps);
         }
     }
     

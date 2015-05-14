@@ -1,7 +1,11 @@
 #!/usr/bin/python
 #
+# Uses long and double versions of classes as templates to create 
+# versions for other Java primitive types.
+#
 # Example usage:
-# find ./src/ilog/cplex/ | xargs -n 1 python ./scripts/cleanup.py
+#     python scripts/copy_primitive_classes.py
+#
 
 import sys
 import re
@@ -54,21 +58,21 @@ def replace_all(repls, s):
 def re_sub_all(re_subs, s):
     for k,v in re_subs:
         s, num_subs = re.subn(k, v, s, flags=re.DOTALL)
-        print "Number of substitutions for %s-->%s: %d" % (k, v, num_subs)
+        #print "Number of substitutions for %s-->%s: %d" % (k, v, num_subs)
     return s
 
 def get_re_subs_for_all():
-    repls = [#("getIntIndexArray", "getIndexArray"),
-             ("int serialVersionUID", "long serialVersionUID"),
+    repls = [("int serialVersionUID", "long serialVersionUID"),
              ("short serialVersionUID", "long serialVersionUID"),
              ("byte serialVersionUID", "long serialVersionUID"),
-             # TODO: The MIN_VALUEs and MAX_VALUEs are not being sorted properly.
-             ("Long.POSITIVE_INFINITY", "9223372036854775806l"),
-             ("Long.NEGATIVE_INFINITY", "-9223372036854775806l"),
-             ("Int.POSITIVE_INFINITY", "2147483646"),
-             ("Int.NEGATIVE_INFINITY", "-2147483646"),
-             ("Short.POSITIVE_INFINITY", "32767"),
-             ("Short.NEGATIVE_INFINITY", "-32768"),
+             ("Long.POSITIVE_INFINITY", "Long.MAX_VALUE"),
+             ("Long.NEGATIVE_INFINITY", "Long.MIN_VALUE"),
+             ("Int.POSITIVE_INFINITY", "Integer.MAX_VALUE"),
+             ("Int.NEGATIVE_INFINITY", "Integer.MIN_VALUE"),
+             ("Short.POSITIVE_INFINITY", "Short.MAX_VALUE"),
+             ("Short.NEGATIVE_INFINITY", "Short.MIN_VALUE"),
+             ("Byte.POSITIVE_INFINITY", "Byte.MAX_VALUE"),
+             ("Byte.NEGATIVE_INFINITY", "Byte.MIN_VALUE"),
              ]
     
     # Convert repls to regex replacements.

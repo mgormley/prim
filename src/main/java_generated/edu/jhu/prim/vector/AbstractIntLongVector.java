@@ -19,7 +19,7 @@ public abstract class AbstractIntLongVector {
     }
 
     public long getMax() {
-        final MutableLong max = new MutableLong(-9223372036854775806l);
+        final MutableLong max = new MutableLong(Long.MIN_VALUE);
         this.iterate(new FnIntLongToVoid() {
             public void call(int idx, long val) {
                 if (val > max.v) {
@@ -32,7 +32,7 @@ public abstract class AbstractIntLongVector {
     
     public int getArgmax() {
         final MutableInt argmax = new MutableInt(-1);
-        final MutableLong max = new MutableLong(-9223372036854775806l);
+        final MutableLong max = new MutableLong(Long.MIN_VALUE);
         this.iterate(new FnIntLongToVoid() {
             public void call(int idx, long val) {
                 if (val > max.v) {
@@ -45,7 +45,7 @@ public abstract class AbstractIntLongVector {
     }
     
     public long getMin() {
-        final MutableLong min = new MutableLong(9223372036854775806l);
+        final MutableLong min = new MutableLong(Long.MAX_VALUE);
         this.iterate(new FnIntLongToVoid() {
             public void call(int idx, long val) {
                 if (val < min.v) {
@@ -58,7 +58,7 @@ public abstract class AbstractIntLongVector {
     
     public int getArgmin() {
         final MutableInt argmin = new MutableInt(-1);
-        final MutableLong min = new MutableLong(9223372036854775806l);
+        final MutableLong min = new MutableLong(Long.MAX_VALUE);
         this.iterate(new FnIntLongToVoid() {
             public void call(int idx, long val) {
                 if (val < min.v) {
@@ -81,7 +81,7 @@ public abstract class AbstractIntLongVector {
     }
     
     public long getInfNorm() {
-        final MutableLong maxAbs = new MutableLong(-9223372036854775806l);
+        final MutableLong maxAbs = new MutableLong(Long.MIN_VALUE);
         this.iterate(new FnIntLongToVoid() {
             public void call(int idx, long val) {
                 long abs = Math.abs(val);

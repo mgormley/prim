@@ -1,5 +1,6 @@
 package edu.jhu.prim.sort;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -167,9 +168,8 @@ public class IntDoubleSortTest {
                 }
                 
                 timer.start();
-                IntDoubleSort.quicksortIndexRecursive(index, values, 0, index.length-1);
-                timer.stop();
-                
+                IntDoubleSort.quicksortIndexRecursive(index, values, 0, index.length-1, true);
+                timer.stop();                
             }
             System.out.println("Total (ms) for recursive: " + timer.totMs());
         }
@@ -196,6 +196,76 @@ public class IntDoubleSortTest {
                 
             }
             System.out.println("Total (ms) for stack: " + timer.totMs());
+        }
+    }
+    
+    @Test
+    public void testSortSpeedPresorted() {  
+        int numTrials = 1; // Add a zero for results above.
+        int size = Byte.MAX_VALUE;
+        {
+            Timer timer = new Timer();
+            for (int trial=0; trial<numTrials; trial++) {           
+                IntDoubleSort.numSwaps = 0;
+                double[] values = new double[size];
+                int[] index = new int[size];
+                for (int j=0; j<size; j++) {
+                    values[j] = (double) -j;
+                    index[j] = (int) -j;
+                }
+
+                if (trial == numTrials/2) {
+                    timer = new Timer();
+                }
+                assertTrue(IntSort.isSortedDesc(index));
+                timer.start();
+                IntDoubleSort.sortIndexDesc(index, values);
+                timer.stop();     
+                assertTrue(IntSort.isSortedDesc(index));
+                assertEquals(0, IntDoubleSort.numSwaps);
+
+                assertTrue(DoubleSort.isSortedDesc(values));
+                timer.start();
+                IntDoubleSort.sortValuesDesc(values, index);
+                timer.stop();
+                assertTrue(DoubleSort.isSortedDesc(values));
+                assertEquals(0, IntDoubleSort.numSwaps);   
+            }
+            System.out.println("Num swaps: " + IntDoubleSort.numSwaps);
+            System.out.println("Total (ms) for descending: " + timer.totMs());
+            assertEquals(0, IntDoubleSort.numSwaps);
+        }
+        {
+            Timer timer = new Timer();
+            for (int trial=0; trial<numTrials; trial++) {  
+                IntDoubleSort.numSwaps = 0;
+                double[] values = new double[size];
+                int[] index = new int[size];
+                for (int j=0; j<size; j++) {
+                    values[j] = (double) j;
+                    index[j] = (int) j;
+                }
+                
+                if (trial == numTrials/2) {
+                    timer = new Timer();
+                }
+                assertTrue(IntSort.isSortedAsc(index));
+                timer.start();
+                IntDoubleSort.sortIndexAsc(index, values);
+                timer.stop();     
+                assertTrue(IntSort.isSortedAsc(index));
+                assertEquals(0, IntDoubleSort.numSwaps);
+
+                assertTrue(DoubleSort.isSortedAsc(values));
+                timer.start();
+                IntDoubleSort.sortValuesAsc(values, index);
+                timer.stop();
+                assertTrue(DoubleSort.isSortedAsc(values));
+                assertEquals(0, IntDoubleSort.numSwaps);                
+            }
+            System.out.println("Num swaps: " + IntDoubleSort.numSwaps);
+            System.out.println("Total (ms) for ascending: " + timer.totMs());
+            assertEquals(0, IntDoubleSort.numSwaps);
         }
     }
     

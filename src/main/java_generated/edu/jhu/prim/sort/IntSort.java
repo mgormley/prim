@@ -5,29 +5,27 @@ import edu.jhu.prim.list.IntStack;
 
 public class IntSort {
 
+    public static int numSwaps = 0;
+
     public IntSort() {
         // private constructor
     }
 
-    /* ------------------- Doubles only --------------- */
-    
     /**
      * Performs an in-place quick sort on array. Sorts in descending order.
      */
     public static void sortDesc(int[] array) {
-        IntArrays.scale(array, (int) -1);
-        sortAsc(array);
-        IntArrays.scale(array, (int) -1);
+        quicksort(array, 0, array.length-1, false);
     }
     
     /**
      * Performs an in-place quick sort on array. Sorts in acscending order.
      */
     public static void sortAsc(int[] array) {
-        quicksort(array, 0, array.length-1);
+        quicksort(array, 0, array.length-1, true);
     }
     
-    private static void quicksort(int[] array, int left, int right) {
+    private static void quicksort(int[] array, int left, int right, boolean asc) {
         IntStack leftStack = new IntStack();
         IntStack rightStack = new IntStack();
         leftStack.add(left);
@@ -43,7 +41,7 @@ public class IntSort {
                 // Partition the array so that everything less than
                 // values[pivotIndex] is on the left of pivotNewIndex and everything
                 // greater than or equal is on the right.
-                int pivotNewIndex = partition(array, left, right, pivotIndex);
+                int pivotNewIndex = partition(array, left, right, pivotIndex, asc);
                 // "Recurse" on the left side.
                 leftStack.push(left);
                 rightStack.push(pivotNewIndex - 1);
@@ -54,23 +52,7 @@ public class IntSort {
         }
     }
     
-    static void quicksortRecursive(int[] array, int left, int right) {
-        if (left < right) {
-            // Choose a pivot index.
-            // --> Here we choose the rightmost element which does the least
-            // amount of work if the array is already sorted.
-            int pivotIndex = right;
-            // Partition the array so that everything less than
-            // values[pivotIndex] is on the left of pivotNewIndex and everything
-            // greater than or equal is on the right.
-            int pivotNewIndex = partition(array, left, right, pivotIndex);
-            // Recurse on the left and right sides.
-            quicksort(array, left, pivotNewIndex - 1);
-            quicksort(array, pivotNewIndex + 1, right);
-        }
-    }
-    
-    private static int partition(int[] array, int left, int right, int pivotIndex) {
+    private static int partition(int[] array, int left, int right, int pivotIndex, boolean asc) {
         int pivotValue = array[pivotIndex];
         // Move the pivot value to the rightmost position.
         swap(array, pivotIndex, right);
@@ -78,7 +60,7 @@ public class IntSort {
         // than or equal to the pivot value to the left side.
         int storeIndex = left;
         for (int i=left; i<right; i++) {
-            if (array[i] <= pivotValue) {
+            if (lte(array[i], pivotValue, asc)) {
                 swap(array, i, storeIndex);
                 storeIndex++;
             }
@@ -103,15 +85,18 @@ public class IntSort {
             index[i] = (int) i;
         }
         return index;
-    }
+    }    
     
     /**
      * Swaps the elements at positions i and j.
      */
     private static void swap(int[] array, int i, int j) {
-        int valAtI = array[i];
-        array[i] = array[j];
-        array[j] = valAtI;
+        if (i != j) { 
+            int valAtI = array[i];
+            array[i] = array[j];
+            array[j] = valAtI;
+            numSwaps++;
+        }
     }
         
     public static boolean isSortedAsc(int[] array) {
@@ -139,6 +124,15 @@ public class IntSort {
             }
         }
         return true;
+    }
+    
+    /** Abstract "less than or equal" for either ascending or descending orders. */
+    private static boolean lte(int v1, int v2, boolean asc) {
+        if (asc) {
+            return v1 <= v2;
+        } else {
+            return v2 <= v1;
+        }
     }
 
 }
