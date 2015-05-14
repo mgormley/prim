@@ -79,9 +79,6 @@ public interface IntFloatVector extends Serializable {
     /** Gets the sum of all the explicit entries in this vector. */
     float getSum();
 
-    /** Gets the product of all the explicit entries in this vector. */
-    float getProd();
-
     /** Gets the max of all the explicit entries in this vector. */
     float getMax();
 

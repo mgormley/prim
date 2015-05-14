@@ -244,11 +244,6 @@ public class IntFloatSortedVector extends IntFloatSortedMap implements IntFloatV
         return prod;
     }
 
-    @Override
-    public float getProd() {
-        throw new RuntimeException("not supported");
-    }    
-
     /**
      * Applies the function to every pair of entries in this vector and an
      * other. If the call is skipping zeros, then the function is only applied

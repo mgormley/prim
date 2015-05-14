@@ -256,11 +256,6 @@ public class IntIntUnsortedVector extends AbstractIntIntVector implements IntInt
     public void product(IntIntVector other) {
         throw new RuntimeException("not supported");
     }
-
-    @Override
-    public int getProd() {
-        throw new RuntimeException("not supported");
-    }
     
     @Override
     public int dot(int[] other) {

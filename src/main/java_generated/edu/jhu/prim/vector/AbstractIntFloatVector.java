@@ -18,16 +18,6 @@ public abstract class AbstractIntFloatVector {
         return sum.v;
     }
 
-    public float getProd() {
-        final MutableFloat prod = new MutableFloat(1);
-        this.iterate(new FnIntFloatToVoid() {
-            public void call(int idx, float val) {
-                prod.v *= val;
-            }
-        });
-        return prod.v;
-    }
-
     public float getMax() {
         final MutableFloat max = new MutableFloat(Float.NEGATIVE_INFINITY);
         this.iterate(new FnIntFloatToVoid() {

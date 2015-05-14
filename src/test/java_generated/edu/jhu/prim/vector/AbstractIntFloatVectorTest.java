@@ -159,28 +159,7 @@ public abstract class AbstractIntFloatVectorTest {
         
         assertEquals(11+33+22, v1.getSum(), 1e-13);
     }
-    
-    @Test
-    public void testGetProd() {
-        IntFloatVector v1 = getIntFloatVector();
-        v1.set(0, toFloat(1));
-        v1.set(1, toFloat(11));
-        v1.set(3, toFloat(33));
-        v1.set(2, toFloat(22));
         
-        assertEquals(11*33*22, v1.getProd(), 1e-13);
-    }
-    
-    @Test
-    public void testGetProdImplicits() {
-        IntFloatVector v1 = getIntFloatVector();
-        v1.set(1, toFloat(11));
-        v1.set(3, toFloat(33));
-        v1.set(2, toFloat(22));
-        // Test case where there are implicit zeros.
-        assertEquals(0, v1.getProd(), 1e-13);        
-    }
-    
     @Test
     public void testGetMax() {
         IntFloatVector v1 = getIntFloatVector();

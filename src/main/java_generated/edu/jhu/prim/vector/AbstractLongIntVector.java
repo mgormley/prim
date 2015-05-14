@@ -18,16 +18,6 @@ public abstract class AbstractLongIntVector {
         return sum.v;
     }
 
-    public int getProd() {
-        final MutableInt prod = new MutableInt(1);
-        this.iterate(new FnLongIntToVoid() {
-            public void call(long idx, int val) {
-                prod.v *= val;
-            }
-        });
-        return prod.v;
-    }
-
     public int getMax() {
         final MutableInt max = new MutableInt(-2147483646);
         this.iterate(new FnLongIntToVoid() {

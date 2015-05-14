@@ -174,9 +174,4 @@ public class IntLongHashVector extends IntLongHashMap implements IntLongVector {
         
     }
 
-    @Override
-    public long getProd() {
-        throw new RuntimeException("not supported");
-    }
-
 }

@@ -311,11 +311,6 @@ public class IntDoubleUnsortedVector extends AbstractIntDoubleVector implements 
     public void product(IntDoubleVector other) {
         throw new RuntimeException("not supported");
     }
-
-    @Override
-    public double getProd() {
-        throw new RuntimeException("not supported");
-    }
     
     @Override
     public double dot(double[] other) {

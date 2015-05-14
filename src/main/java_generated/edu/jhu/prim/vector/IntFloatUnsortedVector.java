@@ -311,11 +311,6 @@ public class IntFloatUnsortedVector extends AbstractIntFloatVector implements In
     public void product(IntFloatVector other) {
         throw new RuntimeException("not supported");
     }
-
-    @Override
-    public float getProd() {
-        throw new RuntimeException("not supported");
-    }
     
     @Override
     public float dot(float[] other) {

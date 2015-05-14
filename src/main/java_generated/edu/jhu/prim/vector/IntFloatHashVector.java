@@ -174,9 +174,4 @@ public class IntFloatHashVector extends IntFloatHashMap implements IntFloatVecto
         
     }
 
-    @Override
-    public float getProd() {
-        throw new RuntimeException("not supported");
-    }
-
 }
