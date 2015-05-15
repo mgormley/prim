@@ -120,6 +120,9 @@ public class Timer implements Serializable {
     
     public double stdDevMs() {
         double avgMs = avgMs();
+        if (numStarts <= 1) { return 0.0; }
+        // This is the corrected sample standard deviation.
+        // 1/(N-1) \sum_{i=1}^N (t_i - \bar{t})^2
         return Math.sqrt(numStarts / (numStarts - 1.0) * (sumSqMs / numStarts - avgMs*avgMs));
     }
     
