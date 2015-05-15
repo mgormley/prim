@@ -11,7 +11,7 @@ import edu.jhu.prim.Primitives;
 import edu.jhu.prim.arrays.FloatArrays;
 import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.util.FloatJUnitUtils;
-import edu.jhu.util.Timer;
+import edu.jhu.prim.util.Timer;
 
 public class IntFloatSortTest {
         

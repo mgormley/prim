@@ -9,7 +9,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import edu.jhu.util.Timer;
+import edu.jhu.prim.util.Timer;
 
 public abstract class AbstractLogAddSubtractTableTest {
 

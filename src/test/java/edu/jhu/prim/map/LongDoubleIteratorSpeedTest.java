@@ -3,10 +3,10 @@ package edu.jhu.prim.map;
 import org.junit.Test;
 
 import edu.jhu.prim.Primitives;
+import edu.jhu.prim.util.Timer;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
 import edu.jhu.prim.vector.LongDoubleSortedVector;
 import edu.jhu.prim.vector.LongDoubleUnsortedVector;
-import edu.jhu.util.Timer;
 
 public class LongDoubleIteratorSpeedTest {
     
