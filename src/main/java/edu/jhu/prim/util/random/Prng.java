@@ -36,6 +36,7 @@ public class Prng {
     /* ----- Initialization ----- */
 
     public static void seed(long seed) {
+        System.out.println("SEED="+seed);
         Prng.seed = seed;
         curRandom.setSeed(seed);
     }
