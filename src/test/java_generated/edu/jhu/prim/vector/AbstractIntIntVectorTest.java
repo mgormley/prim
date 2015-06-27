@@ -159,28 +159,7 @@ public abstract class AbstractIntIntVectorTest {
         
         assertEquals(11+33+22, v1.getSum());
     }
-    
-    @Test
-    public void testGetProd() {
-        IntIntVector v1 = getIntIntVector();
-        v1.set(0, toInt(1));
-        v1.set(1, toInt(11));
-        v1.set(3, toInt(33));
-        v1.set(2, toInt(22));
         
-        assertEquals(11*33*22, v1.getProd());
-    }
-    
-    @Test
-    public void testGetProdImplicits() {
-        IntIntVector v1 = getIntIntVector();
-        v1.set(1, toInt(11));
-        v1.set(3, toInt(33));
-        v1.set(2, toInt(22));
-        // Test case where there are implicit zeros.
-        assertEquals(0, v1.getProd());        
-    }
-    
     @Test
     public void testGetMax() {
         IntIntVector v1 = getIntIntVector();

@@ -9,6 +9,7 @@ import edu.jhu.prim.sort.LongIntSort;
 import edu.jhu.prim.util.Lambda.FnLongIntToInt;
 import edu.jhu.prim.util.Lambda.FnLongIntToVoid;
 import edu.jhu.prim.util.SafeCast;
+import edu.jhu.prim.util.math.FastMath;
 
 /**
  * Lazily-sorted vector.
@@ -253,11 +254,6 @@ public class LongIntUnsortedVector extends AbstractLongIntVector implements Long
 
     @Override
     public void product(LongIntVector other) {
-        throw new RuntimeException("not supported");
-    }
-
-    @Override
-    public int getProd() {
         throw new RuntimeException("not supported");
     }
     

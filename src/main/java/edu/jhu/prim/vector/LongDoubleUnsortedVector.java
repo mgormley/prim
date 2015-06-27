@@ -9,6 +9,7 @@ import edu.jhu.prim.sort.LongDoubleSort;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToVoid;
 import edu.jhu.prim.util.SafeCast;
+import edu.jhu.prim.util.math.FastMath;
 
 /**
  * Lazily-sorted vector.
@@ -230,7 +231,7 @@ public class LongDoubleUnsortedVector extends AbstractLongDoubleVector implement
             double v = vals[i];
             sum += v * v;
         }
-        return Math.sqrt(sum);
+        return FastMath.sqrt(sum);
     }
 
     public double lInfNorm() {
@@ -246,7 +247,7 @@ public class LongDoubleUnsortedVector extends AbstractLongDoubleVector implement
         return biggest >= 0 ? biggest : -biggest;
     }
 
-    public void makeUnitVector() { scale(1d / l2Norm()); }
+    public void makeUnitVector() { scale(1 / l2Norm()); }
 
     /**
      * returns true if any values are NaN or Inf
@@ -308,11 +309,6 @@ public class LongDoubleUnsortedVector extends AbstractLongDoubleVector implement
 
     @Override
     public void product(LongDoubleVector other) {
-        throw new RuntimeException("not supported");
-    }
-
-    @Override
-    public double getProd() {
         throw new RuntimeException("not supported");
     }
     

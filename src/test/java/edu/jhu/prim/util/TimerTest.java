@@ -4,8 +4,6 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import edu.jhu.util.Timer;
-
 
 public class TimerTest {
 

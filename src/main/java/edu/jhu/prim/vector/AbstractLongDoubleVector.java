@@ -18,16 +18,6 @@ public abstract class AbstractLongDoubleVector {
         return sum.v;
     }
 
-    public double getProd() {
-        final MutableDouble prod = new MutableDouble(1);
-        this.iterate(new FnLongDoubleToVoid() {
-            public void call(long idx, double val) {
-                prod.v *= val;
-            }
-        });
-        return prod.v;
-    }
-
     public double getMax() {
         final MutableDouble max = new MutableDouble(Double.NEGATIVE_INFINITY);
         this.iterate(new FnLongDoubleToVoid() {

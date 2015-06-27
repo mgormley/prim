@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import edu.jhu.prim.Primitives;
 import edu.jhu.prim.util.math.FastMath;
-import edu.jhu.util.Prng;
+import edu.jhu.prim.util.random.Prng;
 
 /**
  * Utility class for treating double arrays as multinomial distributions.

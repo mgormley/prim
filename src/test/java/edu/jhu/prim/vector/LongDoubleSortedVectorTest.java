@@ -3,13 +3,12 @@ package edu.jhu.prim.vector;
 import static edu.jhu.prim.Primitives.toDouble;
 import static edu.jhu.prim.Primitives.toInt;
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 
 import org.junit.Test;
 
+import edu.jhu.prim.Primitives;
 import edu.jhu.prim.map.LongDoubleEntry;
 
 public class LongDoubleSortedVectorTest extends AbstractLongDoubleVectorTest {
@@ -30,7 +29,7 @@ public class LongDoubleSortedVectorTest extends AbstractLongDoubleVectorTest {
 		assertEquals(0, toInt(v1.get(5)));
 		assertEquals(5, v1.getUsed());
 		
-        LongDoubleSortedVector v2 = LongDoubleSortedVector.getWithNoZeroValues(v1, 1e-13);
+        LongDoubleSortedVector v2 = LongDoubleSortedVector.getWithNoZeroValues(v1, Primitives.DEFAULT_DOUBLE_DELTA);
         assertEquals(3, v2.getUsed());
 		assertEquals(11, toInt(v2.get(1)));
 		assertEquals(22, toInt(v2.get(2)));

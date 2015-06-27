@@ -174,9 +174,4 @@ public class IntDoubleHashVector extends IntDoubleHashMap implements IntDoubleVe
         
     }
 
-    @Override
-    public double getProd() {
-        throw new RuntimeException("not supported");
-    }
-
 }

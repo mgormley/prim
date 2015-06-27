@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import edu.jhu.prim.util.JUnitUtils;
+import edu.jhu.prim.util.DoubleJUnitUtils;
 
 public class SparseRowDoubleMatrixTest {
 
@@ -24,7 +24,7 @@ public class SparseRowDoubleMatrixTest {
         DenseDoubleMatrix cMat = aMat.mult(bMat);
         
         System.out.println(Arrays.deepToString(cMat.getMatrix()));
-        JUnitUtils.assertArrayEquals(cMatArr, cMat.getMatrix(), 1e-13);
+        DoubleJUnitUtils.assertArrayEquals(cMatArr, cMat.getMatrix(), 1e-13);
     }    
 
     @Test
@@ -43,7 +43,7 @@ public class SparseRowDoubleMatrixTest {
         DenseDoubleMatrix cMat = aMat.mult(bMat);
         
         System.out.println(Arrays.deepToString(cMat.getMatrix()));
-        JUnitUtils.assertArrayEquals(cMatArr, cMat.getMatrix(), 1e-13);
+        DoubleJUnitUtils.assertArrayEquals(cMatArr, cMat.getMatrix(), 1e-13);
     }
 
 }

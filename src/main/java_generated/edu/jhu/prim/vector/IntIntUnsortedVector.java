@@ -9,6 +9,7 @@ import edu.jhu.prim.sort.IntIntSort;
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
 import edu.jhu.prim.util.Lambda.FnIntIntToVoid;
 import edu.jhu.prim.util.SafeCast;
+import edu.jhu.prim.util.math.FastMath;
 
 /**
  * Lazily-sorted vector.
@@ -253,11 +254,6 @@ public class IntIntUnsortedVector extends AbstractIntIntVector implements IntInt
 
     @Override
     public void product(IntIntVector other) {
-        throw new RuntimeException("not supported");
-    }
-
-    @Override
-    public int getProd() {
         throw new RuntimeException("not supported");
     }
     

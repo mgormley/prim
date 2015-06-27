@@ -5,7 +5,7 @@ import java.util.Arrays;
 import edu.jhu.prim.Primitives;
 import edu.jhu.prim.tuple.IntTuple;
 import edu.jhu.prim.util.math.FastMath;
-import edu.jhu.util.Prng;
+import edu.jhu.prim.util.random.Prng;
 
 
 /**

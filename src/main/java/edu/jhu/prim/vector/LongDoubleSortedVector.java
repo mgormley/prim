@@ -244,11 +244,6 @@ public class LongDoubleSortedVector extends LongDoubleSortedMap implements LongD
         return prod;
     }
 
-    @Override
-    public double getProd() {
-        throw new RuntimeException("not supported");
-    }    
-
     /**
      * Applies the function to every pair of entries in this vector and an
      * other. If the call is skipping zeros, then the function is only applied

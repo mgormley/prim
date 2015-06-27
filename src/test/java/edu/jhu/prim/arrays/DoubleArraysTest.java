@@ -6,8 +6,8 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import edu.jhu.prim.util.Timer;
 import edu.jhu.prim.util.math.FastMath;
-import edu.jhu.util.Timer;
 
 public class DoubleArraysTest {
 
