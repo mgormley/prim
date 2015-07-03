@@ -2,6 +2,8 @@ package edu.jhu.prim.arrays;
 
 import java.util.Arrays;
 
+import edu.jhu.prim.Primitives;
+
 /**
  * Utility methods and math for boolean arrays of varying dimensionalities.
  * 
@@ -79,6 +81,26 @@ public class BoolArrays {
         for (int i=0; i<array.length; i++) {
             array[i] = value;
         }
+    }
+
+    /** Checks in O(n) by linear search if the array contains the value. */
+    public static boolean contains(boolean[] array, boolean value) {
+        for (int i=0; i<array.length; i++) {
+            if (array[i] == value) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /** Checks in O(n) by linear search if the array contains the value. */
+    public static boolean contains(boolean[][] array, boolean value) {
+        for (int i=0; i<array.length; i++) {
+            if (contains(array[i], value)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
