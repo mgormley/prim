@@ -19,7 +19,7 @@ The latest public version is deployed on Maven Central:
     <dependency>
       <groupId>edu.jhu.prim</groupId>
       <artifactId>prim</artifactId>
-      <version>2.0.5</version>
+      <version>3.1.0</version>
     </dependency>
 
 ## Dependencies
