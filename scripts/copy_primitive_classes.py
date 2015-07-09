@@ -1,7 +1,11 @@
 #!/usr/bin/python
 #
+# Uses long and double versions of classes as templates to create 
+# versions for other Java primitive types.
+#
 # Example usage:
-# find ./src/ilog/cplex/ | xargs -n 1 python ./scripts/cleanup.py
+#     python scripts/copy_primitive_classes.py
+#
 
 import sys
 import re
@@ -21,7 +25,8 @@ def get_typedef_repls(src, dest):
             (src.const, dest.const)]
     
 def get_typedefs():
-    return {"short" : TypeDef("Short", "short", "SHORT", True),
+    return {"byte" : TypeDef("Byte", "byte", "BYTE", True),
+            "short" : TypeDef("Short", "short", "SHORT", True),
             "int" : TypeDef("Int", "int", "INT", True),
             "long" : TypeDef("Long", "long", "LONG", True),
             "float" : TypeDef("Float", "float", "FLOAT", False),
@@ -53,8 +58,26 @@ def replace_all(repls, s):
 def re_sub_all(re_subs, s):
     for k,v in re_subs:
         s, num_subs = re.subn(k, v, s, flags=re.DOTALL)
-        print "Number of substitutions for %s-->%s: %d" % (k, v, num_subs)
+        #print "Number of substitutions for %s-->%s: %d" % (k, v, num_subs)
     return s
+
+def get_re_subs_for_all():
+    repls = [("int serialVersionUID", "long serialVersionUID"),
+             ("short serialVersionUID", "long serialVersionUID"),
+             ("byte serialVersionUID", "long serialVersionUID"),
+             ("Long.POSITIVE_INFINITY", "Long.MAX_VALUE"),
+             ("Long.NEGATIVE_INFINITY", "Long.MIN_VALUE"),
+             ("Int.POSITIVE_INFINITY", "Integer.MAX_VALUE"),
+             ("Int.NEGATIVE_INFINITY", "Integer.MIN_VALUE"),
+             ("Short.POSITIVE_INFINITY", "Short.MAX_VALUE"),
+             ("Short.NEGATIVE_INFINITY", "Short.MIN_VALUE"),
+             ("Byte.POSITIVE_INFINITY", "Byte.MAX_VALUE"),
+             ("Byte.NEGATIVE_INFINITY", "Byte.MIN_VALUE"),
+             ]
+    
+    # Convert repls to regex replacements.
+    re_subs = [(re.escape(k), v) for k, v in repls]
+    return re_subs
 
 def get_re_subs_for_single(src_prim, dest_prim):
     '''Gets regular expression pairs for use in re.subn (called by re_sub_all). 
@@ -66,13 +89,11 @@ def get_re_subs_for_single(src_prim, dest_prim):
     if src_prim.prim == "long" and dest_prim.prim == "int":
         repls += [("Long.", "Integer.")]
     repls += get_typedef_repls(src_prim, dest_prim)
-    # Corrections to always use.
-    repls += [("int serialVersionUID", "long serialVersionUID")]
     
     # Convert repls to regex replacements.
     re_subs = [(re.escape(k), v) for k, v in repls]
+    re_subs += get_re_subs_for_all() 
     re_subs += add_re_subs
-    assert len(re_subs) == len(repls) + len(add_re_subs)
            
     return re_subs
     
@@ -106,23 +127,12 @@ def get_re_subs_for_pair(dest_key, dest_val):
                   (", double zeroThreshold", ""),
                   (", zeroThreshold", ""),
                   (", 1e-13", ""),
+                  (", Primitives.DEFAULT_DOUBLE_DELTA", ""),
                   ]
         
     # Add the primary replacements.
     repls += get_typedef_repls(src_key, dest_key)
     repls += get_typedef_repls(src_val, dest_val)
-
-    # Special cases to always use.
-    repls += [#("getIntIndexArray", "getIndexArray"),
-             ("int serialVersionUID", "long serialVersionUID"),
-             # TODO: The MIN_VALUEs and MAX_VALUEs are not being sorted properly.
-             ("Long.POSITIVE_INFINITY", "9223372036854775806l"),
-             ("Long.NEGATIVE_INFINITY", "-9223372036854775806l"),
-             ("Int.POSITIVE_INFINITY", "2147483646"),
-             ("Int.NEGATIVE_INFINITY", "-2147483646"),
-             ("Short.POSITIVE_INFINITY", "32767"),
-             ("Short.NEGATIVE_INFINITY", "-32768"),
-             ]
     
     # Additional regular expression replacements to be concatenated at the end.
     add_re_subs = []
@@ -167,8 +177,8 @@ def get_re_subs_for_pair(dest_key, dest_val):
     
     # Convert repls to regex replacements.
     re_subs = [(re.escape(k), v) for k, v in repls]
+    re_subs += get_re_subs_for_all() 
     re_subs += add_re_subs
-    assert len(re_subs) == len(repls) + len(add_re_subs)
            
     return re_subs
 
@@ -201,65 +211,84 @@ def classes_to_files(main_test, classes):
     return src_files
 
 if __name__ == "__main__":
-    # Create a list of main/test classes which are defined for a pair of primitives (Long and Double)
-    # and should be copied over to a new pair of primitives.
-    main_classes = [
-                 "edu.jhu.prim.map.LongDoubleMap",
-                 "edu.jhu.prim.map.LongDoubleEntry",
-                 "edu.jhu.prim.map.LongDoubleSortedMap",
-                 "edu.jhu.prim.map.LongDoubleHashMap",
-                 "edu.jhu.prim.sort.LongDoubleSort",
-                 "edu.jhu.prim.vector.LongDoubleVector",
-                 "edu.jhu.prim.vector.LongDoubleSortedVector",
-                 "edu.jhu.prim.vector.LongDoubleUnsortedVector",
-                 "edu.jhu.prim.vector.LongDoubleHashVector",
-                 "edu.jhu.prim.vector.LongDoubleDenseVector",
-                 "edu.jhu.prim.vector.LongDoubleVectorSlice",
-                 "edu.jhu.prim.vector.AbstractLongDoubleVector",
-                 ]
-    test_classes = [
-                 "edu.jhu.prim.map.LongDoubleSortedMapTest",
-                 "edu.jhu.prim.map.LongDoubleHashMapTest",
-                 "edu.jhu.prim.sort.LongDoubleSortTest",
-                 "edu.jhu.prim.vector.LongDoubleSortedVectorTest",
-                 "edu.jhu.prim.vector.LongDoubleUnsortedVectorTest",
-                 "edu.jhu.prim.vector.LongDoubleHashVectorTest",
-                 "edu.jhu.prim.vector.LongDoubleDenseVectorTest",
-                 "edu.jhu.prim.vector.LongDoubleVectorSliceTest",
-                 "edu.jhu.prim.vector.AbstractLongDoubleVectorTest",
-                 ]
-    src_files = classes_to_files("main", main_classes) + classes_to_files("test", test_classes)
-
     tds = get_typedefs()
+    
+    # ------------------ Copy Primitive Type Pairs --------------------
+    #
+    # Create a list of main/test classes which are defined for a pair of primitives (Long and Double)
+    # and should be copied over to a new pair of primitives.    
+    src_files = classes_to_files("main", [
+                    "edu.jhu.prim.map.LongDoubleMap",
+                    "edu.jhu.prim.map.LongDoubleEntry",
+                    "edu.jhu.prim.map.LongDoubleSortedMap",
+                    "edu.jhu.prim.map.LongDoubleHashMap",
+                    "edu.jhu.prim.sort.LongDoubleSort",
+                    "edu.jhu.prim.vector.LongDoubleVector",
+                    "edu.jhu.prim.vector.LongDoubleSortedVector",
+                    "edu.jhu.prim.vector.LongDoubleUnsortedVector",
+                    "edu.jhu.prim.vector.LongDoubleHashVector",
+                    "edu.jhu.prim.vector.LongDoubleDenseVector",
+                    "edu.jhu.prim.vector.LongDoubleVectorSlice",
+                    "edu.jhu.prim.vector.AbstractLongDoubleVector",
+                    ]) + \
+                classes_to_files("test", [
+                    "edu.jhu.prim.map.LongDoubleSortedMapTest",
+                    "edu.jhu.prim.map.LongDoubleHashMapTest",
+                    "edu.jhu.prim.sort.LongDoubleSortTest",
+                    "edu.jhu.prim.vector.LongDoubleSortedVectorTest",
+                    "edu.jhu.prim.vector.LongDoubleUnsortedVectorTest",
+                    "edu.jhu.prim.vector.LongDoubleHashVectorTest",
+                    "edu.jhu.prim.vector.LongDoubleDenseVectorTest",
+                    "edu.jhu.prim.vector.LongDoubleVectorSliceTest",
+                    "edu.jhu.prim.vector.AbstractLongDoubleVectorTest",
+                    ])
     copy_pair(tds.get("int"), tds.get("double"), src_files)
-    copy_pair(tds.get("int"), tds.get("long"), src_files)
-    
-    #TODO: IntInt/LongInt sort of works, but requires the removal of some duplicate methods/constructors:
+    copy_pair(tds.get("int"), tds.get("float"), src_files)
+    copy_pair(tds.get("int"), tds.get("long"), src_files)    
     copy_pair(tds.get("long"), tds.get("int"), src_files)
-    copy_pair(tds.get("int"), tds.get("int"), src_files)
-    
+    copy_pair(tds.get("int"), tds.get("int"), src_files)    
     # TODO: ShortInt doesn't work because the literal 0 must be manually cast to a short.
-    src_files = classes_to_files("main", ["edu.jhu.prim.sort.LongDoubleSort"])    
-    src_files += classes_to_files("test", ["edu.jhu.prim.sort.LongDoubleSortTest"])
+    src_files = classes_to_files("main", ["edu.jhu.prim.sort.LongDoubleSort"]) + \
+                classes_to_files("test", ["edu.jhu.prim.sort.LongDoubleSortTest"])
     copy_pair(tds.get("int"), tds.get("short"), src_files)
     
-    
+    # ------------------ Copy Primitive Type Singletons --------------------
+    #
     # Create a list of main/test classes which are defined for a single primitive
     # and should be copied over to a primitive.
-    src_files = classes_to_files("main", ["edu.jhu.prim.arrays.DoubleArrays"])    
+    
+    # Float only
+    src_files = classes_to_files("main", [
+                    "edu.jhu.prim.arrays.DoubleArrays",
+                    "edu.jhu.prim.sort.DoubleSort",
+                    "edu.jhu.prim.list.DoubleArrayList",
+                    "edu.jhu.prim.list.DoubleStack",
+                    ]) + \
+                classes_to_files("test", [
+                    "edu.jhu.prim.sort.DoubleSortTest",
+                    "edu.jhu.prim.util.DoubleJUnitUtils",
+                    ]) 
     copy_single(tds.get("double"), tds.get("float"), src_files)
-    # For now we only copy one class for shorts.
-    src_files = classes_to_files("main", ["edu.jhu.prim.arrays.LongArrays",
-                                          "edu.jhu.prim.sort.LongSort",
-                                          ])
-    src_files = classes_to_files("test", ["edu.jhu.prim.sort.LongSortTest",])
+    # Boolean, Byte, Short, Int
+    src_files = classes_to_files("main", [
+                    "edu.jhu.prim.arrays.LongArrays",
+                    "edu.jhu.prim.sort.LongSort",
+                    "edu.jhu.prim.list.LongArrayList",
+                    "edu.jhu.prim.list.LongStack",
+                    ]) + \
+                classes_to_files("test", [
+                    "edu.jhu.prim.sort.LongSortTest",
+                    "edu.jhu.prim.util.LongJUnitUtils",
+                    ])
     copy_single(tds.get("long"), tds.get("short"), src_files)
+    copy_single(tds.get("long"), tds.get("byte"), src_files)
     copy_single(tds.get("long"), tds.get("int"), src_files)
     # Int only
-    src_files = classes_to_files("main", ["edu.jhu.prim.set.LongHashSet",
-                                          "edu.jhu.prim.set.LongSet",
-                                          "edu.jhu.prim.iter.LongIter",
-                                          "edu.jhu.prim.iter.LongArrayIter",
-                                          "edu.jhu.prim.iter.LongIncrIter",
-                                          ])
+    src_files = classes_to_files("main", [
+                    "edu.jhu.prim.set.LongHashSet",
+                    "edu.jhu.prim.set.LongSet",
+                    "edu.jhu.prim.iter.LongIter",
+                    "edu.jhu.prim.iter.LongArrayIter",
+                    "edu.jhu.prim.iter.LongIncrIter",
+                    ]) 
     copy_single(tds.get("long"), tds.get("int"), src_files)

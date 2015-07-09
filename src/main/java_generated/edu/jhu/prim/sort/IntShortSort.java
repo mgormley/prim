@@ -6,6 +6,8 @@ import edu.jhu.prim.list.IntStack;
 
 public class IntShortSort {
 
+    public static int numSwaps = 0;
+
     public IntShortSort() {
         // private constructor
     }
@@ -17,9 +19,7 @@ public class IntShortSort {
      * are mirrored in index. Sorts in descending order.
      */
     public static void sortValuesDesc(short[] values, int[] index) {
-        ShortArrays.scale(values, (short) -1);
-        sortValuesAsc(values, index);
-        ShortArrays.scale(values, (short) -1);
+        quicksortValues(values, index, 0, index.length - 1, false);
     }
     
     /**
@@ -27,10 +27,10 @@ public class IntShortSort {
      * are mirrored in index. Sorts in ascending order.
      */
     public static void sortValuesAsc(short[] values, int[] index) {
-        quicksortValues(values, index, 0, index.length - 1);
+        quicksortValues(values, index, 0, index.length - 1, true);
     }
 
-    private static void quicksortValues(short[] array, int[] index, int left, int right) {
+    private static void quicksortValues(short[] array, int[] index, int left, int right, boolean asc) {
         IntStack leftStack = new IntStack();
         IntStack rightStack = new IntStack();
         leftStack.add(left);
@@ -46,7 +46,7 @@ public class IntShortSort {
                 // Partition the array so that everything less than
                 // values[pivotIndex] is on the left of pivotNewIndex and everything
                 // greater than or equal is on the right.
-                int pivotNewIndex = partitionValues(array, index, left, right, pivotIndex);
+                int pivotNewIndex = partitionValues(array, index, left, right, pivotIndex, asc);
                 // "Recurse" on the left side.
                 leftStack.push(left);
                 rightStack.push(pivotNewIndex - 1);
@@ -57,7 +57,7 @@ public class IntShortSort {
         }
     }
 
-    static void quicksortValuesRecursive(short[] array, int[] index, int left, int right) {
+    static void quicksortValuesRecursive(short[] array, int[] index, int left, int right, boolean asc) {
         if (left < right) {
             // Choose a pivot index.
             // --> Here we choose the rightmost element which does the least
@@ -66,14 +66,14 @@ public class IntShortSort {
             // Partition the array so that everything less than
             // values[pivotIndex] is on the left of pivotNewIndex and everything
             // greater than or equal is on the right.
-            int pivotNewIndex = partitionValues(array, index, left, right, pivotIndex);
+            int pivotNewIndex = partitionValues(array, index, left, right, pivotIndex, asc);
             // Recurse on the left and right sides.
-            quicksortValues(array, index, left, pivotNewIndex - 1);
-            quicksortValues(array, index, pivotNewIndex + 1, right);
+            quicksortValuesRecursive(array, index, left, pivotNewIndex - 1, asc);
+            quicksortValuesRecursive(array, index, pivotNewIndex + 1, right, asc);
         }
     }
     
-    private static int partitionValues(short[] array, int[] index, int left, int right, int pivotIndex) {
+    private static int partitionValues(short[] array, int[] index, int left, int right, int pivotIndex, boolean asc) {
         short pivotValue = array[pivotIndex];
         // Move the pivot value to the rightmost position.
         swap(array, index, pivotIndex, right);
@@ -81,7 +81,7 @@ public class IntShortSort {
         // than or equal to the pivot value to the left side.
         int storeIndex = left;
         for (int i=left; i<right; i++) {
-            if (array[i] <= pivotValue) {
+            if (lte(array[i], pivotValue, asc)) {
                 swap(array, index, i, storeIndex);
                 storeIndex++;
             }
@@ -97,9 +97,7 @@ public class IntShortSort {
      * Sorts in descending order.
      */
     public static void sortIndexDesc(int[] index, short[] values) {
-        IntArrays.scale(index, (int) -1);
-        sortIndexAsc(index, values);
-        IntArrays.scale(index, (int) -1);
+        quicksortIndex(index, values, 0, index.length - 1, false);
     }
     
     /**
@@ -109,9 +107,7 @@ public class IntShortSort {
      * Sorts in descending order.
      */
     public static void sortIndexDesc(int[] index, short[] values, int top) {
-        IntArrays.scale(index, (int) -1);
-        sortIndexAsc(index, values, top - 1);
-        IntArrays.scale(index, (int) -1);
+        quicksortIndex(index, values, 0, top - 1, false);
     }
     
     /**
@@ -120,7 +116,7 @@ public class IntShortSort {
      * Sorts in ascending order.
      */
     public static void sortIndexAsc(int[] index, short[] values) {
-        quicksortIndex(index, values, 0, index.length - 1);
+        quicksortIndex(index, values, 0, index.length - 1, true);
     }
 
     /**
@@ -131,10 +127,10 @@ public class IntShortSort {
      */
     public static void sortIndexAsc(int[] index, short[] values, int top) {
         assert top <= index.length;
-        quicksortIndex(index, values, 0, top - 1);
+        quicksortIndex(index, values, 0, top - 1, true);
     }
     
-    private static void quicksortIndex(int[] array, short[] values, int left, int right) {
+    private static void quicksortIndex(int[] array, short[] values, int left, int right, boolean asc) {
         IntStack leftStack = new IntStack();
         IntStack rightStack = new IntStack();
         leftStack.add(left);
@@ -147,10 +143,10 @@ public class IntShortSort {
                 // --> Here we choose the rightmost element which does the least
                 // amount of work if the array is already sorted.
                 int pivotIndex = right;
-                // Partition the array so that everything less than
+                // Partition the array  so that everything less than
                 // values[pivotIndex] is on the left of pivotNewIndex and everything
                 // greater than or equal is on the right.
-                int pivotNewIndex = partitionIndex(array, values, left, right, pivotIndex);
+                int pivotNewIndex = partitionIndex(array, values, left, right, pivotIndex, asc);
                 // "Recurse" on the left side.
                 leftStack.push(left);
                 rightStack.push(pivotNewIndex - 1);
@@ -161,7 +157,7 @@ public class IntShortSort {
         }
     }
     
-    static void quicksortIndexRecursive(int[] array, short[] values, int left, int right) {
+    static void quicksortIndexRecursive(int[] array, short[] values, int left, int right, boolean asc) {
         if (left < right) {
             // Choose a pivot index.
             // --> Here we choose the rightmost element which does the least
@@ -170,14 +166,13 @@ public class IntShortSort {
             // Partition the array so that everything less than
             // values[pivotIndex] is on the left of pivotNewIndex and everything
             // greater than or equal is on the right.
-            int pivotNewIndex = partitionIndex(array, values, left, right, pivotIndex);
+            int pivotNewIndex = partitionIndex(array, values, left, right, pivotIndex, asc);
             // Recurse on the left and right sides.
-            quicksortIndex(array, values, left, pivotNewIndex - 1);
-            quicksortIndex(array, values, pivotNewIndex + 1, right);
+            quicksortIndexRecursive(array, values, left, pivotNewIndex - 1, asc);
+            quicksortIndexRecursive(array, values, pivotNewIndex + 1, right, asc);
         }
     }
-    
-    private static int partitionIndex(int[] array, short[] values, int left, int right, int pivotIndex) {
+    private static int partitionIndex(int[] array, short[] values, int left, int right, int pivotIndex, boolean asc) {
         int pivotValue = array[pivotIndex];
         // Move the pivot value to the rightmost position.
         swap(values, array, pivotIndex, right);
@@ -185,7 +180,7 @@ public class IntShortSort {
         // than or equal to the pivot value to the left side.
         int storeIndex = left;
         for (int i=left; i<right; i++) {
-            if (array[i] <= pivotValue) {
+            if (lte(array[i], pivotValue, asc)) {
                 swap(values, array, i, storeIndex);
                 storeIndex++;
             }
@@ -203,8 +198,11 @@ public class IntShortSort {
      * @param j The position of the second element to swap.
      */
     private static void swap(short[] values, int[] index, int i, int j) {
-        swap(values, i, j);
-        swap(index, i, j);
+        if (i != j) {
+            swap(values, i, j);
+            swap(index, i, j);
+            numSwaps ++;
+        }
     }
     
     /* ----------------------------------------------------- */
@@ -218,6 +216,15 @@ public class IntShortSort {
         array[j] = valAtI;
     }
 
+    /** Abstract "less than or equal" for either ascending or descending orders. */
+    private static boolean lte(short v1, short v2, boolean asc) {
+        if (asc) {
+            return v1 <= v2;
+        } else {
+            return v2 <= v1;
+        }
+    }
+
     /*  */
     
     /**
@@ -228,30 +235,17 @@ public class IntShortSort {
         array[i] = array[j];
         array[j] = valAtI;
     }
+    
+    /** Abstract "less than or equal" for either ascending or descending orders. */
+    private static boolean lte(int v1, int v2, boolean asc) {
+        if (asc) {
+            return v1 <= v2;
+        } else {
+            return v2 <= v1;
+        }
+    }
+
 
     /*  */
-
-    /**
-     * Gets an array where array[i] = i.
-     * @param values The length of the index array will be values.length.
-     * @return The new index array.
-     */
-    public static int[] getIntIndexArray(short[] values) {
-        return getIntIndexArray(values.length);
-    }
-    
-    /**
-     * Gets an array where array[i] = i.
-     * @param length The length of the array.
-     * @return The new index array.
-     */
-    public static int[] getIntIndexArray(int length) {
-        int[] index = new int[length];
-        for (int i=0; i<index.length; i++) {
-            // TODO: This should maybe be a safe cast for the benefit of non-IntShort classes.
-            index[i] = (int) i;
-        }
-        return index;
-    }
 
 }

@@ -6,8 +6,6 @@ import edu.jhu.prim.util.Lambda.FnLongDoubleToVoid;
 
 public abstract class AbstractLongDoubleVector {
 
-    private static final long serialVersionUID = 1L;
-    
     public abstract void iterate(FnLongDoubleToVoid function);
     
     public double getSum() {
@@ -18,16 +16,6 @@ public abstract class AbstractLongDoubleVector {
             }
         });
         return sum.v;
-    }
-
-    public double getProd() {
-        final MutableDouble prod = new MutableDouble(1);
-        this.iterate(new FnLongDoubleToVoid() {
-            public void call(long idx, double val) {
-                prod.v *= val;
-            }
-        });
-        return prod.v;
     }
 
     public double getMax() {

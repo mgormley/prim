@@ -64,7 +64,7 @@ public class IntLongHashMap extends AbstractIntLongVector implements Serializabl
     private static final long serialVersionUID = -3646337053166149105L;
 
     /** Load factor for the map. */
-    private static final float LOAD_FACTOR = 0.5f;
+    private static final float LOAD_FACTOR = 0.75f;
 
     /** Default starting size.
      * <p>This must be a power of two for bit mask to work properly. </p>
@@ -142,6 +142,17 @@ public class IntLongHashMap extends AbstractIntLongVector implements Serializabl
         size  = source.size;
         mask  = source.mask;
         count = source.count;
+    }
+    
+    /** Builds a map with the given keys and values. */
+    public IntLongHashMap(int[] keys, long[] vals) {
+        this(keys.length, Primitives.DEFAULT_MISSING_ENTRY_LONG);
+        if (keys.length != vals.length) {
+            throw new IllegalStateException("keys and vals must be of the same length");
+        }
+        for (int i=0; i<keys.length; i++) {
+            this.put(keys[i], vals[i]);
+        }
     }
 
     /**

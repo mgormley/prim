@@ -1,4 +1,4 @@
-package edu.jhu.util;
+package edu.jhu.prim.util;
 
 import java.io.Serializable;
 
@@ -60,7 +60,7 @@ public class Timer implements Serializable {
     /**
      * Gets the number of times that timer has been started or split.
      */
-    public Object getCount() {
+    public int getCount() {
         return numStarts;
     }
 
@@ -95,6 +95,13 @@ public class Timer implements Serializable {
     public double totSec() {
         return totMs() / 1000.0;
     }
+    
+    /**
+     * Gets the total number of minutes.
+     */
+    public double totMin() {
+        return totMs() / 1000.0 / 60.0;
+    }
 
     /**
      * Gets the average number of seconds.
@@ -113,6 +120,9 @@ public class Timer implements Serializable {
     
     public double stdDevMs() {
         double avgMs = avgMs();
+        if (numStarts <= 1) { return 0.0; }
+        // This is the corrected sample standard deviation.
+        // 1/(N-1) \sum_{i=1}^N (t_i - \bar{t})^2
         return Math.sqrt(numStarts / (numStarts - 1.0) * (sumSqMs / numStarts - avgMs*avgMs));
     }
     

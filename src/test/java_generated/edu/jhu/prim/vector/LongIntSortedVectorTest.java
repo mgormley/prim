@@ -3,13 +3,12 @@ package edu.jhu.prim.vector;
 import static edu.jhu.prim.Primitives.toInt;
 import static edu.jhu.prim.Primitives.toInt;
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 
 import org.junit.Test;
 
+import edu.jhu.prim.Primitives;
 import edu.jhu.prim.map.LongIntEntry;
 
 public class LongIntSortedVectorTest extends AbstractLongIntVectorTest {

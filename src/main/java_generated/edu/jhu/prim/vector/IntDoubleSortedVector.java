@@ -7,9 +7,7 @@ import edu.jhu.prim.list.DoubleArrayList;
 import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.map.IntDoubleEntry;
 import edu.jhu.prim.map.IntDoubleSortedMap;
-import edu.jhu.prim.sort.IntDoubleSort;
 import edu.jhu.prim.util.Lambda;
-import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToVoid;
 import edu.jhu.prim.util.Lambda.LambdaBinOpDouble;
 import edu.jhu.prim.util.SafeCast;
@@ -41,7 +39,7 @@ public class IntDoubleSortedVector extends IntDoubleSortedMap implements IntDoub
 	}
 
 	public IntDoubleSortedVector(double[] denseRow) {
-		this(IntDoubleSort.getIntIndexArray(denseRow.length), denseRow);
+		this(IntArrays.range(denseRow.length), denseRow);
 	}
 	
 	/** Copy constructor. */

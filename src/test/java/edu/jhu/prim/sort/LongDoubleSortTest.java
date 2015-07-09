@@ -1,5 +1,6 @@
 package edu.jhu.prim.sort;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -7,10 +8,11 @@ import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 
+import edu.jhu.prim.Primitives;
 import edu.jhu.prim.arrays.DoubleArrays;
 import edu.jhu.prim.arrays.LongArrays;
-import edu.jhu.prim.util.JUnitUtils;
-import edu.jhu.util.Timer;
+import edu.jhu.prim.util.DoubleJUnitUtils;
+import edu.jhu.prim.util.Timer;
 
 public class LongDoubleSortTest {
         
@@ -19,48 +21,48 @@ public class LongDoubleSortTest {
     @Test
     public void testLongDoubleSortValuesAsc() {
         double[] values = new double[]{ 1, 3, 2, -1, 5};
-        long[] index = LongDoubleSort.getLongIndexArray(values);
+        long[] index = LongArrays.range(values.length);
         LongDoubleSort.sortValuesAsc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new double[]{ -1, 1, 2, 3, 5}, values, 1e-13);
+        DoubleJUnitUtils.assertArrayEquals(new double[]{ -1, 1, 2, 3, 5}, values, Primitives.DEFAULT_DOUBLE_DELTA);
         Assert.assertArrayEquals(new long[]{ 3, 0, 2, 1, 4}, index);
     }
     
     @Test
     public void testLongDoubleSortValuesDesc() {
         double[] values = new double[]{ 1, 3, 2, -1, 5};
-        long[] index = LongDoubleSort.getLongIndexArray(values);
+        long[] index = LongArrays.range(values.length);
         LongDoubleSort.sortValuesDesc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new double[]{ 5, 3, 2, 1, -1}, values, 1e-13);
+        DoubleJUnitUtils.assertArrayEquals(new double[]{ 5, 3, 2, 1, -1}, values, Primitives.DEFAULT_DOUBLE_DELTA);
         Assert.assertArrayEquals(new long[]{ 4, 1, 2, 0, 3}, index);
     }
     
     @Test
     public void testLongDoubleSortValuesInfinitiesAsc() {
         double[] values = new double[]{ 1, Double.POSITIVE_INFINITY, 2, -1, Double.NEGATIVE_INFINITY, 5};
-        long[] index = LongDoubleSort.getLongIndexArray(values);
+        long[] index = LongArrays.range(values.length);
         LongDoubleSort.sortValuesAsc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
 
-        JUnitUtils.assertArrayEquals(new double[]{Double.NEGATIVE_INFINITY, -1, 1, 2, 5, Double.POSITIVE_INFINITY}, values, 1e-13);
+        DoubleJUnitUtils.assertArrayEquals(new double[]{Double.NEGATIVE_INFINITY, -1, 1, 2, 5, Double.POSITIVE_INFINITY}, values, Primitives.DEFAULT_DOUBLE_DELTA);
         Assert.assertArrayEquals(new long[]{ 4, 3, 0, 2, 5, 1 }, index);
     }
     
     @Test
     public void testLongDoubleSortValuesInfinitiesDesc() {
         double[] values = new double[]{ 1, Double.POSITIVE_INFINITY, 2, -1, Double.NEGATIVE_INFINITY, 5};
-        long[] index = LongDoubleSort.getLongIndexArray(values);
+        long[] index = LongArrays.range(values.length);
         LongDoubleSort.sortValuesDesc(values, index);
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new double[]{Double.POSITIVE_INFINITY,  5, 2, 1, -1, Double.NEGATIVE_INFINITY}, values, 1e-13);
+        DoubleJUnitUtils.assertArrayEquals(new double[]{Double.POSITIVE_INFINITY,  5, 2, 1, -1, Double.NEGATIVE_INFINITY}, values, Primitives.DEFAULT_DOUBLE_DELTA);
         Assert.assertArrayEquals(new long[]{ 1, 5, 2, 0, 3, 4 }, index);
     }    
 
@@ -72,7 +74,7 @@ public class LongDoubleSortTest {
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new double[]{ 1, 5, 3, 2, -1 }, values, 1e-13);
+        DoubleJUnitUtils.assertArrayEquals(new double[]{ 1, 5, 3, 2, -1 }, values, Primitives.DEFAULT_DOUBLE_DELTA);
         Assert.assertArrayEquals(new long[]{ 1, 3, 4, 5, 8 }, index);
     }
 
@@ -84,7 +86,7 @@ public class LongDoubleSortTest {
         System.out.println(Arrays.toString(values));
         System.out.println(Arrays.toString(index));
         
-        JUnitUtils.assertArrayEquals(new double[]{ -1, 2, 3, 5, 1 }, values, 1e-13);
+        DoubleJUnitUtils.assertArrayEquals(new double[]{ -1, 2, 3, 5, 1 }, values, Primitives.DEFAULT_DOUBLE_DELTA);
         Assert.assertArrayEquals(new long[]{ 8, 5, 4, 3, 1 }, index);
     }
     
@@ -166,9 +168,8 @@ public class LongDoubleSortTest {
                 }
                 
                 timer.start();
-                LongDoubleSort.quicksortIndexRecursive(index, values, 0, index.length-1);
-                timer.stop();
-                
+                LongDoubleSort.quicksortIndexRecursive(index, values, 0, index.length-1, true);
+                timer.stop();                
             }
             System.out.println("Total (ms) for recursive: " + timer.totMs());
         }
@@ -195,6 +196,76 @@ public class LongDoubleSortTest {
                 
             }
             System.out.println("Total (ms) for stack: " + timer.totMs());
+        }
+    }
+    
+    @Test
+    public void testSortSpeedPresorted() {  
+        int numTrials = 1; // Add a zero for results above.
+        int size = Byte.MAX_VALUE;
+        {
+            Timer timer = new Timer();
+            for (int trial=0; trial<numTrials; trial++) {           
+                LongDoubleSort.numSwaps = 0;
+                double[] values = new double[size];
+                long[] index = new long[size];
+                for (int j=0; j<size; j++) {
+                    values[j] = (double) -j;
+                    index[j] = (long) -j;
+                }
+
+                if (trial == numTrials/2) {
+                    timer = new Timer();
+                }
+                assertTrue(LongSort.isSortedDesc(index));
+                timer.start();
+                LongDoubleSort.sortIndexDesc(index, values);
+                timer.stop();     
+                assertTrue(LongSort.isSortedDesc(index));
+                assertEquals(0, LongDoubleSort.numSwaps);
+
+                assertTrue(DoubleSort.isSortedDesc(values));
+                timer.start();
+                LongDoubleSort.sortValuesDesc(values, index);
+                timer.stop();
+                assertTrue(DoubleSort.isSortedDesc(values));
+                assertEquals(0, LongDoubleSort.numSwaps);   
+            }
+            System.out.println("Num swaps: " + LongDoubleSort.numSwaps);
+            System.out.println("Total (ms) for descending: " + timer.totMs());
+            assertEquals(0, LongDoubleSort.numSwaps);
+        }
+        {
+            Timer timer = new Timer();
+            for (int trial=0; trial<numTrials; trial++) {  
+                LongDoubleSort.numSwaps = 0;
+                double[] values = new double[size];
+                long[] index = new long[size];
+                for (int j=0; j<size; j++) {
+                    values[j] = (double) j;
+                    index[j] = (long) j;
+                }
+                
+                if (trial == numTrials/2) {
+                    timer = new Timer();
+                }
+                assertTrue(LongSort.isSortedAsc(index));
+                timer.start();
+                LongDoubleSort.sortIndexAsc(index, values);
+                timer.stop();     
+                assertTrue(LongSort.isSortedAsc(index));
+                assertEquals(0, LongDoubleSort.numSwaps);
+
+                assertTrue(DoubleSort.isSortedAsc(values));
+                timer.start();
+                LongDoubleSort.sortValuesAsc(values, index);
+                timer.stop();
+                assertTrue(DoubleSort.isSortedAsc(values));
+                assertEquals(0, LongDoubleSort.numSwaps);                
+            }
+            System.out.println("Num swaps: " + LongDoubleSort.numSwaps);
+            System.out.println("Total (ms) for ascending: " + timer.totMs());
+            assertEquals(0, LongDoubleSort.numSwaps);
         }
     }
     

@@ -5,7 +5,7 @@ import java.util.Arrays;
 import edu.jhu.prim.Primitives;
 import edu.jhu.prim.tuple.IntTuple;
 import edu.jhu.prim.util.math.FastMath;
-import edu.jhu.util.Prng;
+import edu.jhu.prim.util.random.Prng;
 
 
 /**
@@ -410,6 +410,22 @@ public class FloatArrays {
         }
     }
     
+    public static float l1norm(float[] array) {
+        float l1norm = 0;
+        for (int i=0; i<array.length; i++) {
+            l1norm += Math.abs(array[i]);
+        }
+        return l1norm;
+    }
+    
+    public static float l2norm(float[] array) {
+        float l2norm = 0;
+        for (int i=0; i<array.length; i++) {
+            l2norm += array[i] * array[i];
+        }
+        return (float) Math.sqrt(l2norm);
+    }
+    
     public static float infinityNorm(float[] gradient) {
         float maxAbs = 0;
         for (int i=0; i<gradient.length; i++) {
@@ -463,7 +479,7 @@ public class FloatArrays {
     /** Checks in O(n) by linear search if the array contains the value. */
     public static boolean contains(float[] array, float value, float delta) {
         for (int i=0; i<array.length; i++) {
-            if (Primitives.equals(array[i], value, 1e-13)) {
+            if (Primitives.equals(array[i], value, delta)) {
                 return true;
             }
         }
@@ -473,7 +489,7 @@ public class FloatArrays {
     /** Checks in O(n) by linear search if the array contains the value. */
     public static boolean contains(float[][] array, float value, float delta) {
         for (int i=0; i<array.length; i++) {
-            if (contains(array[i], value, (float) 1e-13)) {
+            if (contains(array[i], value, delta)) {
                 return true;
             }
         }

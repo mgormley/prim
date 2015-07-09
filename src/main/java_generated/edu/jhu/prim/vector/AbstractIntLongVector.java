@@ -6,8 +6,6 @@ import edu.jhu.prim.util.Lambda.FnIntLongToVoid;
 
 public abstract class AbstractIntLongVector {
 
-    private static final long serialVersionUID = 1L;
-    
     public abstract void iterate(FnIntLongToVoid function);
     
     public long getSum() {
@@ -20,18 +18,8 @@ public abstract class AbstractIntLongVector {
         return sum.v;
     }
 
-    public long getProd() {
-        final MutableLong prod = new MutableLong(1);
-        this.iterate(new FnIntLongToVoid() {
-            public void call(int idx, long val) {
-                prod.v *= val;
-            }
-        });
-        return prod.v;
-    }
-
     public long getMax() {
-        final MutableLong max = new MutableLong(-9223372036854775806l);
+        final MutableLong max = new MutableLong(Long.MIN_VALUE);
         this.iterate(new FnIntLongToVoid() {
             public void call(int idx, long val) {
                 if (val > max.v) {
@@ -44,7 +32,7 @@ public abstract class AbstractIntLongVector {
     
     public int getArgmax() {
         final MutableInt argmax = new MutableInt(-1);
-        final MutableLong max = new MutableLong(-9223372036854775806l);
+        final MutableLong max = new MutableLong(Long.MIN_VALUE);
         this.iterate(new FnIntLongToVoid() {
             public void call(int idx, long val) {
                 if (val > max.v) {
@@ -57,7 +45,7 @@ public abstract class AbstractIntLongVector {
     }
     
     public long getMin() {
-        final MutableLong min = new MutableLong(9223372036854775806l);
+        final MutableLong min = new MutableLong(Long.MAX_VALUE);
         this.iterate(new FnIntLongToVoid() {
             public void call(int idx, long val) {
                 if (val < min.v) {
@@ -70,7 +58,7 @@ public abstract class AbstractIntLongVector {
     
     public int getArgmin() {
         final MutableInt argmin = new MutableInt(-1);
-        final MutableLong min = new MutableLong(9223372036854775806l);
+        final MutableLong min = new MutableLong(Long.MAX_VALUE);
         this.iterate(new FnIntLongToVoid() {
             public void call(int idx, long val) {
                 if (val < min.v) {
@@ -93,7 +81,7 @@ public abstract class AbstractIntLongVector {
     }
     
     public long getInfNorm() {
-        final MutableLong maxAbs = new MutableLong(-9223372036854775806l);
+        final MutableLong maxAbs = new MutableLong(Long.MIN_VALUE);
         this.iterate(new FnIntLongToVoid() {
             public void call(int idx, long val) {
                 long abs = Math.abs(val);

@@ -79,9 +79,6 @@ public interface LongDoubleVector extends Serializable {
     /** Gets the sum of all the explicit entries in this vector. */
     double getSum();
 
-    /** Gets the product of all the explicit entries in this vector. */
-    double getProd();
-
     /** Gets the max of all the explicit entries in this vector. */
     double getMax();
 

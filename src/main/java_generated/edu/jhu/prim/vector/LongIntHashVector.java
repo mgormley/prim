@@ -1,6 +1,5 @@
 package edu.jhu.prim.vector;
 
-import edu.jhu.prim.arrays.LongArrays;
 import edu.jhu.prim.map.LongIntHashMap;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnLongIntToInt;
@@ -35,6 +34,11 @@ public class LongIntHashVector extends LongIntHashMap implements LongIntVector {
                 thisVec.set(idx, val);
             }
         });
+    }
+
+    /** Builds a vector with the given keys and values. */
+    public LongIntHashVector(long[] keys, int[] vals) {
+        super(keys, vals);
     }
     
     /** Gets a deep copy of this vector. */

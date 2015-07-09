@@ -9,6 +9,7 @@ import edu.jhu.prim.sort.LongDoubleSort;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToDouble;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToVoid;
 import edu.jhu.prim.util.SafeCast;
+import edu.jhu.prim.util.math.FastMath;
 
 /**
  * Lazily-sorted vector.
@@ -19,23 +20,19 @@ public class LongDoubleUnsortedVector extends AbstractLongDoubleVector implement
 
     private static final long serialVersionUID = 1L;
 
+    public static final int defaultSparseInitCapacity = 16;
+    
     public boolean printWarnings = true;
-
+    
     protected long[] idx;
     protected double[] vals;
     protected int top;          	// indices less than this are valid
     protected boolean compacted;    // are elements of idx sorted and unique?
 
-    // private constructor: must call static methods to initialize
-    public LongDoubleUnsortedVector(long[] idx, double[] values) {
-        if(idx != null && idx.length != values.length)
-            throw new IllegalArgumentException();
-        this.idx = idx;
-        this.vals = values;
-        this.top = idx.length;
-        this.compacted = false;
+    public LongDoubleUnsortedVector() {
+        this(defaultSparseInitCapacity);
     }
-
+    
     public LongDoubleUnsortedVector(int initCapacity) {
         idx = new long[initCapacity];
         vals = new double[initCapacity];
@@ -43,9 +40,24 @@ public class LongDoubleUnsortedVector extends AbstractLongDoubleVector implement
         compacted = true;
     }
 
-    public static final int defaultSparseInitCapacity = 16;
-    public LongDoubleUnsortedVector() {
-        this(defaultSparseInitCapacity);
+    /** Copy constructor. */
+    public LongDoubleUnsortedVector(LongDoubleUnsortedVector other) {
+        this(other.idx.length);
+        for (int i=0; i<other.top; i++) {
+            this.idx[i] = other.idx[i];
+            this.vals[i] = other.vals[i];
+        }
+        this.top = other.top;
+        this.compacted = other.compacted;
+    }
+    
+    public LongDoubleUnsortedVector(long[] idx, double[] values) {
+        if(idx != null && idx.length != values.length)
+            throw new IllegalArgumentException();
+        this.idx = idx;
+        this.vals = values;
+        this.top = idx.length;
+        this.compacted = false;
     }
 
     protected int capacity() {
@@ -219,7 +231,7 @@ public class LongDoubleUnsortedVector extends AbstractLongDoubleVector implement
             double v = vals[i];
             sum += v * v;
         }
-        return Math.sqrt(sum);
+        return FastMath.sqrt(sum);
     }
 
     public double lInfNorm() {
@@ -235,7 +247,7 @@ public class LongDoubleUnsortedVector extends AbstractLongDoubleVector implement
         return biggest >= 0 ? biggest : -biggest;
     }
 
-    public void makeUnitVector() { scale(1d / l2Norm()); }
+    public void makeUnitVector() { scale(1 / l2Norm()); }
 
     /**
      * returns true if any values are NaN or Inf
@@ -299,7 +311,7 @@ public class LongDoubleUnsortedVector extends AbstractLongDoubleVector implement
     public void product(LongDoubleVector other) {
         throw new RuntimeException("not supported");
     }
-
+    
     @Override
     public double dot(double[] other) {
         double sum = 0;

@@ -1,6 +1,5 @@
 package edu.jhu.prim.vector;
 
-import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.map.IntDoubleHashMap;
 import edu.jhu.prim.util.Lambda;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToDouble;
@@ -35,6 +34,11 @@ public class IntDoubleHashVector extends IntDoubleHashMap implements IntDoubleVe
                 thisVec.set(idx, val);
             }
         });
+    }
+
+    /** Builds a vector with the given keys and values. */
+    public IntDoubleHashVector(int[] keys, double[] vals) {
+        super(keys, vals);
     }
     
     /** Gets a deep copy of this vector. */

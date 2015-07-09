@@ -16,20 +16,24 @@ public class Lambda {
     }
 
     // TODO: Generalize this.
-    public interface LambdaOne<T> {
+    public interface FnO1ToVoid<T> {
         public void call(T obj);
     }
     
-    public interface LambdaOneToOne<T,S> {
+    public interface FnO1ToO2<T,S> {
         public S call(T obj);
     }
 
-    public interface LambdaTwo<T,S> {
+    public interface FnO1O2ToVoid<T,S> {
         public void call(T obj1, S obj2);
     }
 
-    public interface LambdaTwoToOne<T,S,V> {
+    public interface FnO1O2ToO3<T,S,V> {
         public V call(T obj1, S obj2);
+    }
+    
+    public interface FnIntToVoid {
+        public void call(int idx);
     }
     
     /* -------------------- Apply functions over vector entries ---------------------- */
@@ -46,12 +50,24 @@ public class Lambda {
         public int call(long idx, int val);
     }
     
+    public interface FnLongLongToLong {
+        public long call(long idx, long val);
+    }
+    
     public interface FnIntDoubleToDouble {
         public double call(int idx, double val);
     }
     
     public interface FnLongDoubleToDouble {
         public double call(long idx, double val);
+    }
+
+    public interface FnIntFloatToFloat {
+        public float call(int idx, float val);
+    }
+    
+    public interface FnLongFloatToFloat {
+        public float call(long idx, float val);
     }
     
     /* -------------------- Iterate functions over vector entries ---------------------- */
@@ -74,6 +90,22 @@ public class Lambda {
     
     public interface FnLongDoubleToVoid {
         public void call(long idx, double val);
+    }
+    
+    public interface FnObjDoubleToVoid<T> {
+        public void call(T idx, double val);
+    }
+    
+    public interface FnIntFloatToVoid {
+        public void call(int idx, float val);
+    }
+    
+    public interface FnLongFloatToVoid {
+        public void call(long idx, float val);
+    }
+    
+    public interface FnObjFloatToVoid<T> {
+        public void call(T idx, float val);
     }
     
     /* -------------------- Doubles ---------------------- */
@@ -149,6 +181,78 @@ public class Lambda {
         }
     }
 
+    /* -------------------- Floats ---------------------- */
+
+    /** A unary operator on floats. */
+    public interface LambdaUnaryOpFloat {
+        public float call(float v);
+    }
+    
+    /** A binary operator on floats. */
+    public interface LambdaBinOpFloat {
+        public float call(float v1, float v2);
+    }
+    
+    /** Addition operator on floats. */
+    public static final class FloatAdd implements LambdaBinOpFloat {
+        public float call(float v1, float v2) {
+            return v1 + v2;
+        }
+    }
+    
+    /** Subtraction operator on floats. */
+    public static final class FloatSubtract implements LambdaBinOpFloat {
+        public float call(float v1, float v2) {
+            return v1 - v2;
+        }
+    }
+    
+    /** Multiplication operator on floats. */
+    public static final class FloatProd implements LambdaBinOpFloat {
+        public float call(float v1, float v2) {
+            return v1 * v2;
+        }
+    }
+    
+    /** Division operator on floats. */
+    public static final class FloatDiv implements LambdaBinOpFloat {
+        public float call(float v1, float v2) {
+            return v1 / v2;
+        }
+    }
+    
+    /** Log-add operator on floats. */
+    public static final class FloatLogAdd implements LambdaBinOpFloat {
+        public float call(float v1, float v2) {
+            return FastMath.logAdd(v1, v2);
+        }
+    }
+    
+    /**
+     * Like FloatSubtract, but handles edge cases slightly differently than Java:
+     * (-Infinity) - (-Infinity) == 0  (java would have this be NaN)
+     * This is useful in Belief Propagation.
+     */
+    public static final class FloatSubtractBP implements LambdaBinOpFloat {
+        public final float call(float v1, float v2) {
+            if(v1 == v2 && v1 == Float.NEGATIVE_INFINITY)
+                return 0;
+            return v1 - v2;
+        }
+    }
+    
+    /**
+     * Like FloatDiv, but handles edge cases slightly differently than Java:
+     * 0 / 0 == 0  (java would have this be NaN)
+     * This is useful in Belief Propagation.
+     */
+    public static final class FloatDivBP implements LambdaBinOpFloat {
+        public final float call(float v1, float v2) {
+            if(v1 == 0 && v2 == 0)
+                return 0;
+            return v1 / v2;
+        }
+    }
 
     /* -------------------- Longs ---------------------- */
     

@@ -1,33 +1,31 @@
 package edu.jhu.prim.sort;
 
-import edu.jhu.prim.arrays.ShortArrays;
+import edu.jhu.prim.arrays.IntArrays;
 import edu.jhu.prim.list.IntStack;
 
-public class ShortSort {
+public class IntSort {
 
-    public ShortSort() {
+    public static int numSwaps = 0;
+
+    public IntSort() {
         // private constructor
     }
 
-    /* ------------------- Doubles only --------------- */
-    
     /**
      * Performs an in-place quick sort on array. Sorts in descending order.
      */
-    public static void sortDesc(short[] array) {
-        ShortArrays.scale(array, (short) -1);
-        sortAsc(array);
-        ShortArrays.scale(array, (short) -1);
+    public static void sortDesc(int[] array) {
+        quicksort(array, 0, array.length-1, false);
     }
     
     /**
      * Performs an in-place quick sort on array. Sorts in acscending order.
      */
-    public static void sortAsc(short[] array) {
-        quicksort(array, 0, array.length-1);
+    public static void sortAsc(int[] array) {
+        quicksort(array, 0, array.length-1, true);
     }
     
-    private static void quicksort(short[] array, int left, int right) {
+    private static void quicksort(int[] array, int left, int right, boolean asc) {
         IntStack leftStack = new IntStack();
         IntStack rightStack = new IntStack();
         leftStack.add(left);
@@ -43,7 +41,7 @@ public class ShortSort {
                 // Partition the array so that everything less than
                 // values[pivotIndex] is on the left of pivotNewIndex and everything
                 // greater than or equal is on the right.
-                int pivotNewIndex = partition(array, left, right, pivotIndex);
+                int pivotNewIndex = partition(array, left, right, pivotIndex, asc);
                 // "Recurse" on the left side.
                 leftStack.push(left);
                 rightStack.push(pivotNewIndex - 1);
@@ -54,31 +52,15 @@ public class ShortSort {
         }
     }
     
-    static void quicksortRecursive(short[] array, int left, int right) {
-        if (left < right) {
-            // Choose a pivot index.
-            // --> Here we choose the rightmost element which does the least
-            // amount of work if the array is already sorted.
-            int pivotIndex = right;
-            // Partition the array so that everything less than
-            // values[pivotIndex] is on the left of pivotNewIndex and everything
-            // greater than or equal is on the right.
-            int pivotNewIndex = partition(array, left, right, pivotIndex);
-            // Recurse on the left and right sides.
-            quicksort(array, left, pivotNewIndex - 1);
-            quicksort(array, pivotNewIndex + 1, right);
-        }
-    }
-    
-    private static int partition(short[] array, int left, int right, int pivotIndex) {
-        short pivotValue = array[pivotIndex];
+    private static int partition(int[] array, int left, int right, int pivotIndex, boolean asc) {
+        int pivotValue = array[pivotIndex];
         // Move the pivot value to the rightmost position.
         swap(array, pivotIndex, right);
         // For each position between left and right, swap all the values less
         // than or equal to the pivot value to the left side.
         int storeIndex = left;
         for (int i=left; i<right; i++) {
-            if (array[i] <= pivotValue) {
+            if (lte(array[i], pivotValue, asc)) {
                 swap(array, i, storeIndex);
                 storeIndex++;
             }
@@ -88,7 +70,7 @@ public class ShortSort {
         return storeIndex;
     }
     
-    public static short[] getIndexArray(short[] values) {
+    public static int[] getIndexArray(int[] values) {
         return getIndexArray(values.length);
     }
 
@@ -97,24 +79,27 @@ public class ShortSort {
      * @param length The length of the array.
      * @return The new index array.
      */
-    public static short[] getIndexArray(int length) {
-        short[] index = new short[length];
+    public static int[] getIndexArray(int length) {
+        int[] index = new int[length];
         for (int i=0; i<index.length; i++) {
-            index[i] = (short) i;
+            index[i] = (int) i;
         }
         return index;
-    }
+    }    
     
     /**
      * Swaps the elements at positions i and j.
      */
-    private static void swap(short[] array, int i, int j) {
-        short valAtI = array[i];
-        array[i] = array[j];
-        array[j] = valAtI;
+    private static void swap(int[] array, int i, int j) {
+        if (i != j) { 
+            int valAtI = array[i];
+            array[i] = array[j];
+            array[j] = valAtI;
+            numSwaps++;
+        }
     }
         
-    public static boolean isSortedAsc(short[] array) {
+    public static boolean isSortedAsc(int[] array) {
     	for (int i=0; i<array.length-1; i++) {
     		if (array[i] > array[i+1]) {
     			return false;
@@ -123,7 +108,7 @@ public class ShortSort {
     	return true;
     }
     
-    public static boolean isSortedDesc(short[] array) {
+    public static boolean isSortedDesc(int[] array) {
     	for (int i=0; i<array.length-1; i++) {
     		if (array[i] < array[i+1]) {
     			return false;
@@ -132,13 +117,22 @@ public class ShortSort {
     	return true;
     }
     
-    public static boolean isSortedAscAndUnique(short[] array) {
+    public static boolean isSortedAscAndUnique(int[] array) {
         for (int i=0; i<array.length-1; i++) {
             if (array[i] >= array[i+1]) {
                 return false;
             }
         }
         return true;
+    }
+    
+    /** Abstract "less than or equal" for either ascending or descending orders. */
+    private static boolean lte(int v1, int v2, boolean asc) {
+        if (asc) {
+            return v1 <= v2;
+        } else {
+            return v2 <= v1;
+        }
     }
 
 }

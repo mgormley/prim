@@ -7,9 +7,7 @@ import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.map.IntIntEntry;
 import edu.jhu.prim.map.IntIntSortedMap;
-import edu.jhu.prim.sort.IntIntSort;
 import edu.jhu.prim.util.Lambda;
-import edu.jhu.prim.util.Lambda.FnIntIntToInt;
 import edu.jhu.prim.util.Lambda.FnIntIntToVoid;
 import edu.jhu.prim.util.Lambda.LambdaBinOpInt;
 import edu.jhu.prim.util.SafeCast;
@@ -41,7 +39,7 @@ public class IntIntSortedVector extends IntIntSortedMap implements IntIntVector 
 	}
 
 	public IntIntSortedVector(int[] denseRow) {
-		this(IntIntSort.getIntIndexArray(denseRow.length), denseRow);
+		this(IntArrays.range(denseRow.length), denseRow);
 	}
 	
 	/** Copy constructor. */

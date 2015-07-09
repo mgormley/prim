@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import edu.jhu.prim.util.JUnitUtils;
+import edu.jhu.prim.util.IntJUnitUtils;
 
 public class IntObjectHashMapTest {
 
@@ -32,7 +32,7 @@ public class IntObjectHashMapTest {
         map.put(5, 55);
         map.put(7, 77);
         
-        JUnitUtils.assertArrayEquals(new int[]{2, 5, 7}, map.keys());
+        IntJUnitUtils.assertArrayEquals(new int[]{2, 5, 7}, map.keys());
     }
 
 }

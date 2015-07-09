@@ -64,7 +64,7 @@ public class LongDoubleHashMap extends AbstractLongDoubleVector implements Seria
     private static final long serialVersionUID = -3646337053166149105L;
 
     /** Load factor for the map. */
-    private static final float LOAD_FACTOR = 0.5f;
+    private static final float LOAD_FACTOR = 0.75f;
 
     /** Default starting size.
      * <p>This must be a power of two for bit mask to work properly. </p>
@@ -110,14 +110,6 @@ public class LongDoubleHashMap extends AbstractLongDoubleVector implements Seria
     /* START EXCLUDE ILV 1 */
     
     /**
-     * Build an empty map with default size
-     * @param missingEntries value to return when a missing entry is fetched
-     */
-    public LongDoubleHashMap(final double missingEntries) {
-        this(DEFAULT_EXPECTED_SIZE, missingEntries);
-    }
-
-    /**
      * Build an empty map with specified size and using NaN for missing entries.
      * @param expectedSize expected number of elements in the map
      */
@@ -160,6 +152,17 @@ public class LongDoubleHashMap extends AbstractLongDoubleVector implements Seria
         size  = source.size;
         mask  = source.mask;
         count = source.count;
+    }
+    
+    /** Builds a map with the given keys and values. */
+    public LongDoubleHashMap(long[] keys, double[] vals) {
+        this(keys.length, Primitives.DEFAULT_MISSING_ENTRY_DOUBLE);
+        if (keys.length != vals.length) {
+            throw new IllegalStateException("keys and vals must be of the same length");
+        }
+        for (int i=0; i<keys.length; i++) {
+            this.put(keys[i], vals[i]);
+        }
     }
 
     /**

@@ -1,6 +1,6 @@
 package edu.jhu.prim.tuple;
 
-import edu.jhu.util.SafeEquals;
+import edu.jhu.prim.util.SafeEquals;
 
 public class Triple<X,Y,Z> {
 
@@ -51,5 +51,5 @@ public class Triple<X,Y,Z> {
 		result = 37*result + (z == null ? 0 : z.hashCode());
 		return result;
 	}
-	
+    
 }

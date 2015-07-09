@@ -1,5 +1,7 @@
 package edu.jhu.prim;
 
+import java.io.Serializable;
+
 
 /**
  * Methods and constants for primitive collections.
@@ -9,6 +11,7 @@ public class Primitives {
     
     /** The default value for missing entries. */
     public static final double DEFAULT_MISSING_ENTRY_DOUBLE = Double.NaN;
+    public static final float DEFAULT_MISSING_ENTRY_FLOAT = Float.NaN;
     public static final long DEFAULT_MISSING_ENTRY_LONG = 0;
     public static final int DEFAULT_MISSING_ENTRY_INT = 0;
     
@@ -59,6 +62,11 @@ public class Primitives {
         return -zeroThreshold <= val && val <= zeroThreshold;
     }
     
+    public static boolean isZero(float val, float zeroThreshold) {
+        zeroThreshold = Math.abs(zeroThreshold);
+        return -zeroThreshold <= val && val <= zeroThreshold;
+    }
+    
     /* --------------------- Long Form Casting ------------------- */
 
     public static long toLong(int d) {
@@ -67,6 +75,10 @@ public class Primitives {
 
     public static double toDouble(int i) {
         return (double)i;
+    }
+
+    public static float toFloat(int i) {
+        return (float)i;
     }
 
     public static int toInt(long d) {
@@ -92,6 +104,14 @@ public class Primitives {
         }
         return a;
     }
+    
+    public static float[] toFloats(int... b) {
+        float[] a = new float[b.length];
+        for (int i=0; i<b.length; i++) {
+            a[i] = b[i];
+        }
+        return a;
+    }
 
     /* --------------------- Equality and Comparison ------------------- */
 
@@ -110,13 +130,17 @@ public class Primitives {
         }
         return Math.abs(a - b) < delta;
     }
+    
+    public static boolean equals(float a, float b, float delta) {
+        if (a == b) {
+            // This case is needed for infinity equality.
+            return true;
+        }
+        return Math.abs(a - b) < delta;
+    }
 
     /**
      * Compares two double values up to some delta.
-     * 
-     * @param a
-     * @param b
-     * @param delta
      * @return The value 0 if a equals b, a value greater than 0 if if a > b, and a value less than 0 if a < b.  
      */
     public static int compare(double a, double b, double delta) {
@@ -124,6 +148,17 @@ public class Primitives {
             return 0;
         }
         return Double.compare(a, b);
+    }
+    
+    /**
+     * Compares two float values up to some delta.
+     * @return The value 0 if a equals b, a value greater than 0 if if a > b, and a value less than 0 if a < b.  
+     */
+    public static int compare(float a, float b, float delta) {
+        if (equals(a, b, delta)) {
+            return 0;
+        }
+        return Float.compare(a, b);
     }
 
     public static int compare(int a, int b) {
@@ -154,31 +189,60 @@ public class Primitives {
         assert(Math.abs(a - b) < 0.000000000001);
     }
     
-    public static class MutableLong {
+    public static boolean lte(float a, float b) {
+        return a <= b + Primitives.DEFAULT_FLOAT_DELTA;
+    }
+
+    public static boolean lte(float a, float b, float delta) {
+        return a <= b + delta;
+    }
+
+    public static boolean gte(float a, float b) {
+        return a + Primitives.DEFAULT_FLOAT_DELTA >= b;
+    }
+
+    public static boolean gte(float a, float b, float delta) {
+        return a + delta >= b;
+    }
+
+    public static void assertFloatEquals(float a, float b) {
+        if (a == b) {
+            // This check is needed to ensure infinity equality.
+            return;
+        }
+        assert(Math.abs(a - b) < 0.000000000001);
+    }
+    
+    public static class MutableLong implements Serializable {
+        private static final long serialVersionUID = 1L;
         public long v;
         public MutableLong() { }
         public MutableLong(long v) { this.v = v; }
     }
 
-    public static class MutableInt {
+    public static class MutableInt implements Serializable {
+        private static final long serialVersionUID = 1L;
         public int v;
         public MutableInt() { }
         public MutableInt(int v) { this.v = v; }
     }
     
-    public static class MutableShort {
+    public static class MutableShort implements Serializable {
+        private static final long serialVersionUID = 1L;
         public short v;
         public MutableShort() { }
         public MutableShort(short v) { this.v = v; }
     }
     
-    public static class MutableDouble {
+    public static class MutableDouble implements Serializable {
+        private static final long serialVersionUID = 1L;
         public double v;
         public MutableDouble() { }
         public MutableDouble(double v) { this.v = v; }
     }
 
-    public static class MutableFloat {
+    public static class MutableFloat implements Serializable {
+        private static final long serialVersionUID = 1L;
         public float v;
         public MutableFloat() { }
         public MutableFloat(float v) { this.v = v; }

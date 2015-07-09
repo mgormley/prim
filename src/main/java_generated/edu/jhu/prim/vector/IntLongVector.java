@@ -79,9 +79,6 @@ public interface IntLongVector extends Serializable {
     /** Gets the sum of all the explicit entries in this vector. */
     long getSum();
 
-    /** Gets the product of all the explicit entries in this vector. */
-    long getProd();
-
     /** Gets the max of all the explicit entries in this vector. */
     long getMax();
 

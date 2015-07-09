@@ -2,7 +2,8 @@ package edu.jhu.prim.arrays;
 
 import java.util.Arrays;
 
-import edu.jhu.util.Prng;
+import edu.jhu.prim.Primitives;
+import edu.jhu.prim.util.random.Prng;
 
 /**
  * Utility methods and math for long arrays of varying dimensionalities.
@@ -27,6 +28,14 @@ public class LongArrays {
             sum += vector[i];
         }
         return sum;
+    }
+
+    public static long prod(long[] vector) {
+        long prod = 1;
+        for (int i = 0; i < vector.length; i++) {
+            prod *= vector[i];
+        }
+        return prod;
     }
 
     public static long max(long[] array) {
@@ -226,6 +235,81 @@ public class LongArrays {
             numCommonIndices++;
         }
         return numCommonIndices;
+    }
+
+    /**
+     * Gets a copy of the array with the specified entry removed.
+     * 
+     * @param a The input array.
+     * @param idx The entry to remove.
+     * @return A new array with the entry removed.
+     */
+    public static long[] removeEntry(long[] a, int idx) {
+        long[] b = new long[a.length - 1];
+        for (int i = 0; i < b.length; i++) {
+            if (i < idx) {
+                b[i] = a[i];
+            } else {
+                b[i] = a[i + 1];
+            }
+        }
+        return b;
+    }
+
+    /**
+     * Gets a copy of the array with an entry inserted.
+     * 
+     * @param a The input array.
+     * @param idx The position at which to insert.
+     * @param val The value to insert.
+     * @return A new array with the inserted value.
+     */
+    public static long[] insertEntry(long[] a, int idx, long val) {
+        long[] b = new long[a.length + 1];
+        for (int i = 0; i < b.length; i++) {
+            if (i < idx) {
+                b[i] = a[i];
+            } else if (i == idx) {
+                b[idx] = val;
+            } else {
+                b[i] = a[i - 1];
+            }
+        }
+        return b;
+    }
+    
+    /** Checks in O(n) by linear search if the array contains the value. */
+    public static boolean contains(long[] array, long value) {
+        for (int i=0; i<array.length; i++) {
+            if (Primitives.equals(array[i], value)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /** Checks in O(n) by linear search if the array contains the value. */
+    public static boolean contains(long[][] array, long value) {
+        for (int i=0; i<array.length; i++) {
+            if (contains(array[i], value)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Gets an array where array[i] = i.
+     * @param length The length of the array.
+     * @return The new index array.
+     */
+    public static long[] range(int length) {
+        long[] index = new long[length];
+        for (int i=0; i<index.length; i++) {
+            // TODO: This should maybe be a safe cast for the benefit of non-LongDouble classes.
+            index[i] = (long) i;
+        }
+        return index;
     }
 
 }

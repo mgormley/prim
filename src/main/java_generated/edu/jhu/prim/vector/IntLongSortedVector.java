@@ -7,9 +7,7 @@ import edu.jhu.prim.list.LongArrayList;
 import edu.jhu.prim.list.IntArrayList;
 import edu.jhu.prim.map.IntLongEntry;
 import edu.jhu.prim.map.IntLongSortedMap;
-import edu.jhu.prim.sort.IntLongSort;
 import edu.jhu.prim.util.Lambda;
-import edu.jhu.prim.util.Lambda.FnIntLongToLong;
 import edu.jhu.prim.util.Lambda.FnIntLongToVoid;
 import edu.jhu.prim.util.Lambda.LambdaBinOpLong;
 import edu.jhu.prim.util.SafeCast;
@@ -41,7 +39,7 @@ public class IntLongSortedVector extends IntLongSortedMap implements IntLongVect
 	}
 
 	public IntLongSortedVector(long[] denseRow) {
-		this(IntLongSort.getIntIndexArray(denseRow.length), denseRow);
+		this(IntArrays.range(denseRow.length), denseRow);
 	}
 	
 	/** Copy constructor. */

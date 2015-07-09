@@ -1,6 +1,6 @@
 package edu.jhu.prim.tuple;
 
-import edu.jhu.util.SafeEquals;
+import edu.jhu.prim.util.SafeEquals;
 
 public class Pair<X,Y> {
 

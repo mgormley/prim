@@ -26,7 +26,7 @@ public class FastMath {
      */
     public static double logAdd(double x, double y) {
         if (FastMath.useLogAddTable) {
-            return LogAddTable.logAdd(x,y);
+            return SmoothedLogAddTable.logAdd(x,y);
         } else {
             return FastMath.logAddExact(x,y);
         }
@@ -43,7 +43,7 @@ public class FastMath {
      */
     public static double logSubtract(double x, double y) {
         if (FastMath.useLogAddTable) {
-            return LogAddTable.logSubtract(x,y);
+            return SmoothedLogAddTable.logSubtract(x,y);
         } else {
             return FastMath.logSubtractExact(x,y);
         }
@@ -89,10 +89,27 @@ public class FastMath {
             return x;
         } else if (Double.NEGATIVE_INFINITY == x) {
             return y;
+        } else if (x == y) {
+            return Double.NEGATIVE_INFINITY;
         }
-    
+        
         // p != 0 && q != 0
-        return x + Math.log1p(-FastMath.exp(y - x));
+        //return x + Math.log1p(-FastMath.exp(y - x));
+        // 
+        // The method below is more numerically stable for small differences in x and y.
+        // See paper: http://cran.r-project.org/web/packages/Rmpfr/vignettes/log1mexp-note.pdf
+        return x + log1mexp(x - y);
+    }
+    
+    /** f(a) = log(1 - exp(-a)) */
+    public static double log1mexp(double a) {
+        if (a <= 0) {
+            throw new IllegalArgumentException("a must be > 0: " + a);
+        } else if (a <= 0.693) {
+            return Math.log(-Math.expm1(-a));
+        } else {
+            return Math.log1p(-Math.exp(-a));
+        }
     }
 
     public static double log(double d) {
