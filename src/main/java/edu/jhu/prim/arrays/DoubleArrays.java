@@ -540,5 +540,11 @@ public class DoubleArrays {
         }
         return count;
     }
+
+    public static double[] newFilled(int length, double val) {
+        double[] a = new double[length];
+        Arrays.fill(a, val);
+        return a;
+    }
     
 }
