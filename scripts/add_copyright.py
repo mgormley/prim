@@ -55,9 +55,16 @@ xml_regex = r"""
 %s -->
 """ % (watermark, watermark)
 
+def get_root_dir():
+    scripts_dir =  os.path.abspath(sys.path[0])
+    root_dir =  os.path.dirname(os.path.dirname(scripts_dir))
+    print "Using root_dir: " + root_dir
+    return root_dir;
+
 class Commenter:
     
     def __init__(self, options):
+        self.root_dir = os.path.abspath(get_root_dir())
         self.cr_comments = {}
         self.cr_regexes = {}
         self.add_copyright("java", java_apache, java_regex)
