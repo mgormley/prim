@@ -240,6 +240,33 @@ public class LongIntUnsortedVector extends AbstractLongIntVector implements Long
             function.call(idx[i], vals[i]);
         }
     }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see edu.jhu.util.vector.LongIntMap#iterator()
+     */
+    @Override
+    public Iterator<LongIntEntry> iterator() {
+        compact();
+        return new LongIntIterator();
+    }
+    
+    public void applyNoCompact(FnLongIntToInt function) {
+        for(int i=0; i<top; i++) {
+            vals[i] = function.call(idx[i], vals[i]);
+        }
+    }
+
+    public void iterateNoCompact(FnLongIntToVoid function) {
+        for(int i=0; i<top; i++) {
+            function.call(idx[i], vals[i]);
+        }
+    }
+
+    public Iterator<LongIntEntry> iteratorNoCompact() {
+        return new LongIntIterator();
+    }
 
     @Override
     public void subtract(LongIntVector other) {
@@ -354,16 +381,6 @@ public class LongIntUnsortedVector extends AbstractLongIntVector implements Long
             throw new RuntimeException("operation not supported");
         }
 
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see edu.jhu.util.vector.LongIntMap#iterator()
-     */
-    @Override
-    public Iterator<LongIntEntry> iterator() {
-        return new LongIntIterator();
     }
     
     @Override
