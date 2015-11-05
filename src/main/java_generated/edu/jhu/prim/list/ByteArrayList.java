@@ -19,6 +19,11 @@ public class ByteArrayList implements Serializable {
     public ByteArrayList() {
         this(8);
     }
+
+    public ByteArrayList(byte[] elements) {
+        this.elements = elements;
+        this.size = elements.length;
+    }
     
     public ByteArrayList(int initialCapacity) {
         elements = new byte[initialCapacity];
@@ -184,13 +189,26 @@ public class ByteArrayList implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("ByteArrayList [");
         for (int i=0; i<size; i++) {
-            sb.append(i);
+            sb.append(elements[i]);
             if (i != size-1) {
                 sb.append(", ");
             }
         }
         sb.append("]");
         return sb.toString();
+    }
+
+    /** Removes all identical neighboring elements, resizing the array list accordingly. */
+    public void uniq() {
+        if (size <= 1) { return; }
+        int cursor = 0;
+        for (int i=1; i<size; i++) {
+            if (elements[cursor] != elements[i]) {
+                cursor++;
+                elements[cursor] = elements[i];
+            }
+        }
+        size = cursor+1;
     }
     
 }
