@@ -177,6 +177,11 @@ public class LongArrayList implements Serializable {
         return size;
     }
     
+    /** Returns true iff the list is empty. */
+    public boolean isEmpty() {
+        return size == 0;
+    }
+    
     /**
      * Removes all elements from this array list.
      */
