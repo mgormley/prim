@@ -196,4 +196,35 @@ public class FloatArrayList implements Serializable {
         return sb.toString();
     }
     
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + size;
+        Arrays.hashCode(elements);
+        for (int i=0; i<size; i++) {
+            int elementHash = Primitives.hashOfFloat(elements[i]);
+            result = prime * result + elementHash;
+        }
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        FloatArrayList other = (FloatArrayList) obj;
+        if (size != other.size)
+            return false;
+        for (int i=0; i<size; i++) {
+            if (this.elements[i] != other.elements[i]) 
+                return false;
+        }
+        return true;
+    }
+        
 }

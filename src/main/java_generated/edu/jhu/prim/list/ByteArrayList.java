@@ -3,6 +3,8 @@ package edu.jhu.prim.list;
 import java.io.Serializable;
 import java.util.Arrays;
 
+import edu.jhu.prim.Primitives;
+
 /**
  * Array list of byte primitives.
  * @author mgormley
@@ -215,5 +217,37 @@ public class ByteArrayList implements Serializable {
         }
         size = cursor+1;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + size;
+        Arrays.hashCode(elements);
+        for (int i=0; i<size; i++) {
+            int elementHash = Primitives.hashOfByte(elements[i]);
+            result = prime * result + elementHash;
+        }
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ByteArrayList other = (ByteArrayList) obj;
+        if (size != other.size)
+            return false;
+        for (int i=0; i<size; i++) {
+            if (this.elements[i] != other.elements[i]) 
+                return false;
+        }
+        return true;
+    }
+    
     
 }

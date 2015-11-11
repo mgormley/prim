@@ -25,7 +25,7 @@ public class Primitives {
     }
     
     /* ------------------- Algorithms ---------------------- */
-    
+        
     /**
      * Compute the hash value of a key
      * @param key key to hash
@@ -45,6 +45,22 @@ public class Primitives {
     public static int hashOfInt(final int key) {
         final int h = key ^ ((key >>> 20) ^ (key >>> 12));
         return h ^ (h >>> 7) ^ (h >>> 4);
+    }
+    
+    public static int hashOfShort(final short key) {
+        return hashOfInt(key);
+    }
+    
+    public static int hashOfByte(final byte key) {
+        return hashOfInt(key);
+    }
+
+    public static int hashOfDouble(final double key) {
+        return hashOfLong(Double.doubleToLongBits(key));
+    }
+
+    public static int hashOfFloat(final float key) {
+        return hashOfInt(Float.floatToIntBits(key));
     }
     
     /* ------------------- Tests ---------------------- */

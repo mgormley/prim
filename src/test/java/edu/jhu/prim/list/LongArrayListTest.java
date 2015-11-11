@@ -192,4 +192,19 @@ public class LongArrayListTest {
         assertEquals(0, list.size());
     }
 
+    @Test
+    public void testEqualsAndHashCode() throws Exception {
+        LongArrayList list1 = new LongArrayList();
+        list1.add(getLong(1));
+        list1.add(getLong(2));
+        list1.add(getLong(3));
+        LongArrayList list2 = new LongArrayList();
+        list2.add(getLong(1));
+        list2.add(getLong(2));
+        list2.add(getLong(3));
+        
+        assertEquals(list1, list2);
+        assertEquals(list1.hashCode(), list2.hashCode());
+    }
+
 }
