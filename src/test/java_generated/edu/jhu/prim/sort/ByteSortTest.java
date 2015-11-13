@@ -168,5 +168,20 @@ public class ByteSortTest {
             assertEquals(0, ByteSort.numSwaps);
         }
     }
-    
+
+    @Test
+    public void testQuicksortAscSublist() {
+        byte[] values = new byte[]{ 1, 3, 2, -1, 5};
+        ByteSort.sortAsc(values, 1, 3);
+        System.out.println(Arrays.toString(values));
+        ByteJUnitUtils.assertArrayEquals(new byte[]{ 1, 2, 3, -1, 5}, values);
+    }
+
+    @Test
+    public void testQuicksortDescSublist() {
+        byte[] values = new byte[]{ 1, 2, 3, -1, 5};
+        ByteSort.sortDesc(values, 1, 3);
+        System.out.println(Arrays.toString(values));
+        ByteJUnitUtils.assertArrayEquals(new byte[]{ 1, 3, 2, -1, 5}, values);
+    }
 }

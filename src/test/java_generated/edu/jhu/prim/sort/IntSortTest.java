@@ -168,5 +168,20 @@ public class IntSortTest {
             assertEquals(0, IntSort.numSwaps);
         }
     }
-    
+
+    @Test
+    public void testQuicksortAscSublist() {
+        int[] values = new int[]{ 1, 3, 2, -1, 5};
+        IntSort.sortAsc(values, 1, 3);
+        System.out.println(Arrays.toString(values));
+        IntJUnitUtils.assertArrayEquals(new int[]{ 1, 2, 3, -1, 5}, values);
+    }
+
+    @Test
+    public void testQuicksortDescSublist() {
+        int[] values = new int[]{ 1, 2, 3, -1, 5};
+        IntSort.sortDesc(values, 1, 3);
+        System.out.println(Arrays.toString(values));
+        IntJUnitUtils.assertArrayEquals(new int[]{ 1, 3, 2, -1, 5}, values);
+    }
 }

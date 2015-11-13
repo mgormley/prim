@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 import edu.jhu.prim.Primitives;
+import edu.jhu.prim.sort.LongSort;
 
 /**
  * Array list of long primitives.
@@ -205,6 +206,16 @@ public class LongArrayList implements Serializable {
         return sb.toString();
     }
 
+    /** Sorts this list in ascending order. */
+    public void sortAsc() {
+        LongSort.sortAsc(elements, 0, size);
+    }
+    
+    /** Sorts this list in descending order. */
+    public void sortDesc() {
+        LongSort.sortDesc(elements, 0, size);
+    }
+    
     /** Removes all identical neighboring elements, resizing the array list accordingly. */
     public void uniq() {
         if (size <= 1) { return; }
