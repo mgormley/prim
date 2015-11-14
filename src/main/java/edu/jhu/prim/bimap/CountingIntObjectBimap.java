@@ -45,5 +45,9 @@ public class CountingIntObjectBimap<T> extends IntObjectBimap<T> {
     public void setObjectCount(int index, int count) {
         idxCountMap.set(index, count);
     }
+    
+    public IntArrayList getIdxCountMap() {
+        return idxCountMap;
+    }
 	
 }
