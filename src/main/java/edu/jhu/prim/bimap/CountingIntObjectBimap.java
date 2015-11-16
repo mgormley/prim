@@ -46,7 +46,7 @@ public class CountingIntObjectBimap<T> extends IntObjectBimap<T> {
         idxCountMap.set(index, count);
     }
     
-    public IntArrayList getIdxCountMap() {
+    public IntArrayList getInternalIdxCountMap() {
         return idxCountMap;
     }
 	
