@@ -20,6 +20,22 @@ public class Primitives {
     public static final double DEFAULT_DOUBLE_DELTA = 1e-13;
     public static final float DEFAULT_FLOAT_DELTA = 1e-13f;
     
+
+    /** Bit masks. */
+    public static long LONG_MAX_UBYTE = 0xffL;
+    public static long LONG_MAX_USHORT = 0xffffL;
+    public static long LONG_MAX_UINT = 0xffffffffL;
+    public static long LONG_MAX_ULONG = 0xffffffffffffffffL;
+    //
+    public static int INT_MAX_UBYTE = 0xff;
+    public static int INT_MAX_USHORT = 0xffff;
+    public static int INT_MAX_UINT = 0xffffffff;
+    //
+    public static short SHORT_MAX_UBYTE = (short) 0xff;
+    public static short SHORT_MAX_USHORT = (short) 0xffff;
+    //
+    public static byte BYTE_MAX_UBYTE = (byte) 0xff;
+    
     private Primitives() {
         // Private constructor.
     }
