@@ -168,5 +168,20 @@ public class ShortSortTest {
             assertEquals(0, ShortSort.numSwaps);
         }
     }
-    
+
+    @Test
+    public void testQuicksortAscSublist() {
+        short[] values = new short[]{ 1, 3, 2, -1, 5};
+        ShortSort.sortAsc(values, 1, 3);
+        System.out.println(Arrays.toString(values));
+        ShortJUnitUtils.assertArrayEquals(new short[]{ 1, 2, 3, -1, 5}, values);
+    }
+
+    @Test
+    public void testQuicksortDescSublist() {
+        short[] values = new short[]{ 1, 2, 3, -1, 5};
+        ShortSort.sortDesc(values, 1, 3);
+        System.out.println(Arrays.toString(values));
+        ShortJUnitUtils.assertArrayEquals(new short[]{ 1, 3, 2, -1, 5}, values);
+    }
 }

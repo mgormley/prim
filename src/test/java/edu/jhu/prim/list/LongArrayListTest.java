@@ -133,4 +133,78 @@ public class LongArrayListTest {
         return i;
     }
 
+    // Tests a list with multiple non-unique values.
+    @Test
+    public void testUniq() throws Exception {
+        LongArrayList list = new LongArrayList();
+        list.add(1);
+        list.add(1);
+        list.add(2);
+        list.add(2);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(4);
+        list.add(4);
+        System.out.println(list);
+        list.uniq();
+        System.out.println(list);
+        assertEquals(4, list.size());
+        assertEquals(list.get(0), 1);
+        assertEquals(list.get(1), 2);
+        assertEquals(list.get(2), 3);
+        assertEquals(list.get(3), 4);
+    }
+        
+    // Tests a list with all unique values.
+    @Test
+    public void testUniq2() throws Exception {
+        LongArrayList list = new LongArrayList();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        System.out.println(list);
+        list.uniq();
+        System.out.println(list);
+        assertEquals(3, list.size());
+        assertEquals(list.get(0), 1);
+        assertEquals(list.get(1), 2);
+        assertEquals(list.get(2), 3);
+    }
+
+    // Tests a length 1 list.
+    @Test
+    public void testUniqLen1() throws Exception {
+        LongArrayList list = new LongArrayList();
+        list.add(1);
+        System.out.println(list);
+        list.uniq();
+        System.out.println(list);
+        assertEquals(1, list.size());
+        assertEquals(list.get(0), 1);
+    }
+    
+    // Tests a length 0 list.
+    @Test
+    public void testUniqLen0() throws Exception {
+        LongArrayList list = new LongArrayList();
+        list.uniq();
+        assertEquals(0, list.size());
+    }
+
+    @Test
+    public void testEqualsAndHashCode() throws Exception {
+        LongArrayList list1 = new LongArrayList();
+        list1.add(getLong(1));
+        list1.add(getLong(2));
+        list1.add(getLong(3));
+        LongArrayList list2 = new LongArrayList();
+        list2.add(getLong(1));
+        list2.add(getLong(2));
+        list2.add(getLong(3));
+        
+        assertEquals(list1, list2);
+        assertEquals(list1.hashCode(), list2.hashCode());
+    }
+
 }

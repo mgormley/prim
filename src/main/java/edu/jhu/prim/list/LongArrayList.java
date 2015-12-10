@@ -3,6 +3,9 @@ package edu.jhu.prim.list;
 import java.io.Serializable;
 import java.util.Arrays;
 
+import edu.jhu.prim.Primitives;
+import edu.jhu.prim.sort.LongSort;
+
 /**
  * Array list of long primitives.
  * @author mgormley
@@ -18,6 +21,11 @@ public class LongArrayList implements Serializable {
     
     public LongArrayList() {
         this(8);
+    }
+
+    public LongArrayList(long[] elements) {
+        this.elements = elements;
+        this.size = elements.length;
     }
     
     public LongArrayList(int initialCapacity) {
@@ -172,6 +180,11 @@ public class LongArrayList implements Serializable {
         return size;
     }
     
+    /** Returns true iff the list is empty. */
+    public boolean isEmpty() {
+        return size == 0;
+    }
+    
     /**
      * Removes all elements from this array list.
      */
@@ -184,7 +197,7 @@ public class LongArrayList implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("LongArrayList [");
         for (int i=0; i<size; i++) {
-            sb.append(i);
+            sb.append(elements[i]);
             if (i != size-1) {
                 sb.append(", ");
             }
@@ -192,5 +205,60 @@ public class LongArrayList implements Serializable {
         sb.append("]");
         return sb.toString();
     }
+
+    /** Sorts this list in ascending order. */
+    public void sortAsc() {
+        LongSort.sortAsc(elements, 0, size);
+    }
+    
+    /** Sorts this list in descending order. */
+    public void sortDesc() {
+        LongSort.sortDesc(elements, 0, size);
+    }
+    
+    /** Removes all identical neighboring elements, resizing the array list accordingly. */
+    public void uniq() {
+        if (size <= 1) { return; }
+        int cursor = 0;
+        for (int i=1; i<size; i++) {
+            if (elements[cursor] != elements[i]) {
+                cursor++;
+                elements[cursor] = elements[i];
+            }
+        }
+        size = cursor+1;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + size;
+        Arrays.hashCode(elements);
+        for (int i=0; i<size; i++) {
+            int elementHash = Primitives.hashOfLong(elements[i]);
+            result = prime * result + elementHash;
+        }
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        LongArrayList other = (LongArrayList) obj;
+        if (size != other.size)
+            return false;
+        for (int i=0; i<size; i++) {
+            if (this.elements[i] != other.elements[i]) 
+                return false;
+        }
+        return true;
+    }
+    
     
 }

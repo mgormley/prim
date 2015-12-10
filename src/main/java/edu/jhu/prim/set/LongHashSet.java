@@ -66,4 +66,8 @@ public class LongHashSet implements LongSet {
         return map.size();
     }
     
+    public long[] toNativeArray() {
+        return map.getIndices();
+    }
+    
 }
