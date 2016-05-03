@@ -143,7 +143,6 @@
 	    <artifactId>maven-javadoc-plugin</artifactId>
 	    <configuration>
 	      <quiet />
-	      <failOnError>false</failOnError>
 	    </configuration>
 	    <executions>
 	      <execution>
