@@ -16,11 +16,15 @@ LongIntSortedVector, etc.
 
 The latest public version is deployed on Maven Central:
 
-    <dependency>
-      <groupId>edu.jhu.prim</groupId>
-      <artifactId>prim</artifactId>
-      <version>3.1.0</version>
-    </dependency>
+```xml
+<dependency>
+    <groupId>edu.jhu.prim</groupId>
+    <artifactId>prim</artifactId>
+    <version>3.1.3</version>
+</dependency>
+```
+
+# Development
 
 ## Dependencies
 
@@ -37,8 +41,6 @@ only.
 
         mvn compile assembly:single
 
-# Development
-
 ## Code Generation
 
 The generated main code lives in src/main/java. The generated code is
@@ -53,10 +55,10 @@ simply run the following from the root directory:
 
         mvn eclipse:eclipse
 
-* Add M2_REPO environment variable to
+* Add M2\_REPO environment variable to
   Eclipse. http://maven.apache.org/guides/mini/guide-ide-eclipse.html
   Open the Preferences and navigate to 'Java --> Build Path -->
-  Classpath Variables'. Add a new classpath variable M2_REPO with the
+  Classpath Variables'. Add a new classpath variable M2\_REPO with the
   path to your local repository (e.g. ~/.m2/repository).
 
 * To make the project Git aware, right click on the project and select Team -> Git... 
