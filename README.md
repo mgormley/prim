@@ -1,6 +1,7 @@
 
+# Prim [![Build Status](https://travis-ci.org/mgormley/prim.svg?branch=master)](https://travis-ci.org/mgormley/prim)
 
-# Summary
+## Summary 
 
 Prim is a Java primitives library akin to GNU Trove. It
 differs by focusing heavily on sparse representations of vectors and
@@ -12,7 +13,7 @@ example, LongDoubleSortedVector is used as the "template" class for
 automatic generation of IntDoubleSortedVector, IntIntSortedVector,
 LongIntSortedVector, etc.
 
-# Using Prim
+## Using Prim
 
 The latest public version is deployed on Maven Central:
 
@@ -24,14 +25,14 @@ The latest public version is deployed on Maven Central:
 </dependency>
 ```
 
-# Development
+## Development
 
-## Dependencies
+### Dependencies
 
 Currently, Prim has no dependencies other than JUnit, in test scope
 only.
 
-## Build
+### Build
 
 * Compile the code from the command line:
 
@@ -41,7 +42,7 @@ only.
 
         mvn compile assembly:single
 
-## Code Generation
+### Code Generation
 
 The generated main code lives in src/main/java. The generated code is
 also checked in and lives in src/main/generated_java. To regenerate,
@@ -49,7 +50,7 @@ simply run the following from the root directory:
 
 	python scripts/copy_primitive_classes.py
 
-## Eclipse setup
+### Eclipse setup
 
 * Create local versions of the .project and .classpath files for Eclipse:
 
