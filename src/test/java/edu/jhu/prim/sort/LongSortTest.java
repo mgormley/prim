@@ -168,5 +168,20 @@ public class LongSortTest {
             assertEquals(0, LongSort.numSwaps);
         }
     }
-    
+
+    @Test
+    public void testQuicksortAscSublist() {
+        long[] values = new long[]{ 1, 3, 2, -1, 5};
+        LongSort.sortAsc(values, 1, 3);
+        System.out.println(Arrays.toString(values));
+        LongJUnitUtils.assertArrayEquals(new long[]{ 1, 2, 3, -1, 5}, values);
+    }
+
+    @Test
+    public void testQuicksortDescSublist() {
+        long[] values = new long[]{ 1, 2, 3, -1, 5};
+        LongSort.sortDesc(values, 1, 3);
+        System.out.println(Arrays.toString(values));
+        LongJUnitUtils.assertArrayEquals(new long[]{ 1, 3, 2, -1, 5}, values);
+    }
 }

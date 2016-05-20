@@ -295,6 +295,33 @@ public class IntDoubleUnsortedVector extends AbstractIntDoubleVector implements 
             function.call(idx[i], vals[i]);
         }
     }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see edu.jhu.util.vector.IntDoubleMap#iterator()
+     */
+    @Override
+    public Iterator<IntDoubleEntry> iterator() {
+        compact();
+        return new IntDoubleIterator();
+    }
+    
+    public void applyNoCompact(FnIntDoubleToDouble function) {
+        for(int i=0; i<top; i++) {
+            vals[i] = function.call(idx[i], vals[i]);
+        }
+    }
+
+    public void iterateNoCompact(FnIntDoubleToVoid function) {
+        for(int i=0; i<top; i++) {
+            function.call(idx[i], vals[i]);
+        }
+    }
+
+    public Iterator<IntDoubleEntry> iteratorNoCompact() {
+        return new IntDoubleIterator();
+    }
 
     @Override
     public void subtract(IntDoubleVector other) {
@@ -409,16 +436,6 @@ public class IntDoubleUnsortedVector extends AbstractIntDoubleVector implements 
             throw new RuntimeException("operation not supported");
         }
 
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see edu.jhu.util.vector.IntDoubleMap#iterator()
-     */
-    @Override
-    public Iterator<IntDoubleEntry> iterator() {
-        return new IntDoubleIterator();
     }
     
     @Override

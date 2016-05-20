@@ -295,6 +295,33 @@ public class LongDoubleUnsortedVector extends AbstractLongDoubleVector implement
             function.call(idx[i], vals[i]);
         }
     }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see edu.jhu.util.vector.LongDoubleMap#iterator()
+     */
+    @Override
+    public Iterator<LongDoubleEntry> iterator() {
+        compact();
+        return new LongDoubleIterator();
+    }
+    
+    public void applyNoCompact(FnLongDoubleToDouble function) {
+        for(int i=0; i<top; i++) {
+            vals[i] = function.call(idx[i], vals[i]);
+        }
+    }
+
+    public void iterateNoCompact(FnLongDoubleToVoid function) {
+        for(int i=0; i<top; i++) {
+            function.call(idx[i], vals[i]);
+        }
+    }
+
+    public Iterator<LongDoubleEntry> iteratorNoCompact() {
+        return new LongDoubleIterator();
+    }
 
     @Override
     public void subtract(LongDoubleVector other) {
@@ -409,16 +436,6 @@ public class LongDoubleUnsortedVector extends AbstractLongDoubleVector implement
             throw new RuntimeException("operation not supported");
         }
 
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see edu.jhu.util.vector.LongDoubleMap#iterator()
-     */
-    @Override
-    public Iterator<LongDoubleEntry> iterator() {
-        return new LongDoubleIterator();
     }
     
     @Override

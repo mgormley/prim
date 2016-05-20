@@ -28,7 +28,7 @@ public class CountingIntObjectBimap<T> extends IntObjectBimap<T> {
 	@Override
     public int lookupIndex(T object, boolean addIfMissing) {
 	    int index = super.lookupIndex(object, addIfMissing);
-	    if (index != MISSING_OBJECT_INDEX) {
+	    if (isGrowing() && index != MISSING_OBJECT_INDEX) {
 	        while (index+1 > idxCountMap.size()) {
 	            idxCountMap.add(0);
 	        }
@@ -41,5 +41,13 @@ public class CountingIntObjectBimap<T> extends IntObjectBimap<T> {
 	public int lookupObjectCount(int index) {
 	    return idxCountMap.get(index);
 	}
+
+    public void setObjectCount(int index, int count) {
+        idxCountMap.set(index, count);
+    }
+    
+    public IntArrayList getInternalIdxCountMap() {
+        return idxCountMap;
+    }
 	
 }

@@ -240,6 +240,33 @@ public class IntIntUnsortedVector extends AbstractIntIntVector implements IntInt
             function.call(idx[i], vals[i]);
         }
     }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see edu.jhu.util.vector.IntIntMap#iterator()
+     */
+    @Override
+    public Iterator<IntIntEntry> iterator() {
+        compact();
+        return new IntIntIterator();
+    }
+    
+    public void applyNoCompact(FnIntIntToInt function) {
+        for(int i=0; i<top; i++) {
+            vals[i] = function.call(idx[i], vals[i]);
+        }
+    }
+
+    public void iterateNoCompact(FnIntIntToVoid function) {
+        for(int i=0; i<top; i++) {
+            function.call(idx[i], vals[i]);
+        }
+    }
+
+    public Iterator<IntIntEntry> iteratorNoCompact() {
+        return new IntIntIterator();
+    }
 
     @Override
     public void subtract(IntIntVector other) {
@@ -354,16 +381,6 @@ public class IntIntUnsortedVector extends AbstractIntIntVector implements IntInt
             throw new RuntimeException("operation not supported");
         }
 
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see edu.jhu.util.vector.IntIntMap#iterator()
-     */
-    @Override
-    public Iterator<IntIntEntry> iterator() {
-        return new IntIntIterator();
     }
     
     @Override

@@ -66,4 +66,8 @@ public class IntHashSet implements IntSet {
         return map.size();
     }
     
+    public int[] toNativeArray() {
+        return map.getIndices();
+    }
+    
 }

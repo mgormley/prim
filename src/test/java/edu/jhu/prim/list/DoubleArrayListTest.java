@@ -133,4 +133,19 @@ public class DoubleArrayListTest {
         return i;
     }
 
+    @Test
+    public void testEqualsAndHashCode() throws Exception {
+        DoubleArrayList list1 = new DoubleArrayList();
+        list1.add(getDouble(1));
+        list1.add(getDouble(2));
+        list1.add(getDouble(3));
+        DoubleArrayList list2 = new DoubleArrayList();
+        list2.add(getDouble(1));
+        list2.add(getDouble(2));
+        list2.add(getDouble(3));
+        
+        assertEquals(list1, list2);
+        assertEquals(list1.hashCode(), list2.hashCode());
+    }
+
 }

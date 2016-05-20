@@ -25,6 +25,28 @@ public class ShortSort {
         quicksort(array, 0, array.length-1, true);
     }
     
+    /**
+     * Performs an in-place quick sort on array. Sorts in acscending order.
+     * 
+     * @param array Elements to sort.
+     * @param fromIndex The starting index (inclusive).
+     * @param toIndex The ending index (exclusive).
+     */
+    public static void sortAsc(short[] array, int fromIndex, int toIndex) {
+        quicksort(array, fromIndex, toIndex-1, true);
+    }
+
+    /**
+     * Performs an in-place quick sort on array. Sorts in acscending order.
+     * 
+     * @param array Elements to sort.
+     * @param fromIndex The starting index (inclusive).
+     * @param toIndex The ending index (exclusive).
+     */
+    public static void sortDesc(short[] array, int fromIndex, int toIndex) {
+        quicksort(array, fromIndex, toIndex-1, false);
+    }
+        
     private static void quicksort(short[] array, int left, int right, boolean asc) {
         IntStack leftStack = new IntStack();
         IntStack rightStack = new IntStack();

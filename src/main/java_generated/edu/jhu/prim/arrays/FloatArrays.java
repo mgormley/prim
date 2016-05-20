@@ -540,5 +540,11 @@ public class FloatArrays {
         }
         return count;
     }
+
+    public static float[] newFilled(int length, float val) {
+        float[] a = new float[length];
+        Arrays.fill(a, val);
+        return a;
+    }
     
 }

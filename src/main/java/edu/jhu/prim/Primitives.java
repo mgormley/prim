@@ -20,12 +20,28 @@ public class Primitives {
     public static final double DEFAULT_DOUBLE_DELTA = 1e-13;
     public static final float DEFAULT_FLOAT_DELTA = 1e-13f;
     
+
+    /** Bit masks. */
+    public static long LONG_MAX_UBYTE = 0xffL;
+    public static long LONG_MAX_USHORT = 0xffffL;
+    public static long LONG_MAX_UINT = 0xffffffffL;
+    public static long LONG_MAX_ULONG = 0xffffffffffffffffL;
+    //
+    public static int INT_MAX_UBYTE = 0xff;
+    public static int INT_MAX_USHORT = 0xffff;
+    public static int INT_MAX_UINT = 0xffffffff;
+    //
+    public static short SHORT_MAX_UBYTE = (short) 0xff;
+    public static short SHORT_MAX_USHORT = (short) 0xffff;
+    //
+    public static byte BYTE_MAX_UBYTE = (byte) 0xff;
+    
     private Primitives() {
         // Private constructor.
     }
     
     /* ------------------- Algorithms ---------------------- */
-    
+        
     /**
      * Compute the hash value of a key
      * @param key key to hash
@@ -45,6 +61,22 @@ public class Primitives {
     public static int hashOfInt(final int key) {
         final int h = key ^ ((key >>> 20) ^ (key >>> 12));
         return h ^ (h >>> 7) ^ (h >>> 4);
+    }
+    
+    public static int hashOfShort(final short key) {
+        return hashOfInt(key);
+    }
+    
+    public static int hashOfByte(final byte key) {
+        return hashOfInt(key);
+    }
+
+    public static int hashOfDouble(final double key) {
+        return hashOfLong(Double.doubleToLongBits(key));
+    }
+
+    public static int hashOfFloat(final float key) {
+        return hashOfInt(Float.floatToIntBits(key));
     }
     
     /* ------------------- Tests ---------------------- */

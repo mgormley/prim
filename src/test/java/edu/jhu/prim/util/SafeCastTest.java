@@ -81,15 +81,26 @@ public class SafeCastTest {
     }
     
     @Test 
-    public void testUnsignedShortToInt() {
+    public void testSafeUnsignedShortToInt() {
         assertEquals(1, SafeCast.safeUnsignedShortToInt((short)1));
         assertEquals((int) 65535, SafeCast.safeUnsignedShortToInt((short)-1));
     }
     
     @Test 
-    public void testUnsignedByteToInt() {
+    public void testSafeUnsignedByteToInt() {
         assertEquals(1, SafeCast.safeUnsignedByteToInt((byte)1));
         assertEquals((int) 255, SafeCast.safeUnsignedByteToInt((byte)-1));
+    }
+
+    @Test
+    public void testSafeUnsignedIntToLong() throws Exception {
+        assertEquals(1l, SafeCast.safeUnsignedIntToLong(1));
+        assertEquals(255l, SafeCast.safeUnsignedIntToLong(255));
+        System.out.println(Integer.toHexString(-579523657));
+        System.out.println(Long.toHexString(SafeCast.safeUnsignedIntToLong(-579523657)));
+        assertEquals(0xdd752bb7l, SafeCast.safeUnsignedIntToLong(0xdd752bb7)); //-579523657));
+        assertEquals(0xdd752bb7l, SafeCast.safeUnsignedIntToLong(-579523657));
+        assertEquals(0xffffffffl, SafeCast.safeUnsignedIntToLong(-1));
     }
 
 }

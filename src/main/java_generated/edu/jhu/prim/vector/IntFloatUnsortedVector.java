@@ -295,6 +295,33 @@ public class IntFloatUnsortedVector extends AbstractIntFloatVector implements In
             function.call(idx[i], vals[i]);
         }
     }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see edu.jhu.util.vector.IntFloatMap#iterator()
+     */
+    @Override
+    public Iterator<IntFloatEntry> iterator() {
+        compact();
+        return new IntFloatIterator();
+    }
+    
+    public void applyNoCompact(FnIntFloatToFloat function) {
+        for(int i=0; i<top; i++) {
+            vals[i] = function.call(idx[i], vals[i]);
+        }
+    }
+
+    public void iterateNoCompact(FnIntFloatToVoid function) {
+        for(int i=0; i<top; i++) {
+            function.call(idx[i], vals[i]);
+        }
+    }
+
+    public Iterator<IntFloatEntry> iteratorNoCompact() {
+        return new IntFloatIterator();
+    }
 
     @Override
     public void subtract(IntFloatVector other) {
@@ -409,16 +436,6 @@ public class IntFloatUnsortedVector extends AbstractIntFloatVector implements In
             throw new RuntimeException("operation not supported");
         }
 
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see edu.jhu.util.vector.IntFloatMap#iterator()
-     */
-    @Override
-    public Iterator<IntFloatEntry> iterator() {
-        return new IntFloatIterator();
     }
     
     @Override
