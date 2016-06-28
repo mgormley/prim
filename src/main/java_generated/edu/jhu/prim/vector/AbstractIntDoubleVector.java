@@ -2,7 +2,6 @@ package edu.jhu.prim.vector;
 
 import edu.jhu.prim.Primitives.MutableDouble;
 import edu.jhu.prim.Primitives.MutableInt;
-import edu.jhu.prim.set.IntHashSet;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToVoid;
 
 public abstract class AbstractIntDoubleVector {

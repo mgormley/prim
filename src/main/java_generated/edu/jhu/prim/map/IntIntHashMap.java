@@ -24,10 +24,8 @@ import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.Map.Entry;
 
 import edu.jhu.prim.Primitives;
-import edu.jhu.prim.sort.IntIntSort;
 import edu.jhu.prim.tuple.Pair;
 import edu.jhu.prim.util.Lambda.FnIntIntToInt;
 import edu.jhu.prim.util.Lambda.FnIntIntToVoid;
@@ -719,41 +717,4 @@ public class IntIntHashMap extends AbstractIntIntVector implements Serializable,
         }
     }
     
-    @Override
-    public int hashCode() {
-        int h = 0;
-        int[] indices = getIndices();
-        int[] values = getValues();
-        IntIntSort.sortIndexAsc(indices, values);
-        for (int i=0; i<indices.length; i++) {
-            int result = 17;
-            result = 37*result + Primitives.hashOfInt(indices[i]);
-            result = 37*result + Primitives.hashOfInt(values[i]);
-            h += result;
-        }
-        return h;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (this.getClass() != obj.getClass())
-            return false;
-        IntIntHashMap other = (IntIntHashMap) obj;
-        if (this.size() != other.size()) {
-            return false;
-        }
-        for (int i=0; i<keys.length; i++) {
-            if (states[i] == FULL) {
-                if (!other.contains(keys[i])) 
-                    return false;
-                if (other.get(keys[i]) != values[i])
-                    return false;
-            }
-        }
-        return true;
-    }
 }

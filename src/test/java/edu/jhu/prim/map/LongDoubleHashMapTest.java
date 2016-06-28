@@ -3,7 +3,7 @@ package edu.jhu.prim.map;
 import static edu.jhu.prim.Primitives.toDouble;
 import static edu.jhu.prim.Primitives.toInt;
 import static edu.jhu.prim.Primitives.toLong;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Iterator;
 
@@ -153,44 +153,6 @@ public class LongDoubleHashMapTest {
         assertEquals(2, cur.index()); 
         assertEquals(22, toInt(cur.get())); 
         assertEquals(false, iter.hasNext());
-    }
-
-    @Test
-    public void testEquals() throws Exception {
-        LongDoubleHashMap m1 = new LongDoubleHashMap();
-        LongDoubleHashMap m2 = new LongDoubleHashMap();
-        assertTrue(m1.equals(m2));
-        
-        m1.put(2, toDouble(22));
-        m1.put(1, toDouble(11));
-        assertFalse(m1.equals(m2));
-        
-        m2.put(1, toDouble(11));
-        m2.put(2, toDouble(22));
-        assertTrue(m1.equals(m2));
-        
-        m2.put(3, toDouble(33));
-        assertFalse(m1.equals(m2));
-        
-        m1.put(3, toDouble(33));
-        assertTrue(m1.equals(m2));
-    }
-
-    @Test
-    public void testHashCode() throws Exception {
-        LongDoubleHashMap m1 = new LongDoubleHashMap();
-        LongDoubleHashMap m2 = new LongDoubleHashMap();
-        assertEquals(m1.hashCode(), m2.hashCode());
-        
-        m1.put(2, toDouble(22));
-        m1.put(1, toDouble(11));
-        m2.put(1, toDouble(11));
-        m2.put(2, toDouble(22));
-        assertEquals(m1.hashCode(), m2.hashCode());
-        
-        m2.put(3, toDouble(33));
-        m1.put(3, toDouble(33));
-        assertEquals(m1.hashCode(), m2.hashCode());
     }
     
 }
