@@ -2,6 +2,7 @@ package edu.jhu.prim.vector;
 
 import edu.jhu.prim.Primitives.MutableDouble;
 import edu.jhu.prim.Primitives.MutableLong;
+import edu.jhu.prim.set.LongHashSet;
 import edu.jhu.prim.util.Lambda.FnLongDoubleToVoid;
 
 public abstract class AbstractLongDoubleVector {
