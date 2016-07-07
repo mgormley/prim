@@ -3,27 +3,29 @@
  */
 package edu.jhu.prim.tuple;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class DoubleTuple {
-    
+public class DoubleTuple implements Serializable {
+    private static final long serialVersionUID = 1118705656501316524L;
+
     private final double[] x;
-    
+
     public DoubleTuple(double... args) {
         x = new double[args.length];
         for (int i=0; i<args.length; i++) {
             x[i] = args[i];
         }
     }
-    
+
     public int size() {
         return x.length;
     }
-    
+
     public double get(int i) {
         return x[i];
     }
-    
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -50,5 +52,5 @@ public class DoubleTuple {
     public String toString() {
         return Arrays.toString(x);
     }
-    
+
 }

@@ -1,10 +1,13 @@
 package edu.jhu.prim.tuple;
 
+import java.io.Serializable;
+
 import edu.jhu.prim.util.SafeEquals;
 
-public class Pair<X,Y> {
+public class Pair<X,Y> implements Serializable {
+    private static final long serialVersionUID = 8212980173848331024L;
 
-	private X x;
+    private X x;
 	private Y y;
 	
 	public Pair(X x, Y y) {

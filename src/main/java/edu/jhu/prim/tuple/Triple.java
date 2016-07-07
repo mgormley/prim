@@ -1,10 +1,13 @@
 package edu.jhu.prim.tuple;
 
+import java.io.Serializable;
+
 import edu.jhu.prim.util.SafeEquals;
 
-public class Triple<X,Y,Z> {
+public class Triple<X,Y,Z> implements Serializable {
+    private static final long serialVersionUID = -6935430631568159681L;
 
-	private X x;
+    private X x;
 	private Y y;
 	private Z z;
 	

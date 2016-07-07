@@ -1,9 +1,12 @@
 package edu.jhu.prim.tuple;
 
-public class ComparableTriple<X extends Comparable<X>, Y extends Comparable<Y>, Z extends Comparable<Z>> extends Triple<X, Y, Z> implements
-        Comparable<ComparableTriple<X, Y, Z>> {		
+import java.io.Serializable;
 
-	public ComparableTriple(X x, Y y, Z z) {
+public class ComparableTriple<X extends Comparable<X>, Y extends Comparable<Y>, Z extends Comparable<Z>> extends Triple<X, Y, Z>
+        implements Comparable<ComparableTriple<X, Y, Z>>, Serializable {
+    private static final long serialVersionUID = -5844901187236720835L;
+
+    public ComparableTriple(X x, Y y, Z z) {
 		super(x, y, z);
 	}
 
@@ -17,5 +20,5 @@ public class ComparableTriple<X extends Comparable<X>, Y extends Comparable<Y>, 
 		}
 		return diff;
 	}
-	
+
 }

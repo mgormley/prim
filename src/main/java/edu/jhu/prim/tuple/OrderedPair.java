@@ -3,8 +3,11 @@
  */
 package edu.jhu.prim.tuple;
 
+import java.io.Serializable;
 
-public class OrderedPair extends IntTuple {
+public class OrderedPair extends IntTuple implements Serializable {
+    private static final long serialVersionUID = -4438111618394922684L;
+
     public OrderedPair(int facIdx, int varIdx) {
         super(facIdx, varIdx);
     }
