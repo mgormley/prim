@@ -3,6 +3,7 @@ package edu.jhu.prim.vector;
 import edu.jhu.prim.Primitives.MutableDouble;
 import edu.jhu.prim.Primitives.MutableInt;
 import edu.jhu.prim.util.Lambda.FnIntDoubleToVoid;
+import edu.jhu.prim.util.math.FastMath;
 
 public abstract class AbstractIntDoubleVector {
 
@@ -77,7 +78,7 @@ public abstract class AbstractIntDoubleVector {
                 sum.v += val*val;
             }
         });
-        return sum.v;
+        return Math.sqrt(sum.v);
     }
     
     public double getInfNorm() {

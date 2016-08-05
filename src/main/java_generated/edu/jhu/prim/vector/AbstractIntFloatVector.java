@@ -3,6 +3,7 @@ package edu.jhu.prim.vector;
 import edu.jhu.prim.Primitives.MutableFloat;
 import edu.jhu.prim.Primitives.MutableInt;
 import edu.jhu.prim.util.Lambda.FnIntFloatToVoid;
+import edu.jhu.prim.util.math.FastMath;
 
 public abstract class AbstractIntFloatVector {
 
@@ -77,7 +78,7 @@ public abstract class AbstractIntFloatVector {
                 sum.v += val*val;
             }
         });
-        return sum.v;
+        return Math.sqrt(sum.v);
     }
     
     public float getInfNorm() {
