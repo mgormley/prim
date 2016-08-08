@@ -2,6 +2,8 @@ package edu.jhu.prim;
 
 import java.io.Serializable;
 
+import edu.jhu.prim.util.SafeCast;
+
 
 /**
  * Methods and constants for primitive collections.
@@ -250,6 +252,9 @@ public class Primitives {
         public long v;
         public MutableLong() { }
         public MutableLong(long v) { this.v = v; }
+        public long sqrt() {
+            return SafeCast.safeDoubleToLong(Math.sqrt(v));
+        }
     }
 
     public static class MutableInt implements Serializable {
@@ -257,6 +262,9 @@ public class Primitives {
         public int v;
         public MutableInt() { }
         public MutableInt(int v) { this.v = v; }
+        public int sqrt() {
+            return SafeCast.safeDoubleToInt(Math.sqrt(v));
+        }
     }
     
     public static class MutableShort implements Serializable {
@@ -264,6 +272,9 @@ public class Primitives {
         public short v;
         public MutableShort() { }
         public MutableShort(short v) { this.v = v; }
+        public short sqrt() {
+            return SafeCast.safeIntToShort(SafeCast.safeDoubleToInt(Math.sqrt(v)));
+        }
     }
     
     public static class MutableDouble implements Serializable {
@@ -271,6 +282,9 @@ public class Primitives {
         public double v;
         public MutableDouble() { }
         public MutableDouble(double v) { this.v = v; }
+        public double sqrt() {
+            return Math.sqrt(v);
+        }
     }
 
     public static class MutableFloat implements Serializable {
@@ -278,6 +292,9 @@ public class Primitives {
         public float v;
         public MutableFloat() { }
         public MutableFloat(float v) { this.v = v; }
+        public float sqrt() {
+            return SafeCast.safeDoubleToFloat(Math.sqrt(v));
+        }
     }
     
  }
