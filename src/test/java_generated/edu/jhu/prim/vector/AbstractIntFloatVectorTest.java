@@ -217,13 +217,14 @@ public abstract class AbstractIntFloatVectorTest {
     
     @Test
     public void testGetL2Norm() {
+        // TODO write some code to search for perfect squares which are the sum
+        // of other perfect squares (so this test has more cases and still works
+        // for the integer-valued vector variants).
         IntFloatVector v1 = getIntFloatVector();
-        v1.set(1, toFloat(11));
-        v1.set(3, toFloat(33));
-        v1.set(2, toFloat(-22));
-        v1.set(5, toFloat(-55));
+        v1.set(3, toFloat(-4));
+        v1.set(1, toFloat(3));
         
-        assertEquals(11*11 + 33*33 + 22*22 + 55*55, v1.getL2Norm(), 1e-13);
+        assertEquals(5, (float) v1.getL2Norm(), 1e-13);
     }
     
     @Test

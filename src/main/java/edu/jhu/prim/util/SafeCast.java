@@ -33,6 +33,13 @@ public class SafeCast {
         return (int)l;
     }
     
+    public static long safeDoubleToLong(double d) {
+        if (d > (double)Long.MAX_VALUE || d < (double) Long.MIN_VALUE) {
+            throw new IllegalStateException("Cannot convert double to long: " + d);
+        }
+        return (long)d;
+    }
+    
     public static int safeDoubleToInt(double d) {
         if (d > (double)Integer.MAX_VALUE || d < (double) Integer.MIN_VALUE) {
             throw new IllegalStateException("Cannot convert double to int: " + d);
