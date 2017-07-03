@@ -1,11 +1,12 @@
 package edu.jhu.prim.tuple;
 
 import java.util.Comparator;
+import java.io.Serializable;
 
-public class ComparablePair<X extends Comparable<X>,Y extends Comparable<Y>> extends Pair<X,Y> implements Comparable<ComparablePair<X,Y>> {
-		
+public class ComparablePair<X extends Comparable<X>,Y extends Comparable<Y>> extends Pair<X,Y> implements Comparable<ComparablePair<X,Y>>, Serializable {
+    private static final long serialVersionUID = -9010917846690758395L;
 
-	public ComparablePair(X x, Y y) {
+    public ComparablePair(X x, Y y) {
 		super(x, y);
 	}
 

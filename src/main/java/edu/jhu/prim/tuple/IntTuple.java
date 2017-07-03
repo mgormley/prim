@@ -1,24 +1,26 @@
 package edu.jhu.prim.tuple;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 import edu.jhu.prim.arrays.IntArrays;
 
-public class IntTuple implements Comparable<IntTuple> {
-    
+public class IntTuple implements Comparable<IntTuple>, Serializable {
+    private static final long serialVersionUID = -3712750256247592267L;
+
     private final int[] x;
-    
+
     public IntTuple(int... args) {
         x = new int[args.length];
         for (int i=0; i<args.length; i++) {
             x[i] = args[i];
         }
     }
-    
+
     public int size() {
         return x.length;
     }
-    
+
     public int get(int i) {
         return x[i];
     }
@@ -44,7 +46,7 @@ public class IntTuple implements Comparable<IntTuple> {
             return false;
         return true;
     }
-    
+
     @Override
     public String toString() {
         return Arrays.toString(x);
@@ -54,5 +56,5 @@ public class IntTuple implements Comparable<IntTuple> {
     public int compareTo(IntTuple other) {
         return IntArrays.compare(this.x, other.x);
     }
-    
+
 }

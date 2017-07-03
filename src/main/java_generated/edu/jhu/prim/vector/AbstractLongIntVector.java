@@ -78,7 +78,7 @@ public abstract class AbstractLongIntVector {
                 sum.v += val*val;
             }
         });
-        return sum.v;
+        return sum.sqrt();
     }
     
     public int getInfNorm() {
