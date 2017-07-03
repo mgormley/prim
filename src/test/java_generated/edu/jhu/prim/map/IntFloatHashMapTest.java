@@ -3,7 +3,7 @@ package edu.jhu.prim.map;
 import static edu.jhu.prim.Primitives.toFloat;
 import static edu.jhu.prim.Primitives.toInt;
 import static edu.jhu.prim.Primitives.toInt;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.Iterator;
 
@@ -153,6 +153,44 @@ public class IntFloatHashMapTest {
         assertEquals(2, cur.index()); 
         assertEquals(22, toInt(cur.get())); 
         assertEquals(false, iter.hasNext());
+    }
+
+    @Test
+    public void testEquals() throws Exception {
+        IntFloatHashMap m1 = new IntFloatHashMap();
+        IntFloatHashMap m2 = new IntFloatHashMap();
+        assertTrue(m1.equals(m2));
+        
+        m1.put(2, toFloat(22));
+        m1.put(1, toFloat(11));
+        assertFalse(m1.equals(m2));
+        
+        m2.put(1, toFloat(11));
+        m2.put(2, toFloat(22));
+        assertTrue(m1.equals(m2));
+        
+        m2.put(3, toFloat(33));
+        assertFalse(m1.equals(m2));
+        
+        m1.put(3, toFloat(33));
+        assertTrue(m1.equals(m2));
+    }
+
+    @Test
+    public void testHashCode() throws Exception {
+        IntFloatHashMap m1 = new IntFloatHashMap();
+        IntFloatHashMap m2 = new IntFloatHashMap();
+        assertEquals(m1.hashCode(), m2.hashCode());
+        
+        m1.put(2, toFloat(22));
+        m1.put(1, toFloat(11));
+        m2.put(1, toFloat(11));
+        m2.put(2, toFloat(22));
+        assertEquals(m1.hashCode(), m2.hashCode());
+        
+        m2.put(3, toFloat(33));
+        m1.put(3, toFloat(33));
+        assertEquals(m1.hashCode(), m2.hashCode());
     }
     
 }

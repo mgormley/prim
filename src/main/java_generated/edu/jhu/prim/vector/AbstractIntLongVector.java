@@ -2,6 +2,7 @@ package edu.jhu.prim.vector;
 
 import edu.jhu.prim.Primitives.MutableLong;
 import edu.jhu.prim.Primitives.MutableInt;
+import edu.jhu.prim.set.IntHashSet;
 import edu.jhu.prim.util.Lambda.FnIntLongToVoid;
 
 public abstract class AbstractIntLongVector {

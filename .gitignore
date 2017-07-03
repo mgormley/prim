@@ -20,3 +20,4 @@ tmp
 /lib/*.tgz
 /lib/*.tar.gz
 /lib/*.zip
+/bin/
