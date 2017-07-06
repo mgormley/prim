@@ -15,13 +15,14 @@ LongIntSortedVector, etc.
 
 ## Using Prim
 
-The latest public version is deployed on Maven Central:
+The latest public version is deployed on 
+[Maven Central](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22edu.jhu.prim%22%20AND%20a%3A%22prim%22):
 
 ```xml
 <dependency>
     <groupId>edu.jhu.prim</groupId>
     <artifactId>prim</artifactId>
-    <version>3.1.3</version>
+    <version>3.1.5</version>
 </dependency>
 ```
 
